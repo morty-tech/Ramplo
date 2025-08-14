@@ -188,7 +188,17 @@ export default function Dashboard() {
               
               <div className="text-center">
                 <div className="text-xs font-medium text-gray-900">{performanceLevel.level}</div>
-                <div className="text-xs text-gray-500">Performance</div>
+                <div className="flex items-center gap-1 text-xs text-gray-500 justify-center">
+                  Performance
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Info className="h-3 w-3 text-gray-400" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Your daily performance score combines task completion with client outreach activity</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
               </div>
             </div>
           </div>
@@ -205,7 +215,7 @@ export default function Dashboard() {
                   <div>
                     <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
                     <div className="flex items-center gap-1 text-sm text-gray-600">
-                      {stat.subtitle || stat.title}
+                      {stat.title}
                       {stat.tooltip && (
                         <Tooltip>
                           <TooltipTrigger>
