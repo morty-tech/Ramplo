@@ -14,17 +14,19 @@ import { Loader2, User, Clock, Target, Users, MessageSquare, TrendingUp, X } fro
 
 export default function Onboarding() {
   const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
+    firstName: "",
+    lastName: "",
     markets: [] as string[], // Multiple cities as tags, max 4
     experienceLevel: "",
-    focus: [] as string[],
+    focus: [] as string[], // Max 3 loan types
     borrowerTypes: [] as string[], // Include veterans, new construction, commercial as tags, max 4
     timeAvailableWeekday: "",
     outreachComfort: "",
-    hasRealtorRelationships: false,
     hasPastClientList: false,
+    clientListLocation: "",
+    crmName: "",
     socialChannelsUsed: [] as string[],
+    socialLinks: {} as Record<string, string>,
     networkSources: [] as string[], // Include insurance agents, lawyers
     tonePreference: "",
     preferredChannels: [] as string[], // Tag-based, max 3
@@ -77,7 +79,7 @@ export default function Onboarding() {
 
   const canProceed = () => {
     switch (step) {
-      case 1: return formData.fullName && formData.email && formData.markets.length > 0;
+      case 1: return formData.firstName && formData.lastName && formData.markets.length > 0;
       case 2: return formData.experienceLevel;
       case 3: return formData.focus.length > 0;
       case 4: return formData.borrowerTypes.length > 0;
@@ -149,22 +151,21 @@ export default function Onboarding() {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="fullName" className="font-medium">Full Name</Label>
+                      <Label htmlFor="firstName" className="font-medium">First Name</Label>
                       <Input
-                        id="fullName"
-                        value={formData.fullName}
-                        onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
-                        placeholder="John Smith"
+                        id="firstName"
+                        value={formData.firstName}
+                        onChange={(e) => setFormData(prev => ({ ...prev, firstName: e.target.value }))}
+                        placeholder="John"
                       />
                     </div>
                     <div>
-                      <Label htmlFor="email" className="font-medium">Email Address</Label>
+                      <Label htmlFor="lastName" className="font-medium">Last Name</Label>
                       <Input
-                        id="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                        placeholder="john@example.com"
+                        id="lastName"
+                        value={formData.lastName}
+                        onChange={(e) => setFormData(prev => ({ ...prev, lastName: e.target.value }))}
+                        placeholder="Smith"
                       />
                     </div>
                   </div>
@@ -220,38 +221,89 @@ export default function Onboarding() {
                 </div>
               )}
 
-              {/* Step 3: Focus Areas */}
+              {/* Step 3: Focus Areas - Limited to 3 with tags */}
               {step === 3 && (
                 <div>
-                  <div className="flex items-center mb-4">
-                    <Target className="w-6 h-6 text-blue-600 mr-3" />
-                    <Label className="text-lg font-medium text-gray-900">
-                      What's your focus? (Select all that apply)
-                    </Label>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {[
-                      { value: "purchase", label: "Purchase Loans", desc: "Home buying transactions" },
-                      { value: "refi", label: "Refinancing", desc: "Rate & term, cash-out refis" },
-                      { value: "heloc", label: "HELOC", desc: "Home equity lines of credit" },
-                      { value: "investor-dscr", label: "Investor (DSCR)", desc: "Investment property loans" },
-                      { value: "non-qm", label: "Non-QM", desc: "Non-qualified mortgages" },
-                    ].map((focus) => (
-                      <Label
-                        key={focus.value}
-                        className="flex items-start p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
-                      >
-                        <Checkbox
-                          checked={formData.focus.includes(focus.value)}
-                          onCheckedChange={(checked) => handleArrayChange("focus", focus.value, checked as boolean)}
-                          className="mr-3 mt-0.5"
-                        />
-                        <div>
-                          <div className="font-medium">{focus.label}</div>
-                          <div className="text-sm text-gray-600">{focus.desc}</div>
+                  <Label className="text-lg font-medium text-gray-900 mb-4 block">
+                    What's your focus? (Select up to 3 loan types)
+                  </Label>
+                  
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {[
+                        { value: "purchase", label: "Purchase Loans", desc: "Home buying transactions" },
+                        { value: "refi", label: "Refinancing", desc: "Rate & term, cash-out refis" },
+                        { value: "heloc", label: "HELOC", desc: "Home equity lines of credit" },
+                        { value: "investor-dscr", label: "Investor (DSCR)", desc: "Investment property loans" },
+                        { value: "non-qm", label: "Non-QM", desc: "Non-qualified mortgages" },
+                      ].map((focus) => (
+                        <div
+                          key={focus.value}
+                          className={`p-4 border-2 rounded-lg cursor-pointer transition-colors ${
+                            formData.focus.includes(focus.value)
+                              ? "border-primary bg-primary/5"
+                              : "border-gray-200 hover:border-primary/50"
+                          } ${formData.focus.length >= 3 && !formData.focus.includes(focus.value) ? "opacity-50 cursor-not-allowed" : ""}`}
+                          onClick={() => {
+                            if (formData.focus.includes(focus.value)) {
+                              handleArrayChange("focus", focus.value, false);
+                            } else if (formData.focus.length < 3) {
+                              handleArrayChange("focus", focus.value, true);
+                            }
+                          }}
+                        >
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="font-medium">{focus.label}</div>
+                              <div className="text-sm text-gray-600">{focus.desc}</div>
+                            </div>
+                            {formData.focus.includes(focus.value) && (
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleArrayChange("focus", focus.value, false);
+                                }}
+                                className="p-1 hover:bg-primary/20 rounded-full"
+                              >
+                                <X className="w-4 h-4" />
+                              </button>
+                            )}
+                          </div>
                         </div>
-                      </Label>
-                    ))}
+                      ))}
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      {formData.focus.map((focusType) => {
+                        const option = [
+                          { value: "purchase", label: "Purchase Loans" },
+                          { value: "refi", label: "Refinancing" },
+                          { value: "heloc", label: "HELOC" },
+                          { value: "investor-dscr", label: "Investor (DSCR)" },
+                          { value: "non-qm", label: "Non-QM" },
+                        ].find(opt => opt.value === focusType);
+                        return (
+                          <div
+                            key={focusType}
+                            className="inline-flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary rounded-full text-sm"
+                          >
+                            {option?.label}
+                            <button
+                              type="button"
+                              onClick={() => handleArrayChange("focus", focusType, false)}
+                              className="p-0.5 hover:bg-primary/20 rounded-full"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    
+                    <p className="text-xs text-gray-500">
+                      {formData.focus.length}/3 loan types selected
+                    </p>
                   </div>
                 </div>
               )}
@@ -400,33 +452,62 @@ export default function Onboarding() {
                       </Label>
                     </div>
                     
-                    <div className="space-y-4">
-                      <div className="flex items-center space-x-3 p-4 border-2 border-gray-200 rounded-lg">
-                        <Checkbox
-                          id="hasRealtorRelationships"
-                          checked={formData.hasRealtorRelationships}
-                          onCheckedChange={(checked) => setFormData(prev => ({ ...prev, hasRealtorRelationships: checked as boolean }))}
-                        />
-                        <div>
-                          <Label htmlFor="hasRealtorRelationships" className="font-medium">
-                            I have established realtor relationships
-                          </Label>
-                          <p className="text-sm text-gray-600">Active referral partnerships with real estate agents</p>
+                    <div className="space-y-6">
+                      <div className="p-4 border-2 border-gray-200 rounded-lg">
+                        <div className="flex items-center space-x-3 mb-4">
+                          <Checkbox
+                            id="hasPastClientList"
+                            checked={formData.hasPastClientList}
+                            onCheckedChange={(checked) => setFormData(prev => ({ ...prev, hasPastClientList: checked as boolean }))}
+                          />
+                          <div>
+                            <Label htmlFor="hasPastClientList" className="font-medium">
+                              Do you have a client list?
+                            </Label>
+                            <p className="text-sm text-gray-600">Database of previous customers for referrals and repeat business</p>
+                          </div>
                         </div>
-                      </div>
-
-                      <div className="flex items-center space-x-3 p-4 border-2 border-gray-200 rounded-lg">
-                        <Checkbox
-                          id="hasPastClientList"
-                          checked={formData.hasPastClientList}
-                          onCheckedChange={(checked) => setFormData(prev => ({ ...prev, hasPastClientList: checked as boolean }))}
-                        />
-                        <div>
-                          <Label htmlFor="hasPastClientList" className="font-medium">
-                            I have a past client list
-                          </Label>
-                          <p className="text-sm text-gray-600">Database of previous customers for referrals and repeat business</p>
-                        </div>
+                        
+                        {formData.hasPastClientList && (
+                          <div className="space-y-4 ml-6 border-l-2 border-primary/20 pl-4">
+                            <div>
+                              <Label className="font-medium block mb-2">Where does your client list live?</Label>
+                              <RadioGroup
+                                value={formData.clientListLocation}
+                                onValueChange={(value) => setFormData(prev => ({ ...prev, clientListLocation: value }))}
+                                className="grid grid-cols-2 gap-2"
+                              >
+                                {[
+                                  { value: "crm", label: "CRM System" },
+                                  { value: "excel", label: "Excel File" },
+                                  { value: "email", label: "Email Contacts" },
+                                  { value: "my-head", label: "In My Head" },
+                                ].map((option) => (
+                                  <Label
+                                    key={option.value}
+                                    htmlFor={`client-${option.value}`}
+                                    className="flex items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
+                                  >
+                                    <RadioGroupItem value={option.value} id={`client-${option.value}`} className="mr-2" />
+                                    <span className="text-sm font-medium">{option.label}</span>
+                                  </Label>
+                                ))}
+                              </RadioGroup>
+                            </div>
+                            
+                            {formData.clientListLocation === "crm" && (
+                              <div>
+                                <Label htmlFor="crmName" className="font-medium">What CRM do you use?</Label>
+                                <Input
+                                  id="crmName"
+                                  value={formData.crmName}
+                                  onChange={(e) => setFormData(prev => ({ ...prev, crmName: e.target.value }))}
+                                  placeholder="e.g., Salesforce, HubSpot, Top Producer"
+                                />
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
 
@@ -494,30 +575,59 @@ export default function Onboarding() {
                       </div>
                     </div>
 
-                    <div>
-                      <Label className="font-medium block mb-3">What social channels do you use for business?</Label>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                        {[
-                          { value: "linkedin", label: "LinkedIn" },
-                          { value: "facebook", label: "Facebook" },
-                          { value: "instagram", label: "Instagram" },
-                          { value: "youtube", label: "YouTube" },
-                          { value: "tiktok", label: "TikTok" },
-                          { value: "twitter", label: "Twitter/X" },
-                        ].map((channel) => (
-                          <Label
-                            key={channel.value}
-                            className="flex items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
-                          >
-                            <Checkbox
-                              checked={formData.socialChannelsUsed.includes(channel.value)}
-                              onCheckedChange={(checked) => handleArrayChange("socialChannelsUsed", channel.value, checked as boolean)}
-                              className="mr-2"
-                            />
-                            <span className="text-sm font-medium">{channel.label}</span>
-                          </Label>
-                        ))}
+                    <div className="space-y-6">
+                      <div>
+                        <Label className="font-medium block mb-3">What social channels do you use for business?</Label>
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                          {[
+                            { value: "linkedin", label: "LinkedIn" },
+                            { value: "facebook", label: "Facebook" },
+                            { value: "instagram", label: "Instagram" },
+                            { value: "youtube", label: "YouTube" },
+                            { value: "tiktok", label: "TikTok" },
+                            { value: "twitter", label: "Twitter/X" },
+                          ].map((channel) => (
+                            <Label
+                              key={channel.value}
+                              className="flex items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
+                            >
+                              <Checkbox
+                                checked={formData.socialChannelsUsed.includes(channel.value)}
+                                onCheckedChange={(checked) => handleArrayChange("socialChannelsUsed", channel.value, checked as boolean)}
+                                className="mr-2"
+                              />
+                              <span className="text-sm font-medium">{channel.label}</span>
+                            </Label>
+                          ))}
+                        </div>
                       </div>
+
+                      {formData.socialChannelsUsed.length > 0 && (
+                        <div className="p-4 bg-gray-50 rounded-lg">
+                          <Label className="font-medium block mb-3">Share your social links (optional)</Label>
+                          <div className="space-y-3">
+                            {formData.socialChannelsUsed.map((channel) => (
+                              <div key={channel}>
+                                <Label htmlFor={`social-${channel}`} className="text-sm font-medium capitalize">
+                                  {channel} Profile URL
+                                </Label>
+                                <Input
+                                  id={`social-${channel}`}
+                                  value={formData.socialLinks[channel] ?? ""}
+                                  onChange={(e) => setFormData(prev => ({
+                                    ...prev,
+                                    socialLinks: { ...prev.socialLinks, [channel]: e.target.value }
+                                  }))}
+                                  placeholder={`https://${channel}.com/yourprofile`}
+                                />
+                              </div>
+                            ))}
+                          </div>
+                          <p className="text-xs text-gray-600 mt-2">
+                            These links help us personalize your social media task recommendations
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -54,7 +54,8 @@ export const userProfiles = pgTable("user_profiles", {
   userId: uuid("user_id").references(() => users.id).notNull().unique(),
   
   // Personal/Professional Info
-  fullName: varchar("full_name"),
+  firstName: varchar("first_name"),
+  lastName: varchar("last_name"),
   email: varchar("email"),
   markets: jsonb("markets").$type<string[]>(), // Array of cities/market areas (max 4)
   
@@ -68,9 +69,11 @@ export const userProfiles = pgTable("user_profiles", {
   outreachComfort: varchar("outreach_comfort"), // low, medium, high
   
   // Network Assets
-  hasRealtorRelationships: boolean("has_realtor_relationships").default(false),
   hasPastClientList: boolean("has_past_client_list").default(false),
+  clientListLocation: varchar("client_list_location"), // crm, excel, email, my-head, none
+  crmName: varchar("crm_name"), // if they use a CRM
   socialChannelsUsed: jsonb("social_channels_used").$type<string[]>(), // linkedin, facebook, instagram, etc.
+  socialLinks: jsonb("social_links").$type<Record<string, string>>(), // {linkedin: "url", facebook: "url", etc}
   networkSources: jsonb("network_sources").$type<string[]>(), // realtors, insurance-agents, lawyers, past-clients, etc.
   
   // Communication Preferences
