@@ -34,14 +34,11 @@ function Router() {
     );
   }
 
-  if (!profile?.onboardingCompleted) {
-    return <Route component={Onboarding} />;
-  }
-
   return (
     <Layout>
       <Switch>
-        <Route path="/" component={Dashboard} />
+        <Route path="/onboarding" component={Onboarding} />
+        <Route path="/" component={!profile?.onboardingCompleted ? Onboarding : Dashboard} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/roadmap" component={Roadmap} />
         <Route path="/outreach" component={Outreach} />

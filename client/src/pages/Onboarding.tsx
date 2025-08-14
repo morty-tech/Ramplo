@@ -42,7 +42,7 @@ export default function Onboarding() {
     try {
       await apiRequest("POST", "/api/onboarding", formData);
       toast({
-        title: "Welcome to Ramplo!",
+        title: "Welcome to RampLO!",
         description: "Your personalized ramp plan is being created.",
       });
       // Redirect will happen automatically via App.tsx
@@ -75,7 +75,7 @@ export default function Onboarding() {
         <Card>
           <CardContent className="p-8">
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome to Ramplo!</h1>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome to RampLO!</h1>
               <p className="text-gray-600">Help us personalize your 90-day ramp plan with a few quick questions.</p>
               
               <div className="mt-6">
