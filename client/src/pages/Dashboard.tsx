@@ -70,6 +70,16 @@ export default function Dashboard() {
   const connectionScore = Math.min(totalConnections * 10, 100); // 10 points per connection, max 100
   const performanceScore = Math.round((taskCompletionRate + connectionScore) / 2);
 
+  // Performance level based on score
+  const getPerformanceLevel = (score: number) => {
+    if (score >= 75) return { level: "Excelling", color: "#22c55e" }; // Green
+    if (score >= 50) return { level: "On Track", color: "#3b82f6" }; // Blue  
+    if (score >= 25) return { level: "Building", color: "#f59e0b" }; // Orange
+    return { level: "Getting Started", color: "#ef4444" }; // Red
+  };
+
+  const performanceLevel = getPerformanceLevel(performanceScore);
+
   // Week focus based on current week
   const getWeekFocus = (week: number) => {
     const focuses = [
@@ -142,9 +152,44 @@ export default function Dashboard() {
               </h2>
               <p className="text-gray-600">Week Focus: {getWeekFocus(progress?.currentWeek || 1)}</p>
             </div>
-            <div className="text-right">
-              <div className="text-2xl font-bold text-primary">{performanceScore}</div>
-              <div className="text-sm text-gray-600">Performance Score</div>
+            <div className="text-right flex flex-col items-end">
+              <div className="relative w-20 h-20 mb-2">
+                {/* Background circle */}
+                <svg className="w-20 h-20 transform -rotate-90" viewBox="0 0 80 80">
+                  {/* Quarter segments background */}
+                  <circle
+                    cx="40"
+                    cy="40" 
+                    r="36"
+                    fill="none"
+                    stroke="#f3f4f6"
+                    strokeWidth="8"
+                  />
+                  
+                  {/* Performance level arc */}
+                  <circle
+                    cx="40"
+                    cy="40"
+                    r="36"
+                    fill="none"
+                    stroke={performanceLevel.color}
+                    strokeWidth="8"
+                    strokeLinecap="round"
+                    strokeDasharray={`${(performanceScore / 100) * 226} 226`}
+                    className="transition-all duration-500"
+                  />
+                </svg>
+                
+                {/* Score text overlay */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <div className="text-lg font-bold text-gray-900">{performanceScore}</div>
+                </div>
+              </div>
+              
+              <div className="text-center">
+                <div className="text-xs font-medium text-gray-900">{performanceLevel.level}</div>
+                <div className="text-xs text-gray-500">Performance</div>
+              </div>
             </div>
           </div>
         </CardContent>
