@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Task } from "@shared/schema";
 import ClientConnectionTracker from "@/components/ClientConnectionTracker";
 import { 
@@ -18,7 +19,8 @@ import {
   UserCheck,
   Map,
   Trophy,
-  Clock
+  Clock,
+  Info
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -62,6 +64,32 @@ export default function Dashboard() {
   const todayTasksCompleted = todayTasks.filter((task: Task) => task.completed).length;
   const todayTasksTotal = todayTasks.length;
 
+  // Calculate performance score based on tasks and connections
+  const taskCompletionRate = todayTasksTotal > 0 ? (todayTasksCompleted / todayTasksTotal) * 100 : 0;
+  const totalConnections = todayConnections ? (todayConnections.phoneCalls || 0) + (todayConnections.textMessages || 0) + (todayConnections.emails || 0) : 0;
+  const connectionScore = Math.min(totalConnections * 10, 100); // 10 points per connection, max 100
+  const performanceScore = Math.round((taskCompletionRate + connectionScore) / 2);
+
+  // Week focus based on current week
+  const getWeekFocus = (week: number) => {
+    const focuses = [
+      "Foundation Building", // Week 1
+      "Network Activation", // Week 2
+      "Lead Generation", // Week 3
+      "Client Outreach", // Week 4
+      "Relationship Building", // Week 5
+      "Pipeline Development", // Week 6
+      "Follow-up Mastery", // Week 7
+      "Deal Acceleration", // Week 8
+      "Closing Techniques", // Week 9
+      "Referral Systems", // Week 10
+      "Market Expansion", // Week 11
+      "Process Optimization", // Week 12
+      "Mastery & Growth" // Week 13
+    ];
+    return focuses[week - 1] || "Foundation Building";
+  };
+
   const stats = [
     {
       title: "Today's Tasks",
@@ -83,6 +111,7 @@ export default function Dashboard() {
       icon: Flame,
       color: "text-orange-600", 
       bgColor: "bg-orange-100",
+      tooltip: "Number of days you've completed all tasks and made client connections"
     },
     {
       title: "Closed Loans",
@@ -111,34 +140,48 @@ export default function Dashboard() {
               <h2 className="text-xl font-semibold text-gray-900">
                 Week {progress?.currentWeek || 1} of 13
               </h2>
-              <p className="text-gray-600">Progress for {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}</p>
+              <p className="text-gray-600">Week Focus: {getWeekFocus(progress?.currentWeek || 1)}</p>
             </div>
             <div className="text-right">
-              <div className="text-2xl font-bold text-primary">{Math.round(((progress?.currentWeek || 1) - 1) / 13 * 100)}%</div>
-              <div className="text-sm text-gray-600">Program Complete</div>
+              <div className="text-2xl font-bold text-primary">{performanceScore}</div>
+              <div className="text-sm text-gray-600">Performance Score</div>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {stats.map((stat) => (
-          <Card key={stat.title}>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
-                  <div className="text-sm text-gray-600">{stat.subtitle || stat.title}</div>
+      <TooltipProvider>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {stats.map((stat) => (
+            <Card key={stat.title}>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
+                    <div className="flex items-center gap-1 text-sm text-gray-600">
+                      {stat.subtitle || stat.title}
+                      {stat.tooltip && (
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <Info className="h-3 w-3 text-gray-400" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{stat.tooltip}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      )}
+                    </div>
+                  </div>
+                  <div className={`w-12 h-12 ${stat.bgColor} rounded-full flex items-center justify-center`}>
+                    <stat.icon className={`${stat.color} text-xl`} />
+                  </div>
                 </div>
-                <div className={`w-12 h-12 ${stat.bgColor} rounded-full flex items-center justify-center`}>
-                  <stat.icon className={`${stat.color} text-xl`} />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </TooltipProvider>
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
