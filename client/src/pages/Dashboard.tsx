@@ -349,7 +349,7 @@ export default function Dashboard() {
               <div className="space-y-3">
                 <Button 
                   variant="outline" 
-                  className="w-full justify-start"
+                  className="w-full justify-start hover:bg-blue-50 hover:text-blue-600 hover:border-blue-600"
                   onClick={() => window.location.href = '/outreach'}
                 >
                   <Send className="w-4 h-4 mr-3" />
@@ -357,7 +357,7 @@ export default function Dashboard() {
                 </Button>
                 <Button 
                   variant="outline" 
-                  className="w-full justify-start"
+                  className="w-full justify-start hover:bg-blue-50 hover:text-blue-600 hover:border-blue-600"
                   onClick={() => window.location.href = '/deal-coach'}
                 >
                   <UserCheck className="w-4 h-4 mr-3" />
@@ -365,7 +365,7 @@ export default function Dashboard() {
                 </Button>
                 <Button 
                   variant="outline" 
-                  className="w-full justify-start"
+                  className="w-full justify-start hover:bg-blue-50 hover:text-blue-600 hover:border-blue-600"
                   onClick={() => window.location.href = '/roadmap'}
                 >
                   <Map className="w-4 h-4 mr-3" />
@@ -376,7 +376,7 @@ export default function Dashboard() {
           </Card>
 
           {/* Achievement Badge */}
-          <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white">
+          <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white">
             <CardContent className="p-6 text-center">
               <Trophy className="w-12 h-12 mx-auto mb-3" />
               <h3 className="font-bold mb-2">Streak Master!</h3>
