@@ -322,6 +322,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 async function generateInitialTasks(userId: string, profile: any) {
   // Generate personalized tasks based on profile data
   const baseTasks = [
+    // Week 1, Day 1 - Foundation
     {
       title: "Complete CRM setup",
       description: "Set up your customer relationship management system",
@@ -331,6 +332,32 @@ async function generateInitialTasks(userId: string, profile: any) {
       day: 1,
     },
     {
+      title: "Create professional email signature",
+      description: "Design an email signature with your contact info, license number, and NMLS ID",
+      category: "branding",
+      estimatedMinutes: 15,
+      week: 1,
+      day: 1,
+    },
+    {
+      title: "Set up business cards",
+      description: "Order professional business cards or update your existing design",
+      category: "branding",
+      estimatedMinutes: 30,
+      week: 1,
+      day: 1,
+    },
+    {
+      title: "Update LinkedIn profile",
+      description: "Optimize your LinkedIn profile with mortgage industry keywords and experience",
+      category: "branding",
+      estimatedMinutes: 45,
+      week: 1,
+      day: 1,
+    },
+    
+    // Week 1, Day 2 - Networking Foundation
+    {
       title: "Send 5 realtor introduction emails",
       description: "Use the realtor intro template to connect with new real estate agents in your area",
       category: "networking", 
@@ -338,7 +365,56 @@ async function generateInitialTasks(userId: string, profile: any) {
       week: 1,
       day: 2,
     },
-    // Add more tasks based on profile
+    {
+      title: "Join 3 local Facebook groups",
+      description: "Find and join local real estate investor, homebuyer, and professional networking groups",
+      category: "networking",
+      estimatedMinutes: 20,
+      week: 1,
+      day: 2,
+    },
+    {
+      title: "Research top 20 realtors in your area",
+      description: "Create a list of high-producing realtors with their contact information and recent sales data",
+      category: "research",
+      estimatedMinutes: 45,
+      week: 1,
+      day: 2,
+    },
+    {
+      title: "Schedule 2 coffee meetings",
+      description: "Reach out to industry contacts to schedule informal coffee meetings this week",
+      category: "networking",
+      estimatedMinutes: 15,
+      week: 1,
+      day: 2,
+    },
+
+    // Week 1, Day 3 - Market Research
+    {
+      title: "Analyze local market trends",
+      description: "Research recent home sales, price trends, and inventory levels in your target area",
+      category: "research",
+      estimatedMinutes: 60,
+      week: 1,
+      day: 3,
+    },
+    {
+      title: "Create rate comparison sheet",
+      description: "Compare your rates with 3 competitors and identify your competitive advantages",
+      category: "organization",
+      estimatedMinutes: 30,
+      week: 1,
+      day: 3,
+    },
+    {
+      title: "Call 10 past clients",
+      description: "Reconnect with previous clients to ask for referrals and reviews",
+      category: "networking",
+      estimatedMinutes: 45,
+      week: 1,
+      day: 3,
+    }
   ];
 
   for (const taskData of baseTasks) {
