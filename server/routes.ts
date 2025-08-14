@@ -132,7 +132,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
-  // Onboarding
+  // Onboarding route - handle enhanced multi-step onboarding
   app.post("/api/onboarding", requireAuth, async (req: AuthenticatedRequest, res) => {
     try {
       const userId = req.session.user.id;
