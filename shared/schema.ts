@@ -81,6 +81,7 @@ export const tasks = pgTable("tasks", {
 export const userProgress = pgTable("user_progress", {
   id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
   userId: uuid("user_id").references(() => users.id).notNull().unique(),
+  startDate: timestamp("start_date").defaultNow(), // When user began the program
   currentWeek: integer("current_week").default(1),
   currentDay: integer("current_day").default(1),
   rampRunDays: integer("ramp_run_days").default(0), // Days completed all tasks + had client connect

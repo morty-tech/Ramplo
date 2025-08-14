@@ -365,7 +365,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
 // Helper functions
 async function generateInitialTasks(userId: string, profile: any) {
-  // Generate personalized tasks based on profile data
+  // Calculate smart start date based on current day of week
+  const now = new Date();
+  const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
+  
+  // Convert to business day (1-5, Mon-Fri)
+  let currentBusinessDay;
+  if (dayOfWeek === 0) currentBusinessDay = 1; // Sunday -> Monday
+  else if (dayOfWeek === 6) currentBusinessDay = 1; // Saturday -> Monday  
+  else currentBusinessDay = dayOfWeek; // Mon-Fri: 1-5
+
+  // Generate personalized tasks based on profile data and start day
   const baseTasks = [
     // Week 1, Day 1 - Foundation
     {
@@ -462,7 +472,29 @@ async function generateInitialTasks(userId: string, profile: any) {
     }
   ];
 
-  for (const taskData of baseTasks) {
+  // Filter and adjust tasks based on smart start day
+  const tasksToCreate = [];
+  const essentialTasks = ["Complete CRM setup", "Create professional email signature", "Update LinkedIn profile"];
+
+  for (const task of baseTasks) {
+    if (currentBusinessDay > task.day) {
+      // Mark essential foundation tasks as current day if missed
+      if (essentialTasks.includes(task.title)) {
+        tasksToCreate.push({ 
+          ...task, 
+          day: currentBusinessDay, 
+          description: `${task.description} (catch-up essential)` 
+        });
+      }
+      // Skip non-essential missed tasks
+    } else {
+      // Include tasks for current day forward
+      tasksToCreate.push(task);
+    }
+  }
+
+  // Create adjusted tasks
+  for (const taskData of tasksToCreate) {
     await storage.createTask({
       ...taskData,
       userId,

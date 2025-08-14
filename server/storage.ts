@@ -132,7 +132,6 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getUserTasks(userId: string, week?: number, day?: number): Promise<Task[]> {
-    let query = db.select().from(tasks);
     let whereConditions = [eq(tasks.userId, userId)];
     
     if (week !== undefined) {
@@ -143,9 +142,7 @@ export class DatabaseStorage implements IStorage {
       whereConditions.push(eq(tasks.day, day));
     }
     
-    query = query.where(and(...whereConditions));
-    
-    return await query;
+    return await db.select().from(tasks).where(and(...whereConditions));
   }
 
   async createTask(taskData: InsertTask): Promise<Task> {
