@@ -56,9 +56,7 @@ export const userProfiles = pgTable("user_profiles", {
   // Personal/Professional Info
   fullName: varchar("full_name"),
   email: varchar("email"),
-  market: varchar("market"), // city/market area
-  statesLicensed: jsonb("states_licensed").$type<string[]>(), // Array of state codes
-  nmlsId: varchar("nmls_id"), // Optional NMLS number
+  markets: jsonb("markets").$type<string[]>(), // Array of cities/market areas (max 4)
   
   // Experience & Focus
   experienceLevel: varchar("experience_level"), // new, <1y, 1-3y, 3+
@@ -73,13 +71,14 @@ export const userProfiles = pgTable("user_profiles", {
   hasRealtorRelationships: boolean("has_realtor_relationships").default(false),
   hasPastClientList: boolean("has_past_client_list").default(false),
   socialChannelsUsed: jsonb("social_channels_used").$type<string[]>(), // linkedin, facebook, instagram, etc.
+  networkSources: jsonb("network_sources").$type<string[]>(), // realtors, insurance-agents, lawyers, past-clients, etc.
   
   // Communication Preferences
   tonePreference: varchar("tone_preference"), // professional, friendly, direct
   preferredChannels: jsonb("preferred_channels").$type<string[]>(), // email, phone, social, inperson
   
   // Legacy fields (keeping for backwards compatibility)
-  markets: jsonb("markets").$type<string[]>(), // Multiple markets: first-time-buyers, refinance, luxury, investment, etc.
+  legacyMarkets: jsonb("legacy_markets").$type<string[]>(), // Multiple markets: first-time-buyers, refinance, luxury, investment, etc.
   primaryMarket: varchar("primary_market"), // Their main focus market
   networkSize: varchar("network_size"), // small, medium, large, starting
   networkGrowthStrategy: varchar("network_growth_strategy"), // social-media, referrals, cold-outreach, events, partnerships
