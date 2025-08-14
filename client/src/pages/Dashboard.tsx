@@ -26,7 +26,14 @@ export default function Dashboard() {
   const queryClient = useQueryClient();
 
   const { data: todayTasks = [] } = useQuery<Task[]>({
-    queryKey: ["/api/tasks", { week: progress?.currentWeek, day: progress?.currentDay }],
+    queryKey: ["/api/tasks", `week=${progress?.currentWeek || 1}&day=${progress?.currentDay || 1}`],
+    queryFn: async () => {
+      const week = progress?.currentWeek || 1;
+      const day = progress?.currentDay || 1;
+      const response = await apiRequest("GET", `/api/tasks?week=${week}&day=${day}`);
+      return response.json();
+    },
+    enabled: !!progress,
   });
 
   const completeTaskMutation = useMutation({
