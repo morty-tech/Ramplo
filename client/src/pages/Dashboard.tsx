@@ -102,7 +102,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="p-6 mt-16">
+    <div className="p-6 mx-4 md:mx-8">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
@@ -232,52 +232,7 @@ export default function Dashboard() {
           {/* Client Connection Tracker */}
           <ClientConnectionTracker />
           
-          {/* Weekly Task Overview */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">This Week's Daily Focus</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {[
-                  { day: 'Monday', focus: 'Foundation Setup' },
-                  { day: 'Tuesday', focus: 'Network Building' }, 
-                  { day: 'Wednesday', focus: 'Market Research' },
-                  { day: 'Thursday', focus: 'Outreach Campaign' },
-                  { day: 'Friday', focus: 'Follow-up & Review' }
-                ].map((item, index) => {
-                  const dayNumber = index + 1;
-                  const currentDay = progress?.currentDay || 1;
-                  const isCompleted = dayNumber < currentDay;
-                  const isCurrent = dayNumber === currentDay;
-                  
-                  return (
-                    <div key={item.day} className="flex justify-between items-center">
-                      <div>
-                        <div className="text-sm font-medium text-gray-900">{item.day}</div>
-                        <div className="text-xs text-gray-500">{item.focus}</div>
-                      </div>
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                        isCompleted 
-                          ? 'bg-green-600 text-white' 
-                          : isCurrent
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-gray-200'
-                      }`}>
-                        {isCompleted ? (
-                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        ) : isCurrent ? (
-                          <span className="text-xs font-bold">{dayNumber}</span>
-                        ) : null}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </CardContent>
-          </Card>
+
 
           {/* Quick Actions */}
           <Card>
