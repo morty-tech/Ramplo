@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { apiRequest } from "@/lib/queryClient";
+import { useLocation } from "wouter";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +14,7 @@ import { TagInput } from "@/components/ui/tag-input";
 import { Loader2, User, Clock, Target, Users, MessageSquare, TrendingUp, X } from "lucide-react";
 
 export default function Onboarding() {
+  const [, setLocation] = useLocation();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -62,11 +64,17 @@ export default function Onboarding() {
 
     try {
       await apiRequest("POST", "/api/onboarding", formData);
+      
+      // Invalidate user data to refresh profile
+      queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
+      
       toast({
         title: "Welcome to RampLO!",
         description: "Your personalized ramp plan is being created.",
       });
-      window.location.reload();
+      
+      // Navigate to dashboard
+      setLocation("/dashboard");
     } catch (error) {
       toast({
         title: "Error",
