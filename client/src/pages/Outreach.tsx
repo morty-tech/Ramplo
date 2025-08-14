@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -143,7 +142,7 @@ Best regards,
 };
 
 export default function Outreach() {
-  const [activeTemplate, setActiveTemplate] = useState("realtor");
+  const [selectedTemplate, setSelectedTemplate] = useState("realtor");
   const [customizationForm, setCustomizationForm] = useState({
     recipientType: "realtor",
     tone: "professional",
@@ -166,7 +165,7 @@ export default function Outreach() {
     });
   };
 
-  const currentTemplate = templates[activeTemplate as keyof typeof templates];
+  const currentTemplate = templates[selectedTemplate as keyof typeof templates];
 
   return (
     <div className="p-6">
@@ -181,59 +180,68 @@ export default function Outreach() {
         {/* Template Library */}
         <div className="lg:col-span-2">
           <Card>
-            <Tabs value={activeTemplate} onValueChange={setActiveTemplate}>
-              <CardHeader>
-                <TabsList className="grid w-full grid-cols-5">
-                  <TabsTrigger value="realtor">Realtor</TabsTrigger>
-                  <TabsTrigger value="heloc">HELOC</TabsTrigger>
-                  <TabsTrigger value="fthb">FTHB</TabsTrigger>
-                  <TabsTrigger value="preapproval">Pre-Approval</TabsTrigger>
-                  <TabsTrigger value="referral">Referral</TabsTrigger>
-                </TabsList>
-              </CardHeader>
+            <CardHeader>
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <CardTitle>Email Templates</CardTitle>
+                  <p className="text-sm text-gray-600 mt-1">Select a template to customize and use</p>
+                </div>
+                <div className="w-64">
+                  <Select value={selectedTemplate} onValueChange={setSelectedTemplate}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choose template type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="realtor">Realtor Introduction</SelectItem>
+                      <SelectItem value="heloc">HELOC Check-in</SelectItem>
+                      <SelectItem value="fthb">First-Time Home Buyer</SelectItem>
+                      <SelectItem value="preapproval">Pre-Approval Process</SelectItem>
+                      <SelectItem value="referral">Referral Partner</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </CardHeader>
 
-              <CardContent>
-                <TabsContent value={activeTemplate} className="mt-0">
-                  <div className="flex items-center justify-between mb-6">
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900">{currentTemplate.name}</h3>
-                      <p className="text-sm text-gray-600">{currentTemplate.description}</p>
-                    </div>
-                    <Button 
-                      onClick={() => copyToClipboard(`Subject: ${currentTemplate.subject}\n\n${currentTemplate.content}`)}
-                      className="bg-primary hover:bg-blue-700"
-                    >
-                      <Copy className="w-4 h-4 mr-2" />
-                      Copy Template
-                    </Button>
-                  </div>
+            <CardContent>
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900">{currentTemplate.name}</h3>
+                  <p className="text-sm text-gray-600">{currentTemplate.description}</p>
+                </div>
+                <Button 
+                  onClick={() => copyToClipboard(`Subject: ${currentTemplate.subject}\n\n${currentTemplate.content}`)}
+                  className="bg-primary hover:bg-blue-700"
+                >
+                  <Copy className="w-4 h-4 mr-2" />
+                  Copy Template
+                </Button>
+              </div>
 
-                  <div className="bg-gray-50 rounded-lg p-6 mb-6">
-                    <div className="text-sm font-medium text-gray-900 mb-2">Subject Line:</div>
-                    <div className="text-sm text-gray-700 mb-4 italic">{currentTemplate.subject}</div>
-                    
-                    <div className="text-sm font-medium text-gray-900 mb-2">Email Body:</div>
-                    <div className="text-sm text-gray-900 whitespace-pre-wrap font-mono bg-white p-4 rounded border">
-                      {currentTemplate.content}
-                    </div>
-                  </div>
+              <div className="bg-gray-50 rounded-lg p-6 mb-6">
+                <div className="text-sm font-medium text-gray-900 mb-2">Subject Line:</div>
+                <div className="text-sm text-gray-700 mb-4 italic">{currentTemplate.subject}</div>
+                
+                <div className="text-sm font-medium text-gray-900 mb-2">Email Body:</div>
+                <div className="text-sm text-gray-900 whitespace-pre-wrap font-mono bg-white p-4 rounded border">
+                  {currentTemplate.content}
+                </div>
+              </div>
 
-                  <div className="flex items-center space-x-4">
-                    <Button
-                      onClick={handleCustomize}
-                      className="bg-orange-600 hover:bg-orange-700"
-                    >
-                      <Wand2 className="w-4 h-4 mr-2" />
-                      Customize with AI
-                    </Button>
-                    <Button variant="outline">
-                      <Edit className="w-4 h-4 mr-2" />
-                      Edit Template
-                    </Button>
-                  </div>
-                </TabsContent>
-              </CardContent>
-            </Tabs>
+              <div className="flex items-center space-x-4">
+                <Button
+                  onClick={handleCustomize}
+                  className="bg-orange-600 hover:bg-orange-700"
+                >
+                  <Wand2 className="w-4 h-4 mr-2" />
+                  Customize with AI
+                </Button>
+                <Button variant="outline">
+                  <Edit className="w-4 h-4 mr-2" />
+                  Edit Template
+                </Button>
+              </div>
+            </CardContent>
           </Card>
         </div>
 

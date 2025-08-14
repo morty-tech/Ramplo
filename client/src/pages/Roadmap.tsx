@@ -1,20 +1,60 @@
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Check, Clock, Calendar } from "lucide-react";
+import { Task } from "@shared/schema";
+import TaskDetailModal from "@/components/TaskDetailModal";
+import { Check, Clock, Calendar, Eye } from "lucide-react";
 
 const TOTAL_WEEKS = 13;
 
 export default function Roadmap() {
   const { progress } = useAuth();
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   
   const currentWeek = progress?.currentWeek || 1;
   const completedTasks = progress?.tasksCompleted || 0;
   const totalTasks = 155; // Mock total tasks for 13 weeks
   const overallProgress = (completedTasks / totalTasks) * 100;
   const daysRemaining = 90 - ((currentWeek - 1) * 7 + (progress?.currentDay || 1));
+
+  // Query for all tasks to enable detailed view
+  const { data: allTasks = [] } = useQuery<Task[]>({
+    queryKey: ["/api/tasks"],
+    queryFn: async () => {
+      const response = await apiRequest("GET", "/api/tasks");
+      return response.json();
+    },
+  });
+
+  const completeTaskMutation = useMutation({
+    mutationFn: (taskId: string) => apiRequest("PATCH", `/api/tasks/${taskId}/complete`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/tasks"] });
+      setIsTaskModalOpen(false);
+      toast({
+        title: "Task completed!",
+        description: "Great job staying on track!",
+      });
+    },
+  });
+
+  const handleTaskClick = (task: Task) => {
+    setSelectedTask(task);
+    setIsTaskModalOpen(true);
+  };
+
+  const getTaskForTitle = (taskTitle: string) => {
+    return allTasks.find(task => task.title.toLowerCase().includes(taskTitle.toLowerCase()));
+  };
 
   const weeks = [
     {
@@ -163,26 +203,52 @@ export default function Roadmap() {
             <CardContent>
               <p className="text-sm text-gray-600 mb-4">{week.description}</p>
               <div className="space-y-2">
-                {week.tasks.map((task, index) => (
-                  <div key={index} className="flex items-center text-sm">
-                    {week.status === 'completed' ? (
-                      <>
-                        <Check className="h-4 w-4 text-green-600 mr-2" />
-                        <span className="line-through text-gray-500">{task}</span>
-                      </>
-                    ) : week.status === 'current' && index < 2 ? (
-                      <>
-                        <div className="h-2 w-2 bg-blue-600 rounded-full mr-2" />
-                        <span className="text-gray-900">{task}</span>
-                      </>
-                    ) : (
-                      <>
-                        <div className="h-2 w-2 bg-gray-300 rounded-full mr-2" />
-                        <span className="text-gray-500">{task}</span>
-                      </>
-                    )}
-                  </div>
-                ))}
+                {week.tasks.map((task, index) => {
+                  const taskObj = getTaskForTitle(task);
+                  const isClickable = taskObj && (taskObj.detailedDescription || taskObj.externalLinks?.length || taskObj.internalLinks?.length);
+                  
+                  return (
+                    <div 
+                      key={index} 
+                      className={`flex items-center justify-between text-sm group ${
+                        isClickable ? 'cursor-pointer hover:bg-gray-50 p-2 rounded transition-colors' : ''
+                      }`}
+                      onClick={() => taskObj && isClickable && handleTaskClick(taskObj)}
+                    >
+                      <div className="flex items-center">
+                        {week.status === 'completed' ? (
+                          <>
+                            <Check className="h-4 w-4 text-green-600 mr-2" />
+                            <span className="line-through text-gray-500">{task}</span>
+                          </>
+                        ) : week.status === 'current' && index < 2 ? (
+                          <>
+                            <div className="h-2 w-2 bg-blue-600 rounded-full mr-2" />
+                            <span className="text-gray-900">{task}</span>
+                          </>
+                        ) : (
+                          <>
+                            <div className="h-2 w-2 bg-gray-300 rounded-full mr-2" />
+                            <span className="text-gray-500">{task}</span>
+                          </>
+                        )}
+                      </div>
+                      {isClickable && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="opacity-0 group-hover:opacity-100 transition-opacity text-gray-500 hover:text-primary"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleTaskClick(taskObj);
+                          }}
+                        >
+                          <Eye className="w-4 h-4" />
+                        </Button>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
               <div className="mt-4 pt-4 border-t border-gray-200">
                 <Badge variant={
@@ -250,6 +316,15 @@ export default function Roadmap() {
           </Button>
         </CardContent>
       </Card>
+
+      {/* Task Detail Modal */}
+      <TaskDetailModal
+        task={selectedTask}
+        isOpen={isTaskModalOpen}
+        onClose={() => setIsTaskModalOpen(false)}
+        onComplete={completeTaskMutation.mutate}
+        isCompleting={completeTaskMutation.isPending}
+      />
     </div>
   );
 }

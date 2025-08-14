@@ -480,11 +480,11 @@ export default function Onboarding() {
                           >
                             <div className="flex items-center space-x-2">
                               <RadioGroupItem value="yes" id="client-list-yes" />
-                              <Label htmlFor="client-list-yes" className="text-sm cursor-pointer">• Yes</Label>
+                              <Label htmlFor="client-list-yes" className="text-sm cursor-pointer">Yes</Label>
                             </div>
                             <div className="flex items-center space-x-2">
                               <RadioGroupItem value="no" id="client-list-no" />
-                              <Label htmlFor="client-list-no" className="text-sm cursor-pointer">• No</Label>
+                              <Label htmlFor="client-list-no" className="text-sm cursor-pointer">No</Label>
                             </div>
                           </RadioGroup>
                         </div>
