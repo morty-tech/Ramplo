@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { useAuth } from "@/hooks/useAuth";
 import { apiRequest } from "@/lib/queryClient";
@@ -28,6 +29,7 @@ const navigation = [
 export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
   const [location, setLocation] = useLocation();
   const { user } = useAuth();
+  const [showText, setShowText] = useState(isExpanded);
 
   const handleLogout = async () => {
     try {
@@ -37,6 +39,18 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
       console.error("Logout failed:", error);
     }
   };
+
+  // Manage text visibility during transitions
+  useEffect(() => {
+    if (isExpanded) {
+      // Show text after expansion starts
+      const timer = setTimeout(() => setShowText(true), 150);
+      return () => clearTimeout(timer);
+    } else {
+      // Hide text immediately when collapsing
+      setShowText(false);
+    }
+  }, [isExpanded]);
 
   return (
     <div className={cn(
@@ -48,7 +62,7 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
       <div className="flex items-center justify-center h-16 px-4 flex-shrink-0">
         {isExpanded ? (
           <>
-            <h1 className="text-white text-xl font-bold">RampLO</h1>
+            {showText && <h1 className="text-white text-xl font-bold">RampLO</h1>}
             <button
               onClick={onToggle}
               className="ml-auto text-white hover:bg-white hover:bg-opacity-10 p-1 rounded transition-colors"
@@ -92,7 +106,7 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
                 title={!isExpanded ? item.name : undefined}
               >
                 <item.icon className="h-5 w-5 flex-shrink-0" />
-                {isExpanded && <span className="ml-3">{item.name}</span>}
+                {showText && <span className="ml-3">{item.name}</span>}
               </button>
             );
           })}
@@ -109,21 +123,23 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
                   {user?.firstName?.[0]}{user?.lastName?.[0]}
                 </span>
               </div>
-              <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium text-white truncate">
-                  {user?.firstName} {user?.lastName}
+              {showText && (
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-medium text-white truncate">
+                    {user?.firstName} {user?.lastName}
+                  </div>
+                  <div className="text-xs text-white text-opacity-70 truncate">
+                    {user?.email}
+                  </div>
                 </div>
-                <div className="text-xs text-white text-opacity-70 truncate">
-                  {user?.email}
-                </div>
-              </div>
+              )}
             </div>
             <button
               onClick={handleLogout}
               className="w-full flex items-center px-2 py-2 text-left rounded-lg text-white text-opacity-80 hover:bg-white hover:bg-opacity-10 hover:text-white transition-colors"
             >
               <LogOut className="mr-3 h-4 w-4" />
-              Sign out
+              {showText && <span>Sign out</span>}
             </button>
           </div>
         ) : (
