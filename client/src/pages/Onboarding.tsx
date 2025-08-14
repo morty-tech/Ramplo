@@ -25,6 +25,7 @@ export default function Onboarding() {
     hasPastClientList: false,
     clientListLocation: "",
     crmName: "",
+    clientListOther: "",
     socialChannelsUsed: [] as string[],
     socialLinks: {} as Record<string, string>,
     networkSources: [] as string[], // Include insurance agents, lawyers
@@ -481,7 +482,7 @@ export default function Onboarding() {
                                   { value: "crm", label: "CRM System" },
                                   { value: "excel", label: "Excel File" },
                                   { value: "email", label: "Email Contacts" },
-                                  { value: "my-head", label: "In My Head" },
+                                  { value: "other", label: "Other" },
                                 ].map((option) => (
                                   <Label
                                     key={option.value}
@@ -503,6 +504,18 @@ export default function Onboarding() {
                                   value={formData.crmName}
                                   onChange={(e) => setFormData(prev => ({ ...prev, crmName: e.target.value }))}
                                   placeholder="e.g., Salesforce, HubSpot, Top Producer"
+                                />
+                              </div>
+                            )}
+                            
+                            {formData.clientListLocation === "other" && (
+                              <div>
+                                <Label htmlFor="clientListOther" className="font-medium">Please explain where your client list lives</Label>
+                                <Input
+                                  id="clientListOther"
+                                  value={formData.clientListOther}
+                                  onChange={(e) => setFormData(prev => ({ ...prev, clientListOther: e.target.value }))}
+                                  placeholder="e.g., In my head, business cards, notebook, Google Docs"
                                 />
                               </div>
                             )}

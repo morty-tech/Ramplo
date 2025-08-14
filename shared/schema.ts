@@ -70,8 +70,9 @@ export const userProfiles = pgTable("user_profiles", {
   
   // Network Assets
   hasPastClientList: boolean("has_past_client_list").default(false),
-  clientListLocation: varchar("client_list_location"), // crm, excel, email, my-head, none
+  clientListLocation: varchar("client_list_location"), // crm, excel, email, other, none
   crmName: varchar("crm_name"), // if they use a CRM
+  clientListOther: varchar("client_list_other"), // if they select other
   socialChannelsUsed: jsonb("social_channels_used").$type<string[]>(), // linkedin, facebook, instagram, etc.
   socialLinks: jsonb("social_links").$type<Record<string, string>>(), // {linkedin: "url", facebook: "url", etc}
   networkSources: jsonb("network_sources").$type<string[]>(), // realtors, insurance-agents, lawyers, past-clients, etc.
