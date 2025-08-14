@@ -111,6 +111,24 @@ export default function Dashboard() {
         <p className="text-gray-600">Here's your progress on your 90-day ramp plan.</p>
       </div>
 
+      {/* Week Progress Banner */}
+      <Card className="mb-6">
+        <CardContent className="p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900">
+                Week {progress?.currentWeek || 1} of 13 - Day {progress?.currentDay || 1}
+              </h2>
+              <p className="text-gray-600">Your 90-day mortgage ramp plan progress</p>
+            </div>
+            <div className="text-right">
+              <div className="text-2xl font-bold text-primary">{Math.round(((progress?.currentWeek || 1) - 1) / 13 * 100)}%</div>
+              <div className="text-sm text-gray-600">Program Complete</div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {stats.map((stat) => (
@@ -214,22 +232,31 @@ export default function Dashboard() {
           {/* Client Connection Tracker */}
           <ClientConnectionTracker />
           
-          {/* Weekly Progress */}
+          {/* Weekly Task Overview */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">This Week's Progress</CardTitle>
+              <CardTitle className="text-lg">This Week's Daily Focus</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map((day, index) => {
+                {[
+                  { day: 'Monday', focus: 'Foundation Setup' },
+                  { day: 'Tuesday', focus: 'Network Building' }, 
+                  { day: 'Wednesday', focus: 'Market Research' },
+                  { day: 'Thursday', focus: 'Outreach Campaign' },
+                  { day: 'Friday', focus: 'Follow-up & Review' }
+                ].map((item, index) => {
                   const dayNumber = index + 1;
                   const currentDay = progress?.currentDay || 1;
                   const isCompleted = dayNumber < currentDay;
                   const isCurrent = dayNumber === currentDay;
                   
                   return (
-                    <div key={day} className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">{day}</span>
+                    <div key={item.day} className="flex justify-between items-center">
+                      <div>
+                        <div className="text-sm font-medium text-gray-900">{item.day}</div>
+                        <div className="text-xs text-gray-500">{item.focus}</div>
+                      </div>
                       <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
                         isCompleted 
                           ? 'bg-green-600 text-white' 
