@@ -3,99 +3,99 @@ import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Phone, MessageSquare, Mail, Plus, Minus } from "lucide-react";
+import { FileCheck, DollarSign, Home, Plus, Minus } from "lucide-react";
 
-interface DailyConnections {
-  phoneCalls: number;
-  textMessages: number;
-  emails: number;
+interface LoanActions {
+  preapprovals: number;
+  applications: number;
+  closings: number;
 }
 
-export default function ClientConnectionTracker() {
+export default function LoanActionTracker() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { data: todayConnections } = useQuery({
-    queryKey: ["/api/connections/today"],
+  const { data: todayLoanActions } = useQuery({
+    queryKey: ["/api/loan-actions/today"],
     queryFn: async () => {
-      const response = await apiRequest("GET", "/api/connections/today");
+      const response = await apiRequest("GET", "/api/loan-actions/today");
       return response.json();
     },
   });
 
-  const updateConnectionsMutation = useMutation({
-    mutationFn: async (data: DailyConnections) => {
-      return apiRequest("POST", "/api/connections", data);
+  const updateLoanActionsMutation = useMutation({
+    mutationFn: async (data: LoanActions) => {
+      return apiRequest("POST", "/api/loan-actions", data);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/connections/today"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/loan-actions/today"] });
       queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
       toast({
         title: "Updated!",
-        description: "Client connection recorded.",
+        description: "Loan action recorded.",
       });
     },
     onError: () => {
       toast({
         title: "Error",
-        description: "Failed to update connections. Please try again.",
+        description: "Failed to update loan actions. Please try again.",
         variant: "destructive",
       });
     },
   });
 
-  const adjustCount = (type: keyof DailyConnections, increment: boolean) => {
+  const adjustCount = (type: keyof LoanActions, increment: boolean) => {
     const newValue = increment ? 1 : -1;
     
-    // Immediately update the backend
-    updateConnectionsMutation.mutate({
+    updateLoanActionsMutation.mutate({
       [type]: newValue,
-      phoneCalls: type === 'phoneCalls' ? newValue : 0,
-      textMessages: type === 'textMessages' ? newValue : 0,
-      emails: type === 'emails' ? newValue : 0,
-    } as DailyConnections);
+      preapprovals: type === 'preapprovals' ? newValue : 0,
+      applications: type === 'applications' ? newValue : 0,
+      closings: type === 'closings' ? newValue : 0,
+    } as LoanActions);
   };
 
-  const connectionTypes = [
+  const actionTypes = [
     {
-      key: "phoneCalls" as keyof DailyConnections,
-      label: "Phone Calls",
-      icon: Phone,
+      key: "preapprovals" as keyof LoanActions,
+      label: "Preapprovals",
+      icon: FileCheck,
       color: "text-blue-600",
       bgColor: "bg-blue-100",
     },
     {
-      key: "textMessages" as keyof DailyConnections,
-      label: "Text Messages", 
-      icon: MessageSquare,
+      key: "applications" as keyof LoanActions,
+      label: "Applications", 
+      icon: DollarSign,
       color: "text-green-600",
       bgColor: "bg-green-100",
     },
     {
-      key: "emails" as keyof DailyConnections,
-      label: "Emails",
-      icon: Mail,
+      key: "closings" as keyof LoanActions,
+      label: "Closings",
+      icon: Home,
       color: "text-purple-600",
       bgColor: "bg-purple-100",
     },
   ];
 
-  const todayTotal = todayConnections ? 
-    (todayConnections.phoneCalls || 0) + (todayConnections.textMessages || 0) + (todayConnections.emails || 0) : 0;
+  const todayTotal = todayLoanActions 
+    ? (todayLoanActions.preapprovals || 0) + (todayLoanActions.applications || 0) + (todayLoanActions.closings || 0)
+    : 0;
 
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Phone className="w-5 h-5" />
-          Client Connections
+          <FileCheck className="w-5 h-5" />
+          Loan Actions
         </CardTitle>
         <p className="text-sm text-gray-600">
-          Today's total: {todayTotal} connections
+          Today's total: {todayTotal} actions
         </p>
       </CardHeader>
       <CardContent className="space-y-2">
-        {connectionTypes.map((type) => (
+        {actionTypes.map((type) => (
           <div key={type.key} className="flex items-center justify-between p-2 border rounded-lg">
             <div className="flex items-center gap-2">
               <div className={`w-8 h-8 ${type.bgColor} rounded-full flex items-center justify-center`}>
@@ -109,21 +109,21 @@ export default function ClientConnectionTracker() {
                 variant="outline"
                 size="sm"
                 onClick={() => adjustCount(type.key, false)}
-                disabled={updateConnectionsMutation.isPending || !todayConnections?.[type.key]}
+                disabled={updateLoanActionsMutation.isPending || !todayLoanActions?.[type.key]}
                 className="h-7 w-7 p-0"
               >
                 <Minus className="w-3 h-3" />
               </Button>
               
               <div className="w-8 text-center font-medium text-sm">
-                {todayConnections?.[type.key] || 0}
+                {todayLoanActions?.[type.key] || 0}
               </div>
               
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => adjustCount(type.key, true)}
-                disabled={updateConnectionsMutation.isPending}
+                disabled={updateLoanActionsMutation.isPending}
                 className="h-7 w-7 p-0"
               >
                 <Plus className="w-3 h-3" />
@@ -131,14 +131,6 @@ export default function ClientConnectionTracker() {
             </div>
           </div>
         ))}
-        
-        <div className="pt-4 border-t">
-          <div className="text-center">
-            <div className="text-sm text-gray-600">
-              Click + or - to instantly update your daily totals
-            </div>
-          </div>
-        </div>
       </CardContent>
     </Card>
   );

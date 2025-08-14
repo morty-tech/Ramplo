@@ -144,6 +144,18 @@ export const dailyConnections = pgTable("daily_connections", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+// Daily loan actions tracking
+export const dailyLoanActions = pgTable("daily_loan_actions", {
+  id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: uuid("user_id").references(() => users.id).notNull(),
+  date: timestamp("date").defaultNow(),
+  preapprovals: integer("preapprovals").default(0),
+  applications: integer("applications").default(0),
+  closings: integer("closings").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Marketing templates
 export const marketingTemplates = pgTable("marketing_templates", {
   id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
@@ -203,6 +215,12 @@ export const insertDailyConnectionsSchema = createInsertSchema(dailyConnections)
   updatedAt: true,
 });
 
+export const insertDailyLoanActionsSchema = createInsertSchema(dailyLoanActions).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type UserProfile = typeof userProfiles.$inferSelect;
@@ -216,4 +234,6 @@ export type DealCoachSession = typeof dealCoachSessions.$inferSelect;
 export type InsertDealCoachSession = z.infer<typeof insertDealCoachSessionSchema>;
 export type DailyConnections = typeof dailyConnections.$inferSelect;
 export type InsertDailyConnections = z.infer<typeof insertDailyConnectionsSchema>;
+export type DailyLoanActions = typeof dailyLoanActions.$inferSelect;
+export type InsertDailyLoanActions = z.infer<typeof insertDailyLoanActionsSchema>;
 export type MagicLink = typeof magicLinks.$inferSelect;

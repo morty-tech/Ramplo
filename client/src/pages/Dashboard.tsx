@@ -11,6 +11,7 @@ import { Progress } from "@/components/ui/progress";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Task } from "@shared/schema";
 import ClientConnectionTracker from "@/components/ClientConnectionTracker";
+import LoanActionTracker from "@/components/LoanActionTracker";
 import TaskDetailModal from "@/components/TaskDetailModal";
 import { 
   Flame, 
@@ -20,7 +21,6 @@ import {
   Send,
   UserCheck,
   Map,
-  Trophy,
   Clock,
   Info,
   Eye
@@ -296,9 +296,8 @@ export default function Dashboard() {
                   >
                     <Checkbox
                       checked={task.completed}
-                      onCheckedChange={(e) => {
-                        e.stopPropagation();
-                        if (!task.completed) {
+                      onCheckedChange={(checked) => {
+                        if (checked && !task.completed) {
                           completeTaskMutation.mutate(task.id);
                         }
                       }}
@@ -403,16 +402,8 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          {/* Achievement Badge */}
-          <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white">
-            <CardContent className="p-6 text-center">
-              <Trophy className="w-12 h-12 mx-auto mb-3" />
-              <h3 className="font-bold mb-2">Streak Master!</h3>
-              <p className="text-sm opacity-90">
-                You've completed tasks for {progress?.currentStreak || 0} days straight. Keep it up!
-              </p>
-            </CardContent>
-          </Card>
+          {/* Loan Action Tracker */}
+          <LoanActionTracker />
         </div>
       </div>
 

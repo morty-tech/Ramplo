@@ -362,6 +362,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Loan Actions Routes
+  app.get("/api/loan-actions/today", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const userId = req.session.user.id;
+      const loanActions = await storage.getTodayLoanActions(userId);
+      res.json(loanActions || { preapprovals: 0, applications: 0, closings: 0 });
+    } catch (error) {
+      console.error("Error fetching today's loan actions:", error);
+      res.status(500).json({ message: "Failed to fetch loan actions" });
+    }
+  });
+
+  app.post("/api/loan-actions", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const userId = req.session.user.id;
+      const { preapprovals, applications, closings } = req.body;
+      
+      const today = new Date();
+      const existing = await storage.getTodayLoanActions(userId);
+      
+      if (existing) {
+        // Add to existing counts
+        const loanActions = await storage.updateDailyLoanActions(userId, today, {
+          preapprovals: (existing.preapprovals || 0) + (preapprovals || 0),
+          applications: (existing.applications || 0) + (applications || 0),
+          closings: (existing.closings || 0) + (closings || 0),
+        });
+        res.json(loanActions);
+      } else {
+        // Create new entry for today
+        const loanActions = await storage.createDailyLoanActions({
+          userId,
+          date: today,
+          preapprovals: preapprovals || 0,
+          applications: applications || 0,
+          closings: closings || 0,
+        });
+        res.json(loanActions);
+      }
+    } catch (error) {
+      console.error("Error saving loan actions:", error);
+      res.status(500).json({ message: "Failed to save loan actions" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

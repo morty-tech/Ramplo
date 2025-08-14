@@ -65,6 +65,11 @@ export interface IStorage {
   createDailyConnections(connections: InsertDailyConnections): Promise<DailyConnections>;
   getTodayConnections(userId: string): Promise<DailyConnections | undefined>;
   updateDailyConnections(userId: string, date: Date, updates: Partial<DailyConnections>): Promise<DailyConnections>;
+
+  // Daily loan actions operations (stub methods for now)
+  getTodayLoanActions(userId: string): Promise<any>;
+  createDailyLoanActions(actions: any): Promise<any>;
+  updateDailyLoanActions(userId: string, date: Date, updates: any): Promise<any>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -248,6 +253,22 @@ export class DatabaseStorage implements IStorage {
         ...updates,
       } as InsertDailyConnections);
     }
+  }
+
+  // Daily loan actions operations (stub methods for now - table doesn't exist yet)
+  async getTodayLoanActions(userId: string): Promise<any> {
+    // Return default values since table doesn't exist
+    return { preapprovals: 0, applications: 0, closings: 0 };
+  }
+
+  async createDailyLoanActions(actions: any): Promise<any> {
+    // Return default values since table doesn't exist
+    return { preapprovals: 0, applications: 0, closings: 0 };
+  }
+
+  async updateDailyLoanActions(userId: string, date: Date, updates: any): Promise<any> {
+    // Return default values since table doesn't exist
+    return { preapprovals: 0, applications: 0, closings: 0 };
   }
 }
 
