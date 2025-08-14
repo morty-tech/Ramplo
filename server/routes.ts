@@ -93,7 +93,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (isNew) {
         res.redirect('/onboarding');
       } else {
-        res.redirect('/dashboard');
+        res.redirect('/');
       }
     } catch (error) {
       console.error("Error verifying magic link:", error);
