@@ -142,71 +142,72 @@ export default function Dashboard() {
         <p className="text-gray-600">Here's your progress on your 90-day ramp plan.</p>
       </div>
 
-      {/* Week Progress Banner */}
-      <Card className="mb-6">
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900">
-                Week {progress?.currentWeek || 1} of 13
-              </h2>
-              <p className="text-gray-600">Week Focus: {getWeekFocus(progress?.currentWeek || 1)}</p>
-            </div>
-            <div className="text-right flex flex-col items-end">
-              <div className="relative w-20 h-20 mb-2">
-                {/* Background circle */}
-                <svg className="w-20 h-20 transform -rotate-90" viewBox="0 0 80 80">
-                  {/* Quarter segments background */}
-                  <circle
-                    cx="40"
-                    cy="40" 
-                    r="36"
-                    fill="none"
-                    stroke="#f3f4f6"
-                    strokeWidth="8"
-                  />
-                  
-                  {/* Performance level arc */}
-                  <circle
-                    cx="40"
-                    cy="40"
-                    r="36"
-                    fill="none"
-                    stroke={performanceLevel.color}
-                    strokeWidth="8"
-                    strokeLinecap="round"
-                    strokeDasharray={`${(performanceScore / 100) * 226} 226`}
-                    className="transition-all duration-500"
-                  />
-                </svg>
-                
-                {/* Score text overlay */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <div className="text-lg font-bold text-gray-900">{performanceScore}</div>
-                </div>
-              </div>
-              
-              <div className="text-center">
-                <div className="text-xs font-medium text-gray-900">{performanceLevel.level}</div>
-                <div className="flex items-center gap-1 text-xs text-gray-500 justify-center">
-                  Performance
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <Info className="h-3 w-3 text-gray-400" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Your daily performance score combines task completion with client outreach activity</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Stats Cards */}
+      {/* Week Progress Banner & Stats Cards */}
       <TooltipProvider>
+        {/* Week Progress Banner */}
+        <Card className="mb-6">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900">
+                  Week {progress?.currentWeek || 1} of 13
+                </h2>
+                <p className="text-gray-600">Week Focus: {getWeekFocus(progress?.currentWeek || 1)}</p>
+              </div>
+              <div className="text-right flex flex-col items-end">
+                <div className="relative w-20 h-20 mb-2">
+                  {/* Background circle */}
+                  <svg className="w-20 h-20 transform -rotate-90" viewBox="0 0 80 80">
+                    {/* Quarter segments background */}
+                    <circle
+                      cx="40"
+                      cy="40" 
+                      r="36"
+                      fill="none"
+                      stroke="#f3f4f6"
+                      strokeWidth="8"
+                    />
+                    
+                    {/* Performance level arc */}
+                    <circle
+                      cx="40"
+                      cy="40"
+                      r="36"
+                      fill="none"
+                      stroke={performanceLevel.color}
+                      strokeWidth="8"
+                      strokeLinecap="round"
+                      strokeDasharray={`${(performanceScore / 100) * 226} 226`}
+                      className="transition-all duration-500"
+                    />
+                  </svg>
+                  
+                  {/* Score text overlay */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <div className="text-lg font-bold text-gray-900">{performanceScore}</div>
+                  </div>
+                </div>
+                
+                <div className="text-center">
+                  <div className="text-xs font-medium text-gray-900">{performanceLevel.level}</div>
+                  <div className="flex items-center gap-1 text-xs text-gray-500 justify-center">
+                    Performance
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Info className="h-3 w-3 text-gray-400" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Your daily performance score combines task completion with client outreach activity</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat) => (
             <Card key={stat.title}>
