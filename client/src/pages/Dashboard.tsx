@@ -123,8 +123,8 @@ export default function Dashboard() {
       title: "Ramp Run",
       value: progress?.rampRunDays || 0,
       icon: Flame,
-      color: "text-orange-600", 
-      bgColor: "bg-orange-100",
+      color: "text-blue-600", 
+      bgColor: "bg-blue-100",
       tooltip: "Number of days you've completed all tasks and made client connections"
     },
     {
