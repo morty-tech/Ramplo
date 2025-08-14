@@ -118,7 +118,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createUserProfile(profileData: InsertUserProfile): Promise<UserProfile> {
-    const [profile] = await db.insert(userProfiles).values(profileData).returning();
+    const [profile] = await db.insert(userProfiles).values([profileData]).returning();
     return profile;
   }
 
@@ -146,7 +146,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createTask(taskData: InsertTask): Promise<Task> {
-    const [task] = await db.insert(tasks).values(taskData).returning();
+    const [task] = await db.insert(tasks).values([taskData]).returning();
     return task;
   }
 
