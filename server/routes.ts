@@ -133,9 +133,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Onboarding route - handle enhanced multi-step onboarding
-  app.post("/api/onboarding", requireAuth, async (req: AuthenticatedRequest, res) => {
+  app.post("/api/onboarding", requireAuth, async (req, res) => {
     try {
-      const userId = req.session.user.id;
+      const userId = (req as any).session.user.id;
       const profileData = insertUserProfileSchema.parse({
         ...req.body,
         userId,
@@ -155,9 +155,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Tasks
-  app.get("/api/tasks", requireAuth, async (req: AuthenticatedRequest, res) => {
+  app.get("/api/tasks", requireAuth, async (req, res) => {
     try {
-      const userId = req.session.user.id;
+      const userId = (req as any).session.user.id;
       const { week, day } = req.query;
       
       const tasks = await storage.getUserTasks(
@@ -173,10 +173,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch("/api/tasks/:id/complete", requireAuth, async (req: AuthenticatedRequest, res) => {
+  app.patch("/api/tasks/:id/complete", requireAuth, async (req, res) => {
     try {
       const { id } = req.params;
-      const userId = req.session.user.id;
+      const userId = (req as any).session.user.id;
       
       const task = await storage.markTaskComplete(id);
       
@@ -197,7 +197,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Templates
-  app.get("/api/templates", requireAuth, async (req: AuthenticatedRequest, res) => {
+  app.get("/api/templates", requireAuth, async (req, res) => {
     try {
       const templates = await storage.getMarketingTemplates();
       res.json(templates);
@@ -208,9 +208,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Deal Coach
-  app.post("/api/deal-coach", requireAuth, async (req: AuthenticatedRequest, res) => {
+  app.post("/api/deal-coach", requireAuth, async (req, res) => {
     try {
-      const userId = req.session.user.id;
+      const userId = (req as any).session.user.id;
       const sessionData = insertDealCoachSessionSchema.parse({
         ...req.body,
         userId,
@@ -228,9 +228,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/deal-coach/sessions", requireAuth, async (req: AuthenticatedRequest, res) => {
+  app.get("/api/deal-coach/sessions", requireAuth, async (req, res) => {
     try {
-      const userId = req.session.user.id;
+      const userId = (req as any).session.user.id;
       const sessions = await storage.getUserDealCoachSessions(userId);
       res.json(sessions);
     } catch (error) {
@@ -241,9 +241,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Stripe billing
   if (stripe) {
-    app.post("/api/create-subscription", requireAuth, async (req: AuthenticatedRequest, res) => {
+    app.post("/api/create-subscription", requireAuth, async (req, res) => {
       try {
-        const userId = req.session.user.id;
+        const userId = (req as any).session.user.id;
         const user = await storage.getUser(userId);
         
         if (!user) {
