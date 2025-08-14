@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useAuth } from "@/hooks/useAuth";
@@ -10,6 +11,7 @@ import { Progress } from "@/components/ui/progress";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Task } from "@shared/schema";
 import ClientConnectionTracker from "@/components/ClientConnectionTracker";
+import TaskDetailModal from "@/components/TaskDetailModal";
 import { 
   Flame, 
   FileText, 
@@ -20,13 +22,16 @@ import {
   Map,
   Trophy,
   Clock,
-  Info
+  Info,
+  Eye
 } from "lucide-react";
 
 export default function Dashboard() {
   const { user, progress } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
 
   const { data: todayTasks = [] } = useQuery<Task[]>({
     queryKey: ["/api/tasks", `week=${progress?.currentWeek || 1}&day=${progress?.currentDay || 1}`],
@@ -51,12 +56,18 @@ export default function Dashboard() {
     mutationFn: (taskId: string) => apiRequest("PATCH", `/api/tasks/${taskId}/complete`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/tasks"] });
+      setIsTaskModalOpen(false);
       toast({
         title: "Task completed!",
         description: "Great job staying on track!",
       });
     },
   });
+
+  const handleTaskClick = (task: Task) => {
+    setSelectedTask(task);
+    setIsTaskModalOpen(true);
+  };
 
   const completedTasks = todayTasks.filter((task: Task) => task.completed);
   const progressPercentage = todayTasks.length > 0 ? (completedTasks.length / todayTasks.length) * 100 : 0;
@@ -278,24 +289,40 @@ export default function Dashboard() {
                 {todayTasks.map((task: Task) => (
                   <div
                     key={task.id}
-                    className={`flex items-start space-x-4 p-4 border border-gray-200 rounded-lg hover:border-primary transition-colors ${
+                    className={`flex items-start space-x-4 p-4 border border-gray-200 rounded-lg hover:border-primary transition-colors cursor-pointer ${
                       task.completed ? 'opacity-50' : ''
                     }`}
+                    onClick={() => handleTaskClick(task)}
                   >
                     <Checkbox
                       checked={task.completed}
-                      onCheckedChange={() => {
+                      onCheckedChange={(e) => {
+                        e.stopPropagation();
                         if (!task.completed) {
                           completeTaskMutation.mutate(task.id);
                         }
                       }}
                       disabled={task.completed}
                       className="mt-1"
+                      onClick={(e) => e.stopPropagation()}
                     />
                     <div className="flex-grow">
-                      <h3 className={`font-medium text-gray-900 ${task.completed ? 'line-through' : ''}`}>
-                        {task.title}
-                      </h3>
+                      <div className="flex items-center justify-between">
+                        <h3 className={`font-medium text-gray-900 ${task.completed ? 'line-through' : ''}`}>
+                          {task.title}
+                        </h3>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-gray-500 hover:text-primary"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleTaskClick(task);
+                          }}
+                        >
+                          <Eye className="w-4 h-4" />
+                        </Button>
+                      </div>
                       <p className="text-sm text-gray-600 mt-1">{task.description}</p>
                       <div className="flex items-center mt-2 space-x-4">
                         <Badge variant="secondary" className="text-xs">
@@ -305,6 +332,7 @@ export default function Dashboard() {
                           <Clock className="w-3 h-3 mr-1" />
                           Est. {task.estimatedMinutes} min
                         </span>
+                        <span className="text-xs text-blue-600 font-medium">Click for details</span>
                       </div>
                     </div>
                   </div>
@@ -387,6 +415,15 @@ export default function Dashboard() {
           </Card>
         </div>
       </div>
+
+      {/* Task Detail Modal */}
+      <TaskDetailModal
+        task={selectedTask}
+        isOpen={isTaskModalOpen}
+        onClose={() => setIsTaskModalOpen(false)}
+        onComplete={completeTaskMutation.mutate}
+        isCompleting={completeTaskMutation.isPending}
+      />
     </div>
   );
 }

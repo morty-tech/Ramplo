@@ -104,6 +104,9 @@ export const tasks = pgTable("tasks", {
   userId: uuid("user_id").references(() => users.id).notNull(),
   title: varchar("title").notNull(),
   description: text("description"),
+  detailedDescription: text("detailed_description"), // Rich explanatory text with markdown support
+  externalLinks: jsonb("external_links").$type<Array<{title: string, url: string}>>(), // External links
+  internalLinks: jsonb("internal_links").$type<Array<{title: string, route: string}>>(), // Internal app links
   category: varchar("category"), // networking, follow-up, social-media, organization
   estimatedMinutes: integer("estimated_minutes"),
   week: integer("week").notNull(), // 1-13
