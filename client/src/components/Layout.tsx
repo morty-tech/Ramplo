@@ -9,29 +9,15 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarExpanded, setSidebarExpanded] = useState(false);
   const { isMortyUser } = useAuth();
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <Sidebar isExpanded={sidebarExpanded} onToggle={() => setSidebarExpanded(!sidebarExpanded)} />
       
-      {/* Mobile menu button */}
-      <div className="lg:hidden fixed top-4 left-4 z-50">
-        {!sidebarOpen && (
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="bg-primary hover:opacity-90 text-white p-3 rounded-lg shadow-lg transition-all duration-200"
-            aria-label="Open menu"
-            style={{ backgroundColor: 'hsl(217, 91%, 60%)' }}
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
-        )}
-      </div>
-
       {/* Main content */}
-      <div className="lg:ml-64">
+      <div className={`transition-all duration-300 ${sidebarExpanded ? 'ml-64' : 'ml-16'}`}>
         {children}
       </div>
 

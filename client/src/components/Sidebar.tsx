@@ -9,13 +9,12 @@ import {
   UserCheck,
   CreditCard,
   LogOut,
-  X
+  ChevronRight
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 interface SidebarProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isExpanded: boolean;
+  onToggle: () => void;
 }
 
 const navigation = [
@@ -26,7 +25,7 @@ const navigation = [
   { name: "Billing", href: "/billing", icon: CreditCard },
 ];
 
-export default function Sidebar({ isOpen, onClose }: SidebarProps) {
+export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
   const [location, setLocation] = useLocation();
   const { user } = useAuth();
 
@@ -40,90 +39,111 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   };
 
   return (
-    <>
-      {/* Overlay */}
-      {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-          onClick={onClose}
-        />
-      )}
-
-      {/* Sidebar */}
-      <div className={cn(
-        "fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 lg:translate-x-0",
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      )}>
-        {/* Header */}
-        <div className="flex items-center justify-between h-16 bg-primary px-6">
-          <h1 className="text-white text-xl font-bold">Ramplo</h1>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onClose}
-            className="text-white lg:hidden"
+    <div className={cn(
+      "fixed inset-y-0 left-0 z-50 bg-white shadow-lg transition-all duration-300 flex flex-col",
+      isExpanded ? "w-64" : "w-16"
+    )} style={{ backgroundColor: 'hsl(217, 91%, 60%)' }}>
+      
+      {/* Header */}
+      <div className="flex items-center justify-center h-16 px-4 flex-shrink-0">
+        {isExpanded ? (
+          <>
+            <h1 className="text-white text-xl font-bold">RampLO</h1>
+            <button
+              onClick={onToggle}
+              className="ml-auto text-white hover:bg-white hover:bg-opacity-10 p-1 rounded transition-colors"
+              aria-label="Collapse menu"
+            >
+              <ChevronRight className="h-4 w-4 rotate-180" />
+            </button>
+          </>
+        ) : (
+          <button
+            onClick={onToggle}
+            className="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded-lg transition-colors"
+            aria-label="Expand menu"
           >
-            <X className="h-4 w-4" />
-          </Button>
+            <div className="w-6 h-6 bg-white rounded-sm flex items-center justify-center">
+              <span className="text-blue-600 text-xs font-bold">R</span>
+            </div>
+          </button>
+        )}
+      </div>
+
+      {/* Navigation */}
+      <nav className="flex-1 px-2 py-4">
+        <div className="space-y-2">
+          {navigation.map((item) => {
+            const isActive = location === item.href || (item.href === "/dashboard" && location === "/");
+            
+            return (
+              <button
+                key={item.name}
+                onClick={() => {
+                  setLocation(item.href);
+                  if (!isExpanded) onToggle();
+                }}
+                className={cn(
+                  "w-full flex items-center transition-all duration-200 rounded-lg",
+                  isExpanded ? "px-4 py-3 justify-start" : "px-3 py-3 justify-center",
+                  isActive
+                    ? "bg-white bg-opacity-20 text-white font-medium"
+                    : "text-white text-opacity-80 hover:bg-white hover:bg-opacity-10 hover:text-white"
+                )}
+                title={!isExpanded ? item.name : undefined}
+              >
+                <item.icon className="h-5 w-5 flex-shrink-0" />
+                {isExpanded && <span className="ml-3">{item.name}</span>}
+              </button>
+            );
+          })}
         </div>
+      </nav>
 
-        {/* Navigation */}
-        <nav className="mt-8 px-4">
-          <div className="space-y-2">
-            {navigation.map((item) => {
-              const isActive = location === item.href || (item.href === "/dashboard" && location === "/");
-              
-              return (
-                <button
-                  key={item.name}
-                  onClick={() => {
-                    setLocation(item.href);
-                    onClose();
-                  }}
-                  className={cn(
-                    "w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors",
-                    isActive
-                      ? "bg-blue-50 text-primary font-medium"
-                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                  )}
-                >
-                  <item.icon className={cn(
-                    "mr-3 h-5 w-5",
-                    isActive ? "text-primary" : "text-gray-400"
-                  )} />
-                  {item.name}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* User section */}
-          <div className="mt-8 pt-8 border-t border-gray-200">
-            <div className="flex items-center px-4 py-3">
-              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center mr-3">
+      {/* User section */}
+      <div className="border-t border-white border-opacity-20 p-2 flex-shrink-0">
+        {isExpanded ? (
+          <div className="px-2">
+            <div className="flex items-center px-2 py-2 mb-2">
+              <div className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
                 <span className="text-white text-sm font-medium">
                   {user?.firstName?.[0]}{user?.lastName?.[0]}
                 </span>
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium text-gray-900 truncate">
+                <div className="text-sm font-medium text-white truncate">
                   {user?.firstName} {user?.lastName}
                 </div>
-                <div className="text-xs text-gray-500 truncate">
+                <div className="text-xs text-white text-opacity-70 truncate">
                   {user?.email}
                 </div>
               </div>
             </div>
             <button
               onClick={handleLogout}
-              className="w-full flex items-center px-4 py-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
+              className="w-full flex items-center px-2 py-2 text-left rounded-lg text-white text-opacity-80 hover:bg-white hover:bg-opacity-10 hover:text-white transition-colors"
             >
-              <LogOut className="mr-2 h-4 w-4" />
-              Sign Out
+              <LogOut className="mr-3 h-4 w-4" />
+              Sign out
             </button>
           </div>
-        </nav>
+        ) : (
+          <div className="flex flex-col items-center space-y-2">
+            <div className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+              <span className="text-white text-sm font-medium">
+                {user?.firstName?.[0]}{user?.lastName?.[0]}
+              </span>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="p-2 text-white text-opacity-80 hover:bg-white hover:bg-opacity-10 hover:text-white rounded-lg transition-colors"
+              title="Sign out"
+            >
+              <LogOut className="h-4 w-4" />
+            </button>
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 }
