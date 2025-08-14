@@ -150,7 +150,7 @@ export default function Dashboard() {
       <TooltipProvider>
         {/* Week Progress Banner */}
         <Card className="mb-6">
-          <CardContent className="p-6">
+          <CardContent className="px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex-1">
                 <h2 className="text-xl font-semibold text-gray-900 mb-2">
@@ -224,7 +224,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat) => (
             <Card key={stat.title}>
-              <CardContent className="p-6">
+              <CardContent className="px-6 py-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
