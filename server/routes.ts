@@ -160,12 +160,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = (req as any).session.user.id;
       const { week, day } = req.query;
       
+      console.log("Fetching tasks for user:", userId, "week:", week, "day:", day);
+      
       const tasks = await storage.getUserTasks(
         userId,
         week ? parseInt(week as string) : undefined,
         day ? parseInt(day as string) : undefined
       );
       
+      console.log("Found tasks:", tasks.length);
       res.json(tasks);
     } catch (error) {
       console.error("Error fetching tasks:", error);
