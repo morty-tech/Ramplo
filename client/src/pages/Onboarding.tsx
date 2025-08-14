@@ -463,18 +463,30 @@ export default function Onboarding() {
                     
                     <div className="space-y-6">
                       <div className="p-4 border-2 border-gray-200 rounded-lg">
-                        <div className="flex items-center space-x-3 mb-4">
-                          <Checkbox
-                            id="hasPastClientList"
-                            checked={formData.hasPastClientList}
-                            onCheckedChange={(checked) => setFormData(prev => ({ ...prev, hasPastClientList: checked as boolean }))}
-                          />
-                          <div>
-                            <Label htmlFor="hasPastClientList" className="font-medium">
-                              Do you have a client list?
-                            </Label>
-                            <p className="text-sm text-gray-600">Database of previous customers for referrals and repeat business</p>
-                          </div>
+                        <div className="mb-4">
+                          <Label className="text-base font-medium mb-3 block">Do you have a client list?</Label>
+                          <p className="text-sm text-gray-600 mb-3">Database of previous customers for referrals and repeat business</p>
+                          <RadioGroup 
+                            value={formData.hasPastClientList ? "yes" : "no"}
+                            onValueChange={(value) => setFormData(prev => ({ 
+                              ...prev, 
+                              hasPastClientList: value === "yes",
+                              // Reset dependent fields when changing to no
+                              clientListLocation: value === "yes" ? prev.clientListLocation : "",
+                              crmName: value === "yes" ? prev.crmName : "",
+                              clientListOther: value === "yes" ? prev.clientListOther : ""
+                            }))}
+                            className="flex gap-6"
+                          >
+                            <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="yes" id="client-list-yes" />
+                              <Label htmlFor="client-list-yes" className="text-sm cursor-pointer">• Yes</Label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="no" id="client-list-no" />
+                              <Label htmlFor="client-list-no" className="text-sm cursor-pointer">• No</Label>
+                            </div>
+                          </RadioGroup>
                         </div>
                         
                         {formData.hasPastClientList && (
