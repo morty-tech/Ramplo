@@ -109,9 +109,9 @@ export default function Dashboard() {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-xl font-semibold text-gray-900">
-                Week {progress?.currentWeek || 1} of 13 - Day {progress?.currentDay || 1}
+                Week {progress?.currentWeek || 1} of 13
               </h2>
-              <p className="text-gray-600">Your 90-day mortgage ramp plan progress</p>
+              <p className="text-gray-600">Progress for {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}</p>
             </div>
             <div className="text-right">
               <div className="text-2xl font-bold text-primary">{Math.round(((progress?.currentWeek || 1) - 1) / 13 * 100)}%</div>
