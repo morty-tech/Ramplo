@@ -41,12 +41,12 @@ export function TagInput({ value, onChange, placeholder, maxTags, className }: T
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
-          disabled={maxTags && value.length >= maxTags}
+          disabled={!!(maxTags && value.length >= maxTags)}
         />
         <Button
           type="button"
           onClick={addTag}
-          disabled={!inputValue.trim() || (maxTags && value.length >= maxTags)}
+          disabled={!inputValue.trim() || !!(maxTags && value.length >= maxTags)}
           size="sm"
         >
           Add
