@@ -193,25 +193,27 @@ export default function Dashboard() {
                     />
                   </svg>
                   
-                  {/* Score and level in circle */}
+                  {/* Score in circle */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
                     <div className="text-lg font-bold text-gray-900">{performanceScore}</div>
-                    <div className="text-xs font-medium text-gray-600 leading-none">{performanceLevel.level}</div>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-1 mt-1 text-xs text-gray-500">
-                  Ramp Performance
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <button className="hover:text-gray-700">
-                        <Info className="h-3 w-3" />
-                      </button>
-                    </TooltipTrigger>
-                    <TooltipContent className="max-w-[300px]">
-                      <p>Your daily performance score combines task completion with client outreach activity</p>
-                    </TooltipContent>
-                  </Tooltip>
+                <div className="text-center mt-1">
+                  <div className="text-xs font-medium text-gray-900">{performanceLevel.level}</div>
+                  <div className="flex items-center gap-1 text-xs text-gray-500 justify-center">
+                    Ramp Performance
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button className="hover:text-gray-700">
+                          <Info className="h-3 w-3" />
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-[300px]">
+                        <p>Your daily performance score combines task completion with client outreach activity</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
                 </div>
               </div>
             </div>
