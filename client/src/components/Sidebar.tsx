@@ -81,7 +81,6 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
                 key={item.name}
                 onClick={() => {
                   setLocation(item.href);
-                  if (!isExpanded) onToggle();
                 }}
                 className={cn(
                   "w-full flex items-center transition-all duration-200 rounded-lg",
