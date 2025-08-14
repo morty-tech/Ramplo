@@ -314,6 +314,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Daily connections tracking
+  app.get("/api/connections/today", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const userId = req.session.user.id;
+      const connections = await storage.getTodayConnections(userId);
+      res.json(connections || { phoneCalls: 0, textMessages: 0, emails: 0 });
+    } catch (error) {
+      console.error("Error fetching today's connections:", error);
+      res.status(500).json({ message: "Failed to fetch connections" });
+    }
+  });
+
+  app.post("/api/connections", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const userId = req.session.user.id;
+      const { phoneCalls, textMessages, emails } = req.body;
+      
+      const today = new Date();
+      const existing = await storage.getTodayConnections(userId);
+      
+      if (existing) {
+        // Add to existing counts
+        const connections = await storage.updateDailyConnections(userId, today, {
+          phoneCalls: (existing.phoneCalls || 0) + (phoneCalls || 0),
+          textMessages: (existing.textMessages || 0) + (textMessages || 0),
+          emails: (existing.emails || 0) + (emails || 0),
+        });
+        res.json(connections);
+      } else {
+        // Create new entry for today
+        const connections = await storage.createDailyConnections({
+          userId,
+          date: today,
+          phoneCalls: phoneCalls || 0,
+          textMessages: textMessages || 0,
+          emails: emails || 0,
+        });
+        res.json(connections);
+      }
+    } catch (error) {
+      console.error("Error saving connections:", error);
+      res.status(500).json({ message: "Failed to save connections" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

@@ -83,12 +83,23 @@ export const userProgress = pgTable("user_progress", {
   userId: uuid("user_id").references(() => users.id).notNull().unique(),
   currentWeek: integer("current_week").default(1),
   currentDay: integer("current_day").default(1),
-  currentStreak: integer("current_streak").default(0),
-  longestStreak: integer("longest_streak").default(0),
+  rampRunDays: integer("ramp_run_days").default(0), // Days completed all tasks + had client connect
   applicationsSubmitted: integer("applications_submitted").default(0),
   loansClosed: integer("loans_closed").default(0),
   tasksCompleted: integer("tasks_completed").default(0),
   lastActivityDate: timestamp("last_activity_date"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Daily client connections tracking
+export const dailyConnections = pgTable("daily_connections", {
+  id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: uuid("user_id").references(() => users.id).notNull(),
+  date: timestamp("date").defaultNow(),
+  phoneCalls: integer("phone_calls").default(0),
+  textMessages: integer("text_messages").default(0),
+  emails: integer("emails").default(0),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -146,6 +157,12 @@ export const insertDealCoachSessionSchema = createInsertSchema(dealCoachSessions
   createdAt: true,
 });
 
+export const insertDailyConnectionsSchema = createInsertSchema(dailyConnections).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type UserProfile = typeof userProfiles.$inferSelect;
@@ -157,4 +174,6 @@ export type InsertUserProgress = z.infer<typeof insertUserProgressSchema>;
 export type MarketingTemplate = typeof marketingTemplates.$inferSelect;
 export type DealCoachSession = typeof dealCoachSessions.$inferSelect;
 export type InsertDealCoachSession = z.infer<typeof insertDealCoachSessionSchema>;
+export type DailyConnections = typeof dailyConnections.$inferSelect;
+export type InsertDailyConnections = z.infer<typeof insertDailyConnectionsSchema>;
 export type MagicLink = typeof magicLinks.$inferSelect;

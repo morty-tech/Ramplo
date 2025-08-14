@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Task } from "@shared/schema";
+import ClientConnectionTracker from "@/components/ClientConnectionTracker";
 import { 
   Flame, 
   FileText, 
@@ -36,6 +37,14 @@ export default function Dashboard() {
     enabled: !!progress,
   });
 
+  const { data: todayConnections } = useQuery({
+    queryKey: ["/api/connections/today"],
+    queryFn: async () => {
+      const response = await apiRequest("GET", "/api/connections/today");
+      return response.json();
+    },
+  });
+
   const completeTaskMutation = useMutation({
     mutationFn: (taskId: string) => apiRequest("PATCH", `/api/tasks/${taskId}/complete`),
     onSuccess: () => {
@@ -50,27 +59,37 @@ export default function Dashboard() {
   const completedTasks = todayTasks.filter((task: Task) => task.completed);
   const progressPercentage = todayTasks.length > 0 ? (completedTasks.length / todayTasks.length) * 100 : 0;
 
+  const todayTasksCompleted = todayTasks.filter((task: Task) => task.completed).length;
+  const todayTasksTotal = todayTasks.length;
+
   const stats = [
     {
-      title: "Day Streak",
-      value: progress?.currentStreak || 0,
-      icon: Flame,
-      color: "text-orange-600",
-      bgColor: "bg-orange-100",
-    },
-    {
-      title: "Applications Submitted", 
-      value: progress?.applicationsSubmitted || 0,
+      title: "Today's Tasks",
+      value: `${todayTasksCompleted}/${todayTasksTotal}`,
       icon: FileText,
       color: "text-blue-600",
       bgColor: "bg-blue-100",
     },
     {
-      title: "Loans Closed",
+      title: "Client Connects Today", 
+      value: todayConnections ? (todayConnections.phoneCalls || 0) + (todayConnections.textMessages || 0) + (todayConnections.emails || 0) : 0,
+      icon: UserCheck,
+      color: "text-green-600",
+      bgColor: "bg-green-100",
+    },
+    {
+      title: "Ramp Run",
+      value: progress?.rampRunDays || 0,
+      icon: Flame,
+      color: "text-orange-600", 
+      bgColor: "bg-orange-100",
+    },
+    {
+      title: "Closed Loans",
       value: progress?.loansClosed || 0,
       icon: Home,
-      color: "text-green-600", 
-      bgColor: "bg-green-100",
+      color: "text-purple-600", 
+      bgColor: "bg-purple-100",
     },
     {
       title: "Week Progress",
@@ -83,7 +102,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="p-6">
+    <div className="p-6 mt-16">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
@@ -191,6 +210,9 @@ export default function Dashboard() {
 
         {/* Sidebar Widgets */}
         <div className="space-y-6">
+          
+          {/* Client Connection Tracker */}
+          <ClientConnectionTracker />
           
           {/* Weekly Progress */}
           <Card>

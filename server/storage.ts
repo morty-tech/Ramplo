@@ -6,6 +6,7 @@ import {
   marketingTemplates,
   dealCoachSessions,
   magicLinks,
+  dailyConnections,
   type User,
   type InsertUser,
   type UserProfile,
@@ -18,6 +19,8 @@ import {
   type DealCoachSession,
   type InsertDealCoachSession,
   type MagicLink,
+  type DailyConnections,
+  type InsertDailyConnections,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, and, desc, gte } from "drizzle-orm";
@@ -57,6 +60,11 @@ export interface IStorage {
   // Deal coach operations
   createDealCoachSession(session: InsertDealCoachSession): Promise<DealCoachSession>;
   getUserDealCoachSessions(userId: string): Promise<DealCoachSession[]>;
+
+  // Daily connections operations
+  createDailyConnections(connections: InsertDailyConnections): Promise<DailyConnections>;
+  getTodayConnections(userId: string): Promise<DailyConnections | undefined>;
+  updateDailyConnections(userId: string, date: Date, updates: Partial<DailyConnections>): Promise<DailyConnections>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -198,6 +206,51 @@ export class DatabaseStorage implements IStorage {
       .from(dealCoachSessions)
       .where(eq(dealCoachSessions.userId, userId))
       .orderBy(desc(dealCoachSessions.createdAt));
+  }
+
+  async createDailyConnections(connectionsData: InsertDailyConnections): Promise<DailyConnections> {
+    const [connections] = await db.insert(dailyConnections).values(connectionsData).returning();
+    return connections;
+  }
+
+  async getTodayConnections(userId: string): Promise<DailyConnections | undefined> {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    const [connections] = await db
+      .select()
+      .from(dailyConnections)
+      .where(
+        and(
+          eq(dailyConnections.userId, userId),
+          gte(dailyConnections.date, today)
+        )
+      )
+      .orderBy(desc(dailyConnections.createdAt))
+      .limit(1);
+    
+    return connections;
+  }
+
+  async updateDailyConnections(userId: string, date: Date, updates: Partial<DailyConnections>): Promise<DailyConnections> {
+    const existing = await this.getTodayConnections(userId);
+    
+    if (existing) {
+      const [connections] = await db
+        .update(dailyConnections)
+        .set({ ...updates, updatedAt: new Date() })
+        .where(eq(dailyConnections.id, existing.id))
+        .returning();
+      return connections;
+    } else {
+      return await this.createDailyConnections({
+        userId,
+        date,
+        ...updates,
+      } as InsertDailyConnections);
+    }
   }
 }
 
