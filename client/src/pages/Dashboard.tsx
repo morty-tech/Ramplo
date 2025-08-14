@@ -100,6 +100,10 @@ export default function Dashboard() {
     return focuses[week - 1] || "Foundation Building";
   };
 
+  const currentWeek = progress?.currentWeek || 1;
+  const lastWeekFocus = currentWeek > 1 ? getWeekFocus(currentWeek - 1) : null;
+  const nextWeekFocus = currentWeek < 13 ? getWeekFocus(currentWeek + 1) : null;
+
   const stats = [
     {
       title: "Today's Tasks",
@@ -148,59 +152,66 @@ export default function Dashboard() {
         <Card className="mb-6">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-xl font-semibold text-gray-900">
-                  Week {progress?.currentWeek || 1} of 13
+              <div className="flex-1">
+                <h2 className="text-xl font-semibold text-gray-900 mb-2">
+                  Week {currentWeek} of 13
                 </h2>
-                <p className="text-gray-600">Week Focus: {getWeekFocus(progress?.currentWeek || 1)}</p>
+                <div className="space-y-1">
+                  <p className="text-gray-900 font-medium">Focus: {getWeekFocus(currentWeek)}</p>
+                  {lastWeekFocus && (
+                    <p className="text-sm text-gray-500">Last week: {lastWeekFocus}</p>
+                  )}
+                  {nextWeekFocus && (
+                    <p className="text-sm text-gray-500">Next week: {nextWeekFocus}</p>
+                  )}
+                </div>
               </div>
-              <div className="text-right flex flex-col items-end">
-                <div className="relative w-20 h-20 mb-2">
+              <div className="flex flex-col items-center">
+                <div className="relative w-16 h-16">
                   {/* Background circle */}
-                  <svg className="w-20 h-20 transform -rotate-90" viewBox="0 0 80 80">
-                    {/* Quarter segments background */}
+                  <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
                     <circle
-                      cx="40"
-                      cy="40" 
-                      r="36"
+                      cx="32"
+                      cy="32" 
+                      r="28"
                       fill="none"
                       stroke="#f3f4f6"
-                      strokeWidth="8"
+                      strokeWidth="6"
                     />
                     
                     {/* Performance level arc */}
                     <circle
-                      cx="40"
-                      cy="40"
-                      r="36"
+                      cx="32"
+                      cy="32"
+                      r="28"
                       fill="none"
                       stroke={performanceLevel.color}
-                      strokeWidth="8"
+                      strokeWidth="6"
                       strokeLinecap="round"
-                      strokeDasharray={`${(performanceScore / 100) * 226} 226`}
+                      strokeDasharray={`${(performanceScore / 100) * 176} 176`}
                       className="transition-all duration-500"
                     />
                   </svg>
                   
-                  {/* Score text overlay */}
+                  {/* Score and level in circle */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
                     <div className="text-lg font-bold text-gray-900">{performanceScore}</div>
+                    <div className="text-xs font-medium text-gray-600 leading-none">{performanceLevel.level}</div>
                   </div>
                 </div>
                 
-                <div className="text-center">
-                  <div className="text-xs font-medium text-gray-900">{performanceLevel.level}</div>
-                  <div className="flex items-center gap-1 text-xs text-gray-500 justify-center">
-                    Performance
-                    <Tooltip>
-                      <TooltipTrigger>
-                        <Info className="h-3 w-3 text-gray-400" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Your daily performance score combines task completion with client outreach activity</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </div>
+                <div className="flex items-center gap-1 mt-1 text-xs text-gray-500">
+                  Ramp Performance
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button className="hover:text-gray-700">
+                        <Info className="h-3 w-3" />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-[300px]">
+                      <p>Your daily performance score combines task completion with client outreach activity</p>
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
               </div>
             </div>
@@ -219,10 +230,12 @@ export default function Dashboard() {
                       {stat.title}
                       {stat.tooltip && (
                         <Tooltip>
-                          <TooltipTrigger>
-                            <Info className="h-3 w-3 text-gray-400" />
+                          <TooltipTrigger asChild>
+                            <button className="hover:text-gray-600">
+                              <Info className="h-3 w-3 text-gray-400" />
+                            </button>
                           </TooltipTrigger>
-                          <TooltipContent>
+                          <TooltipContent className="max-w-[300px]">
                             <p>{stat.tooltip}</p>
                           </TooltipContent>
                         </Tooltip>
