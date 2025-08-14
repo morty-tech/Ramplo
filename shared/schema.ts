@@ -52,16 +52,43 @@ export const magicLinks = pgTable("magic_links", {
 export const userProfiles = pgTable("user_profiles", {
   id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
   userId: uuid("user_id").references(() => users.id).notNull().unique(),
-  experienceLevel: varchar("experience_level"), // beginner, intermediate, experienced
+  
+  // Personal/Professional Info
+  fullName: varchar("full_name"),
+  email: varchar("email"),
+  market: varchar("market"), // city/market area
+  statesLicensed: jsonb("states_licensed").$type<string[]>(), // Array of state codes
+  nmlsId: varchar("nmls_id"), // Optional NMLS number
+  
+  // Experience & Focus
+  experienceLevel: varchar("experience_level"), // new, <1y, 1-3y, 3+
+  focus: jsonb("focus").$type<string[]>(), // purchase, refi, heloc, investor-dscr, non-qm
+  borrowerTypes: jsonb("borrower_types").$type<string[]>(), // fthb, move-up, cash-out, investor
+  
+  // Time & Comfort Level
+  timeAvailableWeekday: varchar("time_available_weekday"), // 30, 60, 90+ minutes
+  outreachComfort: varchar("outreach_comfort"), // low, medium, high
+  
+  // Network Assets
+  hasRealtorRelationships: boolean("has_realtor_relationships").default(false),
+  hasPastClientList: boolean("has_past_client_list").default(false),
+  socialChannelsUsed: jsonb("social_channels_used").$type<string[]>(), // linkedin, facebook, instagram, etc.
+  
+  // Communication Preferences
+  tonePreference: varchar("tone_preference"), // professional, friendly, direct
+  preferredChannels: jsonb("preferred_channels").$type<string[]>(), // email, phone, social, inperson
+  
+  // Legacy fields (keeping for backwards compatibility)
   markets: jsonb("markets").$type<string[]>(), // Multiple markets: first-time-buyers, refinance, luxury, investment, etc.
   primaryMarket: varchar("primary_market"), // Their main focus market
   networkSize: varchar("network_size"), // small, medium, large, starting
   networkGrowthStrategy: varchar("network_growth_strategy"), // social-media, referrals, cold-outreach, events, partnerships
   connectionTypes: jsonb("connection_types").$type<string[]>(), // realtors, builders, financial-advisors, past-clients, etc.
-  preferredChannels: jsonb("preferred_channels").$type<string[]>(), // email, phone, social, inperson
   hasOnlinePresence: boolean("has_online_presence").default(false),
   socialMediaLinks: jsonb("social_media_links").$type<Record<string, string>>(), // {linkedin: "url", facebook: "url", etc}
   loansClosedCount: varchar("loans_closed_count"), // 0, 1-10, 11-50, 51-100, 100+
+  
+  // Goals
   goals: text("goals"),
   onboardingCompleted: boolean("onboarding_completed").default(false),
   createdAt: timestamp("created_at").defaultNow(),

@@ -4,7 +4,7 @@
 
 RampLO is a 90-day AI-powered ramp plan designed to help mortgage loan officers secure their first 1-3 deals. The application provides personalized daily tasks, progress tracking, outreach templates, and deal coaching tools. Morty users get free access while non-Morty users pay $49/month.
 
-The platform features a comprehensive onboarding questionnaire that gathers user information for AI personalization, including experience level, market, network size, preferred outreach channels, and goals. Users receive a structured 13-week program with daily tasks, streak tracking, and loan progress monitoring.
+The platform features a comprehensive 9-step onboarding questionnaire that captures detailed industry-specific information: personal details (name, email, market, state licensing, NMLS), experience level (new/<1y/1-3y/3+), focus areas (purchase/refi/HELOC/investor/non-QM), borrower types (FTHB/move-up/cash-out/investor), time availability (30/60/90+ minutes), outreach comfort level (low/medium/high), network assets (realtor relationships, past clients, social channels), communication preferences (professional/friendly/direct tone), and 90-day goals. This rich data enables highly personalized AI task generation and coaching.
 
 ## User Preferences
 
@@ -31,7 +31,8 @@ Preferred communication style: Simple, everyday language.
 ### Data Storage
 - **Database**: PostgreSQL with Neon serverless driver (@neondatabase/serverless)
 - **Schema Management**: Drizzle Kit for migrations and schema definitions
-- **Tables**: Users, user profiles, tasks, progress tracking, magic links, marketing templates, deal coach sessions, and session storage
+- **Tables**: Users, enhanced user profiles (with 15+ industry-specific fields), tasks, progress tracking, magic links, marketing templates, deal coach sessions, and session storage
+- **Enhanced Profile Fields**: Full name, email, market/city, states licensed, NMLS ID, experience level, focus areas, borrower types, time availability, outreach comfort, network assets, social channels, tone preference, communication channels, and goals
 
 ### Authentication & Authorization
 - **Magic Link System**: Passwordless authentication using secure tokens

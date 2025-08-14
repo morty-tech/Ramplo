@@ -10,27 +10,40 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Loader2, Globe, Users, Target, TrendingUp, Building, Network } from "lucide-react";
+import { Loader2, User, MapPin, Clock, Target, Users, MessageSquare, TrendingUp } from "lucide-react";
+
+const US_STATES = [
+  "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
+  "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
+  "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
+  "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
+  "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "DC"
+];
 
 export default function Onboarding() {
   const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    market: "",
+    statesLicensed: [] as string[],
+    nmlsId: "",
     experienceLevel: "",
-    markets: [] as string[],
-    primaryMarket: "",
-    networkSize: "",
-    networkGrowthStrategy: "",
-    connectionTypes: [] as string[],
+    focus: [] as string[],
+    borrowerTypes: [] as string[],
+    timeAvailableWeekday: "",
+    outreachComfort: "",
+    hasRealtorRelationships: false,
+    hasPastClientList: false,
+    socialChannelsUsed: [] as string[],
+    tonePreference: "",
     preferredChannels: [] as string[],
-    hasOnlinePresence: false,
-    socialMediaLinks: {} as Record<string, string>,
-    loansClosedCount: "",
     goals: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(1);
   const { toast } = useToast();
 
-  const totalSteps = 8;
+  const totalSteps = 9;
   const progress = (step / totalSteps) * 100;
 
   const handleArrayChange = (field: keyof typeof formData, value: string, checked: boolean) => {
@@ -39,16 +52,6 @@ export default function Onboarding() {
       [field]: checked 
         ? [...(prev[field] as string[]), value]
         : (prev[field] as string[]).filter(item => item !== value)
-    }));
-  };
-
-  const handleSocialMediaChange = (platform: string, url: string) => {
-    setFormData(prev => ({
-      ...prev,
-      socialMediaLinks: {
-        ...prev.socialMediaLinks,
-        [platform]: url
-      }
     }));
   };
 
@@ -76,14 +79,15 @@ export default function Onboarding() {
 
   const canProceed = () => {
     switch (step) {
-      case 1: return formData.experienceLevel && formData.loansClosedCount;
-      case 2: return formData.markets.length > 0;
-      case 3: return formData.primaryMarket;
-      case 4: return formData.networkSize;
-      case 5: return formData.networkGrowthStrategy && formData.connectionTypes.length > 0;
-      case 6: return formData.preferredChannels.length > 0;
-      case 7: return true; // Social media step is optional
-      case 8: return formData.goals.trim();
+      case 1: return formData.fullName && formData.email && formData.market;
+      case 2: return formData.statesLicensed.length > 0;
+      case 3: return formData.experienceLevel;
+      case 4: return formData.focus.length > 0;
+      case 5: return formData.borrowerTypes.length > 0;
+      case 6: return formData.timeAvailableWeekday && formData.outreachComfort;
+      case 7: return true; // Network assets are optional
+      case 8: return formData.tonePreference && formData.preferredChannels.length > 0;
+      case 9: return formData.goals.trim();
       default: return false;
     }
   };
@@ -107,184 +111,118 @@ export default function Onboarding() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Step 1: Experience & Loan History */}
+              {/* Step 1: Personal Info */}
               {step === 1 && (
-                <div className="space-y-8">
-                  <div>
-                    <div className="flex items-center mb-4">
-                      <TrendingUp className="w-6 h-6 text-blue-600 mr-3" />
-                      <Label className="text-lg font-medium text-gray-900">
-                        What's your experience level as a mortgage loan officer?
-                      </Label>
-                    </div>
-                    <RadioGroup
-                      value={formData.experienceLevel}
-                      onValueChange={(value) => setFormData(prev => ({ ...prev, experienceLevel: value }))}
-                      className="grid grid-cols-1 md:grid-cols-3 gap-4"
-                    >
-                      {[
-                        { value: "beginner", label: "Beginner", desc: "0-6 months" },
-                        { value: "intermediate", label: "Intermediate", desc: "6-24 months" },
-                        { value: "experienced", label: "Experienced", desc: "2+ years" },
-                      ].map((option) => (
-                        <Label
-                          key={option.value}
-                          htmlFor={option.value}
-                          className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
-                        >
-                          <RadioGroupItem value={option.value} id={option.value} className="mr-3" />
-                          <div>
-                            <div className="font-medium">{option.label}</div>
-                            <div className="text-sm text-gray-600">{option.desc}</div>
-                          </div>
-                        </Label>
-                      ))}
-                    </RadioGroup>
+                <div className="space-y-6">
+                  <div className="flex items-center mb-4">
+                    <User className="w-6 h-6 text-blue-600 mr-3" />
+                    <Label className="text-lg font-medium text-gray-900">
+                      Let's start with your basic information
+                    </Label>
                   </div>
-
-                  <div>
-                    <div className="flex items-center mb-4">
-                      <Target className="w-6 h-6 text-green-600 mr-3" />
-                      <Label className="text-lg font-medium text-gray-900">
-                        How many loans have you closed?
-                      </Label>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="fullName" className="font-medium">Full Name</Label>
+                      <Input
+                        id="fullName"
+                        value={formData.fullName}
+                        onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
+                        placeholder="John Smith"
+                      />
                     </div>
-                    <RadioGroup
-                      value={formData.loansClosedCount}
-                      onValueChange={(value) => setFormData(prev => ({ ...prev, loansClosedCount: value }))}
-                      className="grid grid-cols-1 md:grid-cols-2 gap-4"
-                    >
-                      {[
-                        { value: "0", label: "0 loans", desc: "Just starting out" },
-                        { value: "1-10", label: "1-10 loans", desc: "Building experience" },
-                        { value: "11-50", label: "11-50 loans", desc: "Growing my book" },
-                        { value: "51-100", label: "51-100 loans", desc: "Established track record" },
-                        { value: "100+", label: "100+ loans", desc: "Seasoned professional" },
-                      ].map((option) => (
-                        <Label
-                          key={option.value}
-                          htmlFor={`loans-${option.value}`}
-                          className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
-                        >
-                          <RadioGroupItem value={option.value} id={`loans-${option.value}`} className="mr-3" />
-                          <div>
-                            <div className="font-medium">{option.label}</div>
-                            <div className="text-sm text-gray-600">{option.desc}</div>
-                          </div>
-                        </Label>
-                      ))}
-                    </RadioGroup>
+                    <div>
+                      <Label htmlFor="email" className="font-medium">Email Address</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                        placeholder="john@example.com"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="market" className="font-medium">Market/City</Label>
+                    <Input
+                      id="market"
+                      value={formData.market}
+                      onChange={(e) => setFormData(prev => ({ ...prev, market: e.target.value }))}
+                      placeholder="Los Angeles, CA"
+                    />
+                    <p className="text-sm text-gray-600 mt-1">
+                      What city or market area do you primarily serve?
+                    </p>
                   </div>
                 </div>
               )}
 
-              {/* Step 2: Markets Served */}
+              {/* Step 2: Licensing */}
               {step === 2 && (
                 <div>
                   <div className="flex items-center mb-4">
-                    <Building className="w-6 h-6 text-purple-600 mr-3" />
+                    <MapPin className="w-6 h-6 text-green-600 mr-3" />
                     <Label className="text-lg font-medium text-gray-900">
-                      What markets do you serve? (Select all that apply)
+                      What states are you licensed in?
                     </Label>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {[
-                      { value: "first-time-buyers", label: "First-Time Homebuyers", desc: "New to homeownership" },
-                      { value: "refinance", label: "Refinancing", desc: "Rate & term, cash-out" },
-                      { value: "luxury", label: "Luxury/Jumbo", desc: "High-end properties" },
-                      { value: "investment", label: "Investment Properties", desc: "Rental & flip properties" },
-                      { value: "construction", label: "Construction Loans", desc: "New builds & renovations" },
-                      { value: "commercial", label: "Commercial", desc: "Business properties" },
-                      { value: "va-loans", label: "VA Loans", desc: "Veterans & military" },
-                      { value: "fha-loans", label: "FHA Loans", desc: "Government-backed loans" },
-                    ].map((market) => (
+                  
+                  <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+                    {US_STATES.map((state) => (
                       <Label
-                        key={market.value}
-                        className="flex items-start p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
+                        key={state}
+                        className="flex items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
                       >
                         <Checkbox
-                          checked={formData.markets.includes(market.value)}
-                          onCheckedChange={(checked) => handleArrayChange("markets", market.value, checked as boolean)}
-                          className="mr-3 mt-0.5"
+                          checked={formData.statesLicensed.includes(state)}
+                          onCheckedChange={(checked) => handleArrayChange("statesLicensed", state, checked as boolean)}
+                          className="mr-2"
                         />
-                        <div>
-                          <div className="font-medium">{market.label}</div>
-                          <div className="text-sm text-gray-600">{market.desc}</div>
-                        </div>
+                        <span className="text-sm font-medium">{state}</span>
                       </Label>
                     ))}
                   </div>
+                  
+                  <div className="mt-6">
+                    <Label htmlFor="nmlsId" className="font-medium">NMLS ID (Optional)</Label>
+                    <Input
+                      id="nmlsId"
+                      value={formData.nmlsId}
+                      onChange={(e) => setFormData(prev => ({ ...prev, nmlsId: e.target.value }))}
+                      placeholder="123456"
+                      className="w-48"
+                    />
+                  </div>
                 </div>
               )}
 
-              {/* Step 3: Primary Market Focus */}
+              {/* Step 3: Experience Level */}
               {step === 3 && (
                 <div>
                   <div className="flex items-center mb-4">
-                    <Target className="w-6 h-6 text-blue-600 mr-3" />
+                    <TrendingUp className="w-6 h-6 text-purple-600 mr-3" />
                     <Label className="text-lg font-medium text-gray-900">
-                      What's your primary market focus?
-                    </Label>
-                  </div>
-                  <Select
-                    value={formData.primaryMarket}
-                    onValueChange={(value) => setFormData(prev => ({ ...prev, primaryMarket: value }))}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Choose your main market focus" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {formData.markets.map((market) => {
-                        const marketLabels: Record<string, string> = {
-                          "first-time-buyers": "First-Time Homebuyers",
-                          "refinance": "Refinancing", 
-                          "luxury": "Luxury/Jumbo",
-                          "investment": "Investment Properties",
-                          "construction": "Construction Loans",
-                          "commercial": "Commercial",
-                          "va-loans": "VA Loans",
-                          "fha-loans": "FHA Loans"
-                        };
-                        return (
-                          <SelectItem key={market} value={market}>
-                            {marketLabels[market]}
-                          </SelectItem>
-                        );
-                      })}
-                    </SelectContent>
-                  </Select>
-                  <p className="text-sm text-gray-600 mt-2">
-                    This will help us prioritize tasks and templates for your main focus area.
-                  </p>
-                </div>
-              )}
-
-              {/* Step 4: Network Size */}
-              {step === 4 && (
-                <div>
-                  <div className="flex items-center mb-4">
-                    <Users className="w-6 h-6 text-green-600 mr-3" />
-                    <Label className="text-lg font-medium text-gray-900">
-                      How would you describe your current network size?
+                      What's your experience level as a mortgage loan officer?
                     </Label>
                   </div>
                   <RadioGroup
-                    value={formData.networkSize}
-                    onValueChange={(value) => setFormData(prev => ({ ...prev, networkSize: value }))}
+                    value={formData.experienceLevel}
+                    onValueChange={(value) => setFormData(prev => ({ ...prev, experienceLevel: value }))}
                     className="grid grid-cols-1 md:grid-cols-2 gap-4"
                   >
                     {[
-                      { value: "small", label: "Small Network", desc: "0-50 professional contacts" },
-                      { value: "medium", label: "Medium Network", desc: "50-200 contacts" },
-                      { value: "large", label: "Large Network", desc: "200+ contacts" },
-                      { value: "starting", label: "Just Starting", desc: "Building from scratch" },
+                      { value: "new", label: "New to the industry", desc: "Just getting started" },
+                      { value: "<1y", label: "Less than 1 year", desc: "Building foundational skills" },
+                      { value: "1-3y", label: "1-3 years", desc: "Growing experience" },
+                      { value: "3+", label: "3+ years", desc: "Seasoned professional" },
                     ].map((option) => (
                       <Label
                         key={option.value}
-                        htmlFor={`network-${option.value}`}
+                        htmlFor={`exp-${option.value}`}
                         className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
                       >
-                        <RadioGroupItem value={option.value} id={`network-${option.value}`} className="mr-3" />
+                        <RadioGroupItem value={option.value} id={`exp-${option.value}`} className="mr-3" />
                         <div>
                           <div className="font-medium">{option.label}</div>
                           <div className="text-sm text-gray-600">{option.desc}</div>
@@ -295,37 +233,103 @@ export default function Onboarding() {
                 </div>
               )}
 
-              {/* Step 5: Network Growth Strategy */}
+              {/* Step 4: Focus Areas */}
+              {step === 4 && (
+                <div>
+                  <div className="flex items-center mb-4">
+                    <Target className="w-6 h-6 text-blue-600 mr-3" />
+                    <Label className="text-lg font-medium text-gray-900">
+                      What's your focus? (Select all that apply)
+                    </Label>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                      { value: "purchase", label: "Purchase Loans", desc: "Home buying transactions" },
+                      { value: "refi", label: "Refinancing", desc: "Rate & term, cash-out refis" },
+                      { value: "heloc", label: "HELOC", desc: "Home equity lines of credit" },
+                      { value: "investor-dscr", label: "Investor (DSCR)", desc: "Investment property loans" },
+                      { value: "non-qm", label: "Non-QM", desc: "Non-qualified mortgages" },
+                    ].map((focus) => (
+                      <Label
+                        key={focus.value}
+                        className="flex items-start p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
+                      >
+                        <Checkbox
+                          checked={formData.focus.includes(focus.value)}
+                          onCheckedChange={(checked) => handleArrayChange("focus", focus.value, checked as boolean)}
+                          className="mr-3 mt-0.5"
+                        />
+                        <div>
+                          <div className="font-medium">{focus.label}</div>
+                          <div className="text-sm text-gray-600">{focus.desc}</div>
+                        </div>
+                      </Label>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Step 5: Borrower Types */}
               {step === 5 && (
+                <div>
+                  <Label className="text-lg font-medium text-gray-900 mb-4 block">
+                    What types of borrowers do you typically work with?
+                  </Label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                      { value: "fthb", label: "First-Time Home Buyers (FTHB)", desc: "New to homeownership" },
+                      { value: "move-up", label: "Move-Up Buyers", desc: "Upgrading to larger homes" },
+                      { value: "cash-out", label: "Cash-Out Refinance", desc: "Extracting equity" },
+                      { value: "investor", label: "Real Estate Investors", desc: "Investment properties" },
+                    ].map((type) => (
+                      <Label
+                        key={type.value}
+                        className="flex items-start p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
+                      >
+                        <Checkbox
+                          checked={formData.borrowerTypes.includes(type.value)}
+                          onCheckedChange={(checked) => handleArrayChange("borrowerTypes", type.value, checked as boolean)}
+                          className="mr-3 mt-0.5"
+                        />
+                        <div>
+                          <div className="font-medium">{type.label}</div>
+                          <div className="text-sm text-gray-600">{type.desc}</div>
+                        </div>
+                      </Label>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Step 6: Time & Comfort */}
+              {step === 6 && (
                 <div className="space-y-8">
                   <div>
                     <div className="flex items-center mb-4">
-                      <Network className="w-6 h-6 text-orange-600 mr-3" />
+                      <Clock className="w-6 h-6 text-orange-600 mr-3" />
                       <Label className="text-lg font-medium text-gray-900">
-                        How do you plan to grow your network?
+                        How much time can you dedicate to prospecting per weekday?
                       </Label>
                     </div>
                     <RadioGroup
-                      value={formData.networkGrowthStrategy}
-                      onValueChange={(value) => setFormData(prev => ({ ...prev, networkGrowthStrategy: value }))}
-                      className="grid grid-cols-1 gap-3"
+                      value={formData.timeAvailableWeekday}
+                      onValueChange={(value) => setFormData(prev => ({ ...prev, timeAvailableWeekday: value }))}
+                      className="grid grid-cols-1 md:grid-cols-3 gap-4"
                     >
                       {[
-                        { value: "social-media", label: "Social Media & Online Presence", desc: "LinkedIn, Facebook, Instagram outreach" },
-                        { value: "referrals", label: "Referral Partnerships", desc: "Build relationships with realtors, builders, advisors" },
-                        { value: "cold-outreach", label: "Cold Outreach", desc: "Direct calls, emails, door-to-door" },
-                        { value: "events", label: "Networking Events", desc: "Industry events, local meetups, seminars" },
-                        { value: "partnerships", label: "Strategic Partnerships", desc: "Real estate teams, financial planners, attorneys" },
-                      ].map((option) => (
+                        { value: "30", label: "30 minutes", desc: "Quick daily activities" },
+                        { value: "60", label: "60 minutes", desc: "Focused prospecting time" },
+                        { value: "90+", label: "90+ minutes", desc: "Deep relationship building" },
+                      ].map((time) => (
                         <Label
-                          key={option.value}
-                          htmlFor={`strategy-${option.value}`}
-                          className="flex items-start p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
+                          key={time.value}
+                          htmlFor={`time-${time.value}`}
+                          className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
                         >
-                          <RadioGroupItem value={option.value} id={`strategy-${option.value}`} className="mr-3 mt-0.5" />
+                          <RadioGroupItem value={time.value} id={`time-${time.value}`} className="mr-3" />
                           <div>
-                            <div className="font-medium">{option.label}</div>
-                            <div className="text-sm text-gray-600">{option.desc}</div>
+                            <div className="font-medium">{time.label}</div>
+                            <div className="text-sm text-gray-600">{time.desc}</div>
                           </div>
                         </Label>
                       ))}
@@ -334,29 +338,96 @@ export default function Onboarding() {
 
                   <div>
                     <Label className="text-lg font-medium text-gray-900 mb-4 block">
-                      What types of connections are you targeting?
+                      How comfortable are you with outreach activities?
                     </Label>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <RadioGroup
+                      value={formData.outreachComfort}
+                      onValueChange={(value) => setFormData(prev => ({ ...prev, outreachComfort: value }))}
+                      className="grid grid-cols-1 md:grid-cols-3 gap-4"
+                    >
                       {[
-                        { value: "realtors", label: "Real Estate Agents" },
-                        { value: "builders", label: "Home Builders" },
-                        { value: "financial-advisors", label: "Financial Advisors" },
-                        { value: "past-clients", label: "Past Clients" },
-                        { value: "attorneys", label: "Real Estate Attorneys" },
-                        { value: "contractors", label: "Contractors" },
-                        { value: "insurance-agents", label: "Insurance Agents" },
-                        { value: "cpas", label: "CPAs & Accountants" },
-                      ].map((connection) => (
+                        { value: "low", label: "Low", desc: "Prefer warm introductions" },
+                        { value: "medium", label: "Medium", desc: "Willing to reach out with preparation" },
+                        { value: "high", label: "High", desc: "Comfortable with cold outreach" },
+                      ].map((comfort) => (
                         <Label
-                          key={connection.value}
+                          key={comfort.value}
+                          htmlFor={`comfort-${comfort.value}`}
+                          className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
+                        >
+                          <RadioGroupItem value={comfort.value} id={`comfort-${comfort.value}`} className="mr-3" />
+                          <div>
+                            <div className="font-medium">{comfort.label}</div>
+                            <div className="text-sm text-gray-600">{comfort.desc}</div>
+                          </div>
+                        </Label>
+                      ))}
+                    </RadioGroup>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 7: Network Assets */}
+              {step === 7 && (
+                <div className="space-y-6">
+                  <div className="flex items-center mb-4">
+                    <Users className="w-6 h-6 text-green-600 mr-3" />
+                    <Label className="text-lg font-medium text-gray-900">
+                      Tell us about your existing network assets
+                    </Label>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-3 p-4 border-2 border-gray-200 rounded-lg">
+                      <Checkbox
+                        id="hasRealtorRelationships"
+                        checked={formData.hasRealtorRelationships}
+                        onCheckedChange={(checked) => setFormData(prev => ({ ...prev, hasRealtorRelationships: checked as boolean }))}
+                      />
+                      <div>
+                        <Label htmlFor="hasRealtorRelationships" className="font-medium">
+                          I have established realtor relationships
+                        </Label>
+                        <p className="text-sm text-gray-600">Active referral partnerships with real estate agents</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center space-x-3 p-4 border-2 border-gray-200 rounded-lg">
+                      <Checkbox
+                        id="hasPastClientList"
+                        checked={formData.hasPastClientList}
+                        onCheckedChange={(checked) => setFormData(prev => ({ ...prev, hasPastClientList: checked as boolean }))}
+                      />
+                      <div>
+                        <Label htmlFor="hasPastClientList" className="font-medium">
+                          I have a past client list
+                        </Label>
+                        <p className="text-sm text-gray-600">Database of previous customers for referrals and repeat business</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label className="font-medium block mb-3">What social channels do you use for business?</Label>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      {[
+                        { value: "linkedin", label: "LinkedIn" },
+                        { value: "facebook", label: "Facebook" },
+                        { value: "instagram", label: "Instagram" },
+                        { value: "youtube", label: "YouTube" },
+                        { value: "tiktok", label: "TikTok" },
+                        { value: "twitter", label: "Twitter/X" },
+                      ].map((channel) => (
+                        <Label
+                          key={channel.value}
                           className="flex items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
                         >
                           <Checkbox
-                            checked={formData.connectionTypes.includes(connection.value)}
-                            onCheckedChange={(checked) => handleArrayChange("connectionTypes", connection.value, checked as boolean)}
-                            className="mr-3"
+                            checked={formData.socialChannelsUsed.includes(channel.value)}
+                            onCheckedChange={(checked) => handleArrayChange("socialChannelsUsed", channel.value, checked as boolean)}
+                            className="mr-2"
                           />
-                          <div className="font-medium">{connection.label}</div>
+                          <span className="text-sm font-medium">{channel.label}</span>
                         </Label>
                       ))}
                     </div>
@@ -364,97 +435,76 @@ export default function Onboarding() {
                 </div>
               )}
 
-              {/* Step 6: Communication Preferences */}
-              {step === 6 && (
-                <div>
-                  <Label className="text-lg font-medium text-gray-900 mb-4 block">
-                    What are your preferred communication channels?
-                  </Label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {[
-                      { value: "email", label: "Email", desc: "Professional and trackable" },
-                      { value: "phone", label: "Phone Calls", desc: "Direct and personal" },
-                      { value: "social", label: "Social Media", desc: "LinkedIn, Facebook messaging" },
-                      { value: "inperson", label: "In-Person Meetings", desc: "Face-to-face networking" },
-                      { value: "text", label: "Text/SMS", desc: "Quick and convenient" },
-                      { value: "video", label: "Video Calls", desc: "Personal yet convenient" },
-                    ].map((channel) => (
-                      <Label
-                        key={channel.value}
-                        className="flex items-start p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
-                      >
-                        <Checkbox
-                          checked={formData.preferredChannels.includes(channel.value)}
-                          onCheckedChange={(checked) => handleArrayChange("preferredChannels", channel.value, checked as boolean)}
-                          className="mr-3 mt-0.5"
-                        />
-                        <div>
-                          <div className="font-medium">{channel.label}</div>
-                          <div className="text-sm text-gray-600">{channel.desc}</div>
-                        </div>
-                      </Label>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Step 7: Social Media & Online Presence */}
-              {step === 7 && (
-                <div className="space-y-6">
-                  <div className="flex items-center mb-4">
-                    <Globe className="w-6 h-6 text-blue-600 mr-3" />
-                    <Label className="text-lg font-medium text-gray-900">
-                      Do you have an online presence or social media for business?
-                    </Label>
-                  </div>
-                  
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="hasOnlinePresence"
-                      checked={formData.hasOnlinePresence}
-                      onCheckedChange={(checked) => setFormData(prev => ({ ...prev, hasOnlinePresence: checked as boolean }))}
-                    />
-                    <Label htmlFor="hasOnlinePresence">
-                      Yes, I have business social media accounts or website
-                    </Label>
-                  </div>
-
-                  {formData.hasOnlinePresence && (
-                    <div className="space-y-4 border-l-4 border-blue-200 pl-6">
-                      <p className="text-sm text-gray-600">
-                        Share your social media links so we can help optimize your online presence:
-                      </p>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {[
-                          { platform: "linkedin", label: "LinkedIn Profile" },
-                          { platform: "facebook", label: "Facebook Business Page" },
-                          { platform: "instagram", label: "Instagram Business" },
-                          { platform: "website", label: "Personal Website" },
-                          { platform: "youtube", label: "YouTube Channel" },
-                          { platform: "tiktok", label: "TikTok Business" },
-                        ].map(({ platform, label }) => (
-                          <div key={platform} className="space-y-1">
-                            <Label htmlFor={platform} className="text-sm font-medium">
-                              {label}
-                            </Label>
-                            <Input
-                              id={platform}
-                              type="url"
-                              placeholder={`https://${platform}.com/...`}
-                              value={formData.socialMediaLinks[platform] || ''}
-                              onChange={(e) => handleSocialMediaChange(platform, e.target.value)}
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Step 8: Goals */}
+              {/* Step 8: Communication Preferences */}
               {step === 8 && (
+                <div className="space-y-8">
+                  <div>
+                    <div className="flex items-center mb-4">
+                      <MessageSquare className="w-6 h-6 text-blue-600 mr-3" />
+                      <Label className="text-lg font-medium text-gray-900">
+                        What's your preferred communication tone?
+                      </Label>
+                    </div>
+                    <RadioGroup
+                      value={formData.tonePreference}
+                      onValueChange={(value) => setFormData(prev => ({ ...prev, tonePreference: value }))}
+                      className="grid grid-cols-1 md:grid-cols-3 gap-4"
+                    >
+                      {[
+                        { value: "professional", label: "Professional", desc: "Formal and business-focused" },
+                        { value: "friendly", label: "Friendly", desc: "Warm and approachable" },
+                        { value: "direct", label: "Direct", desc: "Straight to the point" },
+                      ].map((tone) => (
+                        <Label
+                          key={tone.value}
+                          htmlFor={`tone-${tone.value}`}
+                          className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
+                        >
+                          <RadioGroupItem value={tone.value} id={`tone-${tone.value}`} className="mr-3" />
+                          <div>
+                            <div className="font-medium">{tone.label}</div>
+                            <div className="text-sm text-gray-600">{tone.desc}</div>
+                          </div>
+                        </Label>
+                      ))}
+                    </RadioGroup>
+                  </div>
+
+                  <div>
+                    <Label className="text-lg font-medium text-gray-900 mb-4 block">
+                      What are your preferred communication channels?
+                    </Label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {[
+                        { value: "email", label: "Email", desc: "Professional and trackable" },
+                        { value: "phone", label: "Phone Calls", desc: "Direct and personal" },
+                        { value: "text", label: "Text/SMS", desc: "Quick and convenient" },
+                        { value: "social", label: "Social Media", desc: "LinkedIn, Facebook messaging" },
+                        { value: "video", label: "Video Calls", desc: "Personal yet convenient" },
+                        { value: "inperson", label: "In-Person", desc: "Face-to-face meetings" },
+                      ].map((channel) => (
+                        <Label
+                          key={channel.value}
+                          className="flex items-start p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
+                        >
+                          <Checkbox
+                            checked={formData.preferredChannels.includes(channel.value)}
+                            onCheckedChange={(checked) => handleArrayChange("preferredChannels", channel.value, checked as boolean)}
+                            className="mr-3 mt-0.5"
+                          />
+                          <div>
+                            <div className="font-medium">{channel.label}</div>
+                            <div className="text-sm text-gray-600">{channel.desc}</div>
+                          </div>
+                        </Label>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 9: Goals */}
+              {step === 9 && (
                 <div>
                   <Label htmlFor="goals" className="text-lg font-medium text-gray-900 mb-4 block">
                     What are your main goals for the next 90 days?
@@ -463,11 +513,11 @@ export default function Onboarding() {
                     id="goals"
                     value={formData.goals}
                     onChange={(e) => setFormData(prev => ({ ...prev, goals: e.target.value }))}
-                    placeholder="e.g., Close my first 3 loans, build a network of 50 realtors, establish online presence..."
+                    placeholder="e.g., Close my first 3 loans, build relationships with 20 realtors, establish a consistent social media presence..."
                     rows={4}
                   />
                   <p className="text-sm text-gray-600 mt-2">
-                    Be specific about what success looks like for you. This helps us tailor your daily tasks.
+                    Be specific about what success looks like for you. This helps us tailor your daily tasks and priorities.
                   </p>
                 </div>
               )}
