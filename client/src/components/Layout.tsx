@@ -2,8 +2,7 @@ import { useState } from "react";
 import Sidebar from "./Sidebar";
 import PaywallOverlay from "./PaywallOverlay";
 import { useAuth } from "@/hooks/useAuth";
-import { Menu } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Menu, X, ChevronRight } from "lucide-react";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -19,14 +18,16 @@ export default function Layout({ children }: LayoutProps) {
       
       {/* Mobile menu button */}
       <div className="lg:hidden fixed top-4 left-4 z-50">
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => setSidebarOpen(true)}
-          className="bg-white shadow-lg"
-        >
-          <Menu className="h-4 w-4" />
-        </Button>
+        {!sidebarOpen && (
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="bg-primary hover:opacity-90 text-white p-3 rounded-lg shadow-lg transition-all duration-200"
+            aria-label="Open menu"
+            style={{ backgroundColor: 'hsl(217, 91%, 60%)' }}
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+        )}
       </div>
 
       {/* Main content */}

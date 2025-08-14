@@ -91,14 +91,6 @@ export default function Dashboard() {
       color: "text-purple-600", 
       bgColor: "bg-purple-100",
     },
-    {
-      title: "Week Progress",
-      value: `Week ${progress?.currentWeek || 1}`,
-      subtitle: "of 13 Weeks",
-      icon: Calendar,
-      color: "text-purple-600",
-      bgColor: "bg-purple-100",
-    },
   ];
 
   return (
