@@ -130,29 +130,27 @@ export default function Dashboard() {
 
   const performanceLevel = getPerformanceLevel(performanceScore);
 
-  // Week focus based on current week
+  // Query for the foundation roadmap to get real week themes
+  const { data: roadmapData } = useQuery({
+    queryKey: ["/api/roadmap/select"],
+    queryFn: async () => {
+      const response = await apiRequest("POST", "/api/roadmap/select", {});
+      return response.json();
+    },
+  });
+
+  // Week focus based on real roadmap data
   const getWeekFocus = (week: number) => {
-    const focuses = [
-      "Foundation Building", // Week 1
-      "Network Activation", // Week 2
-      "Lead Generation", // Week 3
-      "Client Outreach", // Week 4
-      "Relationship Building", // Week 5
-      "Pipeline Development", // Week 6
-      "Follow-up Mastery", // Week 7
-      "Deal Acceleration", // Week 8
-      "Closing Techniques", // Week 9
-      "Referral Systems", // Week 10
-      "Market Expansion", // Week 11
-      "Process Optimization", // Week 12
-      "Mastery & Growth" // Week 13
-    ];
-    return focuses[week - 1] || "Foundation Building";
+    if (roadmapData?.selectedRoadmap?.weeklyTasks) {
+      const weekData = roadmapData.selectedRoadmap.weeklyTasks.find((w: any) => w.week === week);
+      return weekData?.theme || "Week " + week;
+    }
+    return "Week " + week; // Fallback with no hardcoded themes
   };
 
   const currentWeek = progress?.currentWeek || 1;
   const lastWeekFocus = currentWeek > 1 ? getWeekFocus(currentWeek - 1) : null;
-  const nextWeekFocus = currentWeek < 13 ? getWeekFocus(currentWeek + 1) : null;
+  const nextWeekFocus = currentWeek < 14 ? getWeekFocus(currentWeek + 1) : null;
 
   const stats = [
     {
@@ -204,7 +202,7 @@ export default function Dashboard() {
             <div className="flex items-center justify-between">
               <div className="flex-1">
                 <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                  Week {currentWeek} of 13
+                  Week {currentWeek} of 14
                 </h2>
                 <div className="space-y-1">
                   <p className="text-gray-900 font-medium">Focus: {getWeekFocus(currentWeek)}</p>
