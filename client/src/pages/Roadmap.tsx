@@ -37,7 +37,7 @@ export default function Roadmap() {
   const { data: roadmapData } = useQuery({
     queryKey: ["/api/roadmap/select"],
     queryFn: async () => {
-      const response = await apiRequest("GET", "/api/roadmap/select");
+      const response = await apiRequest("POST", "/api/roadmap/select", {});
       return response.json();
     },
   });
@@ -69,7 +69,25 @@ export default function Roadmap() {
 
   // Generate weeks from foundation roadmap data
   const weeks = React.useMemo(() => {
+    console.log('Roadmap data:', roadmapData); // Debug log
+    
     if (!roadmapData?.selectedRoadmap?.weeklyTasks) {
+      // Fallback: use actual tasks data to generate basic weeks
+      if (allTasks.length > 0) {
+        const tasksByWeek = allTasks.reduce((acc: Record<number, Task[]>, task) => {
+          if (!acc[task.week]) acc[task.week] = [];
+          acc[task.week].push(task);
+          return acc;
+        }, {});
+        
+        return Object.entries(tasksByWeek).map(([weekNum, weekTasks]) => ({
+          week: parseInt(weekNum),
+          title: `Week ${weekNum}`,
+          description: `Week ${weekNum} tasks and activities.`,
+          tasks: weekTasks.slice(0, 5).map(t => t.title),
+          status: currentWeek > parseInt(weekNum) ? "completed" : currentWeek === parseInt(weekNum) ? "current" : "upcoming"
+        })).sort((a, b) => a.week - b.week);
+      }
       return [];
     }
 
@@ -87,7 +105,7 @@ export default function Roadmap() {
         .slice(0, 5), // Show first 5 unique tasks
       status: currentWeek > weekData.week ? "completed" : currentWeek === weekData.week ? "current" : "upcoming"
     }));
-  }, [roadmapData, currentWeek]);
+  }, [roadmapData, currentWeek, allTasks]);
 
   return (
     <div className="p-6">
