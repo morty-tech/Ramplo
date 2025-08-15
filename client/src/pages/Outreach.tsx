@@ -1686,23 +1686,26 @@ export default function Outreach() {
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 p-1">
-            <div>
-              <Label htmlFor="recipient-type">Recipient Type</Label>
-              <Select 
-                value={customizationForm.recipientType}
-                onValueChange={(value) => setCustomizationForm(prev => ({ ...prev, recipientType: value }))}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="realtor">Real Estate Agent</SelectItem>
-                  <SelectItem value="past-client">Past Client</SelectItem>
-                  <SelectItem value="prospect">New Prospect</SelectItem>
-                  <SelectItem value="referral">Referral Partner</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            {/* Only show recipient type for email and phone scripts, not social media */}
+            {activeTemplateType !== "social-media" && (
+              <div>
+                <Label htmlFor="recipient-type">Recipient Type</Label>
+                <Select 
+                  value={customizationForm.recipientType}
+                  onValueChange={(value) => setCustomizationForm(prev => ({ ...prev, recipientType: value }))}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="realtor">Real Estate Agent</SelectItem>
+                    <SelectItem value="past-client">Past Client</SelectItem>
+                    <SelectItem value="prospect">New Prospect</SelectItem>
+                    <SelectItem value="referral">Referral Partner</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
             
             <div>
               <Label htmlFor="tone">Tone</Label>
