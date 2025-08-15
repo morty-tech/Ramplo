@@ -129,7 +129,7 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
                     {user?.firstName} {user?.lastName}
                   </div>
                   <div className="text-xs text-white text-opacity-70 truncate">
-                    {user?.email}
+                    {user?.firstName} {user?.lastName}
                   </div>
                 </div>
               )}
