@@ -148,6 +148,7 @@ export default function Roadmap() {
               <div className="flex items-center justify-between">
                 <CardTitle className="text-lg">
                   Week {week.week}: {week.title}
+                  {console.log('Week display:', week.week, week.title, week.status)}
                 </CardTitle>
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
                   week.status === 'completed' 
