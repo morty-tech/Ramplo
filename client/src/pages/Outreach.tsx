@@ -282,6 +282,11 @@ export default function Outreach() {
       return await response.json();
     },
     onSuccess: (data: any) => {
+      toast({
+        title: "Template Customized",
+        description: "Template updated with your customizations.",
+      });
+      
       // Auto-save the changes first
       if (selectedTemplate) {
         const updates: any = {};
