@@ -286,36 +286,27 @@ export default function Outreach() {
         description: "Template updated with your customizations.",
       });
       
-      // Directly populate the inline editing areas based on template type
+      // Auto-save the changes first
       if (selectedTemplate) {
+        const updates: any = {};
+        if (data.subject) updates.subject = data.subject;
+        if (data.content) updates.content = data.content;
+        
+        updateTemplateMutation.mutate({
+          id: selectedTemplate.id,
+          updates
+        });
+        
+        // Determine which fields were changed for animation
         const newAnimatingFields: typeof animatingFields = {};
         
         if (activeTemplateType === "email") {
-          // For email templates, start editing subject and body
-          if (data.subject) {
-            setEditedSubject(data.subject);
-            setIsEditingSubject(true);
-            newAnimatingFields.subject = true;
-          }
-          if (data.content) {
-            setEditedBody(data.content);
-            setIsEditingBody(true);
-            newAnimatingFields.body = true;
-          }
+          if (data.subject) newAnimatingFields.subject = true;
+          if (data.content) newAnimatingFields.body = true;
         } else if (activeTemplateType === "phone-script") {
-          // For phone scripts, start editing the script
-          if (data.content) {
-            setEditedScript(data.content);
-            setIsEditingScript(true);
-            newAnimatingFields.script = true;
-          }
+          if (data.content) newAnimatingFields.script = true;
         } else if (activeTemplateType === "social-media") {
-          // For social media, start editing the content
-          if (data.content) {
-            setEditedContent(data.content);
-            setIsEditingContent(true);
-            newAnimatingFields.content = true;
-          }
+          if (data.content) newAnimatingFields.content = true;
         }
         
         // Trigger animation with a slight delay to see the flash
@@ -330,20 +321,6 @@ export default function Outreach() {
         setTimeout(() => {
           setAnimatingFields({});
         }, 3100);
-        
-        // Auto-save the changes
-        setTimeout(() => {
-          if (selectedTemplate) {
-            const updates: any = {};
-            if (data.subject) updates.subject = data.subject;
-            if (data.content) updates.content = data.content;
-            
-            updateTemplateMutation.mutate({
-              id: selectedTemplate.id,
-              updates
-            });
-          }
-        }, 500);
       }
       
       // Close the AI customization modal
