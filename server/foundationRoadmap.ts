@@ -120,16 +120,16 @@ export const FOUNDATION_ROADMAP = {
         },
         {
           "day": 5,
-          "title": "Set up calendaring links",
-          "description": "Create a booking link with buffers and confirmation emails.",
-          "category": "organization",
+          "title": "Create social media profiles",
+          "description": "Set up or optimize your professional social media presence on Instagram and Facebook.",
+          "category": "branding",
           "estimatedMinutes": 30
         },
         {
           "day": 5,
-          "title": "Organize compliance docs",
-          "description": "Collect license, NMLS, and standard disclosures in one folder.",
-          "category": "admin",
+          "title": "Review and practice elevator pitch",
+          "description": "Develop and practice a 30-second introduction about your mortgage services.",
+          "category": "branding",
           "estimatedMinutes": 20
         }
       ]
