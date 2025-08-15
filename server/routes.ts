@@ -15,6 +15,8 @@ import {
 } from "./objectStorage";
 import { ObjectPermission } from "./objectAcl";
 import { imageService } from "./imageService";
+import multer from "multer";
+import { ZipProcessingService } from "./zipProcessingService";
 
 const openai = process.env.OPENAI_API_KEY ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY }) : null;
 
@@ -335,6 +337,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(500).json({ message: "AI service temporarily unavailable - please try again later" });
       }
       res.status(500).json({ message: "Failed to customize template" });
+    }
+  });
+
+  // Template Zip Processing
+  const upload = multer({ 
+    storage: multer.memoryStorage(),
+    limits: {
+      fileSize: 50 * 1024 * 1024, // 50MB limit
+    },
+    fileFilter: (req, file, cb) => {
+      if (file.mimetype === 'application/zip' || file.originalname.toLowerCase().endsWith('.zip')) {
+        cb(null, true);
+      } else {
+        cb(new Error('Only ZIP files are allowed'));
+      }
+    }
+  });
+
+  app.post("/api/templates/extract-zip", requireAuth, upload.single('zipFile'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: 'No ZIP file uploaded' });
+      }
+
+      console.log(`Processing ZIP file: ${req.file.originalname} (${req.file.size} bytes)`);
+      
+      const result = await ZipProcessingService.processZipFile(req.file.buffer);
+      
+      console.log(`Extraction complete: ${result.extractedFiles} files extracted, ${result.skippedFiles} files skipped`);
+      
+      res.json(result);
+    } catch (error: any) {
+      console.error('ZIP processing error:', error);
+      
+      if (error.message === 'Only ZIP files are allowed') {
+        return res.status(400).json({ error: 'Please upload a valid ZIP file' });
+      }
+      
+      res.status(500).json({ 
+        error: 'Failed to process ZIP file',
+        details: error.message 
+      });
     }
   });
 
