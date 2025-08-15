@@ -166,6 +166,12 @@ export default function Outreach() {
     script?: boolean;
     content?: boolean;
   }>({});
+  const [aiCustomizedFields, setAiCustomizedFields] = useState<{
+    subject?: boolean;
+    body?: boolean;
+    script?: boolean;
+    content?: boolean;
+  }>({});
   const [customizationForm, setCustomizationForm] = useState({
     recipientType: "realtor",
     tone: "professional",
@@ -312,13 +318,32 @@ export default function Outreach() {
           }
         }
         
-        // Trigger animation
-        setAnimatingFields(newAnimatingFields);
+        // Trigger animation with a slight delay to see the flash
+        setTimeout(() => {
+          setAnimatingFields(newAnimatingFields);
+        }, 100);
+        
+        // Set AI customized indicators (persist)
+        setAiCustomizedFields(prev => ({ ...prev, ...newAnimatingFields }));
         
         // Clear animation after 3 seconds
         setTimeout(() => {
           setAnimatingFields({});
-        }, 3000);
+        }, 3100);
+        
+        // Auto-save the changes
+        setTimeout(() => {
+          if (selectedTemplate) {
+            const updates: any = {};
+            if (data.subject) updates.subject = data.subject;
+            if (data.content) updates.content = data.content;
+            
+            updateTemplateMutation.mutate({
+              id: selectedTemplate.id,
+              updates
+            });
+          }
+        }, 500);
       }
       
       // Close the AI customization modal
@@ -499,6 +524,8 @@ export default function Outreach() {
     setEditedBody('');
     setIsEditingScript(false);
     setEditedScript('');
+    // Clear AI customized indicators when template changes
+    setAiCustomizedFields({});
   }, [selectedTemplate, activeTemplateType]);
 
   // Auto-apply changes when inline settings change
@@ -730,7 +757,17 @@ export default function Outreach() {
                           <div>
                             <div className="flex items-center justify-between mb-2">
                               <div className="flex items-center gap-3">
-                                <div className="text-sm font-medium text-gray-900">Subject Line:</div>
+                                <div className="flex items-center gap-2">
+                                  <div className="text-sm font-medium text-gray-900">Subject Line:</div>
+                                  {aiCustomizedFields.subject && (
+                                    <div className="flex items-center gap-1 text-xs text-green-600">
+                                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                      </svg>
+                                      AI Customized
+                                    </div>
+                                  )}
+                                </div>
                                 {!isEditingSubject && (
                                   <Button
                                     onClick={() => copyToClipboard(selectedTemplate.subject || '')}
@@ -805,7 +842,17 @@ export default function Outreach() {
                           <div>
                             <div className="flex items-center justify-between mb-2">
                               <div className="flex items-center gap-3">
-                                <div className="text-sm font-medium text-gray-900">Email Body:</div>
+                                <div className="flex items-center gap-2">
+                                  <div className="text-sm font-medium text-gray-900">Email Body:</div>
+                                  {aiCustomizedFields.body && (
+                                    <div className="flex items-center gap-1 text-xs text-green-600">
+                                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                      </svg>
+                                      AI Customized
+                                    </div>
+                                  )}
+                                </div>
                                 {!isEditingBody && (
                                   <Button
                                     onClick={() => copyToClipboard(selectedTemplate.content)}
@@ -1034,7 +1081,17 @@ export default function Outreach() {
                           <div>
                             <div className="flex items-center justify-between mb-2">
                               <div className="flex items-center gap-3">
-                                <div className="text-sm font-medium text-gray-900">Post Content:</div>
+                                <div className="flex items-center gap-2">
+                                  <div className="text-sm font-medium text-gray-900">Post Content:</div>
+                                  {aiCustomizedFields.content && (
+                                    <div className="flex items-center gap-1 text-xs text-green-600">
+                                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                      </svg>
+                                      AI Customized
+                                    </div>
+                                  )}
+                                </div>
                                 {!isEditingContent && (
                                   <Button
                                     onClick={() => copyToClipboard(cleanContentForDisplay(selectedTemplate.content))}
@@ -1136,7 +1193,17 @@ export default function Outreach() {
                         <div>
                           <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center gap-3">
-                              <div className="text-sm font-medium text-gray-900">Call Script:</div>
+                              <div className="flex items-center gap-2">
+                                <div className="text-sm font-medium text-gray-900">Call Script:</div>
+                                {aiCustomizedFields.script && (
+                                  <div className="flex items-center gap-1 text-xs text-green-600">
+                                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                    AI Customized
+                                  </div>
+                                )}
+                              </div>
                               {!isEditingScript && (
                                 <Button
                                   onClick={() => copyToClipboard(selectedTemplate.content)}
