@@ -185,33 +185,7 @@ export default function DealCoach() {
                   />
                 </div>
 
-                {/* Urgency Level */}
-                <div>
-                  <Label className="text-sm font-medium text-gray-900 mb-4 block">Urgency Level</Label>
-                  <RadioGroup
-                    value={formData.urgencyLevel}
-                    onValueChange={(value) => setFormData(prev => ({ ...prev, urgencyLevel: value }))}
-                    className="grid grid-cols-3 gap-4"
-                  >
-                    {[
-                      { value: "low", label: "Low", desc: "General advice" },
-                      { value: "medium", label: "Medium", desc: "Need guidance" },
-                      { value: "high", label: "High", desc: "Urgent help" },
-                    ].map((option) => (
-                      <Label
-                        key={option.value}
-                        htmlFor={option.value}
-                        className="flex items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
-                      >
-                        <RadioGroupItem value={option.value} id={option.value} className="mr-3" />
-                        <div>
-                          <div className="text-sm font-medium">{option.label}</div>
-                          <div className="text-xs text-gray-600">{option.desc}</div>
-                        </div>
-                      </Label>
-                    ))}
-                  </RadioGroup>
-                </div>
+
 
                 <Button
                   type="submit"
@@ -251,7 +225,7 @@ export default function DealCoach() {
               <CardContent>
                 <div className="prose prose-sm max-w-none">
                   <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
-                    <p className="text-blue-800 font-medium">Analysis:</p>
+                    <p className="text-blue-800 font-medium">Some next steps:</p>
                     <div className="text-blue-700 whitespace-pre-line">{latestSession.aiResponse}</div>
                   </div>
                 </div>
