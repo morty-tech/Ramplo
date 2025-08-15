@@ -637,18 +637,25 @@ export default function Outreach() {
                             {selectedTemplate.imageUrl ? (
                               <div className="bg-white p-4 rounded border space-y-4">
                                 {/* Canvas for customized image */}
-                                <div className="flex justify-center">
+                                <div className="flex justify-center relative">
                                   <canvas 
                                     ref={canvasRef}
                                     className="max-w-md h-48 border rounded shadow-sm"
                                     style={{ display: customImageUrl ? 'block' : 'none' }}
                                   />
                                   {!customImageUrl && (
-                                    <img 
-                                      src={selectedTemplate.imageUrl} 
-                                      alt={selectedTemplate.imageAlt || "Template image"}
-                                      className="w-full max-w-md h-48 object-cover rounded mx-auto"
-                                    />
+                                    <div className="relative">
+                                      <img 
+                                        src={selectedTemplate.imageUrl} 
+                                        alt={selectedTemplate.imageAlt || "Template image"}
+                                        className="w-full max-w-md h-48 object-cover rounded mx-auto"
+                                      />
+                                      {updateTemplateMutation.isPending && (
+                                        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded">
+                                          <Loader2 className="w-8 h-8 text-white animate-spin" />
+                                        </div>
+                                      )}
+                                    </div>
                                   )}
                                 </div>
                                 
@@ -725,11 +732,16 @@ export default function Outreach() {
                                 
                               </div>
                             ) : (
-                              <div className="bg-white p-4 rounded border h-48 flex items-center justify-center text-gray-400">
+                              <div className="bg-white p-4 rounded border h-48 flex items-center justify-center text-gray-400 relative">
                                 <div className="text-center">
                                   <Image className="w-8 h-8 mx-auto mb-2" />
                                   <p className="text-sm">No image selected</p>
                                 </div>
+                                {updateTemplateMutation.isPending && (
+                                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded">
+                                    <Loader2 className="w-8 h-8 text-white animate-spin" />
+                                  </div>
+                                )}
                               </div>
                             )}
                             {selectedTemplate?.imageUrl && (
