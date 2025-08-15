@@ -70,20 +70,29 @@ export default function Roadmap() {
   // Generate weeks from foundation roadmap data - only show real data
   const weeks = React.useMemo(() => {
     if (roadmapData?.selectedRoadmap?.weeklyTasks?.length > 0) {
-      return roadmapData.selectedRoadmap.weeklyTasks.map((weekData: any) => ({
-        week: weekData.week,
-        title: weekData.theme,
-        description: `Week ${weekData.week} focuses on ${weekData.theme.toLowerCase()}.`,
-        tasks: weekData.dailyTasks
+      return roadmapData.selectedRoadmap.weeklyTasks.map((weekData: any) => {
+        const tasks = weekData.dailyTasks
           .reduce((acc: string[], task: any) => {
             if (!acc.includes(task.title)) {
               acc.push(task.title);
             }
             return acc;
           }, [])
-          .slice(0, 5), // Show first 5 unique tasks
-        status: currentWeek > weekData.week ? "completed" : currentWeek === weekData.week ? "current" : "upcoming"
-      }));
+          .slice(0, 5); // Show first 5 unique tasks
+        
+        if (weekData.week === 1) {
+          console.log('Week 1 tasks extracted:', tasks);
+          console.log('Week 1 raw dailyTasks:', weekData.dailyTasks.map((t: any) => t.title));
+        }
+        
+        return {
+          week: weekData.week,
+          title: weekData.theme,
+          description: `Week ${weekData.week} focuses on ${weekData.theme.toLowerCase()}.`,
+          tasks,
+          status: currentWeek > weekData.week ? "completed" : currentWeek === weekData.week ? "current" : "upcoming"
+        };
+      });
     }
     
     // No fallback - only show real roadmap data
@@ -148,7 +157,6 @@ export default function Roadmap() {
               <div className="flex items-center justify-between">
                 <CardTitle className="text-lg">
                   Week {week.week}: {week.title}
-                  {console.log('Week display:', week.week, week.title, week.status)}
                 </CardTitle>
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
                   week.status === 'completed' 
