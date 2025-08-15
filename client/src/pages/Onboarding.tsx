@@ -162,7 +162,7 @@ export default function Onboarding() {
         <Card className="w-full max-w-md">
           <CardContent className="p-8 text-center">
             <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Setting up your account...</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Hang tight — we're building your ramp to success!</h2>
             <div className="space-y-3">
               {loadingMessages.map((message, index) => (
                 <div key={index} className={`flex items-center justify-center space-x-2 text-sm ${

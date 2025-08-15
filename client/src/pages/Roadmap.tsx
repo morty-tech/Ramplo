@@ -69,8 +69,17 @@ export default function Roadmap() {
 
   // Generate weeks from foundation roadmap data - only show real data
   const weeks = React.useMemo(() => {
+    console.log('Roadmap processing:', {
+      hasRoadmapData: !!roadmapData,
+      hasSelectedRoadmap: !!roadmapData?.selectedRoadmap,
+      hasWeeklyTasks: !!roadmapData?.selectedRoadmap?.weeklyTasks,
+      weeklyTasksLength: roadmapData?.selectedRoadmap?.weeklyTasks?.length,
+      firstWeekTheme: roadmapData?.selectedRoadmap?.weeklyTasks?.[0]?.theme,
+      firstWeekTasks: roadmapData?.selectedRoadmap?.weeklyTasks?.[0]?.dailyTasks?.slice(0, 3).map((t: any) => t.title)
+    });
+
     if (roadmapData?.selectedRoadmap?.weeklyTasks?.length > 0) {
-      return roadmapData.selectedRoadmap.weeklyTasks.map((weekData: any) => ({
+      const processedWeeks = roadmapData.selectedRoadmap.weeklyTasks.map((weekData: any) => ({
         week: weekData.week,
         title: weekData.theme,
         description: `Week ${weekData.week} focuses on ${weekData.theme.toLowerCase()}.`,
@@ -84,8 +93,12 @@ export default function Roadmap() {
           .slice(0, 5), // Show first 5 unique tasks
         status: currentWeek > weekData.week ? "completed" : currentWeek === weekData.week ? "current" : "upcoming"
       }));
+      
+      console.log('Processed weeks:', processedWeeks.slice(0, 2)); // Show first 2 weeks
+      return processedWeeks;
     }
     
+    console.log('No roadmap data available, returning empty array');
     // No fallback - only show real roadmap data
     return [];
   }, [roadmapData, currentWeek]);
