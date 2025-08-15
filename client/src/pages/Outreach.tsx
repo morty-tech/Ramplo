@@ -178,7 +178,6 @@ export default function Outreach() {
     keyPoints: ""
   });
   const [isAICustomizationSuccess, setIsAICustomizationSuccess] = useState(false);
-  const [showAICustomizedNotification, setShowAICustomizedNotification] = useState(false);
   const [notificationTimeoutId, setNotificationTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const { toast } = useToast();
 
@@ -325,17 +324,14 @@ export default function Outreach() {
         // Set AI customized indicators (persist)
         setAiCustomizedFields(prev => ({ ...prev, ...newAnimatingFields }));
         
-        // Show on-page notification
-        setShowAICustomizedNotification(true);
-        
         // Clear any existing timeout
         if (notificationTimeoutId) {
           clearTimeout(notificationTimeoutId);
         }
         
-        // Auto-dismiss notification after 10 seconds
+        // Auto-revert button text after 10 seconds
         const timeoutId = setTimeout(() => {
-          setShowAICustomizedNotification(false);
+          setIsAICustomizationSuccess(false);
           setNotificationTimeoutId(null);
         }, 10000);
         setNotificationTimeoutId(timeoutId);
@@ -532,9 +528,10 @@ export default function Outreach() {
     // Clear AI customized indicators and success state when template changes
     setAiCustomizedFields({});
     setIsAICustomizationSuccess(false);
-    // Only clear notification if it's not from a recent AI customization
-    if (!notificationTimeoutId) {
-      setShowAICustomizedNotification(false);
+    // Clear timeout when switching templates
+    if (notificationTimeoutId) {
+      clearTimeout(notificationTimeoutId);
+      setNotificationTimeoutId(null);
     }
   }, [selectedTemplate, activeTemplateType]);
 
@@ -739,21 +736,6 @@ export default function Outreach() {
                           </SelectContent>
                         </Select>
                         
-                        {/* AI Customized Notification */}
-                        {showAICustomizedNotification && (
-                          <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2">
-                            <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                            </svg>
-                            <span className="text-sm text-green-700 font-medium">Template customized with AI</span>
-                            <button 
-                              onClick={() => setShowAICustomizedNotification(false)}
-                              className="ml-auto text-green-400 hover:text-green-600"
-                            >
-                              <X className="w-4 h-4" />
-                            </button>
-                          </div>
-                        )}
                       </div>
                       <button
                         onClick={() => setIsAICustomizationOpen(true)}
@@ -770,7 +752,7 @@ export default function Outreach() {
                         ) : (
                           <Wand2 className="w-3 h-3" />
                         )}
-                        {isAICustomizationSuccess ? "Customize Again" : "Customize with AI"}
+                        {isAICustomizationSuccess ? "Template Customized" : "Customize with AI"}
                       </button>
                     </div>
                   </div>
