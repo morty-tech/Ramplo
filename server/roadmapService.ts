@@ -19,6 +19,17 @@ export interface RoadmapSprint {
   weeklyTasks: {
     week: number;
     theme: string;
+    days?: Array<{
+      day: number;
+      objective: string;
+      extraTimeActivity: string;
+      tasks: Array<{
+        title: string;
+        description: string;
+        category: string;
+        estimatedMinutes: number;
+      }>;
+    }>;
     dailyTasks: Array<{
       day: number;
       title: string;

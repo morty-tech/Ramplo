@@ -617,6 +617,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Temporary endpoint to regenerate roadmap
+  app.post("/api/regenerate-roadmap", requireAuth, async (req: any, res) => {
+    try {
+      const userId = req.session.user.id;
+      const userProfile = await storage.getUserProfile(userId);
+      
+      if (!userProfile) {
+        return res.status(400).json({ message: "User profile not found" });
+      }
+      
+      // Generate personalized roadmap
+      await generatePersonalizedRoadmap(userId, userProfile);
+      
+      res.json({ message: "Roadmap regenerated successfully" });
+    } catch (error) {
+      console.error("Error regenerating roadmap:", error);
+      res.status(500).json({ message: "Failed to regenerate roadmap" });
+    }
+  });
+
   // AI-powered email template selection
   app.post("/api/templates/select", requireAuth, async (req: any, res) => {
     try {
@@ -682,16 +702,43 @@ async function generateTasksFromRoadmap(userId: string, roadmap: any) {
   const baseTasks = [];
   
   for (const weekData of roadmap.weeklyTasks || []) {
-    for (const dailyTask of weekData.dailyTasks || []) {
-      baseTasks.push({
-        title: dailyTask.title,
-        description: dailyTask.description,
-        category: dailyTask.category,
-        estimatedMinutes: dailyTask.estimatedMinutes,
-        week: weekData.week,
-        day: dailyTask.day,
-        theme: weekData.theme
-      });
+    // Check if we have the new 'days' structure with objectives
+    if (weekData.days && weekData.days.length > 0) {
+      // Use new structure with daily objectives
+      for (const dayData of weekData.days) {
+        for (const task of dayData.tasks || []) {
+          baseTasks.push({
+            title: task.title,
+            description: task.description,
+            category: task.category,
+            estimatedMinutes: task.estimatedMinutes,
+            week: weekData.week,
+            day: dayData.day,
+            theme: weekData.theme,
+            objective: dayData.objective,
+            extraTimeActivity: dayData.extraTimeActivity,
+            detailedDescription: null,
+            externalLinks: [],
+            internalLinks: []
+          });
+        }
+      }
+    } else {
+      // Fallback to old structure
+      for (const dailyTask of weekData.dailyTasks || []) {
+        baseTasks.push({
+          title: dailyTask.title,
+          description: dailyTask.description,
+          category: dailyTask.category,
+          estimatedMinutes: dailyTask.estimatedMinutes,
+          week: weekData.week,
+          day: dailyTask.day,
+          theme: weekData.theme,
+          detailedDescription: dailyTask.detailedDescription || null,
+          externalLinks: dailyTask.externalLinks || [],
+          internalLinks: dailyTask.internalLinks || []
+        });
+      }
     }
   }
   
