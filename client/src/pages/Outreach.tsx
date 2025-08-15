@@ -320,18 +320,6 @@ export default function Outreach() {
   }
 
   const selectedImage = templateImages.find(img => img.id === selectedImageId);
-  
-  // Debug logging
-  useEffect(() => {
-    console.log("Debug:", { 
-      selectedTemplateId, 
-      selectedImageId, 
-      selectedTemplate: selectedTemplate?.name,
-      selectedTemplateImageUrl: selectedTemplate?.imageUrl,
-      templateImagesCount: templateImages.length,
-      selectedImage: selectedImage?.name 
-    });
-  }, [selectedTemplateId, selectedImageId, selectedTemplate, templateImages, selectedImage]);
 
   return (
     <div className="p-6">
@@ -559,7 +547,6 @@ export default function Outreach() {
                                       />
                                       <Button 
                                         onClick={() => {
-                                          console.log("Customize button clicked", { selectedImage, selectedImageId });
                                           if (selectedImage) {
                                             setEditingImage(selectedImage);
                                             setIsImageEditorOpen(true);
