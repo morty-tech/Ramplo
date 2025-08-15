@@ -271,18 +271,38 @@ export default function Outreach() {
     onSuccess: (data: any) => {
       toast({
         title: "Template Customized",
-        description: "Opening customized template for editing...",
+        description: "Template updated with your customizations.",
       });
       
-      // Immediately open edit dialog with customized content
+      // Directly populate the inline editing areas based on template type
       if (selectedTemplate) {
-        setEditingTemplate({
-          ...selectedTemplate,
-          subject: data.subject || selectedTemplate.subject,
-          content: data.content || selectedTemplate.content
-        });
-        setIsEditDialogOpen(true);
+        if (activeTemplateType === "email") {
+          // For email templates, start editing subject and body
+          if (data.subject) {
+            setEditedSubject(data.subject);
+            setIsEditingSubject(true);
+          }
+          if (data.content) {
+            setEditedBody(data.content);
+            setIsEditingBody(true);
+          }
+        } else if (activeTemplateType === "phone-script") {
+          // For phone scripts, start editing the script
+          if (data.content) {
+            setEditedScript(data.content);
+            setIsEditingScript(true);
+          }
+        } else if (activeTemplateType === "social-media") {
+          // For social media, start editing the content
+          if (data.content) {
+            setEditedContent(data.content);
+            setIsEditingContent(true);
+          }
+        }
       }
+      
+      // Close the AI customization modal
+      setIsAICustomizationOpen(false);
     },
     onError: (error) => {
       toast({
@@ -1594,10 +1614,7 @@ export default function Outreach() {
                 Cancel
               </Button>
               <Button 
-                onClick={() => {
-                  handleCustomize();
-                  setIsAICustomizationOpen(false);
-                }}
+                onClick={handleCustomize}
                 disabled={customizeTemplateMutation.isPending || !customizationForm.keyPoints.trim()}
                 className="bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400"
               >
@@ -1606,7 +1623,7 @@ export default function Outreach() {
                 ) : (
                   <Wand2 className="w-4 h-4 mr-2" />
                 )}
-                {customizeTemplateMutation.isPending ? 'Generating...' : 'Customize & Edit'}
+                {customizeTemplateMutation.isPending ? 'Generating...' : 'Customize My Template'}
               </Button>
             </div>
           </div>
