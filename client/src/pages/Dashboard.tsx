@@ -23,7 +23,8 @@ import {
   Map,
   Clock,
   Info,
-  Eye
+  Eye,
+  Target
 } from "lucide-react";
 
 // Ticker animation hook for counting numbers
@@ -100,7 +101,7 @@ export default function Dashboard() {
           title: "Task completed!",
           description: "Great job staying on track!",
         });
-      }, 600); // 600ms delay to show animation
+      }, 300); // 300ms delay for faster animation
     },
   });
 
@@ -140,7 +141,7 @@ export default function Dashboard() {
 
   const performanceLevel = getPerformanceLevel(performanceScore);
 
-  // Query for the foundation roadmap to get real week themes
+  // Query for the foundation roadmap to get real week themes and daily objectives
   const { data: roadmapData } = useQuery({
     queryKey: ["/api/roadmap/select"],
     queryFn: async () => {
@@ -148,6 +149,24 @@ export default function Dashboard() {
       return response.json();
     },
   });
+
+  // Define currentWeek and currentDay before using them
+  const currentWeek = progress?.currentWeek || 1;
+  const currentDay = progress?.currentDay || 1;
+
+  // Get today's objective from the roadmap data
+  const getTodaysObjective = () => {
+    if (roadmapData?.selectedRoadmap?.weeklyTasks && currentWeek && currentDay) {
+      const weekData = roadmapData.selectedRoadmap.weeklyTasks.find((w: any) => w.week === currentWeek);
+      if (weekData?.days) {
+        const dayData = weekData.days.find((d: any) => d.day === currentDay);
+        return dayData?.objective;
+      }
+    }
+    return null;
+  };
+
+  const todaysObjective = getTodaysObjective();
 
   // Week focus based on real roadmap data
   const getWeekFocus = (week: number) => {
@@ -157,8 +176,6 @@ export default function Dashboard() {
     }
     return "Week " + week; // Fallback with no hardcoded themes
   };
-
-  const currentWeek = progress?.currentWeek || 1;
   const lastWeekFocus = currentWeek > 1 ? getWeekFocus(currentWeek - 1) : null;
   const nextWeekFocus = currentWeek < 14 ? getWeekFocus(currentWeek + 1) : null;
 
@@ -320,7 +337,16 @@ export default function Dashboard() {
           <Card>
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle>Today's Tasks</CardTitle>
+                <div>
+                  <CardTitle>Today's Tasks</CardTitle>
+                  {todaysObjective && (
+                    <p className="text-sm text-gray-600 mt-1 flex items-center">
+                      <Target className="w-4 h-4 mr-2 text-blue-600" />
+                      <span className="font-medium text-blue-700">Today's Focus:</span>
+                      <span className="ml-1">{todaysObjective}</span>
+                    </p>
+                  )}
+                </div>
                 <span className="text-sm text-gray-600">
                   {new Date().toLocaleDateString('en-US', { 
                     weekday: 'long',
@@ -367,9 +393,6 @@ export default function Dashboard() {
                         }`}
                         onClick={(e) => e.stopPropagation()}
                       />
-                      {isCompleting && (
-                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-ping"></div>
-                      )}
                     </div>
                     <div className="flex-grow">
                       <div>
