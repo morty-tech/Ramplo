@@ -225,7 +225,7 @@ export default function Dashboard() {
       <TooltipProvider>
         {/* Week Progress Banner */}
         <Card className="mb-6">
-          <CardContent className="px-6 py-4">
+          <CardContent className="px-6 py-2">
             <div className="flex items-center justify-between">
               <div className="flex-1">
                 <h2 className="text-xl font-semibold text-gray-900 mb-2">
