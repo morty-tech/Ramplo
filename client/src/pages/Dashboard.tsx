@@ -365,12 +365,16 @@ export default function Dashboard() {
           {/* Client Connection Tracker */}
           <ClientConnectionTracker />
           
-
+          {/* Loan Action Tracker */}
+          <LoanActionTracker />
 
           {/* Quick Actions */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Quick Actions</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <Send className="w-5 h-5" />
+                Quick Actions
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
@@ -401,9 +405,6 @@ export default function Dashboard() {
               </div>
             </CardContent>
           </Card>
-
-          {/* Loan Action Tracker */}
-          <LoanActionTracker />
         </div>
       </div>
 
