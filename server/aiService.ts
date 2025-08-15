@@ -100,36 +100,26 @@ function buildProfileContext(profile: UserProfile): string {
     context.push(`Markets: ${profile.markets.join(", ")}`);
   }
   
-  if (profile.statesLicensedIn && profile.statesLicensedIn.length > 0) {
-    context.push(`Licensed in: ${profile.statesLicensedIn.join(", ")}`);
-  }
-  
-  if (profile.nmlsLicenseId) {
-    context.push(`NMLS ID: ${profile.nmlsLicenseId}`);
-  }
+  // Skip the detailed profile context for now since we simplified the prompt
   
   if (profile.experienceLevel) {
     context.push(`Experience Level: ${profile.experienceLevel}`);
   }
   
-  if (profile.focusAreasSelected && profile.focusAreasSelected.length > 0) {
-    context.push(`Specializes in: ${profile.focusAreasSelected.join(", ")}`);
+  if (profile.focus && profile.focus.length > 0) {
+    context.push(`Specializes in: ${profile.focus.join(", ")}`);
   }
   
-  if (profile.borrowerTypesWorkedWith && profile.borrowerTypesWorkedWith.length > 0) {
-    context.push(`Works with: ${profile.borrowerTypesWorkedWith.join(", ")} buyers`);
+  if (profile.borrowerTypes && profile.borrowerTypes.length > 0) {
+    context.push(`Works with: ${profile.borrowerTypes.join(", ")} buyers`);
   }
   
-  if (profile.dailyTimeAvailable) {
-    context.push(`Time availability: ${profile.dailyTimeAvailable} minutes daily`);
+  if (profile.timeAvailableWeekday) {
+    context.push(`Time availability: ${profile.timeAvailableWeekday} minutes daily`);
   }
   
-  if (profile.outreachComfortLevel) {
-    context.push(`Outreach comfort level: ${profile.outreachComfortLevel}`);
-  }
-  
-  if (profile.networkAssets && profile.networkAssets.length > 0) {
-    context.push(`Network: ${profile.networkAssets.join(", ")}`);
+  if (profile.outreachComfort) {
+    context.push(`Outreach comfort level: ${profile.outreachComfort}`);
   }
   
   if (profile.socialChannelsUsed && profile.socialChannelsUsed.length > 0) {
@@ -140,8 +130,8 @@ function buildProfileContext(profile: UserProfile): string {
     context.push(`Preferred communication tone: ${profile.tonePreference}`);
   }
   
-  if (profile.goalDescription) {
-    context.push(`90-day goal: ${profile.goalDescription}`);
+  if (profile.goals) {
+    context.push(`90-day goal: ${profile.goals}`);
   }
   
   return context.join("\n");
@@ -163,7 +153,7 @@ function fallbackCustomization(request: CustomizationRequest): {
     '[YOUR_NAME]': fullName || '[YOUR_NAME]',
     '[YOUR_EMAIL]': userProfile.email || '[YOUR_EMAIL]',
     '[YOUR_CITY]': userProfile.markets?.[0] || '[YOUR_CITY]',
-    '[NMLS_ID]': userProfile.nmlsLicenseId || '[NMLS_ID]',
+    '[NMLS_ID]': '[NMLS_ID]',
     '[YOUR_PHONE]': '[YOUR_PHONE]', // Would need to be added to profile
     '[COMPANY_NAME]': '[COMPANY_NAME]', // Would need to be added to profile
   };
@@ -212,7 +202,7 @@ export async function generateDealCoachAdvice({
   challenge: string;
   userProfile: UserProfile;
 }): Promise<string> {
-  const profileContext = buildProfileContext(userProfile);
+  // Simplified prompt without detailed profile context
   
   const prompt = `You are an expert mortgage coach. Provide concise, actionable advice in bullet points.
 
