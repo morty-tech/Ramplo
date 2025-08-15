@@ -7,6 +7,7 @@ import {
   dealCoachSessions,
   magicLinks,
   dailyConnections,
+  dailyLoanActions,
   type User,
   type InsertUser,
   type UserProfile,
@@ -21,6 +22,8 @@ import {
   type MagicLink,
   type DailyConnections,
   type InsertDailyConnections,
+  type DailyLoanActions,
+  type InsertDailyLoanActions,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, and, desc, gte } from "drizzle-orm";
@@ -255,20 +258,79 @@ export class DatabaseStorage implements IStorage {
     }
   }
 
-  // Daily loan actions operations (stub methods for now - table doesn't exist yet)
-  async getTodayLoanActions(userId: string): Promise<any> {
-    // Return default values since table doesn't exist
-    return { preapprovals: 0, applications: 0, closings: 0 };
+  // Daily loan actions operations
+  async createDailyLoanActions(actions: InsertDailyLoanActions): Promise<DailyLoanActions> {
+    try {
+      const [loanActions] = await db
+        .insert(dailyLoanActions)
+        .values(actions)
+        .returning();
+      return loanActions;
+    } catch (error) {
+      // If table doesn't exist, return default values
+      console.warn("Loan actions table not available:", error);
+      return { 
+        id: '', userId: actions.userId, date: actions.date || new Date(),
+        preapprovals: actions.preapprovals || 0, 
+        applications: actions.applications || 0, 
+        closings: actions.closings || 0,
+        createdAt: new Date(), updatedAt: new Date()
+      } as DailyLoanActions;
+    }
   }
 
-  async createDailyLoanActions(actions: any): Promise<any> {
-    // Return default values since table doesn't exist
-    return { preapprovals: 0, applications: 0, closings: 0 };
+  async getTodayLoanActions(userId: string): Promise<DailyLoanActions | undefined> {
+    try {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const [loanActions] = await db
+        .select()
+        .from(dailyLoanActions)
+        .where(
+          and(
+            eq(dailyLoanActions.userId, userId),
+            gte(dailyLoanActions.date, today)
+          )
+        )
+        .orderBy(desc(dailyLoanActions.createdAt))
+        .limit(1);
+      
+      return loanActions;
+    } catch (error) {
+      // If table doesn't exist, return default values
+      console.warn("Loan actions table not available:", error);
+      return { preapprovals: 0, applications: 0, closings: 0 } as any;
+    }
   }
 
-  async updateDailyLoanActions(userId: string, date: Date, updates: any): Promise<any> {
-    // Return default values since table doesn't exist
-    return { preapprovals: 0, applications: 0, closings: 0 };
+  async updateDailyLoanActions(userId: string, date: Date, updates: Partial<DailyLoanActions>): Promise<DailyLoanActions> {
+    try {
+      const existing = await this.getTodayLoanActions(userId);
+      
+      if (existing && existing.id) {
+        const [loanActions] = await db
+          .update(dailyLoanActions)
+          .set({ ...updates, updatedAt: new Date() })
+          .where(eq(dailyLoanActions.id, existing.id))
+          .returning();
+        return loanActions;
+      } else {
+        return await this.createDailyLoanActions({
+          userId,
+          date,
+          ...updates,
+        } as InsertDailyLoanActions);
+      }
+    } catch (error) {
+      // If table doesn't exist, return default values
+      console.warn("Loan actions table not available:", error);
+      return { 
+        id: '', userId, date,
+        preapprovals: 0, applications: 0, closings: 0,
+        createdAt: new Date(), updatedAt: new Date()
+      } as DailyLoanActions;
+    }
   }
 }
 
