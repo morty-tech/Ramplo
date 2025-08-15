@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Task } from "@shared/schema";
 import TaskDetailModal from "@/components/TaskDetailModal";
 import DayModal from "@/components/DayModal";
-import { Check, Clock, Calendar, Eye, Lock, Target } from "lucide-react";
+import { Check, Clock, Calendar, Eye, Lock, Target, Star, TrendingUp } from "lucide-react";
 
 const TOTAL_WEEKS = 14;
 
@@ -100,6 +100,20 @@ export default function Roadmap() {
 
   // Calculate current day for highlighting
   const currentDay = progress?.currentDay || 1;
+  
+  // Calculate completion percentages for days
+  const getDayCompletionPercentage = (week: number, day: number) => {
+    const dayTasks = allTasks.filter(task => task.week === week && task.day === day);
+    if (dayTasks.length === 0) return 0;
+    const completedTasks = dayTasks.filter(task => task.completed);
+    return Math.round((completedTasks.length / dayTasks.length) * 100);
+  };
+  
+  // Get today's date info
+  const today = new Date();
+  const isToday = (week: number, day: number) => {
+    return week === currentWeek && day === currentDay;
+  };
 
   return (
     <div className="p-6">
@@ -185,12 +199,16 @@ export default function Roadmap() {
                     const isDayAccessible = week.status !== "upcoming";
                     const isCurrentDay = week.status === "current" && day.day === currentDay;
                     const isDayCompleted = week.status === "completed" || (week.status === "current" && day.day < currentDay);
+                    const isTodayHighlight = isToday(week.week, day.day);
+                    const completionPercentage = getDayCompletionPercentage(week.week, day.day);
                     
                     return (
                       <div 
                         key={day.day}
-                        className={`p-3 rounded-lg border transition-all cursor-pointer group ${
-                          isCurrentDay 
+                        className={`p-3 rounded-lg border transition-all cursor-pointer group relative ${
+                          isTodayHighlight
+                            ? 'border-blue-500 bg-blue-50 shadow-lg ring-2 ring-blue-200'
+                            : isCurrentDay 
                             ? 'border-blue-500 bg-blue-50 shadow-sm' 
                             : isDayCompleted
                             ? 'border-green-300 bg-green-50' 
@@ -202,8 +220,10 @@ export default function Roadmap() {
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-3">
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-                              isCurrentDay
+                            <div className={`relative w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+                              isTodayHighlight
+                                ? 'bg-blue-600 text-white ring-2 ring-blue-300'
+                                : isCurrentDay
                                 ? 'bg-blue-600 text-white'
                                 : isDayCompleted
                                 ? 'bg-green-600 text-white'
@@ -218,22 +238,55 @@ export default function Roadmap() {
                               ) : (
                                 <Lock className="w-3 h-3" />
                               )}
+                              {isTodayHighlight && (
+                                <Star className="w-3 h-3 absolute -top-1 -right-1 text-yellow-400 fill-current" />
+                              )}
                             </div>
                             <div className="flex-grow">
-                              <div className="font-medium text-sm text-gray-900">
-                                Day {day.day}
+                              <div className="flex items-center gap-2">
+                                <div className="font-medium text-sm text-gray-900">
+                                  Day {day.day}
+                                  {isTodayHighlight && (
+                                    <span className="ml-1 text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full font-medium">
+                                      TODAY
+                                    </span>
+                                  )}
+                                </div>
+                                {(isDayCompleted || isCurrentDay) && completionPercentage >= 0 && (
+                                  <div className="text-xs text-gray-500 flex items-center">
+                                    <TrendingUp className="w-3 h-3 mr-1" />
+                                    {completionPercentage}%
+                                  </div>
+                                )}
                               </div>
                               <div className={`text-xs mt-1 ${
+                                isTodayHighlight ? 'text-blue-700 font-medium' :
                                 isCurrentDay ? 'text-blue-700' : isDayCompleted ? 'text-green-700' : 'text-gray-600'
                               }`}>
                                 <Target className="w-3 h-3 inline mr-1" />
                                 {day.objective}
                               </div>
+                              {(isDayCompleted || isCurrentDay) && completionPercentage > 0 && (
+                                <div className="mt-2">
+                                  <div className="w-full bg-gray-200 rounded-full h-1.5">
+                                    <div 
+                                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                                        completionPercentage === 100 ? 'bg-green-500' : 'bg-blue-500'
+                                      }`}
+                                      style={{ width: `${completionPercentage}%` }}
+                                    ></div>
+                                  </div>
+                                </div>
+                              )}
                             </div>
                           </div>
                           {isDayAccessible && (
-                            <div className="text-xs text-gray-500 group-hover:text-primary transition-colors">
-                              Click to view
+                            <div className="text-xs text-gray-500 group-hover:text-primary transition-colors text-right">
+                              {isTodayHighlight ? (
+                                <div className="text-blue-600 font-medium">Active</div>
+                              ) : (
+                                "Click to view"
+                              )}
                             </div>
                           )}
                         </div>
