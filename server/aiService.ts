@@ -73,6 +73,12 @@ Respond with JSON in this exact format:
     };
   } catch (error) {
     console.error("AI customization error:", error);
+    
+    // If OpenAI is unavailable, provide fallback customization
+    if (error.status === 429 || error.code === 'insufficient_quota') {
+      return fallbackCustomization(request);
+    }
+    
     throw new Error("Failed to customize template with AI");
   }
 }
@@ -137,4 +143,58 @@ function buildProfileContext(profile: UserProfile): string {
   }
   
   return context.join("\n");
+}
+
+function fallbackCustomization(request: CustomizationRequest): {
+  subject: string;
+  content: string;
+} {
+  const { template, userProfile, customization } = request;
+  
+  // Simple template personalization without AI
+  let customizedSubject = template.subject;
+  let customizedContent = template.content;
+  
+  // Replace common placeholders with user data
+  const replacements: Record<string, string> = {
+    '[YOUR_NAME]': userProfile.fullName || '[YOUR_NAME]',
+    '[YOUR_EMAIL]': userProfile.email || '[YOUR_EMAIL]',
+    '[YOUR_CITY]': userProfile.market || '[YOUR_CITY]',
+    '[NMLS_ID]': userProfile.nmlsId || '[NMLS_ID]',
+    '[YOUR_PHONE]': '[YOUR_PHONE]', // Would need to be added to profile
+    '[COMPANY_NAME]': '[COMPANY_NAME]', // Would need to be added to profile
+  };
+  
+  // Apply replacements
+  Object.entries(replacements).forEach(([placeholder, value]) => {
+    customizedSubject = customizedSubject.replace(new RegExp(placeholder, 'g'), value);
+    customizedContent = customizedContent.replace(new RegExp(placeholder, 'g'), value);
+  });
+  
+  // Add key points if provided
+  if (customization.keyPoints.trim()) {
+    const keyPointsSection = `\n\nKey highlights:\n• ${customization.keyPoints.split(',').map(point => point.trim()).join('\n• ')}\n`;
+    
+    // Insert before signature or at the end
+    if (customizedContent.includes('Best regards') || customizedContent.includes('Sincerely')) {
+      customizedContent = customizedContent.replace(
+        /(Best regards|Sincerely)/,
+        keyPointsSection + '$1'
+      );
+    } else {
+      customizedContent += keyPointsSection;
+    }
+  }
+  
+  // Adjust tone in subject line
+  if (customization.tone === 'friendly') {
+    customizedSubject = customizedSubject.replace(/^(.*?)$/, "👋 $1");
+  } else if (customization.tone === 'urgent') {
+    customizedSubject = `⚡ ${customizedSubject}`;
+  }
+  
+  return {
+    subject: customizedSubject,
+    content: customizedContent
+  };
 }

@@ -265,6 +265,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (error.message.includes("API key")) {
         return res.status(500).json({ message: "AI service not configured" });
       }
+      if (error.message.includes("quota")) {
+        return res.status(500).json({ message: "AI service temporarily unavailable - please try again later" });
+      }
       res.status(500).json({ message: "Failed to customize template" });
     }
   });
