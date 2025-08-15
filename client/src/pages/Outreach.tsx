@@ -947,11 +947,11 @@ export default function Outreach() {
                     {activeTemplateType === "social-media" && (
                       <>
                         <div className="space-y-6">
-                          {/* Image Preview with Inline Customization - Above content */}
+                          {/* Post Image with Inline Customization - Above content */}
                           <div>
                             <div className="flex items-center justify-between mb-2">
                               <div className="flex items-center gap-3">
-                                <div className="text-sm font-medium text-gray-900">Image Preview:</div>
+                                <div className="text-sm font-medium text-gray-900">Post Image:</div>
                                 {selectedTemplate?.imageUrl && (
                                   <Button
                                     onClick={downloadCustomizedImage}
