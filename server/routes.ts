@@ -318,7 +318,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           name: template.name,
           templateType: template.templateType,
           subject: template.subject,
-          content: template.content
+          content: template.content,
+          platform: template.platform
         },
         userProfile,
         customization: { recipientType, tone, keyPoints }

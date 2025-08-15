@@ -12,6 +12,7 @@ interface CustomizationRequest {
     templateType: string;
     subject?: string;
     content: string;
+    platform?: string;
   };
   userProfile: UserProfile;
   customization: {
@@ -64,6 +65,23 @@ Respond with JSON in this exact format:
   "content": "customized email content"
 }`;
   } else if (template.templateType === 'social-media') {
+    // Determine character limit based on platform
+    const getCharacterLimit = (platform?: string): number => {
+      if (!platform) return 1000; // General default
+      const platformLimits: Record<string, number> = {
+        'Twitter/X': 280,
+        'LinkedIn': 3000,
+        'Instagram': 125,
+        'Facebook': 3000,
+      };
+      const matchedPlatform = Object.keys(platformLimits).find(p => 
+        platform.toLowerCase().includes(p.toLowerCase().split('/')[0])
+      );
+      return matchedPlatform ? platformLimits[matchedPlatform] : 1000;
+    };
+    
+    const charLimit = getCharacterLimit(template.platform);
+    
     prompt = `You are an AI assistant helping a mortgage loan officer customize a social media post template.
 
 LOAN OFFICER PROFILE:
@@ -73,18 +91,21 @@ ORIGINAL SOCIAL MEDIA POST:
 ${template.content}
 
 CUSTOMIZATION REQUIREMENTS:
+- Platform: ${template.platform || 'General'}
+- Character Limit: ${charLimit} characters (STRICT LIMIT)
 - Tone: ${customization.tone}
 - Key Points to Include: ${customization.keyPoints}
 
-INSTRUCTIONS:
-1. Personalize the post using the loan officer's specific details and experience
-2. Adjust the tone to match the requested style (${customization.tone})
-3. Incorporate the key points naturally into the post
-4. Keep the core message and purpose of the original post
-5. Replace placeholder variables like [YOUR_NAME] with actual profile information where available
-6. Make the post engaging and authentic
-7. Keep appropriate length for social media (concise but impactful)
-8. Include relevant hashtags if appropriate
+CRITICAL INSTRUCTIONS:
+1. The final post MUST be ${charLimit} characters or fewer
+2. Personalize the post using the loan officer's specific details and experience
+3. Adjust the tone to match the requested style (${customization.tone})
+4. Incorporate the key points naturally into the post
+5. Keep the core message and purpose of the original post
+6. Replace placeholder variables like [YOUR_NAME] with actual profile information where available
+7. Make the post engaging and authentic
+8. Include relevant hashtags if appropriate and within character limit
+9. COUNT CHARACTERS and ensure you stay under ${charLimit} characters
 
 Respond with JSON in this exact format:
 {
@@ -254,8 +275,34 @@ function fallbackCustomization(request: CustomizationRequest): {
         customizedContent += keyPointsSection;
       }
     } else if (template.templateType === 'social-media') {
-      // For social media, add key points as additional content
-      customizedContent += `\n\n${customization.keyPoints}`;
+      // For social media, add key points as additional content (respecting character limits)
+      const getCharacterLimit = (platform?: string): number => {
+        if (!platform) return 1000;
+        const platformLimits: Record<string, number> = {
+          'Twitter/X': 280,
+          'LinkedIn': 3000, 
+          'Instagram': 125,
+          'Facebook': 3000,
+        };
+        const matchedPlatform = Object.keys(platformLimits).find(p => 
+          platform.toLowerCase().includes(p.toLowerCase().split('/')[0])
+        );
+        return matchedPlatform ? platformLimits[matchedPlatform] : 1000;
+      };
+      
+      const charLimit = getCharacterLimit(template.platform);
+      const keyPointsToAdd = `\n\n${customization.keyPoints}`;
+      
+      // Only add key points if it doesn't exceed character limit
+      if ((customizedContent + keyPointsToAdd).length <= charLimit) {
+        customizedContent += keyPointsToAdd;
+      } else {
+        // Truncate to fit within limit
+        const availableSpace = charLimit - customizedContent.length - 3; // Reserve 3 chars for "..."
+        if (availableSpace > 10) { // Only add if we have meaningful space
+          customizedContent += `\n\n${customization.keyPoints.substring(0, availableSpace)}...`;
+        }
+      }
     } else if (template.templateType === 'phone-script') {
       // For phone scripts, integrate key points into talking points
       const keyPointsSection = `\n\n[KEY TALKING POINTS: ${customization.keyPoints}]\n`;
