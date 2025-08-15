@@ -54,3 +54,11 @@ Preferred communication style: Simple, everyday language.
 - **UI Components**: Radix UI primitives for accessible component foundation
 - **Deployment**: Replit-specific configuration with development banner and cartographer integration
 - **Development Tools**: Vite with runtime error overlay and hot module replacement
+
+## Recent Changes
+
+### Foundation Roadmap Integration (Current Session)
+- **Implemented single source of truth for baseline tasks**: Created `server/foundationRoadmap.ts` containing comprehensive 13-week foundation roadmap data
+- **Updated AI roadmap service**: Modified `server/roadmapService.ts` to use foundation roadmap data instead of minimal example data
+- **Enhanced default task generation**: Updated `server/routes.ts` to pull default tasks from first 13 weeks of foundation roadmap
+- **Unified data source**: Both AI roadmap generation and fallback defaults now use the same comprehensive foundation data covering 13 weeks of progressive task themes from foundation setup through momentum building

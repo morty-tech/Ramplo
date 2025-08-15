@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import type { UserProfile } from "@shared/schema";
+import { FOUNDATION_ROADMAP } from "./foundationRoadmap";
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error("OPENAI_API_KEY environment variable must be set");
@@ -43,39 +44,11 @@ export interface EmailTemplate {
   description: string;
 }
 
-// This would be populated with your actual roadmap data
+// Comprehensive foundation roadmap data - single source of truth
 export const ROADMAP_SPRINTS: RoadmapSprint[] = [
-  // Example structure - you would replace with your actual data
-  {
-    id: "heloc-new-30min",
-    name: "HELOC Specialist - New LO (30 min/day)",
-    focus: "heloc",
-    experienceLevel: "new",
-    timeCommitment: "30",
-    description: "Perfect for new loan officers focusing on HELOC products with limited time availability",
-    weeklyTasks: [
-      {
-        week: 1,
-        theme: "HELOC Fundamentals & Market Research",
-        dailyTasks: [
-          {
-            day: 1,
-            title: "Learn HELOC Basics",
-            description: "Study HELOC product fundamentals and current market rates",
-            category: "education",
-            estimatedMinutes: 25,
-            detailedDescription: "Complete comprehensive HELOC training module covering rates, terms, and qualification requirements",
-            externalLinks: [
-              { title: "HELOC Rate Trends", url: "https://example.com/heloc-rates" }
-            ]
-          }
-          // More tasks would be added here
-        ]
-      }
-      // More weeks would be added here
-    ]
-  }
-  // More roadmap sprints would be added here
+  FOUNDATION_ROADMAP as RoadmapSprint
+  // Additional roadmap sprints can be added here for different user profiles
+  // e.g., HELOC specialists, refinance experts, investor specialists, etc.
 ];
 
 // This would be populated with your actual email templates

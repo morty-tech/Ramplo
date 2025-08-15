@@ -7,6 +7,7 @@ import MemoryStore from "memorystore";
 import { storage } from "./storage";
 import { sendMagicLink, verifyMagicLink, createOrGetUser, requireAuth, isMortyEmail } from "./auth";
 import { insertUserProfileSchema, insertDealCoachSessionSchema } from "@shared/schema";
+import { FOUNDATION_ROADMAP } from "./foundationRoadmap";
 
 // Extend session data
 declare module 'express-session' {
@@ -665,109 +666,29 @@ async function generateDefaultTasks(userId: string, profile: any) {
   else if (dayOfWeek === 6) currentBusinessDay = 1; // Saturday -> Monday  
   else currentBusinessDay = dayOfWeek; // Mon-Fri: 1-5
 
-  // Generate personalized tasks based on profile data and start day
-  const baseTasks = [
-    // Week 1, Day 1 - Foundation
-    {
-      title: "Complete CRM setup",
-      description: "Set up your customer relationship management system",
-      category: "organization",
-      estimatedMinutes: 60,
-      week: 1,
-      day: 1,
-    },
-    {
-      title: "Create professional email signature",
-      description: "Design an email signature with your contact info, license number, and NMLS ID",
-      category: "branding",
-      estimatedMinutes: 15,
-      week: 1,
-      day: 1,
-    },
-    {
-      title: "Set up business cards",
-      description: "Order professional business cards or update your existing design",
-      category: "branding",
-      estimatedMinutes: 30,
-      week: 1,
-      day: 1,
-    },
-    {
-      title: "Update LinkedIn profile",
-      description: "Optimize your LinkedIn profile with mortgage industry keywords and experience",
-      category: "branding",
-      estimatedMinutes: 45,
-      week: 1,
-      day: 1,
-    },
-    
-    // Week 1, Day 2 - Networking Foundation
-    {
-      title: "Send 5 realtor introduction emails",
-      description: "Use the realtor intro template to connect with new real estate agents in your area",
-      category: "networking", 
-      estimatedMinutes: 30,
-      week: 1,
-      day: 2,
-    },
-    {
-      title: "Join 3 local Facebook groups",
-      description: "Find and join local real estate investor, homebuyer, and professional networking groups",
-      category: "networking",
-      estimatedMinutes: 20,
-      week: 1,
-      day: 2,
-    },
-    {
-      title: "Research top 20 realtors in your area",
-      description: "Create a list of high-producing realtors with their contact information and recent sales data",
-      category: "research",
-      estimatedMinutes: 45,
-      week: 1,
-      day: 2,
-    },
-    {
-      title: "Schedule 2 coffee meetings",
-      description: "Reach out to industry contacts to schedule informal coffee meetings this week",
-      category: "networking",
-      estimatedMinutes: 15,
-      week: 1,
-      day: 2,
-    },
-
-    // Week 1, Day 3 - Market Research
-    {
-      title: "Analyze local market trends",
-      description: "Research recent home sales, price trends, and inventory levels in your target area",
-      category: "research",
-      estimatedMinutes: 60,
-      week: 1,
-      day: 3,
-    },
-    {
-      title: "Create rate comparison sheet",
-      description: "Compare your rates with 3 competitors and identify your competitive advantages",
-      category: "organization",
-      estimatedMinutes: 30,
-      week: 1,
-      day: 3,
-    },
-    {
-      title: "Call 10 past clients",
-      description: "Reconnect with previous clients to ask for referrals and reviews",
-      category: "networking",
-      estimatedMinutes: 45,
-      week: 1,
-      day: 3,
+  // Use first 13 weeks from foundation roadmap as default tasks
+  const foundationWeeks = FOUNDATION_ROADMAP.weeklyTasks.slice(0, 13);
+  const allFoundationTasks = [];
+  
+  for (const weekData of foundationWeeks) {
+    for (const dailyTask of weekData.dailyTasks) {
+      allFoundationTasks.push({
+        title: dailyTask.title,
+        description: dailyTask.description,
+        category: dailyTask.category,
+        estimatedMinutes: dailyTask.estimatedMinutes,
+        week: weekData.week,
+        day: dailyTask.day,
+      });
     }
-  ];
+  }
 
   // Filter and adjust tasks based on smart start day
   const tasksToCreate = [];
   const essentialTasks = ["Complete CRM setup", "Create professional email signature", "Update LinkedIn profile"];
 
-  for (const task of baseTasks) {
-    if (currentBusinessDay > task.day) {
+  for (const task of allFoundationTasks) {
+    if (currentBusinessDay > task.day && task.week === 1) {
       // Mark essential foundation tasks as current day if missed
       if (essentialTasks.includes(task.title)) {
         tasksToCreate.push({ 
@@ -776,22 +697,31 @@ async function generateDefaultTasks(userId: string, profile: any) {
           description: `${task.description} (catch-up essential)` 
         });
       }
-      // Skip non-essential missed tasks
+      // Skip non-essential missed tasks from week 1
     } else {
-      // Include tasks for current day forward
+      // Include all tasks from week 2+ and remaining tasks from week 1
       tasksToCreate.push(task);
     }
   }
 
   // Create adjusted tasks
-  console.log(`Creating ${tasksToCreate.length} tasks for user ${userId}`);
+  console.log(`Creating ${tasksToCreate.length} default tasks from foundation roadmap for user ${userId}`);
   for (const taskData of tasksToCreate) {
     await storage.createTask({
-      ...taskData,
       userId,
+      title: taskData.title,
+      description: taskData.description,
+      detailedDescription: null,
+      externalLinks: null,
+      internalLinks: null,
+      category: taskData.category,
+      estimatedMinutes: taskData.estimatedMinutes,
+      week: taskData.week,
+      day: taskData.day,
+      completed: false,
     });
   }
-  console.log(`Successfully created ${tasksToCreate.length} tasks`);
+  console.log(`Successfully created ${tasksToCreate.length} default tasks from foundation roadmap`);
 
   // Update user progress to match current business day
   const progress = await storage.getUserProgress(userId);
