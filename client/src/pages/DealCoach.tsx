@@ -252,7 +252,7 @@ export default function DealCoach() {
                 <div className="prose prose-sm max-w-none">
                   <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
                     <p className="text-blue-800 font-medium">Analysis:</p>
-                    <p className="text-blue-700">{latestSession.aiResponse}</p>
+                    <div className="text-blue-700 whitespace-pre-line">{latestSession.aiResponse}</div>
                   </div>
                 </div>
               </CardContent>
