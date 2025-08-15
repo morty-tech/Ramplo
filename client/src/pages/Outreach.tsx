@@ -670,26 +670,24 @@ export default function Outreach() {
                 <>
                   <div className="flex items-center justify-between mb-6">
                     <div>
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h3 className="text-xl font-bold text-gray-900">{selectedTemplate.name}</h3>
-                          <div className="flex items-center space-x-2 mt-1">
-                            <Badge variant="outline">{selectedTemplate.category}</Badge>
-                            {selectedTemplate.platform && (
-                              <Badge variant="secondary">{selectedTemplate.platform}</Badge>
-                            )}
-                            {selectedTemplate.scriptType && (
-                              <Badge variant="secondary">{selectedTemplate.scriptType}</Badge>
-                            )}
-                          </div>
-                        </div>
-                        <Button
+                      <div className="flex justify-end mb-1">
+                        <button
                           onClick={() => setIsAICustomizationOpen(true)}
-                          className="bg-orange-600 hover:bg-orange-700 flex items-center gap-2"
+                          className="text-xs text-orange-600 hover:text-orange-700 flex items-center gap-1"
                         >
-                          <Wand2 className="w-4 h-4" />
+                          <Wand2 className="w-3 h-3" />
                           Customize with AI
-                        </Button>
+                        </button>
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-900">{selectedTemplate.name}</h3>
+                      <div className="flex items-center space-x-2 mt-1">
+                        <Badge variant="outline">{selectedTemplate.category}</Badge>
+                        {selectedTemplate.platform && (
+                          <Badge variant="secondary">{selectedTemplate.platform}</Badge>
+                        )}
+                        {selectedTemplate.scriptType && (
+                          <Badge variant="secondary">{selectedTemplate.scriptType}</Badge>
+                        )}
                       </div>
                     </div>
                   </div>
