@@ -145,7 +145,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await storage.createUserProfile(profileData);
       
       // Generate initial tasks based on profile
+      console.log("Starting task generation for user:", userId);
       await generateInitialTasks(userId, profileData);
+      console.log("Task generation completed for user:", userId);
 
       res.json({ message: "Onboarding completed" });
     } catch (error) {
@@ -675,11 +677,22 @@ async function generateInitialTasks(userId: string, profile: any) {
   }
 
   // Create adjusted tasks
+  console.log(`Creating ${tasksToCreate.length} tasks for user ${userId}`);
   for (const taskData of tasksToCreate) {
     await storage.createTask({
       ...taskData,
       userId,
     });
+  }
+  console.log(`Successfully created ${tasksToCreate.length} tasks`);
+
+  // Update user progress to match current business day
+  const progress = await storage.getUserProgress(userId);
+  if (progress && progress.currentDay !== currentBusinessDay) {
+    await storage.updateUserProgress(userId, {
+      currentDay: currentBusinessDay,
+    });
+    console.log(`Updated user progress to day ${currentBusinessDay}`);
   }
 }
 
