@@ -71,6 +71,12 @@ export default function Onboarding() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Only allow submission on the final step
+    if (step !== totalSteps) {
+      return;
+    }
+    
     setIsLoading(true);
     setShowOnboardingComplete(true);
 
@@ -210,7 +216,12 @@ export default function Onboarding() {
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-8">
+            <form onSubmit={handleSubmit} onKeyDown={(e) => {
+              // Prevent Enter key from submitting form unless on final step
+              if (e.key === 'Enter' && step !== totalSteps) {
+                e.preventDefault();
+              }
+            }} className="space-y-8">
               {/* Step 1: Personal Info with Multiple Cities */}
               {step === 1 && (
                 <div className="space-y-6">
@@ -902,9 +913,13 @@ export default function Onboarding() {
                   </Button>
                 ) : (
                   <Button
-                    type="submit"
+                    type="button"
                     disabled={!canProceed() || isLoading}
                     className="ml-auto"
+                    onClick={(e) => {
+                      // Explicitly handle final submission
+                      handleSubmit(e as any);
+                    }}
                   >
                     {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
                     Complete Setup

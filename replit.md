@@ -57,10 +57,11 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
-### Foundation Roadmap Integration (Current Session)
+### Foundation Roadmap Integration & UX Fixes (Current Session)
 - **Implemented single source of truth for baseline tasks**: Created `server/foundationRoadmap.ts` containing comprehensive 14-week foundation roadmap data
 - **Updated AI roadmap service**: Modified `server/roadmapService.ts` to use foundation roadmap data instead of minimal example data
 - **Enhanced default task generation**: Updated `server/routes.ts` to pull default tasks from foundation roadmap, removed AI personalization for faster loading
 - **Unified data source**: Both AI roadmap generation and fallback defaults now use the same comprehensive foundation data covering 14 weeks of progressive task themes from foundation setup through momentum building
-- **UI Enhancements**: Improved user experience with slower loading screen transitions (2.5s vs 1.5s) and added ticker animations for daily task counts that count from 0 to actual numbers on dashboard load
+- **UI Enhancements**: Improved user experience with slower loading screen transitions (4s vs 2.5s) and added ticker animations for daily task counts that count from 0 to actual numbers on dashboard load
 - **Removed all hardcoded data**: Completely eliminated hardcoded fallback data from Dashboard and Roadmap pages per user request - both now only display real foundation roadmap data or show empty states
+- **Fixed critical onboarding UX bug**: Resolved Enter key causing premature form submission during onboarding - form now only submits on final step when "Complete Setup" is explicitly clicked
