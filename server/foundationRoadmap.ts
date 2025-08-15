@@ -12,6 +12,145 @@ export const FOUNDATION_ROADMAP = {
     {
       "week": 1,
       "theme": "Foundation Setup",
+      "days": [
+        {
+          "day": 1,
+          "objective": "Set up your professional foundation and digital presence",
+          "extraTimeActivity": "Research additional networking events in your area",
+          "tasks": [
+            {
+              "title": "Complete CRM setup",
+              "description": "Set up your customer relationship management system",
+              "category": "organization",
+              "estimatedMinutes": 60
+            },
+            {
+              "title": "Create professional email signature",
+              "description": "Design an email signature with your contact info, license number, and NMLS ID",
+              "category": "branding",
+              "estimatedMinutes": 15
+            },
+            {
+              "title": "Set up business cards",
+              "description": "Order professional business cards or update your existing design",
+              "category": "branding",
+              "estimatedMinutes": 30
+            },
+            {
+              "title": "Update LinkedIn profile",
+              "description": "Optimize your LinkedIn profile with mortgage industry keywords and experience",
+              "category": "branding",
+              "estimatedMinutes": 45
+            }
+          ]
+        },
+        {
+          "day": 2,
+          "objective": "Begin building your professional network",
+          "extraTimeActivity": "Send 3 additional realtor introduction emails",
+          "tasks": [
+            {
+              "title": "Send 5 realtor introduction emails",
+              "description": "Use the realtor intro template to connect with new real estate agents in your area",
+              "category": "networking",
+              "estimatedMinutes": 30
+            },
+            {
+              "title": "Join 3 local Facebook groups",
+              "description": "Find and join local real estate investor, homebuyer, and professional networking groups",
+              "category": "networking",
+              "estimatedMinutes": 20
+            },
+            {
+              "title": "Research top 20 realtors in your area",
+              "description": "Create a list of high-producing realtors with their contact information and recent sales data",
+              "category": "research",
+              "estimatedMinutes": 45
+            },
+            {
+              "title": "Schedule 2 coffee meetings",
+              "description": "Reach out to industry contacts to schedule informal coffee meetings this week",
+              "category": "networking",
+              "estimatedMinutes": 15
+            }
+          ]
+        },
+        {
+          "day": 3,
+          "objective": "Research your market and reconnect with past clients",
+          "extraTimeActivity": "Call 5 additional past clients for referrals",
+          "tasks": [
+            {
+              "title": "Analyze local market trends",
+              "description": "Research recent home sales, price trends, and inventory levels in your target area",
+              "category": "research",
+              "estimatedMinutes": 60
+            },
+            {
+              "title": "Create rate comparison sheet",
+              "description": "Compare your rates with 3 competitors and identify your competitive advantages",
+              "category": "organization",
+              "estimatedMinutes": 30
+            },
+            {
+              "title": "Call 10 past clients",
+              "description": "Reconnect with previous clients to ask for referrals and reviews",
+              "category": "networking",
+              "estimatedMinutes": 45
+            }
+          ]
+        },
+        {
+          "day": 4,
+          "objective": "Organize your processes and create your professional brand",
+          "extraTimeActivity": "Draft additional email templates for different scenarios",
+          "tasks": [
+            {
+              "title": "Set up calendaring links",
+              "description": "Create a booking link with buffers and confirmation emails.",
+              "category": "organization",
+              "estimatedMinutes": 30
+            },
+            {
+              "title": "Organize compliance docs",
+              "description": "Collect license, NMLS, and standard disclosures in one folder.",
+              "category": "admin",
+              "estimatedMinutes": 20
+            },
+            {
+              "title": "Draft bio",
+              "description": "Write a 3‑sentence bio for email/social/website.",
+              "category": "branding",
+              "estimatedMinutes": 20
+            }
+          ]
+        },
+        {
+          "day": 5,
+          "objective": "Complete your digital toolkit and practice your pitch",
+          "extraTimeActivity": "Record yourself practicing your elevator pitch and review for improvements",
+          "tasks": [
+            {
+              "title": "Set up email templates",
+              "description": "Create canned responses for intro, follow-up, and doc requests.",
+              "category": "organization",
+              "estimatedMinutes": 30
+            },
+            {
+              "title": "Create social media profiles",
+              "description": "Set up or optimize your professional social media presence on Instagram and Facebook.",
+              "category": "branding",
+              "estimatedMinutes": 30
+            },
+            {
+              "title": "Review and practice elevator pitch",
+              "description": "Develop and practice a 30-second introduction about your mortgage services.",
+              "category": "branding",
+              "estimatedMinutes": 20
+            }
+          ]
+        }
+      ],
       "dailyTasks": [
         {
           "day": 1,
@@ -136,7 +275,134 @@ export const FOUNDATION_ROADMAP = {
     },
     {
       "week": 2,
-      "theme": "Networking Foundation",
+      "theme": "Networking Foundation", 
+      "days": [
+        {
+          "day": 1,
+          "objective": "Build your core contact database and draft outreach messages",
+          "extraTimeActivity": "Add 10 more professionals to your contact list",
+          "tasks": [
+            {
+              "title": "Build top-50 contact list",
+              "description": "Combine phone, email, LinkedIn into one sheet.",
+              "category": "organization",
+              "estimatedMinutes": 40
+            },
+            {
+              "title": "Identify 10 local pros",
+              "description": "Find CPAs/attorneys/contractors for future partnerships.",
+              "category": "research",
+              "estimatedMinutes": 30
+            },
+            {
+              "title": "Draft intro DM",
+              "description": "Write a friendly intro for DMs (LinkedIn/FB).",
+              "category": "content",
+              "estimatedMinutes": 15
+            }
+          ]
+        },
+        {
+          "day": 2,
+          "objective": "Begin systematic LinkedIn outreach to expand your network",
+          "extraTimeActivity": "Send 5 additional LinkedIn messages to prospects",
+          "tasks": [
+            {
+              "title": "Send 5 LinkedIn messages",
+              "description": "Outreach to 5 relevant contacts.",
+              "category": "networking",
+              "estimatedMinutes": 20
+            },
+            {
+              "title": "Build top-50 contact list",
+              "description": "Combine phone, email, LinkedIn into one sheet.",
+              "category": "organization",
+              "estimatedMinutes": 40
+            },
+            {
+              "title": "Identify 10 local pros",
+              "description": "Find CPAs/attorneys/contractors for future partnerships.",
+              "category": "research",
+              "estimatedMinutes": 30
+            }
+          ]
+        },
+        {
+          "day": 3,
+          "objective": "Continue building your professional network systematically",
+          "extraTimeActivity": "Research and join one additional professional networking group",
+          "tasks": [
+            {
+              "title": "Draft intro DM",
+              "description": "Write a friendly intro for DMs (LinkedIn/FB).",
+              "category": "content",
+              "estimatedMinutes": 15
+            },
+            {
+              "title": "Send 5 LinkedIn messages",
+              "description": "Outreach to 5 relevant contacts.",
+              "category": "networking",
+              "estimatedMinutes": 20
+            },
+            {
+              "title": "Build top-50 contact list",
+              "description": "Combine phone, email, LinkedIn into one sheet.",
+              "category": "organization",
+              "estimatedMinutes": 40
+            }
+          ]
+        },
+        {
+          "day": 4,
+          "objective": "Focus on local professional partnerships and networking events",
+          "extraTimeActivity": "Schedule coffee meetings with 2 additional local professionals",
+          "tasks": [
+            {
+              "title": "Identify 10 local pros",
+              "description": "Find CPAs/attorneys/contractors for future partnerships.",
+              "category": "research",
+              "estimatedMinutes": 30
+            },
+            {
+              "title": "Draft intro DM",
+              "description": "Write a friendly intro for DMs (LinkedIn/FB).",
+              "category": "content",
+              "estimatedMinutes": 15
+            },
+            {
+              "title": "Send 5 LinkedIn messages",
+              "description": "Outreach to 5 relevant contacts.",
+              "category": "networking",
+              "estimatedMinutes": 20
+            }
+          ]
+        },
+        {
+          "day": 5,
+          "objective": "Complete your networking foundation for the week",
+          "extraTimeActivity": "Reach out to 3 additional realtors in your target market",
+          "tasks": [
+            {
+              "title": "Build top-50 contact list",
+              "description": "Combine phone, email, LinkedIn into one sheet.",
+              "category": "organization",
+              "estimatedMinutes": 40
+            },
+            {
+              "title": "Identify 10 local pros",
+              "description": "Find CPAs/attorneys/contractors for future partnerships.",
+              "category": "research",
+              "estimatedMinutes": 30
+            },
+            {
+              "title": "Draft intro DM",
+              "description": "Write a friendly intro for DMs (LinkedIn/FB).",
+              "category": "content",
+              "estimatedMinutes": 15
+            }
+          ]
+        }
+      ],
       "dailyTasks": [
         {
           "day": 1,

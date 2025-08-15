@@ -9,7 +9,8 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Task } from "@shared/schema";
 import TaskDetailModal from "@/components/TaskDetailModal";
-import { Check, Clock, Calendar, Eye } from "lucide-react";
+import DayModal from "@/components/DayModal";
+import { Check, Clock, Calendar, Eye, Lock, Target } from "lucide-react";
 
 const TOTAL_WEEKS = 14;
 
@@ -19,6 +20,8 @@ export default function Roadmap() {
   const queryClient = useQueryClient();
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const [selectedDay, setSelectedDay] = useState<any>(null);
+  const [isDayModalOpen, setIsDayModalOpen] = useState(false);
   
   const currentWeek = progress?.currentWeek || 1;
   const completedTasks = progress?.tasksCompleted || 0;
@@ -67,21 +70,14 @@ export default function Roadmap() {
   const totalTasks = allTasks.length; // Actual number of tasks from foundation roadmap
   const overallProgress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
 
-  // Generate weeks from foundation roadmap data - only show real data
+  // Generate weeks with days from foundation roadmap data - only show real data
   const weeks = React.useMemo(() => {
     if (roadmapData?.selectedRoadmap?.weeklyTasks?.length > 0) {
       return roadmapData.selectedRoadmap.weeklyTasks.map((weekData: any) => ({
         week: weekData.week,
         title: weekData.theme,
         description: `Week ${weekData.week} focuses on ${weekData.theme.toLowerCase()}.`,
-        tasks: weekData.dailyTasks
-          .reduce((acc: string[], task: any) => {
-            if (!acc.includes(task.title)) {
-              acc.push(task.title);
-            }
-            return acc;
-          }, [])
-          .slice(0, 5), // Show first 5 unique tasks
+        days: weekData.days || [], // Use new days structure if available
         status: currentWeek > weekData.week ? "completed" : currentWeek === weekData.week ? "current" : "upcoming"
       }));
     }
@@ -89,6 +85,21 @@ export default function Roadmap() {
     // No fallback - only show real roadmap data
     return [];
   }, [roadmapData, currentWeek]);
+
+  const handleDayClick = (week: any, day: any) => {
+    // Only allow clicking on current week or past weeks
+    if (week.status === "upcoming") return;
+    
+    setSelectedDay({
+      ...day,
+      week: week.week,
+      weekTheme: week.title
+    });
+    setIsDayModalOpen(true);
+  };
+
+  // Calculate current day for highlighting
+  const currentDay = progress?.currentDay || 1;
 
   return (
     <div className="p-6">
@@ -168,53 +179,72 @@ export default function Roadmap() {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-gray-600 mb-4">{week.description}</p>
-              <div className="space-y-2">
-                {week.tasks.map((task: string, index: number) => {
-                  const taskObj = getTaskForTitle(task);
-                  const isClickable = taskObj && (taskObj.detailedDescription || taskObj.externalLinks?.length || taskObj.internalLinks?.length);
-                  
-                  return (
-                    <div 
-                      key={index} 
-                      className={`flex items-center justify-between text-sm group ${
-                        isClickable ? 'cursor-pointer hover:bg-gray-50 p-2 rounded transition-colors' : ''
-                      }`}
-                      onClick={() => taskObj && isClickable && handleTaskClick(taskObj)}
-                    >
-                      <div className="flex items-center">
-                        {week.status === 'completed' ? (
-                          <>
-                            <Check className="h-4 w-4 text-green-600 mr-2" />
-                            <span className="line-through text-gray-500">{task}</span>
-                          </>
-                        ) : week.status === 'current' && index < 2 ? (
-                          <>
-                            <div className="h-2 w-2 bg-blue-600 rounded-full mr-2" />
-                            <span className="text-gray-900">{task}</span>
-                          </>
-                        ) : (
-                          <>
-                            <div className="h-2 w-2 bg-gray-300 rounded-full mr-2" />
-                            <span className="text-gray-500">{task}</span>
-                          </>
-                        )}
+              <div className="space-y-3">
+                {week.days?.length > 0 ? (
+                  week.days.map((day: any, index: number) => {
+                    const isDayAccessible = week.status !== "upcoming";
+                    const isCurrentDay = week.status === "current" && day.day === currentDay;
+                    const isDayCompleted = week.status === "completed" || (week.status === "current" && day.day < currentDay);
+                    
+                    return (
+                      <div 
+                        key={day.day}
+                        className={`p-3 rounded-lg border transition-all cursor-pointer group ${
+                          isCurrentDay 
+                            ? 'border-blue-500 bg-blue-50 shadow-sm' 
+                            : isDayCompleted
+                            ? 'border-green-300 bg-green-50' 
+                            : isDayAccessible
+                            ? 'border-gray-200 hover:border-primary hover:bg-gray-50'
+                            : 'border-gray-200 bg-gray-100 cursor-not-allowed opacity-60'
+                        }`}
+                        onClick={() => isDayAccessible && handleDayClick(week, day)}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-3">
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+                              isCurrentDay
+                                ? 'bg-blue-600 text-white'
+                                : isDayCompleted
+                                ? 'bg-green-600 text-white'
+                                : isDayAccessible
+                                ? 'bg-gray-200 text-gray-700'
+                                : 'bg-gray-300 text-gray-500'
+                            }`}>
+                              {isDayCompleted ? (
+                                <Check className="w-4 h-4" />
+                              ) : isDayAccessible ? (
+                                day.day
+                              ) : (
+                                <Lock className="w-3 h-3" />
+                              )}
+                            </div>
+                            <div className="flex-grow">
+                              <div className="font-medium text-sm text-gray-900">
+                                Day {day.day}
+                              </div>
+                              <div className={`text-xs mt-1 ${
+                                isCurrentDay ? 'text-blue-700' : isDayCompleted ? 'text-green-700' : 'text-gray-600'
+                              }`}>
+                                <Target className="w-3 h-3 inline mr-1" />
+                                {day.objective}
+                              </div>
+                            </div>
+                          </div>
+                          {isDayAccessible && (
+                            <div className="text-xs text-gray-500 group-hover:text-primary transition-colors">
+                              Click to view
+                            </div>
+                          )}
+                        </div>
                       </div>
-                      {isClickable && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="opacity-0 group-hover:opacity-100 transition-opacity text-gray-500 hover:text-primary"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleTaskClick(taskObj);
-                          }}
-                        >
-                          <Eye className="w-4 h-4" />
-                        </Button>
-                      )}
-                    </div>
-                  );
-                })}
+                    );
+                  })
+                ) : (
+                  <div className="text-sm text-gray-500 italic">
+                    Week details will be available soon.
+                  </div>
+                )}
               </div>
               <div className="mt-4 pt-4 border-t border-gray-200">
                 <Badge variant={
@@ -259,6 +289,13 @@ export default function Roadmap() {
         onClose={() => setIsTaskModalOpen(false)}
         onComplete={completeTaskMutation.mutate}
         isCompleting={completeTaskMutation.isPending}
+      />
+
+      {/* Day Detail Modal */}
+      <DayModal
+        day={selectedDay}
+        isOpen={isDayModalOpen}
+        onClose={() => setIsDayModalOpen(false)}
       />
     </div>
   );
