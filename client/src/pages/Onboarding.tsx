@@ -37,7 +37,15 @@ export default function Onboarding() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(1);
+  const [showOnboardingComplete, setShowOnboardingComplete] = useState(false);
+  const [loadingStep, setLoadingStep] = useState(0);
   const { toast } = useToast();
+
+  const loadingMessages = [
+    "Analysing your experience...",
+    "Creating your roadmap...",
+    "Generating your templates..."
+  ];
 
   const totalSteps = 7; // Reduced from 9 since we removed licensing step
   const progress = (step / totalSteps) * 100;
@@ -61,6 +69,19 @@ export default function Onboarding() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setShowOnboardingComplete(true);
+
+    // Cycle through loading messages
+    const stepDuration = 1500; // 1.5 seconds per step
+    const messageInterval = setInterval(() => {
+      setLoadingStep(prev => {
+        if (prev >= loadingMessages.length - 1) {
+          clearInterval(messageInterval);
+          return prev;
+        }
+        return prev + 1;
+      });
+    }, stepDuration);
 
     try {
       await apiRequest("POST", "/api/onboarding", formData);
@@ -68,14 +89,16 @@ export default function Onboarding() {
       // Invalidate user data to refresh profile
       queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
       
-      toast({
-        title: "Welcome to RampLO!",
-        description: "Your personalized ramp plan is being created.",
-      });
+      // Wait for loading animation to complete
+      setTimeout(() => {
+        clearInterval(messageInterval);
+        setLocation("/dashboard");
+      }, stepDuration * loadingMessages.length + 500);
       
-      // Navigate to dashboard
-      setLocation("/dashboard");
     } catch (error) {
+      clearInterval(messageInterval);
+      setShowOnboardingComplete(false);
+      setLoadingStep(0);
       toast({
         title: "Error",
         description: "Failed to complete onboarding. Please try again.",
@@ -107,6 +130,8 @@ export default function Onboarding() {
     { value: "veterans", label: "Veterans" },
     { value: "new-construction", label: "New Construction" },
     { value: "commercial", label: "Commercial" },
+    { value: "not-sure", label: "Not Sure" },
+    { value: "other", label: "Other" },
   ];
 
   const networkSourceOptions = [
@@ -128,6 +153,41 @@ export default function Onboarding() {
     { value: "video", label: "Video Calls" },
     { value: "inperson", label: "In-Person" },
   ];
+
+  // Loading screen component
+  if (showOnboardingComplete) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <Card className="w-full max-w-md">
+          <CardContent className="p-8 text-center">
+            <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Setting up your account...</h2>
+            <div className="space-y-3">
+              {loadingMessages.map((message, index) => (
+                <div key={index} className={`flex items-center justify-center space-x-2 text-sm ${
+                  index < loadingStep ? 'text-green-600' : 
+                  index === loadingStep ? 'text-primary' : 'text-gray-400'
+                }`}>
+                  {index < loadingStep && (
+                    <div className="w-4 h-4 bg-green-600 rounded-full flex items-center justify-center">
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                    </div>
+                  )}
+                  {index === loadingStep && (
+                    <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                  )}
+                  {index > loadingStep && (
+                    <div className="w-4 h-4 border-2 border-gray-300 rounded-full"></div>
+                  )}
+                  <span>{message}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
@@ -245,6 +305,8 @@ export default function Onboarding() {
                         { value: "heloc", label: "HELOC", desc: "Home equity lines of credit" },
                         { value: "investor-dscr", label: "Investor (DSCR)", desc: "Investment property loans" },
                         { value: "non-qm", label: "Non-QM", desc: "Non-qualified mortgages" },
+                        { value: "not-sure", label: "Not Sure", desc: "Still exploring my options" },
+                        { value: "other", label: "Other", desc: "Something else not listed" },
                       ].map((focus) => (
                         <div
                           key={focus.value}

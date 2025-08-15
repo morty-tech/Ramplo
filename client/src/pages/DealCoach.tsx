@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Badge } from "@/components/ui/badge";
 import { DealCoachSession } from "@shared/schema";
-import { Lightbulb, Bot, ExternalLink, Clock } from "lucide-react";
+import { Lightbulb, Bot, ExternalLink, Clock, Loader2 } from "lucide-react";
 
 const commonScenarios = [
   {
@@ -194,8 +194,8 @@ export default function DealCoach() {
                 >
                   {dealCoachMutation.isPending ? (
                     <>
-                      <Bot className="w-5 h-5 mr-2 animate-pulse" />
-                      Analyzing...
+                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                      Generating your guidance...
                     </>
                   ) : (
                     <>

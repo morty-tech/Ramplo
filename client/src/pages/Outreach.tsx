@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Copy, Wand2, Edit, Plus, Download, BarChart3, X, Save } from "lucide-react";
+import { Copy, Wand2, Edit, Plus, Download, BarChart3, X, Save, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 type MarketingTemplate = {
@@ -273,8 +273,12 @@ export default function Outreach() {
                       disabled={customizeTemplateMutation.isPending || !customizationForm.keyPoints.trim()}
                       className="bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400"
                     >
-                      <Wand2 className="w-4 h-4 mr-2" />
-                      {customizeTemplateMutation.isPending ? 'Customizing...' : 'Customize & Edit'}
+                      {customizeTemplateMutation.isPending ? (
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      ) : (
+                        <Wand2 className="w-4 h-4 mr-2" />
+                      )}
+                      {customizeTemplateMutation.isPending ? 'Generating your template...' : 'Customize & Edit'}
                     </Button>
                     <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
                       <DialogTrigger asChild>
@@ -404,8 +408,12 @@ export default function Outreach() {
                   disabled={customizeTemplateMutation.isPending || !customizationForm.keyPoints.trim()}
                   className="w-full bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400"
                 >
-                  <Wand2 className="w-4 h-4 mr-2" />
-                  {customizeTemplateMutation.isPending ? 'Customizing...' : 'Customize & Edit'}
+                  {customizeTemplateMutation.isPending ? (
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  ) : (
+                    <Wand2 className="w-4 h-4 mr-2" />
+                  )}
+                  {customizeTemplateMutation.isPending ? 'Generating your template...' : 'Customize & Edit'}
                 </Button>
               </div>
             </CardContent>
