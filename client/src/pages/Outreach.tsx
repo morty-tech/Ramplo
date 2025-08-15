@@ -156,6 +156,8 @@ export default function Outreach() {
   const [editedSubject, setEditedSubject] = useState('');
   const [isEditingBody, setIsEditingBody] = useState(false);
   const [editedBody, setEditedBody] = useState('');
+  const [isEditingScript, setIsEditingScript] = useState(false);
+  const [editedScript, setEditedScript] = useState('');
   const [isImageLibraryOpen, setIsImageLibraryOpen] = useState(false);
   const [customizationForm, setCustomizationForm] = useState({
     recipientType: "realtor",
@@ -454,6 +456,8 @@ export default function Outreach() {
     setEditedSubject('');
     setIsEditingBody(false);
     setEditedBody('');
+    setIsEditingScript(false);
+    setEditedScript('');
   }, [selectedTemplate, activeTemplateType]);
 
   // Auto-apply changes when inline settings change
@@ -560,6 +564,31 @@ export default function Outreach() {
   const resetBodyEditing = () => {
     setIsEditingBody(false);
     setEditedBody('');
+  };
+
+  // Save edited script
+  const saveEditedScript = () => {
+    if (selectedTemplate && editedScript.trim()) {
+      updateTemplateMutation.mutate({
+        id: selectedTemplate.id,
+        updates: { content: editedScript }
+      });
+      setIsEditingScript(false);
+    }
+  };
+
+  // Start editing script
+  const startEditingScript = () => {
+    if (selectedTemplate) {
+      setEditedScript(selectedTemplate.content);
+      setIsEditingScript(true);
+    }
+  };
+
+  // Reset script editing
+  const resetScriptEditing = () => {
+    setIsEditingScript(false);
+    setEditedScript('');
   };
 
   const templateTypeIcons = {
@@ -1041,9 +1070,70 @@ export default function Outreach() {
                     {/* Phone Script Template View */}
                     {activeTemplateType === "phone-script" && (
                       <>
-                        <div className="text-sm font-medium text-gray-900 mb-2">Call Script:</div>
-                        <div className="text-sm text-gray-900 whitespace-pre-wrap font-mono bg-white p-4 rounded border">
-                          {selectedTemplate.content}
+                        <div>
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="text-sm font-medium text-gray-900">Call Script:</div>
+                            {isEditingScript && (
+                              <button
+                                onClick={resetScriptEditing}
+                                className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
+                              >
+                                <RotateCcw className="w-3 h-3" />
+                                Reset
+                              </button>
+                            )}
+                            <div className="text-xs text-gray-500">
+                              {selectedTemplate.content.split(/\s+/).length} words • ~{Math.ceil(selectedTemplate.content.split(/\s+/).length / 150)} min read
+                            </div>
+                          </div>
+                          {isEditingScript ? (
+                            <div className="space-y-2">
+                              <Textarea
+                                value={editedScript}
+                                onChange={(e) => setEditedScript(e.target.value)}
+                                className="text-sm min-h-[300px] resize-none font-mono"
+                                placeholder="Enter your phone script..."
+                              />
+                              <div className="flex justify-end">
+                                <Button
+                                  onClick={saveEditedScript}
+                                  size="sm"
+                                  disabled={updateTemplateMutation.isPending}
+                                  className="bg-green-600 hover:bg-green-700"
+                                >
+                                  {updateTemplateMutation.isPending ? (
+                                    <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+                                  ) : (
+                                    <Save className="w-3 h-3 mr-1" />
+                                  )}
+                                  Save
+                                </Button>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="space-y-2">
+                              <div 
+                                className="text-sm text-gray-900 whitespace-pre-wrap bg-white p-4 rounded border min-h-[300px] cursor-pointer hover:bg-gray-50 transition-colors font-mono"
+                                onClick={startEditingScript}
+                              >
+                                {selectedTemplate.content}
+                                <div className="text-xs text-gray-400 mt-2 opacity-0 hover:opacity-100 transition-opacity">
+                                  Click to edit
+                                </div>
+                              </div>
+                              <div className="flex justify-end">
+                                <Button
+                                  onClick={() => copyToClipboard(selectedTemplate.content)}
+                                  size="sm"
+                                  variant="outline"
+                                  className="text-xs"
+                                >
+                                  <Copy className="w-3 h-3 mr-1" />
+                                  Copy Script
+                                </Button>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </>
                     )}
