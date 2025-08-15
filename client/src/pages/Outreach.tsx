@@ -329,11 +329,11 @@ export default function Outreach() {
           clearTimeout(notificationTimeoutId);
         }
         
-        // Auto-revert button text after 10 seconds
+        // Auto-revert button text after 20 seconds
         const timeoutId = setTimeout(() => {
           setIsAICustomizationSuccess(false);
           setNotificationTimeoutId(null);
-        }, 10000);
+        }, 20000);
         setNotificationTimeoutId(timeoutId);
       }
       
@@ -527,11 +527,14 @@ export default function Outreach() {
     setEditedScript('');
     // Clear AI customized indicators and success state when template changes
     setAiCustomizedFields({});
-    setIsAICustomizationSuccess(false);
-    // Clear timeout when switching templates
-    if (notificationTimeoutId) {
-      clearTimeout(notificationTimeoutId);
-      setNotificationTimeoutId(null);
+    // Only clear success state if we're switching to a different template (not just re-rendering the same one)
+    if (selectedTemplate?.id !== selectedTemplateId) {
+      setIsAICustomizationSuccess(false);
+      // Clear timeout when switching templates
+      if (notificationTimeoutId) {
+        clearTimeout(notificationTimeoutId);
+        setNotificationTimeoutId(null);
+      }
     }
   }, [selectedTemplate, activeTemplateType]);
 
