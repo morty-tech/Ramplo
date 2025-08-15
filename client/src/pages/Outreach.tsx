@@ -668,27 +668,25 @@ export default function Outreach() {
             <CardContent>
               {selectedTemplate && (
                 <>
-                  <div className="flex items-center justify-between mb-6">
-                    <div>
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-xl font-bold text-gray-900">{selectedTemplate.name}</h3>
-                        <button
-                          onClick={() => setIsAICustomizationOpen(true)}
-                          className="text-xs text-orange-600 hover:text-orange-700 flex items-center gap-1"
-                        >
-                          <Wand2 className="w-3 h-3" />
-                          Customize with AI
-                        </button>
-                      </div>
-                      <div className="flex items-center space-x-2 mt-1">
-                        <Badge variant="outline">{selectedTemplate.category}</Badge>
-                        {selectedTemplate.platform && (
-                          <Badge variant="secondary">{selectedTemplate.platform}</Badge>
-                        )}
-                        {selectedTemplate.scriptType && (
-                          <Badge variant="secondary">{selectedTemplate.scriptType}</Badge>
-                        )}
-                      </div>
+                  <div className="mb-6">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-xl font-bold text-gray-900">{selectedTemplate.name}</h3>
+                      <button
+                        onClick={() => setIsAICustomizationOpen(true)}
+                        className="text-xs text-orange-600 hover:text-orange-700 flex items-center gap-1"
+                      >
+                        <Wand2 className="w-3 h-3" />
+                        Customize with AI
+                      </button>
+                    </div>
+                    <div className="flex items-center space-x-2 mt-1">
+                      <Badge variant="outline">{selectedTemplate.category}</Badge>
+                      {selectedTemplate.platform && (
+                        <Badge variant="secondary">{selectedTemplate.platform}</Badge>
+                      )}
+                      {selectedTemplate.scriptType && (
+                        <Badge variant="secondary">{selectedTemplate.scriptType}</Badge>
+                      )}
                     </div>
                   </div>
 
