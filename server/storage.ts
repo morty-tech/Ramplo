@@ -268,7 +268,7 @@ export class DatabaseStorage implements IStorage {
       return loanActions;
     } catch (error) {
       // If table doesn't exist, return default values
-      console.warn("Loan actions table not available:", error);
+      console.error("Error creating loan actions:", error);
       return { 
         id: '', userId: actions.userId, date: actions.date || new Date(),
         preapprovals: actions.preapprovals || 0, 
@@ -299,7 +299,7 @@ export class DatabaseStorage implements IStorage {
       return loanActions;
     } catch (error) {
       // If table doesn't exist, return default values
-      console.warn("Loan actions table not available:", error);
+      console.error("Error fetching loan actions:", error);
       return { preapprovals: 0, applications: 0, closings: 0 } as any;
     }
   }
@@ -324,7 +324,7 @@ export class DatabaseStorage implements IStorage {
       }
     } catch (error) {
       // If table doesn't exist, return default values
-      console.warn("Loan actions table not available:", error);
+      console.error("Error updating loan actions:", error);
       return { 
         id: '', userId, date,
         preapprovals: 0, applications: 0, closings: 0,

@@ -379,26 +379,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = req.session.user.id;
       const { preapprovals, applications, closings } = req.body;
       
+      console.log("Loan actions request:", { userId, preapprovals, applications, closings });
+      
       const today = new Date();
       const existing = await storage.getTodayLoanActions(userId);
       
-      if (existing) {
+      console.log("Existing loan actions:", existing);
+      
+      if (existing && existing.id) {
         // Add to existing counts
-        const loanActions = await storage.updateDailyLoanActions(userId, today, {
+        const updateData = {
           preapprovals: (existing.preapprovals || 0) + (preapprovals || 0),
           applications: (existing.applications || 0) + (applications || 0),
           closings: (existing.closings || 0) + (closings || 0),
-        });
+        };
+        console.log("Updating with:", updateData);
+        const loanActions = await storage.updateDailyLoanActions(userId, today, updateData);
         res.json(loanActions);
       } else {
         // Create new entry for today
-        const loanActions = await storage.createDailyLoanActions({
+        const createData = {
           userId,
           date: today,
           preapprovals: preapprovals || 0,
           applications: applications || 0,
           closings: closings || 0,
-        });
+        };
+        console.log("Creating with:", createData);
+        const loanActions = await storage.createDailyLoanActions(createData);
         res.json(loanActions);
       }
     } catch (error) {
