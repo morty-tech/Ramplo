@@ -670,7 +670,8 @@ export default function Outreach() {
                 <>
                   <div className="flex items-center justify-between mb-6">
                     <div>
-                      <div className="flex justify-end mb-1">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-xl font-bold text-gray-900">{selectedTemplate.name}</h3>
                         <button
                           onClick={() => setIsAICustomizationOpen(true)}
                           className="text-xs text-orange-600 hover:text-orange-700 flex items-center gap-1"
@@ -679,7 +680,6 @@ export default function Outreach() {
                           Customize with AI
                         </button>
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900">{selectedTemplate.name}</h3>
                       <div className="flex items-center space-x-2 mt-1">
                         <Badge variant="outline">{selectedTemplate.category}</Badge>
                         {selectedTemplate.platform && (
