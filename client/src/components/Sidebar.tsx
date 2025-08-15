@@ -55,7 +55,7 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
   return (
     <div className={cn(
       "fixed inset-y-0 left-0 z-50 bg-white shadow-lg transition-all duration-300 flex flex-col",
-      isExpanded ? "w-64" : "w-32"
+      isExpanded ? "w-64" : "w-16"
     )} style={{ backgroundColor: 'hsl(217, 91%, 60%)' }}>
       
       {/* Header */}
@@ -144,15 +144,10 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
           </div>
         ) : (
           <div className="flex flex-col items-center space-y-2">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-medium">
-                  {user?.firstName?.[0]}{user?.lastName?.[0]}
-                </span>
-              </div>
-              <div className="text-xs font-medium text-white truncate max-w-[100px]">
-                {user?.firstName} {user?.lastName}
-              </div>
+            <div className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+              <span className="text-white text-sm font-medium">
+                {user?.firstName?.[0]}{user?.lastName?.[0]}
+              </span>
             </div>
             <button
               onClick={handleLogout}
