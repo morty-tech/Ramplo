@@ -43,6 +43,29 @@ type TemplateImage = {
   isDefault: boolean;
 };
 
+// Character limits for social media platforms
+const PLATFORM_LIMITS = {
+  'Twitter/X': 280,
+  'LinkedIn': 3000,
+  'Instagram': 125,
+  'Facebook': 3000,
+  'General': 1000 // Default for unspecified platforms
+} as const;
+
+// Helper function to clean content (remove \n characters for display)
+const cleanContentForDisplay = (content: string): string => {
+  return content.replace(/\\n/g, '').replace(/\n/g, ' ').trim();
+};
+
+// Helper function to get character limit for platform
+const getCharacterLimit = (platform?: string): number => {
+  if (!platform) return PLATFORM_LIMITS.General;
+  const matchedPlatform = Object.keys(PLATFORM_LIMITS).find(p => 
+    platform.toLowerCase().includes(p.toLowerCase().split('/')[0])
+  );
+  return matchedPlatform ? PLATFORM_LIMITS[matchedPlatform as keyof typeof PLATFORM_LIMITS] : PLATFORM_LIMITS.General;
+};
+
 // Email analysis functions
 const getReadabilityScore = (content: string): string => {
   if (!content || typeof content !== 'string') return "N/A";
@@ -420,13 +443,8 @@ export default function Outreach() {
                     {/* Social Media Template View */}
                     {activeTemplateType === "social-media" && (
                       <>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <div>
-                            <div className="text-sm font-medium text-gray-900 mb-2">Post Content:</div>
-                            <div className="text-sm text-gray-900 whitespace-pre-wrap bg-white p-4 rounded border min-h-[200px]">
-                              {selectedTemplate.content}
-                            </div>
-                          </div>
+                        <div className="space-y-6">
+                          {/* Image Preview - Above content */}
                           <div>
                             <div className="text-sm font-medium text-gray-900 mb-2">Image Preview:</div>
                             {selectedTemplate.imageUrl ? (
@@ -434,9 +452,9 @@ export default function Outreach() {
                                 <img 
                                   src={selectedTemplate.imageUrl} 
                                   alt={selectedTemplate.imageAlt || "Template image"}
-                                  className="w-full h-48 object-cover rounded"
+                                  className="w-full max-w-md h-48 object-cover rounded mx-auto"
                                 />
-                                <p className="text-xs text-gray-500 mt-2">{selectedTemplate.imageAlt}</p>
+                                <p className="text-xs text-gray-500 mt-2 text-center">{selectedTemplate.imageAlt}</p>
                               </div>
                             ) : (
                               <div className="bg-white p-4 rounded border h-48 flex items-center justify-center text-gray-400">
@@ -446,6 +464,41 @@ export default function Outreach() {
                                 </div>
                               </div>
                             )}
+                          </div>
+                          
+                          {/* Post Content - Below image */}
+                          <div>
+                            <div className="flex items-center justify-between mb-2">
+                              <div className="text-sm font-medium text-gray-900">Post Content:</div>
+                              <div className="text-xs text-gray-500">
+                                {(() => {
+                                  const cleanContent = cleanContentForDisplay(selectedTemplate.content);
+                                  const charLimit = getCharacterLimit(selectedTemplate.platform);
+                                  const isOverLimit = cleanContent.length > charLimit;
+                                  return (
+                                    <span className={isOverLimit ? 'text-red-600 font-medium' : 'text-gray-500'}>
+                                      {cleanContent.length}/{charLimit} characters
+                                      {selectedTemplate.platform && ` (${selectedTemplate.platform})`}
+                                    </span>
+                                  );
+                                })()}
+                              </div>
+                            </div>
+                            <div className="text-sm text-gray-900 bg-white p-4 rounded border min-h-[200px]">
+                              {cleanContentForDisplay(selectedTemplate.content)}
+                            </div>
+                            {(() => {
+                              const cleanContent = cleanContentForDisplay(selectedTemplate.content);
+                              const charLimit = getCharacterLimit(selectedTemplate.platform);
+                              if (cleanContent.length > charLimit) {
+                                return (
+                                  <div className="mt-2 text-xs text-red-600 bg-red-50 p-2 rounded">
+                                    ⚠️ This post exceeds the {selectedTemplate.platform || 'recommended'} character limit by {cleanContent.length - charLimit} characters.
+                                  </div>
+                                );
+                              }
+                              return null;
+                            })()}
                           </div>
                         </div>
                       </>
