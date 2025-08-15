@@ -56,20 +56,13 @@ export async function createOrGetUser(email: string): Promise<{ user: any; isNew
       isMortyUser: isMorty,
     });
     
-    // Create initial progress record with smart start day
+    // Create initial progress record - all users start at day 1
     const now = new Date();
-    const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
-    
-    // Convert to business day (1-5, Mon-Fri)
-    let currentBusinessDay;
-    if (dayOfWeek === 0) currentBusinessDay = 1; // Sunday -> Monday
-    else if (dayOfWeek === 6) currentBusinessDay = 1; // Saturday -> Monday  
-    else currentBusinessDay = dayOfWeek; // Mon-Fri: 1-5
 
     await storage.createUserProgress({
       userId: user.id,
       startDate: now,
-      currentDay: currentBusinessDay,
+      currentDay: 1,
     });
     
     isNew = true;
