@@ -81,7 +81,7 @@ export default function Onboarding() {
     setShowOnboardingComplete(true);
 
     // Cycle through loading messages
-    const stepDuration = 4000; // 4 seconds per step
+    const stepDuration = 5000; // 5 seconds per step
     const messageInterval = setInterval(() => {
       setLoadingStep(prev => {
         if (prev >= loadingMessages.length - 1) {
@@ -218,8 +218,13 @@ export default function Onboarding() {
 
             <form onSubmit={handleSubmit} onKeyDown={(e) => {
               // Prevent Enter key from submitting form unless on final step
+              // But allow Enter in text inputs and textareas
               if (e.key === 'Enter' && step !== totalSteps) {
-                e.preventDefault();
+                const target = e.target as HTMLElement;
+                const isTextInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA';
+                if (!isTextInput) {
+                  e.preventDefault();
+                }
               }
             }} className="space-y-8">
               {/* Step 1: Personal Info with Multiple Cities */}

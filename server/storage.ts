@@ -151,7 +151,12 @@ export class DatabaseStorage implements IStorage {
       whereConditions.push(eq(tasks.day, day));
     }
     
-    return await db.select().from(tasks).where(and(...whereConditions));
+    console.log("Drizzle query conditions:", { userId, week, day, whereConditionsLength: whereConditions.length });
+    
+    const result = await db.select().from(tasks).where(and(...whereConditions));
+    console.log("Drizzle query result length:", result.length);
+    
+    return result;
   }
 
   async createTask(taskData: InsertTask): Promise<Task> {
