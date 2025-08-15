@@ -12,6 +12,7 @@ import Roadmap from "@/pages/Roadmap";
 import Outreach from "@/pages/Outreach";
 import DealCoach from "@/pages/DealCoach";
 import Billing from "@/pages/Billing";
+import TestRoadmap from "@/pages/TestRoadmap";
 import Layout from "@/components/Layout";
 import NotFound from "@/pages/not-found";
 
@@ -46,6 +47,7 @@ function Router() {
         <Route path="/outreach" component={Outreach} />
         <Route path="/deal-coach" component={DealCoach} />
         <Route path="/billing" component={Billing} />
+        <Route path="/test-roadmap" component={TestRoadmap} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
