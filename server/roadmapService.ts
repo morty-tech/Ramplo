@@ -51,6 +51,9 @@ export const ROADMAP_SPRINTS: RoadmapSprint[] = [
   // e.g., HELOC specialists, refinance experts, investor specialists, etc.
 ];
 
+// Log the loaded roadmap for debugging
+console.log('ROADMAP_SPRINTS loaded:', ROADMAP_SPRINTS.map(r => ({ id: r.id, name: r.name, focus: r.focus })));
+
 // This would be populated with your actual email templates
 export const EMAIL_TEMPLATES: EmailTemplate[] = [
   // Example structure - you would replace with your actual data
@@ -130,8 +133,19 @@ Consider:
     const analysis = JSON.parse(response.choices[0].message.content!);
     
     const selectedRoadmap = ROADMAP_SPRINTS.find(r => r.id === analysis.selectedRoadmapId);
+    console.log('AI selected roadmap ID:', analysis.selectedRoadmapId);
+    console.log('Available roadmap IDs:', ROADMAP_SPRINTS.map(r => r.id));
+    console.log('Found selected roadmap:', selectedRoadmap ? selectedRoadmap.id : 'NOT FOUND');
+    
     if (!selectedRoadmap) {
-      throw new Error("Selected roadmap not found");
+      console.log('Selected roadmap not found, falling back to first available roadmap');
+      const fallbackRoadmap = ROADMAP_SPRINTS[0];
+      console.log('Using fallback roadmap:', fallbackRoadmap.id);
+      return {
+        selectedRoadmap: fallbackRoadmap,
+        reasoning: `Fallback: ${analysis.reasoning}`,
+        alternativeOptions: ROADMAP_SPRINTS.slice(1)
+      };
     }
 
     const alternativeOptions = ROADMAP_SPRINTS.filter(r => 
