@@ -67,9 +67,8 @@ export default function Roadmap() {
   const totalTasks = allTasks.length; // Actual number of tasks from foundation roadmap
   const overallProgress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
 
-  // Generate weeks from foundation roadmap data
+  // Generate weeks from foundation roadmap data - only show real data
   const weeks = React.useMemo(() => {
-    // Prioritize roadmap data if available
     if (roadmapData?.selectedRoadmap?.weeklyTasks?.length > 0) {
       return roadmapData.selectedRoadmap.weeklyTasks.map((weekData: any) => ({
         week: weekData.week,
@@ -86,26 +85,10 @@ export default function Roadmap() {
         status: currentWeek > weekData.week ? "completed" : currentWeek === weekData.week ? "current" : "upcoming"
       }));
     }
-
-    // Fallback: use actual tasks data to generate basic weeks
-    if (allTasks.length > 0) {
-      const tasksByWeek = allTasks.reduce((acc: Record<number, Task[]>, task) => {
-        if (!acc[task.week]) acc[task.week] = [];
-        acc[task.week].push(task);
-        return acc;
-      }, {});
-      
-      return Object.entries(tasksByWeek).map(([weekNum, weekTasks]) => ({
-        week: parseInt(weekNum),
-        title: `Week ${weekNum}`,
-        description: `Week ${weekNum} tasks and activities.`,
-        tasks: weekTasks.slice(0, 5).map(t => t.title),
-        status: currentWeek > parseInt(weekNum) ? "completed" : currentWeek === parseInt(weekNum) ? "current" : "upcoming"
-      })).sort((a, b) => a.week - b.week);
-    }
     
+    // No fallback - only show real roadmap data
     return [];
-  }, [roadmapData, currentWeek, allTasks]);
+  }, [roadmapData, currentWeek]);
 
   return (
     <div className="p-6">
@@ -150,7 +133,7 @@ export default function Roadmap() {
         </div>
       ) : weeks.length === 0 ? (
         <div className="text-center py-8">
-          <div className="text-lg text-gray-600">No roadmap data available</div>
+          <div className="text-lg text-gray-600">Roadmap is loading. Please complete your onboarding to generate your personalized plan.</div>
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
