@@ -132,7 +132,7 @@ export default function Roadmap() {
           </div>
         </CardHeader>
         <CardContent>
-          <Progress value={overallProgress} className="h-3 mb-4" />
+          <Progress value={overallProgress} className="h-3 mb-4 bg-gray-200 [&>div]:bg-blue-500" />
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
             <div className="text-center">
