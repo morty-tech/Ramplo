@@ -340,7 +340,7 @@ export default function Dashboard() {
                   return (
                   <div
                     key={task.id}
-                    className={`flex items-start space-x-4 p-4 border rounded-lg cursor-pointer transition-all duration-300 ${
+                    className={`flex items-center space-x-4 p-4 border rounded-lg cursor-pointer transition-all duration-300 ${
                       isCompleting 
                         ? 'border-green-300 bg-green-50 scale-[1.02] shadow-md' 
                         : isCompleted 
