@@ -167,8 +167,6 @@ export const marketingTemplates = pgTable("marketing_templates", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-export type MarketingTemplate = typeof marketingTemplates.$inferSelect;
-export type InsertMarketingTemplate = typeof marketingTemplates.$inferInsert;
 
 // Deal coach conversations
 export const dealCoachSessions = pgTable("deal_coach_sessions", {
@@ -233,6 +231,7 @@ export type InsertTask = z.infer<typeof insertTaskSchema>;
 export type UserProgress = typeof userProgress.$inferSelect;
 export type InsertUserProgress = z.infer<typeof insertUserProgressSchema>;
 export type MarketingTemplate = typeof marketingTemplates.$inferSelect;
+export type InsertMarketingTemplate = typeof marketingTemplates.$inferInsert;
 export type DealCoachSession = typeof dealCoachSessions.$inferSelect;
 export type InsertDealCoachSession = z.infer<typeof insertDealCoachSessionSchema>;
 export type DailyConnections = typeof dailyConnections.$inferSelect;
