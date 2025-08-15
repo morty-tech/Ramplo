@@ -14,6 +14,7 @@ import {
   ObjectNotFoundError,
 } from "./objectStorage";
 import { ObjectPermission } from "./objectAcl";
+import { imageService } from "./imageService";
 
 const openai = process.env.OPENAI_API_KEY ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY }) : null;
 
@@ -678,6 +679,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching template images:", error);
       res.status(500).json({ message: "Failed to fetch template images" });
+    }
+  });
+
+  // Dynamic Image Search (with fallback to database)
+  app.get("/api/images/search", requireAuth, async (req, res) => {
+    try {
+      const { query, count = "6" } = req.query;
+      if (!query || typeof query !== 'string') {
+        return res.status(400).json({ error: "Query parameter is required" });
+      }
+      
+      const images = await imageService.searchImages(query, parseInt(count as string));
+      res.json({
+        images,
+        source: images[0]?.source || 'database',
+        dynamicEnabled: imageService.isDynamicEnabled()
+      });
+    } catch (error) {
+      console.error("Error searching for images:", error);
+      res.status(500).json({ message: "Failed to search for images" });
+    }
+  });
+
+  // Get random images for a category
+  app.get("/api/images/random/:category", requireAuth, async (req, res) => {
+    try {
+      const { category } = req.params;
+      const { count = "6" } = req.query;
+      
+      const images = await imageService.getRandomImages(category, parseInt(count as string));
+      res.json({
+        images,
+        source: images[0]?.source || 'database',
+        dynamicEnabled: imageService.isDynamicEnabled()
+      });
+    } catch (error) {
+      console.error("Error fetching random images:", error);
+      res.status(500).json({ message: "Failed to fetch random images" });
     }
   });
 
