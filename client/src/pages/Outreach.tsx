@@ -1606,13 +1606,7 @@ export default function Outreach() {
               />
             </div>
             
-            <div className="flex justify-end space-x-2 pt-4">
-              <Button 
-                variant="outline"
-                onClick={() => setIsAICustomizationOpen(false)}
-              >
-                Cancel
-              </Button>
+            <div className="flex justify-end pt-4">
               <Button 
                 onClick={handleCustomize}
                 disabled={customizeTemplateMutation.isPending || !customizationForm.keyPoints.trim()}
