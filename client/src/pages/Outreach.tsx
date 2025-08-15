@@ -10,9 +10,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Copy, Wand2, Edit, Plus, Download, BarChart3, X, Save, Loader2, Mail, MessageSquare, Phone, Image, Upload } from "lucide-react";
+import { Copy, Wand2, Edit, Plus, Download, BarChart3, X, Save, Loader2, Mail, MessageSquare, Phone, Image, Upload, Palette } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ObjectUploader } from "@/components/ObjectUploader";
+import { ImageEditor } from "@/components/ImageEditor";
 import type { UploadResult } from "@uppy/core";
 
 type TemplateType = "email" | "social-media" | "phone-script";
@@ -98,6 +99,8 @@ export default function Outreach() {
   const [editingTemplate, setEditingTemplate] = useState<MarketingTemplate | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [selectedImageId, setSelectedImageId] = useState<string>("");
+  const [isImageEditorOpen, setIsImageEditorOpen] = useState(false);
+  const [editingImage, setEditingImage] = useState<TemplateImage | null>(null);
   const [customizationForm, setCustomizationForm] = useState({
     recipientType: "realtor",
     tone: "professional",
@@ -528,12 +531,24 @@ export default function Outreach() {
                                     </Select>
                                   </div>
                                   {selectedImage && (
-                                    <div>
+                                    <div className="space-y-3">
                                       <img 
                                         src={selectedImage.imageUrl} 
                                         alt={selectedImage.imageAlt}
                                         className="w-full h-32 object-cover rounded border"
                                       />
+                                      <Button 
+                                        onClick={() => {
+                                          setEditingImage(selectedImage);
+                                          setIsImageEditorOpen(true);
+                                        }}
+                                        variant="outline"
+                                        size="sm"
+                                        className="flex items-center space-x-2 w-full"
+                                      >
+                                        <Palette className="w-4 h-4" />
+                                        <span>Customize Image</span>
+                                      </Button>
                                     </div>
                                   )}
                                   <div>
@@ -849,6 +864,17 @@ export default function Outreach() {
           </Card>
         </div>
       </div>
+      
+      {/* Image Editor */}
+      <ImageEditor
+        isOpen={isImageEditorOpen}
+        onClose={() => {
+          setIsImageEditorOpen(false);
+          setEditingImage(null);
+        }}
+        imageUrl={editingImage?.imageUrl || ""}
+        imageName={editingImage?.name || ""}
+      />
     </div>
   );
 }
