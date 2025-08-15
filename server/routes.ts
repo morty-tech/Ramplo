@@ -317,6 +317,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Test email functionality (development only)
+  if (process.env.NODE_ENV === 'development') {
+    app.post("/api/test-email", async (req, res) => {
+      try {
+        const { email, type } = req.body;
+        
+        if (!email) {
+          return res.status(400).json({ message: "Email is required" });
+        }
+
+        if (type === 'welcome') {
+          const { sendWelcomeEmail } = await import('./emailService');
+          await sendWelcomeEmail(email, 'Test User');
+          res.json({ message: "Welcome email sent" });
+        } else {
+          const { sendMagicLinkEmail } = await import('./emailService');
+          await sendMagicLinkEmail(email, 'test-token-123');
+          res.json({ message: "Magic link email sent" });
+        }
+      } catch (error) {
+        console.error("Test email error:", error);
+        res.status(500).json({ message: "Failed to send test email" });
+      }
+    });
+  }
+
   // Stripe billing
   if (stripe) {
     app.post("/api/create-subscription", requireAuth, async (req, res) => {
