@@ -125,13 +125,13 @@ export default function Roadmap() {
 
       {/* Progress Overview */}
       <Card className="mb-8">
-        <CardHeader>
+        <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="text-xl">Overall Progress</CardTitle>
             <span className="text-sm text-gray-600">Week {currentWeek} of {TOTAL_WEEKS}</span>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-3">
           <Progress value={overallProgress} className="h-3 mb-4 bg-gray-200 [&>div]:bg-blue-500" />
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
