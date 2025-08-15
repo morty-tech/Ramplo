@@ -160,6 +160,12 @@ export default function Outreach() {
   const [editedScript, setEditedScript] = useState('');
   const [isImageLibraryOpen, setIsImageLibraryOpen] = useState(false);
   const [isAICustomizationOpen, setIsAICustomizationOpen] = useState(false);
+  const [animatingFields, setAnimatingFields] = useState<{
+    subject?: boolean;
+    body?: boolean;
+    script?: boolean;
+    content?: boolean;
+  }>({});
   const [customizationForm, setCustomizationForm] = useState({
     recipientType: "realtor",
     tone: "professional",
@@ -276,29 +282,43 @@ export default function Outreach() {
       
       // Directly populate the inline editing areas based on template type
       if (selectedTemplate) {
+        const newAnimatingFields: typeof animatingFields = {};
+        
         if (activeTemplateType === "email") {
           // For email templates, start editing subject and body
           if (data.subject) {
             setEditedSubject(data.subject);
             setIsEditingSubject(true);
+            newAnimatingFields.subject = true;
           }
           if (data.content) {
             setEditedBody(data.content);
             setIsEditingBody(true);
+            newAnimatingFields.body = true;
           }
         } else if (activeTemplateType === "phone-script") {
           // For phone scripts, start editing the script
           if (data.content) {
             setEditedScript(data.content);
             setIsEditingScript(true);
+            newAnimatingFields.script = true;
           }
         } else if (activeTemplateType === "social-media") {
           // For social media, start editing the content
           if (data.content) {
             setEditedContent(data.content);
             setIsEditingContent(true);
+            newAnimatingFields.content = true;
           }
         }
+        
+        // Trigger animation
+        setAnimatingFields(newAnimatingFields);
+        
+        // Clear animation after 3 seconds
+        setTimeout(() => {
+          setAnimatingFields({});
+        }, 3000);
       }
       
       // Close the AI customization modal
@@ -743,7 +763,11 @@ export default function Outreach() {
                                 <Input
                                   value={editedSubject}
                                   onChange={(e) => setEditedSubject(e.target.value)}
-                                  className="text-sm"
+                                  className={`text-sm transition-all duration-1000 ${
+                                    animatingFields.subject 
+                                      ? 'bg-blue-50 border-blue-300 shadow-sm' 
+                                      : ''
+                                  }`}
                                   placeholder="Enter subject line..."
                                 />
                                 <div className="flex justify-end">
@@ -814,7 +838,11 @@ export default function Outreach() {
                                 <Textarea
                                   value={editedBody}
                                   onChange={(e) => setEditedBody(e.target.value)}
-                                  className="text-sm min-h-[400px] resize-none font-mono"
+                                  className={`text-sm min-h-[400px] resize-none font-mono transition-all duration-1000 ${
+                                    animatingFields.body 
+                                      ? 'bg-blue-50 border-blue-300 shadow-sm' 
+                                      : ''
+                                  }`}
                                   placeholder="Enter email content..."
                                 />
                                 <div className="flex justify-end">
@@ -1049,7 +1077,11 @@ export default function Outreach() {
                                 <Textarea
                                   value={editedContent}
                                   onChange={(e) => setEditedContent(e.target.value)}
-                                  className="text-sm min-h-[120px] resize-none"
+                                  className={`text-sm min-h-[120px] resize-none transition-all duration-1000 ${
+                                    animatingFields.content 
+                                      ? 'bg-blue-50 border-blue-300 shadow-sm' 
+                                      : ''
+                                  }`}
                                   placeholder="Edit your post content..."
                                 />
                                 <div className="flex justify-end">
@@ -1137,7 +1169,11 @@ export default function Outreach() {
                               <Textarea
                                 value={editedScript}
                                 onChange={(e) => setEditedScript(e.target.value)}
-                                className="text-sm min-h-[300px] resize-none font-mono"
+                                className={`text-sm min-h-[300px] resize-none font-mono transition-all duration-1000 ${
+                                  animatingFields.script 
+                                    ? 'bg-blue-50 border-blue-300 shadow-sm' 
+                                    : ''
+                                }`}
                                 placeholder="Enter your phone script..."
                               />
                               <div className="flex justify-end">
