@@ -679,15 +679,6 @@ export default function Outreach() {
                         Customize with AI
                       </button>
                     </div>
-                    <div className="flex items-center space-x-2 mt-1">
-                      <Badge variant="outline">{selectedTemplate.category}</Badge>
-                      {selectedTemplate.platform && (
-                        <Badge variant="secondary">{selectedTemplate.platform}</Badge>
-                      )}
-                      {selectedTemplate.scriptType && (
-                        <Badge variant="secondary">{selectedTemplate.scriptType}</Badge>
-                      )}
-                    </div>
                   </div>
 
                   <div className="bg-gray-50 rounded-lg p-6 mb-6">
