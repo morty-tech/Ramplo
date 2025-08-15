@@ -152,6 +152,10 @@ export default function Outreach() {
   const [customImageUrl, setCustomImageUrl] = useState<string>('');
   const [isEditingContent, setIsEditingContent] = useState(false);
   const [editedContent, setEditedContent] = useState('');
+  const [isEditingSubject, setIsEditingSubject] = useState(false);
+  const [editedSubject, setEditedSubject] = useState('');
+  const [isEditingBody, setIsEditingBody] = useState(false);
+  const [editedBody, setEditedBody] = useState('');
   const [isImageLibraryOpen, setIsImageLibraryOpen] = useState(false);
   const [customizationForm, setCustomizationForm] = useState({
     recipientType: "realtor",
@@ -446,6 +450,10 @@ export default function Outreach() {
     // Reset editing state when template changes
     setIsEditingContent(false);
     setEditedContent('');
+    setIsEditingSubject(false);
+    setEditedSubject('');
+    setIsEditingBody(false);
+    setEditedBody('');
   }, [selectedTemplate, activeTemplateType]);
 
   // Auto-apply changes when inline settings change
@@ -502,6 +510,56 @@ export default function Outreach() {
   const resetContentEditing = () => {
     setIsEditingContent(false);
     setEditedContent('');
+  };
+
+  // Save edited subject
+  const saveEditedSubject = () => {
+    if (selectedTemplate && editedSubject.trim()) {
+      updateTemplateMutation.mutate({
+        id: selectedTemplate.id,
+        updates: { subject: editedSubject }
+      });
+      setIsEditingSubject(false);
+    }
+  };
+
+  // Start editing subject
+  const startEditingSubject = () => {
+    if (selectedTemplate) {
+      setEditedSubject(selectedTemplate.subject || '');
+      setIsEditingSubject(true);
+    }
+  };
+
+  // Reset subject editing
+  const resetSubjectEditing = () => {
+    setIsEditingSubject(false);
+    setEditedSubject('');
+  };
+
+  // Save edited body
+  const saveEditedBody = () => {
+    if (selectedTemplate && editedBody.trim()) {
+      updateTemplateMutation.mutate({
+        id: selectedTemplate.id,
+        updates: { content: editedBody }
+      });
+      setIsEditingBody(false);
+    }
+  };
+
+  // Start editing body
+  const startEditingBody = () => {
+    if (selectedTemplate) {
+      setEditedBody(selectedTemplate.content);
+      setIsEditingBody(true);
+    }
+  };
+
+  // Reset body editing
+  const resetBodyEditing = () => {
+    setIsEditingBody(false);
+    setEditedBody('');
   };
 
   const templateTypeIcons = {
@@ -599,12 +657,140 @@ export default function Outreach() {
                     {/* Email Template View */}
                     {activeTemplateType === "email" && (
                       <>
-                        <div className="text-sm font-medium text-gray-900 mb-2">Subject Line:</div>
-                        <div className="text-sm text-gray-700 mb-4 italic">{selectedTemplate.subject}</div>
-                        
-                        <div className="text-sm font-medium text-gray-900 mb-2">Email Body:</div>
-                        <div className="text-sm text-gray-900 whitespace-pre-wrap font-mono bg-white p-4 rounded border">
-                          {selectedTemplate.content}
+                        <div className="space-y-6">
+                          {/* Subject Line */}
+                          <div>
+                            <div className="flex items-center justify-between mb-2">
+                              <div className="text-sm font-medium text-gray-900">Subject Line:</div>
+                              {isEditingSubject && (
+                                <button
+                                  onClick={resetSubjectEditing}
+                                  className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
+                                >
+                                  <RotateCcw className="w-3 h-3" />
+                                  Reset
+                                </button>
+                              )}
+                              <div className="text-xs text-gray-500">
+                                {(selectedTemplate.subject || '').length} characters
+                              </div>
+                            </div>
+                            {isEditingSubject ? (
+                              <div className="space-y-2">
+                                <Input
+                                  value={editedSubject}
+                                  onChange={(e) => setEditedSubject(e.target.value)}
+                                  className="text-sm"
+                                  placeholder="Enter subject line..."
+                                />
+                                <div className="flex justify-end">
+                                  <Button
+                                    onClick={saveEditedSubject}
+                                    size="sm"
+                                    disabled={updateTemplateMutation.isPending}
+                                    className="bg-green-600 hover:bg-green-700"
+                                  >
+                                    {updateTemplateMutation.isPending ? (
+                                      <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+                                    ) : (
+                                      <Save className="w-3 h-3 mr-1" />
+                                    )}
+                                    Save
+                                  </Button>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="space-y-2">
+                                <div 
+                                  className="text-sm text-gray-900 bg-white p-3 rounded border cursor-pointer hover:bg-gray-50 transition-colors italic"
+                                  onClick={startEditingSubject}
+                                >
+                                  {selectedTemplate.subject || 'No subject line'}
+                                  <div className="text-xs text-gray-400 mt-1 opacity-0 hover:opacity-100 transition-opacity not-italic">
+                                    Click to edit
+                                  </div>
+                                </div>
+                                <div className="flex justify-end">
+                                  <Button
+                                    onClick={() => copyToClipboard(selectedTemplate.subject || '')}
+                                    size="sm"
+                                    variant="outline"
+                                    className="text-xs"
+                                  >
+                                    <Copy className="w-3 h-3 mr-1" />
+                                    Copy Subject
+                                  </Button>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                          
+                          {/* Email Body */}
+                          <div>
+                            <div className="flex items-center justify-between mb-2">
+                              <div className="text-sm font-medium text-gray-900">Email Body:</div>
+                              {isEditingBody && (
+                                <button
+                                  onClick={resetBodyEditing}
+                                  className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
+                                >
+                                  <RotateCcw className="w-3 h-3" />
+                                  Reset
+                                </button>
+                              )}
+                              <div className="text-xs text-gray-500">
+                                {selectedTemplate.content.split(/\s+/).length} words
+                              </div>
+                            </div>
+                            {isEditingBody ? (
+                              <div className="space-y-2">
+                                <Textarea
+                                  value={editedBody}
+                                  onChange={(e) => setEditedBody(e.target.value)}
+                                  className="text-sm min-h-[200px] resize-none font-mono"
+                                  placeholder="Enter email content..."
+                                />
+                                <div className="flex justify-end">
+                                  <Button
+                                    onClick={saveEditedBody}
+                                    size="sm"
+                                    disabled={updateTemplateMutation.isPending}
+                                    className="bg-green-600 hover:bg-green-700"
+                                  >
+                                    {updateTemplateMutation.isPending ? (
+                                      <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+                                    ) : (
+                                      <Save className="w-3 h-3 mr-1" />
+                                    )}
+                                    Save
+                                  </Button>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="space-y-2">
+                                <div 
+                                  className="text-sm text-gray-900 whitespace-pre-wrap bg-white p-4 rounded border min-h-[200px] cursor-pointer hover:bg-gray-50 transition-colors font-mono"
+                                  onClick={startEditingBody}
+                                >
+                                  {selectedTemplate.content}
+                                  <div className="text-xs text-gray-400 mt-2 opacity-0 hover:opacity-100 transition-opacity">
+                                    Click to edit
+                                  </div>
+                                </div>
+                                <div className="flex justify-end">
+                                  <Button
+                                    onClick={() => copyToClipboard(selectedTemplate.content)}
+                                    size="sm"
+                                    variant="outline"
+                                    className="text-xs"
+                                  >
+                                    <Copy className="w-3 h-3 mr-1" />
+                                    Copy Body
+                                  </Button>
+                                </div>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </>
                     )}
