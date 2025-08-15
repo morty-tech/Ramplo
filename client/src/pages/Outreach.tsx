@@ -842,10 +842,10 @@ export default function Outreach() {
                             ) : (
                               <div className="space-y-2">
                                 <div 
-                                  className={`text-sm text-gray-900 bg-white p-3 rounded border cursor-pointer hover:bg-gray-50 transition-all duration-3000 italic ${
+                                  className={`text-sm text-gray-900 p-3 rounded border cursor-pointer transition-all duration-3000 italic ${
                                     animatingFields.subject 
                                       ? 'bg-blue-50 border-blue-300 shadow-sm' 
-                                      : ''
+                                      : 'bg-white hover:bg-gray-50'
                                   }`}
                                   onClick={startEditingSubject}
                                 >
@@ -931,10 +931,10 @@ export default function Outreach() {
                             ) : (
                               <div className="space-y-2">
                                 <div 
-                                  className={`text-sm text-gray-900 whitespace-pre-wrap bg-white p-4 rounded border min-h-[200px] cursor-pointer hover:bg-gray-50 transition-all duration-3000 font-mono ${
+                                  className={`text-sm text-gray-900 whitespace-pre-wrap p-4 rounded border min-h-[200px] cursor-pointer transition-all duration-3000 font-mono ${
                                     animatingFields.body 
                                       ? 'bg-blue-50 border-blue-300 shadow-sm' 
-                                      : ''
+                                      : 'bg-white hover:bg-gray-50'
                                   }`}
                                   onClick={startEditingBody}
                                 >
@@ -1184,10 +1184,10 @@ export default function Outreach() {
                             ) : (
                               <div className="space-y-2">
                                 <div 
-                                  className={`text-sm text-gray-900 bg-white p-4 rounded border min-h-[120px] cursor-pointer hover:bg-gray-50 transition-all duration-3000 ${
+                                  className={`text-sm text-gray-900 p-4 rounded border min-h-[120px] cursor-pointer transition-all duration-3000 ${
                                     animatingFields.content 
                                       ? 'bg-blue-50 border-blue-300 shadow-sm' 
-                                      : ''
+                                      : 'bg-white hover:bg-gray-50'
                                   }`}
                                   onClick={startEditingContent}
                                 >
@@ -1290,10 +1290,10 @@ export default function Outreach() {
                           ) : (
                             <div className="space-y-2">
                               <div 
-                                className={`text-sm text-gray-900 whitespace-pre-wrap bg-white p-4 rounded border min-h-[300px] cursor-pointer hover:bg-gray-50 transition-all duration-3000 font-mono ${
+                                className={`text-sm text-gray-900 whitespace-pre-wrap p-4 rounded border min-h-[300px] cursor-pointer transition-all duration-3000 font-mono ${
                                   animatingFields.script 
                                     ? 'bg-blue-50 border-blue-300 shadow-sm' 
-                                    : ''
+                                    : 'bg-white hover:bg-gray-50'
                                 }`}
                                 onClick={startEditingScript}
                               >
