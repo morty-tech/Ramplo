@@ -395,6 +395,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         };
         console.log("Updating with:", updateData);
         const loanActions = await storage.updateDailyLoanActions(userId, today, updateData);
+        
+        // Update user progress if closings were added
+        if (closings && closings > 0) {
+          const progress = await storage.getUserProgress(userId);
+          if (progress) {
+            await storage.updateUserProgress(userId, {
+              loansClosed: (progress.loansClosed || 0) + closings,
+              lastActivityDate: new Date(),
+            });
+          }
+        }
+        
         res.json(loanActions);
       } else {
         // Create new entry for today
@@ -407,6 +419,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         };
         console.log("Creating with:", createData);
         const loanActions = await storage.createDailyLoanActions(createData);
+        
+        // Update user progress if closings were added
+        if (createData.closings && createData.closings > 0) {
+          const progress = await storage.getUserProgress(userId);
+          if (progress) {
+            await storage.updateUserProgress(userId, {
+              loansClosed: (progress.loansClosed || 0) + createData.closings,
+              lastActivityDate: new Date(),
+            });
+          }
+        }
+        
         res.json(loanActions);
       }
     } catch (error) {
