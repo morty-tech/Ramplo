@@ -950,7 +950,118 @@ export default function Outreach() {
                     {activeTemplateType === "social-media" && (
                       <>
                         <div className="space-y-6">
-                          {/* Post Image with Inline Customization - Above content */}
+                          {/* Post Content - Now above image */}
+                          <div>
+                            <div className="flex items-center justify-between mb-2">
+                              <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-2">
+                                  <div className="text-sm font-medium text-gray-900">Post Content:</div>
+                                  {aiCustomizedFields.content && (
+                                    <div className="flex items-center gap-1 text-xs text-green-600">
+                                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                      </svg>
+                                      AI Customized
+                                    </div>
+                                  )}
+                                </div>
+                                {!isEditingContent && (
+                                  <Button
+                                    onClick={() => copyToClipboard(cleanContentForDisplay(selectedTemplate.content))}
+                                    size="sm"
+                                    variant="outline"
+                                    className="text-xs h-6 px-2"
+                                  >
+                                    <Copy className="w-3 h-3 mr-1" />
+                                    Copy Content
+                                  </Button>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-3">
+                                {isEditingContent && (
+                                  <button
+                                    onClick={resetContentEditing}
+                                    className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
+                                  >
+                                    <RotateCcw className="w-3 h-3" />
+                                    Reset
+                                  </button>
+                                )}
+                                <div className="text-xs text-gray-500">
+                                  {(() => {
+                                    const cleanContent = cleanContentForDisplay(selectedTemplate.content);
+                                    const charLimit = getCharacterLimit(selectedTemplate.platform);
+                                    const isOverLimit = cleanContent.length > charLimit;
+                                    return (
+                                      <span className={isOverLimit ? 'text-red-600 font-medium' : 'text-gray-500'}>
+                                        {cleanContent.length}/{charLimit} characters
+                                        {selectedTemplate.platform && ` (${selectedTemplate.platform})`}
+                                      </span>
+                                    );
+                                  })()} 
+                                </div>
+                              </div>
+                            </div>
+                            {isEditingContent ? (
+                              <div className="space-y-2">
+                                <Textarea
+                                  value={editedContent}
+                                  onChange={(e) => setEditedContent(e.target.value)}
+                                  className={`text-sm min-h-[120px] resize-none transition-all duration-3000 ${
+                                    animatingFields.content 
+                                      ? 'bg-green-50 border-green-300 shadow-sm' 
+                                      : ''
+                                  }`}
+                                  placeholder="Edit your post content..."
+                                />
+                                <div className="flex justify-end">
+                                  <Button
+                                    onClick={saveEditedContent}
+                                    size="sm"
+                                    disabled={updateTemplateMutation.isPending}
+                                    className="bg-green-600 hover:bg-green-700"
+                                  >
+                                    {updateTemplateMutation.isPending ? (
+                                      <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+                                    ) : (
+                                      <Save className="w-3 h-3 mr-1" />
+                                    )}
+                                    Save
+                                  </Button>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="space-y-2">
+                                <div 
+                                  className={`text-sm text-gray-900 p-4 rounded border min-h-[120px] cursor-pointer transition-all duration-3000 ${
+                                    animatingFields.content 
+                                      ? 'bg-green-50 border-green-300 shadow-sm' 
+                                      : 'bg-white hover:bg-gray-50'
+                                  }`}
+                                  onClick={startEditingContent}
+                                >
+                                  {cleanContentForDisplay(selectedTemplate.content)}
+                                  <div className="text-xs text-gray-400 mt-2 opacity-0 hover:opacity-100 transition-opacity">
+                                    Click to edit
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                            {(() => {
+                              const cleanContent = cleanContentForDisplay(selectedTemplate.content);
+                              const charLimit = getCharacterLimit(selectedTemplate.platform);
+                              if (cleanContent.length > charLimit) {
+                                return (
+                                  <div className="mt-2 text-xs text-red-600 bg-red-50 p-2 rounded">
+                                    ⚠️ This post exceeds the {selectedTemplate.platform || 'recommended'} character limit by {cleanContent.length - charLimit} characters.
+                                  </div>
+                                );
+                              }
+                              return null;
+                            })()} 
+                          </div>
+                          
+                          {/* Post Image - Now below content */}
                           <div>
                             <div className="flex items-center justify-between mb-2">
                               <div className="flex items-center gap-3">
@@ -1095,117 +1206,6 @@ export default function Outreach() {
                                 )}
                               </div>
                             )}
-                          </div>
-                          
-                          {/* Post Content - Below image */}
-                          <div>
-                            <div className="flex items-center justify-between mb-2">
-                              <div className="flex items-center gap-3">
-                                <div className="flex items-center gap-2">
-                                  <div className="text-sm font-medium text-gray-900">Post Content:</div>
-                                  {aiCustomizedFields.content && (
-                                    <div className="flex items-center gap-1 text-xs text-green-600">
-                                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                      </svg>
-                                      AI Customized
-                                    </div>
-                                  )}
-                                </div>
-                                {!isEditingContent && (
-                                  <Button
-                                    onClick={() => copyToClipboard(cleanContentForDisplay(selectedTemplate.content))}
-                                    size="sm"
-                                    variant="outline"
-                                    className="text-xs h-6 px-2"
-                                  >
-                                    <Copy className="w-3 h-3 mr-1" />
-                                    Copy Content
-                                  </Button>
-                                )}
-                              </div>
-                              <div className="flex items-center gap-3">
-                                {isEditingContent && (
-                                  <button
-                                    onClick={resetContentEditing}
-                                    className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
-                                  >
-                                    <RotateCcw className="w-3 h-3" />
-                                    Reset
-                                  </button>
-                                )}
-                                <div className="text-xs text-gray-500">
-                                  {(() => {
-                                    const cleanContent = cleanContentForDisplay(selectedTemplate.content);
-                                    const charLimit = getCharacterLimit(selectedTemplate.platform);
-                                    const isOverLimit = cleanContent.length > charLimit;
-                                    return (
-                                      <span className={isOverLimit ? 'text-red-600 font-medium' : 'text-gray-500'}>
-                                        {cleanContent.length}/{charLimit} characters
-                                        {selectedTemplate.platform && ` (${selectedTemplate.platform})`}
-                                      </span>
-                                    );
-                                  })()}
-                                </div>
-                              </div>
-                            </div>
-                            {isEditingContent ? (
-                              <div className="space-y-2">
-                                <Textarea
-                                  value={editedContent}
-                                  onChange={(e) => setEditedContent(e.target.value)}
-                                  className={`text-sm min-h-[120px] resize-none transition-all duration-3000 ${
-                                    animatingFields.content 
-                                      ? 'bg-green-50 border-green-300 shadow-sm' 
-                                      : ''
-                                  }`}
-                                  placeholder="Edit your post content..."
-                                />
-                                <div className="flex justify-end">
-                                  <Button
-                                    onClick={saveEditedContent}
-                                    size="sm"
-                                    disabled={updateTemplateMutation.isPending}
-                                    className="bg-green-600 hover:bg-green-700"
-                                  >
-                                    {updateTemplateMutation.isPending ? (
-                                      <Loader2 className="w-3 h-3 mr-1 animate-spin" />
-                                    ) : (
-                                      <Save className="w-3 h-3 mr-1" />
-                                    )}
-                                    Save
-                                  </Button>
-                                </div>
-                              </div>
-                            ) : (
-                              <div className="space-y-2">
-                                <div 
-                                  className={`text-sm text-gray-900 p-4 rounded border min-h-[120px] cursor-pointer transition-all duration-3000 ${
-                                    animatingFields.content 
-                                      ? 'bg-green-50 border-green-300 shadow-sm' 
-                                      : 'bg-white hover:bg-gray-50'
-                                  }`}
-                                  onClick={startEditingContent}
-                                >
-                                  {cleanContentForDisplay(selectedTemplate.content)}
-                                  <div className="text-xs text-gray-400 mt-2 opacity-0 hover:opacity-100 transition-opacity">
-                                    Click to edit
-                                  </div>
-                                </div>
-                              </div>
-                            )}
-                            {(() => {
-                              const cleanContent = cleanContentForDisplay(selectedTemplate.content);
-                              const charLimit = getCharacterLimit(selectedTemplate.platform);
-                              if (cleanContent.length > charLimit) {
-                                return (
-                                  <div className="mt-2 text-xs text-red-600 bg-red-50 p-2 rounded">
-                                    ⚠️ This post exceeds the {selectedTemplate.platform || 'recommended'} character limit by {cleanContent.length - charLimit} characters.
-                                  </div>
-                                );
-                              }
-                              return null;
-                            })()}
                           </div>
                         </div>
                       </>
