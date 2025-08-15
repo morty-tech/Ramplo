@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import { Bot, Target, Mail } from "lucide-react";
+import { Bot, Target, Mail, Loader2 } from "lucide-react";
 
 export default function TestRoadmap() {
   const [roadmapResult, setRoadmapResult] = useState<any>(null);
@@ -14,7 +14,8 @@ export default function TestRoadmap() {
   const testRoadmapSelection = async () => {
     setLoading(true);
     try {
-      const result = await apiRequest("POST", "/api/roadmap/select", {});
+      const response = await apiRequest("POST", "/api/roadmap/select", {});
+      const result = await response.json();
       setRoadmapResult(result);
       toast({
         title: "Roadmap Selected!",
@@ -34,7 +35,8 @@ export default function TestRoadmap() {
   const testTemplateSelection = async () => {
     setLoading(true);
     try {
-      const result = await apiRequest("POST", "/api/templates/select", { limit: 3 });
+      const response = await apiRequest("POST", "/api/templates/select", { limit: 3 });
+      const result = await response.json();
       setTemplateResult(result);
       toast({
         title: "Templates Selected!",
@@ -82,7 +84,7 @@ export default function TestRoadmap() {
             >
               {loading ? (
                 <>
-                  <Bot className="w-4 h-4 mr-2 animate-pulse" />
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                   Analyzing Profile...
                 </>
               ) : (
@@ -113,7 +115,7 @@ export default function TestRoadmap() {
             >
               {loading ? (
                 <>
-                  <Bot className="w-4 h-4 mr-2 animate-pulse" />
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                   Finding Templates...
                 </>
               ) : (
