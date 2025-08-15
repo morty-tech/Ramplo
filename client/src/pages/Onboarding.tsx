@@ -42,9 +42,10 @@ export default function Onboarding() {
   const { toast } = useToast();
 
   const loadingMessages = [
-    "Analysing your experience...",
-    "Creating your roadmap...",
-    "Generating your templates..."
+    "Setting up your account...",
+    "Analyzing your experience...",
+    "Building your personalized ramp plan...",
+    "Preparing your templates & resources..."
   ];
 
   const totalSteps = 7; // Reduced from 9 since we removed licensing step
