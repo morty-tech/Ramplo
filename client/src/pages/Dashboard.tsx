@@ -214,7 +214,7 @@ export default function Dashboard() {
   return (
     <div className="p-6 mx-4 md:mx-8">
       {/* Header */}
-      <div className="mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between">
+      <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             {profile?.firstName || user?.firstName || 'there'}, let's Ramp!
@@ -222,8 +222,8 @@ export default function Dashboard() {
           <p className="text-gray-600">This week is all about {getWeekFocus(currentWeek)}</p>
         </div>
         
-        {/* Performance Score - aligned with headline on large screens */}
-        <div className="flex flex-col items-center mt-4 lg:mt-0">
+        {/* Performance Score - aligned with headline on medium+ screens */}
+        <div className="flex flex-col items-center mt-4 md:mt-0">
           <div className="relative w-16 h-16">
             {/* Background circle */}
             <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
