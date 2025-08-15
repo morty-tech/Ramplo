@@ -34,6 +34,8 @@ export default function Onboarding() {
     tonePreference: "",
     preferredChannels: [] as string[], // Tag-based, max 3
     goals: "",
+    otherFocus: "",
+    otherBorrowerType: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(1);
@@ -73,7 +75,7 @@ export default function Onboarding() {
     setShowOnboardingComplete(true);
 
     // Cycle through loading messages
-    const stepDuration = 2500; // 2.5 seconds per step
+    const stepDuration = 4000; // 4 seconds per step
     const messageInterval = setInterval(() => {
       setLoadingStep(prev => {
         if (prev >= loadingMessages.length - 1) {
@@ -373,6 +375,18 @@ export default function Onboarding() {
                       })}
                     </div>
                     
+                    {formData.focus.includes("other") && (
+                      <div className="mt-4">
+                        <Label htmlFor="otherFocus" className="font-medium">Please specify your other loan focus</Label>
+                        <Input
+                          id="otherFocus"
+                          value={formData.otherFocus}
+                          onChange={(e) => setFormData(prev => ({ ...prev, otherFocus: e.target.value }))}
+                          placeholder="e.g., Bridge loans, Construction loans, Jumbo loans"
+                        />
+                      </div>
+                    )}
+                    
                     <p className="text-xs text-gray-500">
                       {formData.focus.length}/3 loan types selected
                     </p>
@@ -444,6 +458,18 @@ export default function Onboarding() {
                         );
                       })}
                     </div>
+                    
+                    {formData.borrowerTypes.includes("other") && (
+                      <div className="mt-4">
+                        <Label htmlFor="otherBorrowerType" className="font-medium">Please specify your other borrower type</Label>
+                        <Input
+                          id="otherBorrowerType"
+                          value={formData.otherBorrowerType}
+                          onChange={(e) => setFormData(prev => ({ ...prev, otherBorrowerType: e.target.value }))}
+                          placeholder="e.g., Foreign nationals, Self-employed, Bank statement loans"
+                        />
+                      </div>
+                    )}
                     
                     <p className="text-xs text-gray-500">
                       {formData.borrowerTypes.length}/4 types selected
