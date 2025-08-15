@@ -713,18 +713,6 @@ export default function Outreach() {
                                   </div>
                                 </div>
                                 
-                                <div className="flex justify-end">
-                                  <Button
-                                    onClick={downloadCustomizedImage}
-                                    size="sm"
-                                    disabled={!customImageUrl}
-                                    variant="outline"
-                                    className="text-xs"
-                                  >
-                                    <Download className="w-3 h-3 mr-1" />
-                                    Download Image
-                                  </Button>
-                                </div>
                               </div>
                             ) : (
                               <div className="bg-white p-4 rounded border h-48 flex items-center justify-center text-gray-400">
@@ -732,6 +720,20 @@ export default function Outreach() {
                                   <Image className="w-8 h-8 mx-auto mb-2" />
                                   <p className="text-sm">No image selected</p>
                                 </div>
+                              </div>
+                            )}
+                            {selectedTemplate?.imageUrl && (
+                              <div className="flex justify-end mt-2">
+                                <Button
+                                  onClick={downloadCustomizedImage}
+                                  size="sm"
+                                  disabled={!customImageUrl}
+                                  variant="outline"
+                                  className="text-xs"
+                                >
+                                  <Download className="w-3 h-3 mr-1" />
+                                  Download Image
+                                </Button>
                               </div>
                             )}
                           </div>
