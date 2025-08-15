@@ -809,7 +809,7 @@ export default function Outreach() {
                                 <Input
                                   value={editedSubject}
                                   onChange={(e) => setEditedSubject(e.target.value)}
-                                  className={`text-sm transition-all duration-1000 ${
+                                  className={`text-sm transition-all duration-3000 ${
                                     animatingFields.subject 
                                       ? 'bg-blue-50 border-blue-300 shadow-sm' 
                                       : ''
@@ -894,7 +894,7 @@ export default function Outreach() {
                                 <Textarea
                                   value={editedBody}
                                   onChange={(e) => setEditedBody(e.target.value)}
-                                  className={`text-sm min-h-[400px] resize-none font-mono transition-all duration-1000 ${
+                                  className={`text-sm min-h-[400px] resize-none font-mono transition-all duration-3000 ${
                                     animatingFields.body 
                                       ? 'bg-blue-50 border-blue-300 shadow-sm' 
                                       : ''
@@ -1143,7 +1143,7 @@ export default function Outreach() {
                                 <Textarea
                                   value={editedContent}
                                   onChange={(e) => setEditedContent(e.target.value)}
-                                  className={`text-sm min-h-[120px] resize-none transition-all duration-1000 ${
+                                  className={`text-sm min-h-[120px] resize-none transition-all duration-3000 ${
                                     animatingFields.content 
                                       ? 'bg-blue-50 border-blue-300 shadow-sm' 
                                       : ''
@@ -1245,7 +1245,7 @@ export default function Outreach() {
                               <Textarea
                                 value={editedScript}
                                 onChange={(e) => setEditedScript(e.target.value)}
-                                className={`text-sm min-h-[300px] resize-none font-mono transition-all duration-1000 ${
+                                className={`text-sm min-h-[300px] resize-none font-mono transition-all duration-3000 ${
                                   animatingFields.script 
                                     ? 'bg-blue-50 border-blue-300 shadow-sm' 
                                     : ''
