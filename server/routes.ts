@@ -234,11 +234,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/templates/:id/customize", requireAuth, async (req: AuthenticatedRequest, res) => {
+  app.post("/api/templates/:id/customize", requireAuth, async (req: any, res) => {
     try {
       const { id } = req.params;
       const { recipientType, tone, keyPoints } = req.body;
-      const userId = req.session.user.id;
+      const userId = (req as any).session.user.id;
       
       // Get template and user profile
       const template = await storage.getMarketingTemplate(id);
@@ -262,12 +262,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
       
       res.json(customizedTemplate);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error customizing template:", error);
-      if (error.message.includes("API key")) {
+      if (error?.message?.includes("API key")) {
         return res.status(500).json({ message: "AI service not configured" });
       }
-      if (error.message.includes("quota")) {
+      if (error?.message?.includes("quota")) {
         return res.status(500).json({ message: "AI service temporarily unavailable - please try again later" });
       }
       res.status(500).json({ message: "Failed to customize template" });
@@ -543,7 +543,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // AI-powered roadmap selection
-  app.post("/api/roadmap/select", requireAuth, async (req: AuthenticatedRequest, res) => {
+  app.post("/api/roadmap/select", requireAuth, async (req: any, res) => {
     try {
       const userId = req.session.user.id;
       const userProfile = await storage.getUserProfile(userId);
@@ -558,9 +558,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const roadmapSelection = await selectOptimalRoadmap(userProfile);
       
       res.json(roadmapSelection);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error selecting roadmap:", error);
-      if (error.message.includes("API key")) {
+      if (error?.message?.includes("API key")) {
         return res.status(500).json({ message: "AI service not configured" });
       }
       res.status(500).json({ message: "Failed to select optimal roadmap" });
@@ -568,7 +568,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // AI-powered email template selection
-  app.post("/api/templates/select", requireAuth, async (req: AuthenticatedRequest, res) => {
+  app.post("/api/templates/select", requireAuth, async (req: any, res) => {
     try {
       const userId = req.session.user.id;
       const { limit = 5 } = req.body;
@@ -584,9 +584,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const templateSelection = await selectRelevantEmailTemplates(userProfile, limit);
       
       res.json(templateSelection);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error selecting email templates:", error);
-      if (error.message.includes("API key")) {
+      if (error?.message?.includes("API key")) {
         return res.status(500).json({ message: "AI service not configured" });
       }
       res.status(500).json({ message: "Failed to select relevant templates" });
