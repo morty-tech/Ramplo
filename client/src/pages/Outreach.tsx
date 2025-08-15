@@ -740,7 +740,7 @@ export default function Outreach() {
                         </Select>
                         
                         {/* AI Customization Success Message */}
-                        <div className="h-4 mt-1">
+                        <div className="h-4 mt-3">
                           {isAICustomizationSuccess && (
                             <div className="text-xs text-green-600 flex items-center gap-1 animate-in slide-in-from-left-2 duration-300">
                               <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -767,7 +767,7 @@ export default function Outreach() {
                         ) : (
                           <Wand2 className="w-3 h-3" />
                         )}
-                        {isAICustomizationSuccess ? "Template Customized" : "Customize with AI"}
+                        Customize with AI
                       </button>
                     </div>
                   </div>
