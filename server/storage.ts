@@ -17,6 +17,7 @@ import {
   type UserProgress,
   type InsertUserProgress,
   type MarketingTemplate,
+  type InsertMarketingTemplate,
   type DealCoachSession,
   type InsertDealCoachSession,
   type MagicLink,
@@ -198,6 +199,23 @@ export class DatabaseStorage implements IStorage {
   async getMarketingTemplate(id: string): Promise<MarketingTemplate | undefined> {
     const [template] = await db.select().from(marketingTemplates).where(eq(marketingTemplates.id, id));
     return template;
+  }
+
+  async updateMarketingTemplate(id: string, updates: Partial<MarketingTemplate>): Promise<MarketingTemplate> {
+    const [template] = await db
+      .update(marketingTemplates)
+      .set(updates)
+      .where(eq(marketingTemplates.id, id))
+      .returning();
+    return template;
+  }
+
+  async createMarketingTemplate(template: InsertMarketingTemplate): Promise<MarketingTemplate> {
+    const [newTemplate] = await db
+      .insert(marketingTemplates)
+      .values(template)
+      .returning();
+    return newTemplate;
   }
 
   async createDealCoachSession(sessionData: InsertDealCoachSession): Promise<DealCoachSession> {

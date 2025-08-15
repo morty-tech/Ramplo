@@ -167,6 +167,9 @@ export const marketingTemplates = pgTable("marketing_templates", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+export type MarketingTemplate = typeof marketingTemplates.$inferSelect;
+export type InsertMarketingTemplate = typeof marketingTemplates.$inferInsert;
+
 // Deal coach conversations
 export const dealCoachSessions = pgTable("deal_coach_sessions", {
   id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),

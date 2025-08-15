@@ -210,6 +210,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.put("/api/templates/:id", requireAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const updates = req.body;
+      const template = await storage.updateMarketingTemplate(id, updates);
+      res.json(template);
+    } catch (error) {
+      console.error("Error updating template:", error);
+      res.status(500).json({ message: "Failed to update template" });
+    }
+  });
+
+  app.post("/api/templates", requireAuth, async (req, res) => {
+    try {
+      const template = await storage.createMarketingTemplate(req.body);
+      res.json(template);
+    } catch (error) {
+      console.error("Error creating template:", error);
+      res.status(500).json({ message: "Failed to create template" });
+    }
+  });
+
   // Deal Coach
   app.post("/api/deal-coach", requireAuth, async (req, res) => {
     try {
