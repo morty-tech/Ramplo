@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
-import { Copy, Wand2, Edit, Plus, Download, BarChart3, X, Save, Loader2, Mail, MessageSquare, Phone, Image, Upload, Palette, Type } from "lucide-react";
+import { Copy, Wand2, Edit, Plus, Download, BarChart3, X, Save, Loader2, Mail, MessageSquare, Phone, Image, Upload, Palette, Type, RotateCcw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ObjectUploader } from "@/components/ObjectUploader";
 import { ImageEditor } from "@/components/ImageEditor";
@@ -150,6 +150,8 @@ export default function Outreach() {
   });
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [customImageUrl, setCustomImageUrl] = useState<string>('');
+  const [isEditingContent, setIsEditingContent] = useState(false);
+  const [editedContent, setEditedContent] = useState('');
   const [customizationForm, setCustomizationForm] = useState({
     recipientType: "realtor",
     tone: "professional",
@@ -439,6 +441,10 @@ export default function Outreach() {
         updateCanvasImage();
       }, 100);
     }
+    
+    // Reset editing state when template changes
+    setIsEditingContent(false);
+    setEditedContent('');
   }, [selectedTemplate, activeTemplateType]);
 
   // Auto-apply changes when inline settings change
@@ -470,6 +476,31 @@ export default function Outreach() {
         description: "Your customized image is being downloaded.",
       });
     }, 'image/png');
+  };
+
+  // Save edited content
+  const saveEditedContent = () => {
+    if (selectedTemplate && editedContent.trim()) {
+      updateTemplateMutation.mutate({
+        id: selectedTemplate.id,
+        updates: { content: editedContent }
+      });
+      setIsEditingContent(false);
+    }
+  };
+
+  // Start editing content
+  const startEditingContent = () => {
+    if (selectedTemplate) {
+      setEditedContent(selectedTemplate.content);
+      setIsEditingContent(true);
+    }
+  };
+
+  // Reset content editing
+  const resetContentEditing = () => {
+    setIsEditingContent(false);
+    setEditedContent('');
   };
 
   const templateTypeIcons = {
@@ -686,7 +717,7 @@ export default function Outreach() {
                                   </div>
                                 </div>
                                 
-                                <div className="flex justify-center gap-2">
+                                <div className="flex justify-center items-center gap-4">
                                   <Button
                                     onClick={downloadCustomizedImage}
                                     size="sm"
@@ -696,13 +727,13 @@ export default function Outreach() {
                                     <Download className="w-3 h-3 mr-1" />
                                     Download
                                   </Button>
-                                  <Button
+                                  <button
                                     onClick={resetImageCustomization}
-                                    size="sm"
-                                    variant="outline"
+                                    className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
                                   >
+                                    <RotateCcw className="w-3 h-3" />
                                     Reset
-                                  </Button>
+                                  </button>
                                 </div>
                               </div>
                             ) : (
@@ -733,9 +764,48 @@ export default function Outreach() {
                                 })()}
                               </div>
                             </div>
-                            <div className="text-sm text-gray-900 bg-white p-4 rounded border min-h-[200px]">
-                              {cleanContentForDisplay(selectedTemplate.content)}
-                            </div>
+                            {isEditingContent ? (
+                              <div className="space-y-2">
+                                <Textarea
+                                  value={editedContent}
+                                  onChange={(e) => setEditedContent(e.target.value)}
+                                  className="text-sm min-h-[200px] resize-none"
+                                  placeholder="Edit your post content..."
+                                />
+                                <div className="flex items-center justify-between">
+                                  <button
+                                    onClick={resetContentEditing}
+                                    className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
+                                  >
+                                    <RotateCcw className="w-3 h-3" />
+                                    Reset
+                                  </button>
+                                  <Button
+                                    onClick={saveEditedContent}
+                                    size="sm"
+                                    disabled={updateTemplateMutation.isPending}
+                                    className="bg-green-600 hover:bg-green-700"
+                                  >
+                                    {updateTemplateMutation.isPending ? (
+                                      <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+                                    ) : (
+                                      <Save className="w-3 h-3 mr-1" />
+                                    )}
+                                    Save
+                                  </Button>
+                                </div>
+                              </div>
+                            ) : (
+                              <div 
+                                className="text-sm text-gray-900 bg-white p-4 rounded border min-h-[200px] cursor-pointer hover:bg-gray-50 transition-colors"
+                                onClick={startEditingContent}
+                              >
+                                {cleanContentForDisplay(selectedTemplate.content)}
+                                <div className="text-xs text-gray-400 mt-2 opacity-0 hover:opacity-100 transition-opacity">
+                                  Click to edit
+                                </div>
+                              </div>
+                            )}
                             {(() => {
                               const cleanContent = cleanContentForDisplay(selectedTemplate.content);
                               const charLimit = getCharacterLimit(selectedTemplate.platform);
@@ -765,25 +835,7 @@ export default function Outreach() {
                   </div>
 
                   <div className="flex items-center space-x-4">
-                    <Button
-                      onClick={handleCustomize}
-                      disabled={customizeTemplateMutation.isPending || !customizationForm.keyPoints.trim()}
-                      className="bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400"
-                    >
-                      {customizeTemplateMutation.isPending ? (
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      ) : (
-                        <Wand2 className="w-4 h-4 mr-2" />
-                      )}
-                      {customizeTemplateMutation.isPending ? 'Generating your template...' : 'Customize & Edit'}
-                    </Button>
                     <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-                      <DialogTrigger asChild>
-                        <Button variant="outline" onClick={handleEditTemplate}>
-                          <Edit className="w-4 h-4 mr-2" />
-                          Edit Template
-                        </Button>
-                      </DialogTrigger>
                       <DialogContent className="max-w-6xl max-h-[80vh] overflow-y-auto">
                         <DialogHeader>
                           <DialogTitle>Edit Template</DialogTitle>
