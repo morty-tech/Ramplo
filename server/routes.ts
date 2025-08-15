@@ -232,6 +232,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.post("/api/templates/:id/customize", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { id } = req.params;
+      const { recipientType, tone, keyPoints } = req.body;
+      const userId = req.session.user.id;
+      
+      // Get template and user profile
+      const template = await storage.getMarketingTemplate(id);
+      const userProfile = await storage.getUserProfile(userId);
+      
+      if (!template) {
+        return res.status(404).json({ message: "Template not found" });
+      }
+      
+      if (!userProfile) {
+        return res.status(400).json({ message: "User profile required for customization" });
+      }
+      
+      // Import AI service dynamically to handle missing API key gracefully
+      const { customizeTemplate } = await import("./aiService");
+      
+      const customizedTemplate = await customizeTemplate({
+        template,
+        userProfile,
+        customization: { recipientType, tone, keyPoints }
+      });
+      
+      res.json(customizedTemplate);
+    } catch (error) {
+      console.error("Error customizing template:", error);
+      if (error.message.includes("API key")) {
+        return res.status(500).json({ message: "AI service not configured" });
+      }
+      res.status(500).json({ message: "Failed to customize template" });
+    }
+  });
+
   // Deal Coach
   app.post("/api/deal-coach", requireAuth, async (req, res) => {
     try {

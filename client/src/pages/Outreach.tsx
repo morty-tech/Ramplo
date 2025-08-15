@@ -76,11 +76,50 @@ export default function Outreach() {
     });
   };
 
+  // AI customization mutation
+  const customizeTemplateMutation = useMutation({
+    mutationFn: async (data: { templateId: string; customization: typeof customizationForm }) => {
+      const response = await apiRequest("POST", `/api/templates/${data.templateId}/customize`, data.customization);
+      return response;
+    },
+    onSuccess: (data) => {
+      toast({
+        title: "Template Customized",
+        description: "AI has personalized your template based on your profile.",
+      });
+      
+      // Update the editing template with customized content
+      if (selectedTemplate) {
+        setEditingTemplate({
+          ...selectedTemplate,
+          subject: data.subject,
+          content: data.content
+        });
+        setIsEditDialogOpen(true);
+      }
+    },
+    onError: (error) => {
+      toast({
+        title: "Customization Failed",
+        description: error.message || "Failed to customize template. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
   const handleCustomize = () => {
-    toast({
-      title: "AI Customization",
-      description: "Template customization feature coming soon!",
-    });
+    if (selectedTemplate && customizationForm.keyPoints.trim()) {
+      customizeTemplateMutation.mutate({
+        templateId: selectedTemplate.id,
+        customization: customizationForm
+      });
+    } else {
+      toast({
+        title: "Missing Information",
+        description: "Please add some key points you'd like to include in the customization.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleEditTemplate = () => {
@@ -177,10 +216,11 @@ export default function Outreach() {
                   <div className="flex items-center space-x-4">
                     <Button
                       onClick={handleCustomize}
-                      className="bg-orange-600 hover:bg-orange-700"
+                      disabled={customizeTemplateMutation.isPending || !customizationForm.keyPoints.trim()}
+                      className="bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400"
                     >
                       <Wand2 className="w-4 h-4 mr-2" />
-                      Customize with AI
+                      {customizeTemplateMutation.isPending ? 'Customizing...' : 'Customize with AI'}
                     </Button>
                     <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
                       <DialogTrigger asChild>
@@ -307,10 +347,11 @@ export default function Outreach() {
                 
                 <Button 
                   onClick={handleCustomize}
-                  className="w-full bg-orange-600 hover:bg-orange-700"
+                  disabled={customizeTemplateMutation.isPending || !customizationForm.keyPoints.trim()}
+                  className="w-full bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400"
                 >
                   <Wand2 className="w-4 h-4 mr-2" />
-                  Customize Template
+                  {customizeTemplateMutation.isPending ? 'Customizing...' : 'Customize Template'}
                 </Button>
               </div>
             </CardContent>
