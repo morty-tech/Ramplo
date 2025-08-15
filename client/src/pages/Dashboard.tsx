@@ -336,17 +336,8 @@ export default function Dashboard() {
         <div className="lg:col-span-2">
           <Card>
             <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Today's Tasks</CardTitle>
-                  {todaysObjective && (
-                    <p className="text-sm text-gray-600 mt-1 flex items-center">
-                      <Target className="w-4 h-4 mr-2 text-blue-600" />
-                      <span className="font-medium text-blue-700">Today's Focus:</span>
-                      <span className="ml-1">{todaysObjective}</span>
-                    </p>
-                  )}
-                </div>
+              <div className="flex items-center justify-between mb-3">
+                <CardTitle>Today's Tasks</CardTitle>
                 <span className="text-sm text-gray-600">
                   {new Date().toLocaleDateString('en-US', { 
                     weekday: 'long',
@@ -356,6 +347,13 @@ export default function Dashboard() {
                   })}
                 </span>
               </div>
+              {todaysObjective && (
+                <div className="flex items-center text-sm text-gray-600">
+                  <Target className="w-4 h-4 mr-2 text-blue-600" />
+                  <span className="font-medium text-blue-700">Today's Focus:</span>
+                  <span className="ml-1">{todaysObjective}</span>
+                </div>
+              )}
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
