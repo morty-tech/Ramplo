@@ -748,26 +748,8 @@ async function generateDefaultTasks(userId: string, profile: any) {
     }
   }
 
-  // Filter and adjust tasks based on smart start day
-  const tasksToCreate = [];
-  const essentialTasks = ["Complete CRM setup", "Create professional email signature", "Update LinkedIn profile"];
-
-  for (const task of allFoundationTasks) {
-    if (currentBusinessDay > task.day && task.week === 1) {
-      // Mark essential foundation tasks as current day if missed
-      if (essentialTasks.includes(task.title)) {
-        tasksToCreate.push({ 
-          ...task, 
-          day: currentBusinessDay, 
-          description: `${task.description} (catch-up essential)` 
-        });
-      }
-      // Skip non-essential missed tasks from week 1
-    } else {
-      // Include all tasks from week 2+ and remaining tasks from week 1
-      tasksToCreate.push(task);
-    }
-  }
+  // Use foundation tasks directly without hardcoded essential task logic
+  const tasksToCreate = allFoundationTasks;
 
   // Create adjusted tasks
   console.log(`Creating ${tasksToCreate.length} default tasks from foundation roadmap for user ${userId}`);
