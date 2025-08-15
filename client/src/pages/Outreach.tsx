@@ -9,17 +9,37 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Copy, Wand2, Edit, Plus, Download, BarChart3, X, Save, Loader2 } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Copy, Wand2, Edit, Plus, Download, BarChart3, X, Save, Loader2, Mail, MessageSquare, Phone, Image, Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { ObjectUploader } from "@/components/ObjectUploader";
+import type { UploadResult } from "@uppy/core";
+
+type TemplateType = "email" | "social-media" | "phone-script";
 
 type MarketingTemplate = {
   id: string;
   name: string;
-  type: string;
+  templateType: TemplateType;
+  category: string;
   subject?: string;
   content: string;
+  imageUrl?: string;
+  imageAlt?: string;
+  platform?: string;
+  scriptType?: string;
   isDefault: boolean;
   createdAt: Date;
+};
+
+type TemplateImage = {
+  id: string;
+  name: string;
+  imageUrl: string;
+  imageAlt?: string;
+  category: string;
+  tags: string[];
+  isDefault: boolean;
 };
 
 // Email analysis functions
@@ -72,10 +92,12 @@ const getCTAStrength = (content: string): string => {
 };
 
 export default function Outreach() {
+  const [activeTemplateType, setActiveTemplateType] = useState<TemplateType>("email");
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>("");
   const [selectedTemplate, setSelectedTemplate] = useState<MarketingTemplate | null>(null);
   const [editingTemplate, setEditingTemplate] = useState<MarketingTemplate | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [selectedImageId, setSelectedImageId] = useState<string>("");
   const [customizationForm, setCustomizationForm] = useState({
     recipientType: "realtor",
     tone: "professional",
@@ -83,21 +105,39 @@ export default function Outreach() {
   });
   const { toast } = useToast();
 
-  // Fetch templates from API
+  // Fetch templates from API filtered by type
   const { data: templates = [], isLoading } = useQuery<MarketingTemplate[]>({
-    queryKey: ['/api/templates'],
+    queryKey: ['/api/templates', activeTemplateType],
+    queryFn: async () => {
+      const response = await fetch(`/api/templates?templateType=${activeTemplateType}`);
+      return response.json();
+    }
+  });
+
+  // Fetch template images
+  const { data: templateImages = [] } = useQuery<TemplateImage[]>({
+    queryKey: ['/api/template-images'],
+    enabled: activeTemplateType === "social-media"
   });
 
   // Set default selected template when templates load
-  if (templates.length > 0 && !selectedTemplateId) {
-    setSelectedTemplateId(templates[0].id);
-  }
+  useEffect(() => {
+    if (templates.length > 0 && !templates.find(t => t.id === selectedTemplateId)) {
+      setSelectedTemplateId(templates[0].id);
+    }
+  }, [templates, selectedTemplateId]);
 
   // Update selected template when template ID changes
   useEffect(() => {
     const template = templates.find(t => t.id === selectedTemplateId);
     setSelectedTemplate(template || null);
-  }, [selectedTemplateId, templates]);
+    if (template?.imageUrl && templateImages.length > 0) {
+      const imageMatch = templateImages.find(img => img.imageUrl === template.imageUrl);
+      if (imageMatch) {
+        setSelectedImageId(imageMatch.id);
+      }
+    }
+  }, [selectedTemplateId, templates, templateImages]);
 
   // Update template mutation
   const updateTemplateMutation = useMutation({
@@ -117,6 +157,28 @@ export default function Outreach() {
       toast({
         title: "Error",
         description: "Failed to update template. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Image upload mutation
+  const uploadImageMutation = useMutation({
+    mutationFn: async (data: { imageURL: string; name: string; category: string; imageAlt: string }) => {
+      const response = await apiRequest("PUT", "/api/template-images", data);
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/template-images'] });
+      toast({
+        title: "Image Uploaded",
+        description: "Your image has been added to the library.",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Upload Failed",
+        description: "Failed to upload image. Please try again.",
         variant: "destructive",
       });
     },
@@ -185,15 +247,57 @@ export default function Outreach() {
 
   const handleSaveTemplate = () => {
     if (editingTemplate) {
+      const selectedImage = templateImages.find(img => img.id === selectedImageId);
       updateTemplateMutation.mutate({
         id: editingTemplate.id,
         updates: {
           name: editingTemplate.name,
           subject: editingTemplate.subject,
           content: editingTemplate.content,
+          imageUrl: selectedImage?.imageUrl || editingTemplate.imageUrl,
+          imageAlt: selectedImage?.imageAlt || editingTemplate.imageAlt,
         }
       });
     }
+  };
+
+  const handleImageUpload = async () => {
+    try {
+      const response = await fetch('/api/objects/upload', { method: 'POST' });
+      const data = await response.json();
+      return { method: 'PUT' as const, url: data.uploadURL };
+    } catch (error) {
+      toast({
+        title: "Upload Error",
+        description: "Failed to get upload URL. Please try again.",
+        variant: "destructive",
+      });
+      throw error;
+    }
+  };
+
+  const handleImageUploadComplete = (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
+    if (result.successful.length > 0) {
+      const upload = result.successful[0];
+      uploadImageMutation.mutate({
+        imageURL: upload.uploadURL || '',
+        name: upload.name || 'Custom Upload',
+        category: 'user-upload',
+        imageAlt: 'User uploaded image'
+      });
+    }
+  };
+
+  const templateTypeIcons = {
+    email: Mail,
+    "social-media": MessageSquare,
+    "phone-script": Phone,
+  };
+
+  const templateTypeLabels = {
+    email: "Email Templates",
+    "social-media": "Social Media Templates", 
+    "phone-script": "Phone Scripts",
   };
 
   if (isLoading) {
@@ -204,6 +308,8 @@ export default function Outreach() {
     );
   }
 
+  const selectedImage = templateImages.find(img => img.id === selectedImageId);
+
   return (
     <div className="p-6">
       {/* Header */}
@@ -211,6 +317,21 @@ export default function Outreach() {
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Outreach Templates</h1>
         <p className="text-gray-600">Professional templates to help you connect with prospects and partners.</p>
       </div>
+
+      {/* Template Type Tabs */}
+      <Tabs value={activeTemplateType} onValueChange={(value) => setActiveTemplateType(value as TemplateType)} className="mb-6">
+        <TabsList className="grid w-full grid-cols-3">
+          {Object.entries(templateTypeLabels).map(([type, label]) => {
+            const Icon = templateTypeIcons[type as TemplateType];
+            return (
+              <TabsTrigger key={type} value={type} className="flex items-center space-x-2">
+                <Icon className="w-4 h-4" />
+                <span>{label}</span>
+              </TabsTrigger>
+            );
+          })}
+        </TabsList>
+      </Tabs>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
@@ -220,13 +341,13 @@ export default function Outreach() {
             <CardHeader>
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <CardTitle>Email Templates</CardTitle>
+                  <CardTitle>{templateTypeLabels[activeTemplateType]}</CardTitle>
                   <p className="text-sm text-gray-600 mt-1">Select a template to customize and use</p>
                 </div>
                 <div className="w-64">
                   <Select value={selectedTemplateId} onValueChange={setSelectedTemplateId}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Choose template type" />
+                      <SelectValue placeholder="Choose template" />
                     </SelectTrigger>
                     <SelectContent>
                       {templates.map((template) => (
@@ -246,10 +367,24 @@ export default function Outreach() {
                   <div className="flex items-center justify-between mb-6">
                     <div>
                       <h3 className="text-xl font-bold text-gray-900">{selectedTemplate.name}</h3>
-                      <p className="text-sm text-gray-600">Template Type: {selectedTemplate.type}</p>
+                      <div className="flex items-center space-x-2 mt-1">
+                        <Badge variant="outline">{selectedTemplate.category}</Badge>
+                        {selectedTemplate.platform && (
+                          <Badge variant="secondary">{selectedTemplate.platform}</Badge>
+                        )}
+                        {selectedTemplate.scriptType && (
+                          <Badge variant="secondary">{selectedTemplate.scriptType}</Badge>
+                        )}
+                      </div>
                     </div>
                     <Button 
-                      onClick={() => copyToClipboard(`Subject: ${selectedTemplate.subject}\n\n${selectedTemplate.content}`)}
+                      onClick={() => {
+                        let textToCopy = selectedTemplate.content;
+                        if (activeTemplateType === "email" && selectedTemplate.subject) {
+                          textToCopy = `Subject: ${selectedTemplate.subject}\n\n${selectedTemplate.content}`;
+                        }
+                        copyToClipboard(textToCopy);
+                      }}
                       className="bg-primary hover:bg-blue-700"
                     >
                       <Copy className="w-4 h-4 mr-2" />
@@ -258,13 +393,62 @@ export default function Outreach() {
                   </div>
 
                   <div className="bg-gray-50 rounded-lg p-6 mb-6">
-                    <div className="text-sm font-medium text-gray-900 mb-2">Subject Line:</div>
-                    <div className="text-sm text-gray-700 mb-4 italic">{selectedTemplate.subject}</div>
-                    
-                    <div className="text-sm font-medium text-gray-900 mb-2">Email Body:</div>
-                    <div className="text-sm text-gray-900 whitespace-pre-wrap font-mono bg-white p-4 rounded border">
-                      {selectedTemplate.content}
-                    </div>
+                    {/* Email Template View */}
+                    {activeTemplateType === "email" && (
+                      <>
+                        <div className="text-sm font-medium text-gray-900 mb-2">Subject Line:</div>
+                        <div className="text-sm text-gray-700 mb-4 italic">{selectedTemplate.subject}</div>
+                        
+                        <div className="text-sm font-medium text-gray-900 mb-2">Email Body:</div>
+                        <div className="text-sm text-gray-900 whitespace-pre-wrap font-mono bg-white p-4 rounded border">
+                          {selectedTemplate.content}
+                        </div>
+                      </>
+                    )}
+
+                    {/* Social Media Template View */}
+                    {activeTemplateType === "social-media" && (
+                      <>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div>
+                            <div className="text-sm font-medium text-gray-900 mb-2">Post Content:</div>
+                            <div className="text-sm text-gray-900 whitespace-pre-wrap bg-white p-4 rounded border min-h-[200px]">
+                              {selectedTemplate.content}
+                            </div>
+                          </div>
+                          <div>
+                            <div className="text-sm font-medium text-gray-900 mb-2">Image Preview:</div>
+                            {selectedTemplate.imageUrl ? (
+                              <div className="bg-white p-4 rounded border">
+                                <img 
+                                  src={selectedTemplate.imageUrl} 
+                                  alt={selectedTemplate.imageAlt || "Template image"}
+                                  className="w-full h-48 object-cover rounded"
+                                />
+                                <p className="text-xs text-gray-500 mt-2">{selectedTemplate.imageAlt}</p>
+                              </div>
+                            ) : (
+                              <div className="bg-white p-4 rounded border h-48 flex items-center justify-center text-gray-400">
+                                <div className="text-center">
+                                  <Image className="w-8 h-8 mx-auto mb-2" />
+                                  <p className="text-sm">No image selected</p>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </>
+                    )}
+
+                    {/* Phone Script Template View */}
+                    {activeTemplateType === "phone-script" && (
+                      <>
+                        <div className="text-sm font-medium text-gray-900 mb-2">Call Script:</div>
+                        <div className="text-sm text-gray-900 whitespace-pre-wrap font-mono bg-white p-4 rounded border">
+                          {selectedTemplate.content}
+                        </div>
+                      </>
+                    )}
                   </div>
 
                   <div className="flex items-center space-x-4">
@@ -287,7 +471,7 @@ export default function Outreach() {
                           Edit Template
                         </Button>
                       </DialogTrigger>
-                      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                      <DialogContent className="max-w-6xl max-h-[80vh] overflow-y-auto">
                         <DialogHeader>
                           <DialogTitle>Edit Template</DialogTitle>
                         </DialogHeader>
@@ -301,24 +485,98 @@ export default function Outreach() {
                                 onChange={(e) => setEditingTemplate(prev => prev ? {...prev, name: e.target.value} : null)}
                               />
                             </div>
-                            <div>
-                              <Label htmlFor="template-subject">Subject Line</Label>
-                              <Input
-                                id="template-subject"
-                                value={editingTemplate.subject || ''}
-                                onChange={(e) => setEditingTemplate(prev => prev ? {...prev, subject: e.target.value} : null)}
-                              />
-                            </div>
-                            <div>
-                              <Label htmlFor="template-content">Email Content</Label>
-                              <Textarea
-                                id="template-content"
-                                value={editingTemplate.content}
-                                onChange={(e) => setEditingTemplate(prev => prev ? {...prev, content: e.target.value} : null)}
-                                rows={15}
-                                className="font-mono text-sm"
-                              />
-                            </div>
+                            
+                            {activeTemplateType === "email" && (
+                              <div>
+                                <Label htmlFor="template-subject">Subject Line</Label>
+                                <Input
+                                  id="template-subject"
+                                  value={editingTemplate.subject || ''}
+                                  onChange={(e) => setEditingTemplate(prev => prev ? {...prev, subject: e.target.value} : null)}
+                                />
+                              </div>
+                            )}
+
+                            {activeTemplateType === "social-media" && (
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="space-y-4">
+                                  <div>
+                                    <Label htmlFor="template-content">Post Content</Label>
+                                    <Textarea
+                                      id="template-content"
+                                      value={editingTemplate.content}
+                                      onChange={(e) => setEditingTemplate(prev => prev ? {...prev, content: e.target.value} : null)}
+                                      rows={8}
+                                      className="text-sm"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="space-y-4">
+                                  <div>
+                                    <Label>Select Image</Label>
+                                    <Select value={selectedImageId} onValueChange={setSelectedImageId}>
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Choose an image" />
+                                      </SelectTrigger>
+                                      <SelectContent>
+                                        {templateImages.map((image) => (
+                                          <SelectItem key={image.id} value={image.id}>
+                                            {image.name}
+                                          </SelectItem>
+                                        ))}
+                                      </SelectContent>
+                                    </Select>
+                                  </div>
+                                  {selectedImage && (
+                                    <div>
+                                      <img 
+                                        src={selectedImage.imageUrl} 
+                                        alt={selectedImage.imageAlt}
+                                        className="w-full h-32 object-cover rounded border"
+                                      />
+                                    </div>
+                                  )}
+                                  <div>
+                                    <ObjectUploader
+                                      onGetUploadParameters={handleImageUpload}
+                                      onComplete={handleImageUploadComplete}
+                                      maxNumberOfFiles={1}
+                                      buttonClassName="w-full"
+                                    >
+                                      <Upload className="w-4 h-4 mr-2" />
+                                      Upload Custom Image
+                                    </ObjectUploader>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+
+                            {activeTemplateType === "phone-script" && (
+                              <div>
+                                <Label htmlFor="template-content">Script Content</Label>
+                                <Textarea
+                                  id="template-content"
+                                  value={editingTemplate.content}
+                                  onChange={(e) => setEditingTemplate(prev => prev ? {...prev, content: e.target.value} : null)}
+                                  rows={15}
+                                  className="font-mono text-sm"
+                                />
+                              </div>
+                            )}
+
+                            {activeTemplateType === "email" && (
+                              <div>
+                                <Label htmlFor="template-content">Email Content</Label>
+                                <Textarea
+                                  id="template-content"
+                                  value={editingTemplate.content}
+                                  onChange={(e) => setEditingTemplate(prev => prev ? {...prev, content: e.target.value} : null)}
+                                  rows={15}
+                                  className="font-mono text-sm"
+                                />
+                              </div>
+                            )}
+
                             <div className="flex justify-end space-x-2">
                               <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
                                 Cancel
@@ -419,8 +677,8 @@ export default function Outreach() {
             </CardContent>
           </Card>
 
-          {/* Email Analysis */}
-          {selectedTemplate && (
+          {/* Template Analysis */}
+          {selectedTemplate && activeTemplateType === "email" && (
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg">Email Analysis</CardTitle>
@@ -472,6 +730,94 @@ export default function Outreach() {
                         {getCTAStrength(selectedTemplate?.content || "")}
                       </div>
                       <div className="text-xs text-gray-500">Action clarity</div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Social Media Insights */}
+          {selectedTemplate && activeTemplateType === "social-media" && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Social Media Insights</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Character Count</span>
+                    <div className="text-right">
+                      <div className="text-sm font-medium text-gray-900">
+                        {selectedTemplate?.content ? selectedTemplate.content.length : 0} chars
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {selectedTemplate?.platform === "linkedin" ? "Max 3,000" :
+                         selectedTemplate?.platform === "facebook" ? "Max 63,206" :
+                         selectedTemplate?.platform === "instagram" ? "Max 2,200" : "Platform optimized"}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Hashtags</span>
+                    <div className="text-right">
+                      <div className="text-sm font-medium text-gray-900">
+                        {(selectedTemplate?.content?.match(/#\w+/g) || []).length}
+                      </div>
+                      <div className="text-xs text-gray-500">Engagement tags</div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Platform</span>
+                    <div className="text-right">
+                      <div className="text-sm font-medium text-gray-900 capitalize">
+                        {selectedTemplate?.platform || "Universal"}
+                      </div>
+                      <div className="text-xs text-gray-500">Target platform</div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Phone Script Guide */}
+          {selectedTemplate && activeTemplateType === "phone-script" && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Script Guide</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Script Type</span>
+                    <div className="text-right">
+                      <div className="text-sm font-medium text-gray-900 capitalize">
+                        {selectedTemplate?.scriptType || "General"}
+                      </div>
+                      <div className="text-xs text-gray-500">Call purpose</div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Estimated Duration</span>
+                    <div className="text-right">
+                      <div className="text-sm font-medium text-gray-900">
+                        {Math.ceil((selectedTemplate?.content || "").split(' ').length / 150)} - {Math.ceil((selectedTemplate?.content || "").split(' ').length / 120)} min
+                      </div>
+                      <div className="text-xs text-gray-500">Speaking time</div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Pause Points</span>
+                    <div className="text-right">
+                      <div className="text-sm font-medium text-gray-900">
+                        {(selectedTemplate?.content?.match(/\[PAUSE/g) || []).length}
+                      </div>
+                      <div className="text-xs text-gray-500">Response opportunities</div>
                     </div>
                   </div>
                 </div>

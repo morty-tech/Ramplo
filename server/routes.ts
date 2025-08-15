@@ -9,6 +9,11 @@ import { sendMagicLink, verifyMagicLink, createOrGetUser, requireAuth, isMortyEm
 import { insertUserProfileSchema, insertDealCoachSessionSchema } from "@shared/schema";
 import { FOUNDATION_ROADMAP } from "./foundationRoadmap";
 import OpenAI from "openai";
+import {
+  ObjectStorageService,
+  ObjectNotFoundError,
+} from "./objectStorage";
+import { ObjectPermission } from "./objectAcl";
 
 const openai = process.env.OPENAI_API_KEY ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY }) : null;
 
@@ -251,10 +256,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Templates
+  // Templates - enhanced for multiple template types
   app.get("/api/templates", requireAuth, async (req, res) => {
     try {
-      const templates = await storage.getMarketingTemplates();
+      const { templateType } = req.query;
+      const templates = await storage.getMarketingTemplates(templateType as string);
       res.json(templates);
     } catch (error) {
       console.error("Error fetching templates:", error);
@@ -660,6 +666,101 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(500).json({ message: "AI service not configured" });
       }
       res.status(500).json({ message: "Failed to select relevant templates" });
+    }
+  });
+
+  // Template Images
+  app.get("/api/template-images", requireAuth, async (req, res) => {
+    try {
+      const { category } = req.query;
+      const images = await storage.getTemplateImages(category as string);
+      res.json(images);
+    } catch (error) {
+      console.error("Error fetching template images:", error);
+      res.status(500).json({ message: "Failed to fetch template images" });
+    }
+  });
+
+  // Object Storage Routes
+  app.get("/public-objects/:filePath(*)", async (req, res) => {
+    const filePath = req.params.filePath;
+    const objectStorageService = new ObjectStorageService();
+    try {
+      const file = await objectStorageService.searchPublicObject(filePath);
+      if (!file) {
+        return res.status(404).json({ error: "File not found" });
+      }
+      objectStorageService.downloadObject(file, res);
+    } catch (error) {
+      console.error("Error searching for public object:", error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  app.get("/objects/:objectPath(*)", requireAuth, async (req, res) => {
+    const userId = (req as any).session.user.id;
+    const objectStorageService = new ObjectStorageService();
+    try {
+      const objectFile = await objectStorageService.getObjectEntityFile(
+        req.path,
+      );
+      const canAccess = await objectStorageService.canAccessObjectEntity({
+        objectFile,
+        userId: userId,
+        requestedPermission: ObjectPermission.READ,
+      });
+      if (!canAccess) {
+        return res.sendStatus(401);
+      }
+      objectStorageService.downloadObject(objectFile, res);
+    } catch (error) {
+      console.error("Error checking object access:", error);
+      if (error instanceof ObjectNotFoundError) {
+        return res.sendStatus(404);
+      }
+      return res.sendStatus(500);
+    }
+  });
+
+  app.post("/api/objects/upload", requireAuth, async (req, res) => {
+    const objectStorageService = new ObjectStorageService();
+    const uploadURL = await objectStorageService.getObjectEntityUploadURL();
+    res.json({ uploadURL });
+  });
+
+  app.put("/api/template-images", requireAuth, async (req, res) => {
+    if (!req.body.imageURL) {
+      return res.status(400).json({ error: "imageURL is required" });
+    }
+
+    const userId = (req as any).session.user.id;
+
+    try {
+      const objectStorageService = new ObjectStorageService();
+      const objectPath = await objectStorageService.trySetObjectEntityAclPolicy(
+        req.body.imageURL,
+        {
+          owner: userId,
+          visibility: "public",
+        },
+      );
+
+      const templateImage = await storage.createTemplateImage({
+        name: req.body.name || "User Upload",
+        imageUrl: objectPath,
+        imageAlt: req.body.imageAlt || "",
+        category: req.body.category || "general",
+        tags: req.body.tags || [],
+        isDefault: false,
+      });
+
+      res.status(200).json({
+        templateImage,
+        objectPath: objectPath,
+      });
+    } catch (error) {
+      console.error("Error setting template image:", error);
+      res.status(500).json({ error: "Internal server error" });
     }
   });
 

@@ -4,6 +4,7 @@ import {
   tasks,
   userProgress,
   marketingTemplates,
+  templateImages,
   dealCoachSessions,
   magicLinks,
   dailyConnections,
@@ -18,6 +19,8 @@ import {
   type InsertUserProgress,
   type MarketingTemplate,
   type InsertMarketingTemplate,
+  type TemplateImage,
+  type InsertTemplateImage,
   type DealCoachSession,
   type InsertDealCoachSession,
   type MagicLink,
@@ -58,8 +61,16 @@ export interface IStorage {
   updateUserProgress(userId: string, updates: Partial<UserProgress>): Promise<UserProgress>;
 
   // Template operations
-  getMarketingTemplates(): Promise<MarketingTemplate[]>;
+  getMarketingTemplates(templateType?: string): Promise<MarketingTemplate[]>;
   getMarketingTemplate(id: string): Promise<MarketingTemplate | undefined>;
+  createMarketingTemplate(template: InsertMarketingTemplate): Promise<MarketingTemplate>;
+  updateMarketingTemplate(id: string, updates: Partial<MarketingTemplate>): Promise<MarketingTemplate>;
+  
+  // Template image operations
+  getTemplateImages(category?: string): Promise<TemplateImage[]>;
+  getTemplateImage(id: string): Promise<TemplateImage | undefined>;
+  createTemplateImage(image: InsertTemplateImage): Promise<TemplateImage>;
+  updateTemplateImage(id: string, updates: Partial<TemplateImage>): Promise<TemplateImage>;
 
   // Deal coach operations
   createDealCoachSession(session: InsertDealCoachSession): Promise<DealCoachSession>;
@@ -197,7 +208,14 @@ export class DatabaseStorage implements IStorage {
     return progress;
   }
 
-  async getMarketingTemplates(): Promise<MarketingTemplate[]> {
+  async getMarketingTemplates(templateType?: string): Promise<MarketingTemplate[]> {
+    if (templateType) {
+      return await db.select().from(marketingTemplates)
+        .where(and(
+          eq(marketingTemplates.isDefault, true),
+          eq(marketingTemplates.templateType, templateType)
+        ));
+    }
     return await db.select().from(marketingTemplates).where(eq(marketingTemplates.isDefault, true));
   }
 
@@ -221,6 +239,40 @@ export class DatabaseStorage implements IStorage {
       .values(template)
       .returning();
     return newTemplate;
+  }
+
+  // Template image operations
+  async getTemplateImages(category?: string): Promise<TemplateImage[]> {
+    if (category) {
+      return await db.select().from(templateImages)
+        .where(and(
+          eq(templateImages.isDefault, true),
+          eq(templateImages.category, category)
+        ));
+    }
+    return await db.select().from(templateImages).where(eq(templateImages.isDefault, true));
+  }
+
+  async getTemplateImage(id: string): Promise<TemplateImage | undefined> {
+    const [image] = await db.select().from(templateImages).where(eq(templateImages.id, id));
+    return image;
+  }
+
+  async createTemplateImage(imageData: InsertTemplateImage): Promise<TemplateImage> {
+    const [image] = await db
+      .insert(templateImages)
+      .values(imageData)
+      .returning();
+    return image;
+  }
+
+  async updateTemplateImage(id: string, updates: Partial<TemplateImage>): Promise<TemplateImage> {
+    const [image] = await db
+      .update(templateImages)
+      .set(updates)
+      .where(eq(templateImages.id, id))
+      .returning();
+    return image;
   }
 
   async createDealCoachSession(sessionData: InsertDealCoachSession): Promise<DealCoachSession> {

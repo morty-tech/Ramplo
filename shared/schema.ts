@@ -156,13 +156,18 @@ export const dailyLoanActions = pgTable("daily_loan_actions", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-// Marketing templates
+// Marketing templates - enhanced for multiple template types
 export const marketingTemplates = pgTable("marketing_templates", {
   id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
   name: varchar("name").notNull(),
-  type: varchar("type").notNull(), // realtor, heloc, fthb, preapproval, referral
-  subject: varchar("subject"),
+  templateType: varchar("template_type").notNull(), // email, social-media, phone-script
+  category: varchar("category").notNull(), // realtor, heloc, fthb, preapproval, referral
+  subject: varchar("subject"), // For email templates
   content: text("content").notNull(),
+  imageUrl: varchar("image_url"), // For social media templates
+  imageAlt: varchar("image_alt"), // Alt text for images
+  platform: varchar("platform"), // For social media: linkedin, facebook, instagram, etc.
+  scriptType: varchar("script_type"), // For phone scripts: cold-call, follow-up, etc.
   isDefault: boolean("is_default").default(true),
   createdAt: timestamp("created_at").defaultNow(),
 });
@@ -232,6 +237,21 @@ export type UserProgress = typeof userProgress.$inferSelect;
 export type InsertUserProgress = z.infer<typeof insertUserProgressSchema>;
 export type MarketingTemplate = typeof marketingTemplates.$inferSelect;
 export type InsertMarketingTemplate = typeof marketingTemplates.$inferInsert;
+
+// Template image library for social media
+export const templateImages = pgTable("template_images", {
+  id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: varchar("name").notNull(),
+  imageUrl: varchar("image_url").notNull(),
+  imageAlt: varchar("image_alt"),
+  category: varchar("category").notNull(), // mortgage, real-estate, finance, etc.
+  tags: jsonb("tags").$type<string[]>(), // Array of tags for searching
+  isDefault: boolean("is_default").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export type TemplateImage = typeof templateImages.$inferSelect;
+export type InsertTemplateImage = typeof templateImages.$inferInsert;
 export type DealCoachSession = typeof dealCoachSessions.$inferSelect;
 export type InsertDealCoachSession = z.infer<typeof insertDealCoachSessionSchema>;
 export type DailyConnections = typeof dailyConnections.$inferSelect;
