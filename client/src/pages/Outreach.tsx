@@ -139,23 +139,17 @@ export default function Outreach() {
     onSuccess: (data: any) => {
       toast({
         title: "Template Customized",
-        description: "Your template has been personalized. Click 'Edit Template' to review and save changes.",
+        description: "Opening customized template for editing...",
       });
       
-      // Update the selected template with customized content for preview
+      // Immediately open edit dialog with customized content
       if (selectedTemplate) {
-        setSelectedTemplate({
-          ...selectedTemplate,
-          subject: data.subject,
-          content: data.content
-        });
-        
-        // Prepare editing template for when user clicks edit
         setEditingTemplate({
           ...selectedTemplate,
-          subject: data.subject,
-          content: data.content
+          subject: data.subject || selectedTemplate.subject,
+          content: data.content || selectedTemplate.content
         });
+        setIsEditDialogOpen(true);
       }
     },
     onError: (error) => {
@@ -280,7 +274,7 @@ export default function Outreach() {
                       className="bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400"
                     >
                       <Wand2 className="w-4 h-4 mr-2" />
-                      {customizeTemplateMutation.isPending ? 'Customizing...' : 'Customize with AI'}
+                      {customizeTemplateMutation.isPending ? 'Customizing...' : 'Customize & Edit'}
                     </Button>
                     <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
                       <DialogTrigger asChild>
@@ -411,7 +405,7 @@ export default function Outreach() {
                   className="w-full bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400"
                 >
                   <Wand2 className="w-4 h-4 mr-2" />
-                  {customizeTemplateMutation.isPending ? 'Customizing...' : 'Customize Template'}
+                  {customizeTemplateMutation.isPending ? 'Customizing...' : 'Customize & Edit'}
                 </Button>
               </div>
             </CardContent>
