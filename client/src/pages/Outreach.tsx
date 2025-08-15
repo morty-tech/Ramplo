@@ -22,6 +22,45 @@ type MarketingTemplate = {
   createdAt: Date;
 };
 
+// Email analysis functions
+const getReadabilityScore = (content: string): string => {
+  const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 0);
+  const words = content.split(/\s+/).length;
+  const avgWordsPerSentence = words / sentences.length;
+  
+  if (avgWordsPerSentence < 15) return "Easy";
+  if (avgWordsPerSentence < 20) return "Good";
+  return "Complex";
+};
+
+const getSpamRisk = (content: string, subject: string): string => {
+  const spamWords = [
+    'free', 'guarantee', 'no obligation', 'act now', 'limited time', 
+    'urgent', 'exclusive', 'amazing', 'incredible', 'unbelievable',
+    'cash', 'money back', 'risk free', 'no risk', 'winner', 'congratulations'
+  ];
+  
+  const text = (content + ' ' + subject).toLowerCase();
+  const spamCount = spamWords.filter(word => text.includes(word)).length;
+  
+  if (spamCount === 0) return "Low";
+  if (spamCount <= 2) return "Medium";
+  return "High";
+};
+
+const getCTAStrength = (content: string): string => {
+  const strongCTAs = ['call', 'schedule', 'book', 'contact', 'apply', 'get started', 'learn more'];
+  const weakCTAs = ['available', 'interested', 'questions', 'thoughts'];
+  
+  const text = content.toLowerCase();
+  const hasStrongCTA = strongCTAs.some(cta => text.includes(cta));
+  const hasWeakCTA = weakCTAs.some(cta => text.includes(cta));
+  
+  if (hasStrongCTA) return "Strong";
+  if (hasWeakCTA) return "Weak";
+  return "None";
+};
+
 export default function Outreach() {
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>("");
   const [editingTemplate, setEditingTemplate] = useState<MarketingTemplate | null>(null);
@@ -95,7 +134,10 @@ export default function Outreach() {
           subject: data.subject,
           content: data.content
         });
-        setIsEditDialogOpen(true);
+        // Only open the dialog if it's not already open
+        if (!isEditDialogOpen) {
+          setIsEditDialogOpen(true);
+        }
       }
     },
     onError: (error) => {
@@ -357,29 +399,63 @@ export default function Outreach() {
             </CardContent>
           </Card>
 
-          {/* Template Performance */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Template Performance</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {templates.map((template) => (
-                  <div key={template.id} className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">{template.name}</span>
+          {/* Email Analysis */}
+          {selectedTemplate && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Email Analysis</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Word Count</span>
                     <div className="text-right">
                       <div className="text-sm font-medium text-gray-900">
-                        {Math.floor(Math.random() * 40 + 50)}% Response Rate
+                        {selectedTemplate.content.split(/\s+/).length} words
                       </div>
                       <div className="text-xs text-gray-500">
-                        {Math.floor(Math.random() * 30 + 10)} sent this month
+                        {selectedTemplate.content.split(/\s+/).length < 150 ? "Good length" : 
+                         selectedTemplate.content.split(/\s+/).length < 250 ? "Moderate length" : "Long - consider shortening"}
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Readability</span>
+                    <div className="text-right">
+                      <div className="text-sm font-medium text-gray-900">
+                        {getReadabilityScore(selectedTemplate.content)}
+                      </div>
+                      <div className="text-xs text-gray-500">Professional level</div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Spam Risk</span>
+                    <div className="text-right">
+                      <div className="text-sm font-medium text-gray-900">
+                        {getSpamRisk(selectedTemplate.content, selectedTemplate.subject || "")}
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {getSpamRisk(selectedTemplate.content, selectedTemplate.subject || "") === "Low" ? "Inbox friendly" :
+                         getSpamRisk(selectedTemplate.content, selectedTemplate.subject || "") === "Medium" ? "Review wording" : "High risk phrases detected"}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Call-to-Action</span>
+                    <div className="text-right">
+                      <div className="text-sm font-medium text-gray-900">
+                        {getCTAStrength(selectedTemplate.content)}
+                      </div>
+                      <div className="text-xs text-gray-500">Action clarity</div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Quick Actions */}
           <Card>
