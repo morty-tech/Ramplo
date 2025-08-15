@@ -24,8 +24,13 @@ type MarketingTemplate = {
 
 // Email analysis functions
 const getReadabilityScore = (content: string): string => {
+  if (!content || typeof content !== 'string') return "N/A";
+  
   const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 0);
   const words = content.split(/\s+/).length;
+  
+  if (sentences.length === 0) return "N/A";
+  
   const avgWordsPerSentence = words / sentences.length;
   
   if (avgWordsPerSentence < 15) return "Easy";
@@ -34,6 +39,9 @@ const getReadabilityScore = (content: string): string => {
 };
 
 const getSpamRisk = (content: string, subject: string): string => {
+  if (!content || typeof content !== 'string') return "N/A";
+  if (!subject || typeof subject !== 'string') subject = "";
+  
   const spamWords = [
     'free', 'guarantee', 'no obligation', 'act now', 'limited time', 
     'urgent', 'exclusive', 'amazing', 'incredible', 'unbelievable',
@@ -49,6 +57,8 @@ const getSpamRisk = (content: string, subject: string): string => {
 };
 
 const getCTAStrength = (content: string): string => {
+  if (!content || typeof content !== 'string') return "N/A";
+  
   const strongCTAs = ['call', 'schedule', 'book', 'contact', 'apply', 'get started', 'learn more'];
   const weakCTAs = ['available', 'interested', 'questions', 'thoughts'];
   
@@ -419,10 +429,11 @@ export default function Outreach() {
                     <span className="text-sm text-gray-600">Word Count</span>
                     <div className="text-right">
                       <div className="text-sm font-medium text-gray-900">
-                        {selectedTemplate.content.split(/\s+/).length} words
+                        {selectedTemplate?.content ? selectedTemplate.content.split(/\s+/).length : 0} words
                       </div>
                       <div className="text-xs text-gray-500">
-                        {selectedTemplate.content.split(/\s+/).length < 150 ? "Good length" : 
+                        {!selectedTemplate?.content ? "No content" :
+                         selectedTemplate.content.split(/\s+/).length < 150 ? "Good length" : 
                          selectedTemplate.content.split(/\s+/).length < 250 ? "Moderate length" : "Long - consider shortening"}
                       </div>
                     </div>
@@ -432,7 +443,7 @@ export default function Outreach() {
                     <span className="text-sm text-gray-600">Readability</span>
                     <div className="text-right">
                       <div className="text-sm font-medium text-gray-900">
-                        {getReadabilityScore(selectedTemplate.content)}
+                        {getReadabilityScore(selectedTemplate?.content || "")}
                       </div>
                       <div className="text-xs text-gray-500">Professional level</div>
                     </div>
@@ -442,11 +453,12 @@ export default function Outreach() {
                     <span className="text-sm text-gray-600">Spam Risk</span>
                     <div className="text-right">
                       <div className="text-sm font-medium text-gray-900">
-                        {getSpamRisk(selectedTemplate.content, selectedTemplate.subject || "")}
+                        {getSpamRisk(selectedTemplate?.content || "", selectedTemplate?.subject || "")}
                       </div>
                       <div className="text-xs text-gray-500">
-                        {getSpamRisk(selectedTemplate.content, selectedTemplate.subject || "") === "Low" ? "Inbox friendly" :
-                         getSpamRisk(selectedTemplate.content, selectedTemplate.subject || "") === "Medium" ? "Review wording" : "High risk phrases detected"}
+                        {getSpamRisk(selectedTemplate?.content || "", selectedTemplate?.subject || "") === "Low" ? "Inbox friendly" :
+                         getSpamRisk(selectedTemplate?.content || "", selectedTemplate?.subject || "") === "Medium" ? "Review wording" : 
+                         getSpamRisk(selectedTemplate?.content || "", selectedTemplate?.subject || "") === "High" ? "High risk phrases detected" : "No analysis"}
                       </div>
                     </div>
                   </div>
@@ -455,7 +467,7 @@ export default function Outreach() {
                     <span className="text-sm text-gray-600">Call-to-Action</span>
                     <div className="text-right">
                       <div className="text-sm font-medium text-gray-900">
-                        {getCTAStrength(selectedTemplate.content)}
+                        {getCTAStrength(selectedTemplate?.content || "")}
                       </div>
                       <div className="text-xs text-gray-500">Action clarity</div>
                     </div>
