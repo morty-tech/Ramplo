@@ -16,7 +16,8 @@ import {
   Database,
   CreditCard,
   Download,
-  AlertCircle
+  AlertCircle,
+  Mail
 } from "lucide-react";
 
 const stripePromise = import.meta.env.VITE_STRIPE_PUBLIC_KEY 
@@ -382,6 +383,32 @@ export default function Billing() {
           )}
         </>
       )}
+
+      {/* Support Section */}
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle className="text-lg flex items-center">
+            <Mail className="w-5 h-5 mr-2" />
+            Need Help?
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="bg-gray-50 rounded-lg p-4">
+            <p className="text-sm text-gray-700 mb-3">
+              For billing questions, subscription changes, or account support, please contact our team:
+            </p>
+            <div className="flex items-center">
+              <Mail className="w-4 h-4 text-blue-600 mr-2" />
+              <a 
+                href="mailto:memberships@morty.com" 
+                className="text-blue-600 hover:text-blue-800 font-medium transition-colors"
+              >
+                memberships@morty.com
+              </a>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Payment Modal */}
       <Dialog open={showPaymentModal} onOpenChange={setShowPaymentModal}>
