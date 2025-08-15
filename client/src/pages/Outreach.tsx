@@ -134,11 +134,19 @@ export default function Outreach() {
   useEffect(() => {
     const template = templates.find(t => t.id === selectedTemplateId);
     setSelectedTemplate(template || null);
+    
+    // Auto-select matching image if available
     if (template?.imageUrl && templateImages.length > 0) {
       const imageMatch = templateImages.find(img => img.imageUrl === template.imageUrl);
       if (imageMatch) {
         setSelectedImageId(imageMatch.id);
+      } else {
+        // Clear selection if no match found
+        setSelectedImageId("");
       }
+    } else if (!template?.imageUrl) {
+      // Clear image selection for templates without images
+      setSelectedImageId("");
     }
   }, [selectedTemplateId, templates, templateImages]);
 
@@ -312,6 +320,18 @@ export default function Outreach() {
   }
 
   const selectedImage = templateImages.find(img => img.id === selectedImageId);
+  
+  // Debug logging
+  useEffect(() => {
+    console.log("Debug:", { 
+      selectedTemplateId, 
+      selectedImageId, 
+      selectedTemplate: selectedTemplate?.name,
+      selectedTemplateImageUrl: selectedTemplate?.imageUrl,
+      templateImagesCount: templateImages.length,
+      selectedImage: selectedImage?.name 
+    });
+  }, [selectedTemplateId, selectedImageId, selectedTemplate, templateImages, selectedImage]);
 
   return (
     <div className="p-6">
@@ -539,15 +559,21 @@ export default function Outreach() {
                                       />
                                       <Button 
                                         onClick={() => {
-                                          setEditingImage(selectedImage);
-                                          setIsImageEditorOpen(true);
+                                          console.log("Customize button clicked", { selectedImage, selectedImageId });
+                                          if (selectedImage) {
+                                            setEditingImage(selectedImage);
+                                            setIsImageEditorOpen(true);
+                                          }
                                         }}
                                         variant="outline"
                                         size="sm"
                                         className="flex items-center space-x-2 w-full"
+                                        disabled={!selectedImage?.imageUrl}
                                       >
                                         <Palette className="w-4 h-4" />
-                                        <span>Customize Image</span>
+                                        <span>
+                                          {selectedImage?.imageUrl ? "Customize Image" : "No Image Available"}
+                                        </span>
                                       </Button>
                                     </div>
                                   )}
