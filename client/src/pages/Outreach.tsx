@@ -159,6 +159,7 @@ export default function Outreach() {
   const [isEditingScript, setIsEditingScript] = useState(false);
   const [editedScript, setEditedScript] = useState('');
   const [isImageLibraryOpen, setIsImageLibraryOpen] = useState(false);
+  const [isAICustomizationOpen, setIsAICustomizationOpen] = useState(false);
   const [customizationForm, setCustomizationForm] = useState({
     recipientType: "realtor",
     tone: "professional",
@@ -669,15 +670,26 @@ export default function Outreach() {
                 <>
                   <div className="flex items-center justify-between mb-6">
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900">{selectedTemplate.name}</h3>
-                      <div className="flex items-center space-x-2 mt-1">
-                        <Badge variant="outline">{selectedTemplate.category}</Badge>
-                        {selectedTemplate.platform && (
-                          <Badge variant="secondary">{selectedTemplate.platform}</Badge>
-                        )}
-                        {selectedTemplate.scriptType && (
-                          <Badge variant="secondary">{selectedTemplate.scriptType}</Badge>
-                        )}
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3 className="text-xl font-bold text-gray-900">{selectedTemplate.name}</h3>
+                          <div className="flex items-center space-x-2 mt-1">
+                            <Badge variant="outline">{selectedTemplate.category}</Badge>
+                            {selectedTemplate.platform && (
+                              <Badge variant="secondary">{selectedTemplate.platform}</Badge>
+                            )}
+                            {selectedTemplate.scriptType && (
+                              <Badge variant="secondary">{selectedTemplate.scriptType}</Badge>
+                            )}
+                          </div>
+                        </div>
+                        <Button
+                          onClick={() => setIsAICustomizationOpen(true)}
+                          className="bg-orange-600 hover:bg-orange-700 flex items-center gap-2"
+                        >
+                          <Wand2 className="w-4 h-4" />
+                          Customize with AI
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -1355,79 +1367,6 @@ export default function Outreach() {
         {/* Sidebar */}
         <div className="space-y-6">
           
-          {/* AI Customization */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center">
-                <Wand2 className="w-5 h-5 text-orange-600 mr-2" />
-                AI Customization
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="recipient-type">Recipient Type</Label>
-                  <Select 
-                    value={customizationForm.recipientType}
-                    onValueChange={(value) => setCustomizationForm(prev => ({ ...prev, recipientType: value }))}
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="realtor">Real Estate Agent</SelectItem>
-                      <SelectItem value="past-client">Past Client</SelectItem>
-                      <SelectItem value="prospect">New Prospect</SelectItem>
-                      <SelectItem value="referral">Referral Partner</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div>
-                  <Label htmlFor="tone">Tone</Label>
-                  <Select
-                    value={customizationForm.tone}
-                    onValueChange={(value) => setCustomizationForm(prev => ({ ...prev, tone: value }))}
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="professional">Professional</SelectItem>
-                      <SelectItem value="friendly">Friendly</SelectItem>
-                      <SelectItem value="casual">Casual</SelectItem>
-                      <SelectItem value="formal">Formal</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div>
-                  <Label htmlFor="key-points">Key Points to Include</Label>
-                  <Textarea
-                    id="key-points"
-                    value={customizationForm.keyPoints}
-                    onChange={(e) => setCustomizationForm(prev => ({ ...prev, keyPoints: e.target.value }))}
-                    placeholder="e.g., Quick turnaround times, competitive rates, local market expertise..."
-                    rows={3}
-                    className="resize-none"
-                  />
-                </div>
-                
-                <Button 
-                  onClick={handleCustomize}
-                  disabled={customizeTemplateMutation.isPending || !customizationForm.keyPoints.trim()}
-                  className="w-full bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400"
-                >
-                  {customizeTemplateMutation.isPending ? (
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  ) : (
-                    <Wand2 className="w-4 h-4 mr-2" />
-                  )}
-                  {customizeTemplateMutation.isPending ? 'Generating your template...' : 'Customize & Edit'}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
 
           {/* Template Analysis */}
           {selectedTemplate && activeTemplateType === "email" && (
@@ -1602,6 +1541,91 @@ export default function Outreach() {
         </div>
       </div>
       
+      {/* AI Customization Modal */}
+      <Dialog open={isAICustomizationOpen} onOpenChange={setIsAICustomizationOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Wand2 className="w-5 h-5 text-orange-600" />
+              AI Customization
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 p-1">
+            <div>
+              <Label htmlFor="recipient-type">Recipient Type</Label>
+              <Select 
+                value={customizationForm.recipientType}
+                onValueChange={(value) => setCustomizationForm(prev => ({ ...prev, recipientType: value }))}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="realtor">Real Estate Agent</SelectItem>
+                  <SelectItem value="past-client">Past Client</SelectItem>
+                  <SelectItem value="prospect">New Prospect</SelectItem>
+                  <SelectItem value="referral">Referral Partner</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div>
+              <Label htmlFor="tone">Tone</Label>
+              <Select
+                value={customizationForm.tone}
+                onValueChange={(value) => setCustomizationForm(prev => ({ ...prev, tone: value }))}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="professional">Professional</SelectItem>
+                  <SelectItem value="friendly">Friendly</SelectItem>
+                  <SelectItem value="casual">Casual</SelectItem>
+                  <SelectItem value="formal">Formal</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div>
+              <Label htmlFor="key-points">Key Points to Include</Label>
+              <Textarea
+                id="key-points"
+                value={customizationForm.keyPoints}
+                onChange={(e) => setCustomizationForm(prev => ({ ...prev, keyPoints: e.target.value }))}
+                placeholder="e.g., Quick turnaround times, competitive rates, local market expertise..."
+                rows={3}
+                className="resize-none"
+              />
+            </div>
+            
+            <div className="flex justify-end space-x-2 pt-4">
+              <Button 
+                variant="outline"
+                onClick={() => setIsAICustomizationOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button 
+                onClick={() => {
+                  handleCustomize();
+                  setIsAICustomizationOpen(false);
+                }}
+                disabled={customizeTemplateMutation.isPending || !customizationForm.keyPoints.trim()}
+                className="bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400"
+              >
+                {customizeTemplateMutation.isPending ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  <Wand2 className="w-4 h-4 mr-2" />
+                )}
+                {customizeTemplateMutation.isPending ? 'Generating...' : 'Customize & Edit'}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Image Editor */}
       <ImageEditor
         isOpen={isImageEditorOpen}
