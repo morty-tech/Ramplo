@@ -179,6 +179,7 @@ export default function Outreach() {
   });
   const [isAICustomizationSuccess, setIsAICustomizationSuccess] = useState(false);
   const [showAICustomizedNotification, setShowAICustomizedNotification] = useState(false);
+  const [notificationTimeoutId, setNotificationTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const { toast } = useToast();
 
   // Fetch templates from API filtered by type
@@ -327,10 +328,17 @@ export default function Outreach() {
         // Show on-page notification
         setShowAICustomizedNotification(true);
         
+        // Clear any existing timeout
+        if (notificationTimeoutId) {
+          clearTimeout(notificationTimeoutId);
+        }
+        
         // Auto-dismiss notification after 10 seconds
-        setTimeout(() => {
+        const timeoutId = setTimeout(() => {
           setShowAICustomizedNotification(false);
+          setNotificationTimeoutId(null);
         }, 10000);
+        setNotificationTimeoutId(timeoutId);
       }
       
       // Show success state on the customize button
@@ -524,7 +532,10 @@ export default function Outreach() {
     // Clear AI customized indicators and success state when template changes
     setAiCustomizedFields({});
     setIsAICustomizationSuccess(false);
-    setShowAICustomizedNotification(false);
+    // Only clear notification if it's not from a recent AI customization
+    if (!notificationTimeoutId) {
+      setShowAICustomizedNotification(false);
+    }
   }, [selectedTemplate, activeTemplateType]);
 
   // Auto-apply changes when inline settings change
@@ -730,14 +741,14 @@ export default function Outreach() {
                         
                         {/* AI Customized Notification */}
                         {showAICustomizedNotification && (
-                          <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-center gap-2">
-                            <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                          <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2">
+                            <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                             </svg>
-                            <span className="text-sm text-blue-700 font-medium">Template customized with AI</span>
+                            <span className="text-sm text-green-700 font-medium">Template customized with AI</span>
                             <button 
                               onClick={() => setShowAICustomizedNotification(false)}
-                              className="ml-auto text-blue-400 hover:text-blue-600"
+                              className="ml-auto text-green-400 hover:text-green-600"
                             >
                               <X className="w-4 h-4" />
                             </button>
@@ -818,7 +829,7 @@ export default function Outreach() {
                                   onChange={(e) => setEditedSubject(e.target.value)}
                                   className={`text-sm transition-all duration-3000 ${
                                     animatingFields.subject 
-                                      ? 'bg-blue-50 border-blue-300 shadow-sm' 
+                                      ? 'bg-green-50 border-green-300 shadow-sm' 
                                       : ''
                                   }`}
                                   placeholder="Enter subject line..."
@@ -844,7 +855,7 @@ export default function Outreach() {
                                 <div 
                                   className={`text-sm text-gray-900 p-3 rounded border cursor-pointer transition-all duration-3000 italic ${
                                     animatingFields.subject 
-                                      ? 'bg-blue-50 border-blue-300 shadow-sm' 
+                                      ? 'bg-green-50 border-green-300 shadow-sm' 
                                       : 'bg-white hover:bg-gray-50'
                                   }`}
                                   onClick={startEditingSubject}
@@ -907,7 +918,7 @@ export default function Outreach() {
                                   onChange={(e) => setEditedBody(e.target.value)}
                                   className={`text-sm min-h-[400px] resize-none font-mono transition-all duration-3000 ${
                                     animatingFields.body 
-                                      ? 'bg-blue-50 border-blue-300 shadow-sm' 
+                                      ? 'bg-green-50 border-green-300 shadow-sm' 
                                       : ''
                                   }`}
                                   placeholder="Enter email content..."
@@ -933,7 +944,7 @@ export default function Outreach() {
                                 <div 
                                   className={`text-sm text-gray-900 whitespace-pre-wrap p-4 rounded border min-h-[200px] cursor-pointer transition-all duration-3000 font-mono ${
                                     animatingFields.body 
-                                      ? 'bg-blue-50 border-blue-300 shadow-sm' 
+                                      ? 'bg-green-50 border-green-300 shadow-sm' 
                                       : 'bg-white hover:bg-gray-50'
                                   }`}
                                   onClick={startEditingBody}
@@ -1160,7 +1171,7 @@ export default function Outreach() {
                                   onChange={(e) => setEditedContent(e.target.value)}
                                   className={`text-sm min-h-[120px] resize-none transition-all duration-3000 ${
                                     animatingFields.content 
-                                      ? 'bg-blue-50 border-blue-300 shadow-sm' 
+                                      ? 'bg-green-50 border-green-300 shadow-sm' 
                                       : ''
                                   }`}
                                   placeholder="Edit your post content..."
@@ -1186,7 +1197,7 @@ export default function Outreach() {
                                 <div 
                                   className={`text-sm text-gray-900 p-4 rounded border min-h-[120px] cursor-pointer transition-all duration-3000 ${
                                     animatingFields.content 
-                                      ? 'bg-blue-50 border-blue-300 shadow-sm' 
+                                      ? 'bg-green-50 border-green-300 shadow-sm' 
                                       : 'bg-white hover:bg-gray-50'
                                   }`}
                                   onClick={startEditingContent}
@@ -1266,7 +1277,7 @@ export default function Outreach() {
                                 onChange={(e) => setEditedScript(e.target.value)}
                                 className={`text-sm min-h-[300px] resize-none font-mono transition-all duration-3000 ${
                                   animatingFields.script 
-                                    ? 'bg-blue-50 border-blue-300 shadow-sm' 
+                                    ? 'bg-green-50 border-green-300 shadow-sm' 
                                     : ''
                                 }`}
                                 placeholder="Enter your phone script..."
@@ -1292,7 +1303,7 @@ export default function Outreach() {
                               <div 
                                 className={`text-sm text-gray-900 whitespace-pre-wrap p-4 rounded border min-h-[300px] cursor-pointer transition-all duration-3000 font-mono ${
                                   animatingFields.script 
-                                    ? 'bg-blue-50 border-blue-300 shadow-sm' 
+                                    ? 'bg-green-50 border-green-300 shadow-sm' 
                                     : 'bg-white hover:bg-gray-50'
                                 }`}
                                 onClick={startEditingScript}
