@@ -13,7 +13,7 @@ import {
   Shield, 
   Check, 
   Infinity, 
-  Heart,
+  Database,
   CreditCard,
   Download,
   AlertCircle
@@ -161,7 +161,7 @@ export default function Billing() {
               </div>
               <div className="text-right">
                 <div className="text-2xl font-bold text-green-600">FREE</div>
-                <div className="text-sm text-gray-600">Morty Employee Benefit</div>
+                <div className="text-sm text-gray-600">Morty Platform Benefit</div>
               </div>
             </div>
             
@@ -178,9 +178,9 @@ export default function Billing() {
                   <div className="text-xs text-gray-600">Unlimited usage</div>
                 </div>
                 <div className="text-center">
-                  <Heart className="w-6 h-6 text-green-600 mx-auto mb-2" />
-                  <div className="text-sm font-medium text-gray-900">Priority Support</div>
-                  <div className="text-xs text-gray-600">Dedicated assistance</div>
+                  <Database className="w-6 h-6 text-green-600 mx-auto mb-2" />
+                  <div className="text-sm font-medium text-gray-900">CMS Integration</div>
+                  <div className="text-xs text-gray-600">Coming soon</div>
                 </div>
               </div>
             </div>
