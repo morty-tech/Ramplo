@@ -214,35 +214,27 @@ export async function generateDealCoachAdvice({
 }): Promise<string> {
   const profileContext = buildProfileContext(userProfile);
   
-  const prompt = `You are an expert mortgage loan officer coach with 20+ years of experience helping loan officers overcome challenges and close deals successfully.
+  const prompt = `You are an expert mortgage coach. Provide concise, actionable advice in bullet points.
 
-LOAN OFFICER PROFILE:
-${profileContext}
+SITUATION: ${dealDetails}
+CHALLENGE: ${challenge}
+EXPERIENCE: ${userProfile.experienceLevel || 'new'}
 
-DEAL SITUATION:
-${dealDetails}
+REQUIREMENTS:
+- Maximum 4 bullet points
+- Each bullet should be 1 concise sentence
+- Focus on immediate, practical actions
+- Be direct and helpful
+- No personal commentary or encouragement
 
-SPECIFIC CHALLENGE:
-${challenge}
-
-INSTRUCTIONS:
-1. Provide specific, actionable advice based on the loan officer's experience level and market
-2. Consider their specialization areas and borrower types they work with
-3. Give practical steps they can take immediately
-4. Include relevant mortgage industry best practices
-5. Suggest communication strategies that match their tone preference
-6. Be encouraging but realistic about the situation
-7. If applicable, mention relevant compliance considerations (TRID, QM rules, etc.)
-8. Keep advice focused and implementable within their available time
-
-Provide your coaching advice in a helpful, professional tone. Focus on practical solutions and next steps.`;
+Format your response as bullet points starting with •`;
 
   try {
     const response = await openai.chat.completions.create({
       model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
       messages: [{ role: "user", content: prompt }],
       temperature: 0.8,
-      max_tokens: 800,
+      max_tokens: 200,
     });
 
     return response.choices[0].message.content || "I apologize, but I couldn't generate advice at this time. Please try rephrasing your question or providing more specific details about your challenge.";
@@ -269,33 +261,25 @@ function generateFallbackDealAdvice({
 }): string {
   // Generate basic advice based on common scenarios
   const adviceTemplates = {
-    credit: `For credit-related challenges, consider these steps:
-• Review the borrower's credit report for any errors that can be disputed
-• Suggest credit repair strategies like paying down balances or removing old inquiries
-• Explore alternative loan programs that may have more flexible credit requirements
-• Consider a co-signer if the borrower has family support
-• Document any compensating factors like stable employment or large down payment`,
+    credit: `• Review credit report for errors and disputes
+• Suggest paying down balances to improve utilization
+• Explore alternative loan programs with flexible requirements
+• Consider adding a creditworthy co-borrower`,
     
-    income: `For income verification issues:
-• Request additional documentation like tax returns, pay stubs, or bank statements
+    income: `• Request additional documentation like tax returns and bank statements
 • Consider alternative income documentation if self-employed
-• Explore stated income loan programs if available in your market
-• Calculate debt-to-income ratio with and without certain debts
-• Look into programs that allow for gift funds or down payment assistance`,
+• Calculate debt-to-income ratio excluding certain debts
+• Look into programs allowing gift funds or down payment assistance`,
     
-    appraisal: `For appraisal concerns:
-• Review the appraisal for any factual errors or missing comparable sales
-• Consider requesting a reconsideration of value with additional comps
-• Explore whether a second appraisal might be beneficial
-• Discuss options like increasing down payment to meet loan-to-value requirements
-• Look into different loan programs that may have more flexible appraisal standards`,
+    appraisal: `• Review appraisal for factual errors or missing comparable sales
+• Request reconsideration of value with additional comps
+• Discuss increasing down payment to meet loan-to-value requirements
+• Explore loan programs with more flexible appraisal standards`,
     
-    default: `Here are some general strategies for deal challenges:
-• Communicate regularly with all parties to keep the deal moving
-• Document everything and maintain detailed notes for your file
-• Consider alternative loan programs or lenders if current path isn't working
-• Set realistic expectations with all parties about timing and potential issues
-• Don't hesitate to escalate to your manager or underwriting team for guidance`
+    default: `• Communicate regularly with all parties to keep deal moving
+• Document everything and maintain detailed notes
+• Consider alternative loan programs or lenders
+• Set realistic expectations about timing and potential issues`
   };
 
   // Try to match challenge keywords to advice type
@@ -310,9 +294,9 @@ function generateFallbackDealAdvice({
     advice = adviceTemplates.appraisal;
   }
 
-  // Personalize based on experience level
+  // Add experience-specific advice
   if (userProfile.experienceLevel === 'new' || userProfile.experienceLevel === '<1y') {
-    advice += "\n\nAs a newer loan officer, don't hesitate to lean on your manager and more experienced colleagues for guidance. This is a learning opportunity that will make you stronger for future deals.";
+    advice += "\n• Consult with your manager or experienced colleagues for guidance";
   }
 
   return advice;
