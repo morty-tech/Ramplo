@@ -152,6 +152,7 @@ export default function Outreach() {
   const [customImageUrl, setCustomImageUrl] = useState<string>('');
   const [isEditingContent, setIsEditingContent] = useState(false);
   const [editedContent, setEditedContent] = useState('');
+  const [isImageLibraryOpen, setIsImageLibraryOpen] = useState(false);
   const [customizationForm, setCustomizationForm] = useState({
     recipientType: "realtor",
     tone: "professional",
@@ -616,13 +617,22 @@ export default function Outreach() {
                           <div>
                             <div className="flex items-center justify-between mb-2">
                               <div className="text-sm font-medium text-gray-900">Image Preview:</div>
-                              <button
-                                onClick={resetImageCustomization}
-                                className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
-                              >
-                                <RotateCcw className="w-3 h-3" />
-                                Reset
-                              </button>
+                              <div className="flex items-center gap-3">
+                                <button
+                                  onClick={() => setIsImageLibraryOpen(true)}
+                                  className="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1"
+                                >
+                                  <Image className="w-3 h-3" />
+                                  Change Image
+                                </button>
+                                <button
+                                  onClick={resetImageCustomization}
+                                  className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
+                                >
+                                  <RotateCcw className="w-3 h-3" />
+                                  Reset
+                                </button>
+                              </div>
                             </div>
                             {selectedTemplate.imageUrl ? (
                               <div className="bg-white p-4 rounded border space-y-4">
@@ -840,6 +850,55 @@ export default function Outreach() {
                       </>
                     )}
                   </div>
+
+                  {/* Image Library Modal */}
+                  <Dialog open={isImageLibraryOpen} onOpenChange={setIsImageLibraryOpen}>
+                    <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                      <DialogHeader>
+                        <DialogTitle>Select an Image</DialogTitle>
+                      </DialogHeader>
+                      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+                        {templateImages.map((image) => (
+                          <div
+                            key={image.id}
+                            className={`relative cursor-pointer rounded-lg overflow-hidden border-2 transition-all ${
+                              selectedTemplate?.imageUrl === image.imageUrl
+                                ? 'border-blue-500 ring-2 ring-blue-200'
+                                : 'border-gray-200 hover:border-gray-300'
+                            }`}
+                            onClick={() => {
+                              if (selectedTemplate) {
+                                updateTemplateMutation.mutate({
+                                  id: selectedTemplate.id,
+                                  updates: {
+                                    imageUrl: image.imageUrl,
+                                    imageAlt: image.imageAlt
+                                  }
+                                });
+                                setIsImageLibraryOpen(false);
+                              }
+                            }}
+                          >
+                            <img
+                              src={image.imageUrl}
+                              alt={image.imageAlt || image.name}
+                              className="w-full h-32 object-cover"
+                            />
+                            <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2">
+                              <p className="text-xs font-medium truncate">{image.name}</p>
+                            </div>
+                            {selectedTemplate?.imageUrl === image.imageUrl && (
+                              <div className="absolute top-2 right-2 bg-blue-500 text-white rounded-full p-1">
+                                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                </svg>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </DialogContent>
+                  </Dialog>
 
                   <div className="flex items-center space-x-4">
                     <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
