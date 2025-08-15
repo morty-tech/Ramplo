@@ -691,7 +691,7 @@ export default function Outreach() {
         {/* Template Library */}
         <div className="lg:col-span-2">
           <Card>
-            <CardContent>
+            <CardContent className="pt-6">
               {selectedTemplate && (
                 <>
                   <div className="mb-2">
