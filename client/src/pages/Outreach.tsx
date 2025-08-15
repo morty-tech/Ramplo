@@ -795,7 +795,7 @@ export default function Outreach() {
                                 <Textarea
                                   value={editedBody}
                                   onChange={(e) => setEditedBody(e.target.value)}
-                                  className="text-sm min-h-[200px] resize-none font-mono"
+                                  className="text-sm min-h-[400px] resize-none font-mono"
                                   placeholder="Enter email content..."
                                 />
                                 <div className="flex justify-end">
