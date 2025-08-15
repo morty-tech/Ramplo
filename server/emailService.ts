@@ -62,6 +62,9 @@ export async function sendMagicLinkEmail(email: string, token: string): Promise<
   const replitDomain = process.env.REPLIT_DEV_DOMAIN || 'localhost:5000';
   const magicLinkUrl = `https://${replitDomain}/api/auth/verify?token=${token}`;
 
+  // Always log the magic link URL for development
+  console.log(`🔗 MAGIC LINK for ${email}: ${magicLinkUrl}`);
+
   await sendEmail({
     to: email,
     subject: 'Your RampLO Login Link',
