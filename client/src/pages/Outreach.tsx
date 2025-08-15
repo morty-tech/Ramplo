@@ -614,7 +614,16 @@ export default function Outreach() {
                         <div className="space-y-6">
                           {/* Image Preview with Inline Customization - Above content */}
                           <div>
-                            <div className="text-sm font-medium text-gray-900 mb-2">Image Preview:</div>
+                            <div className="flex items-center justify-between mb-2">
+                              <div className="text-sm font-medium text-gray-900">Image Preview:</div>
+                              <button
+                                onClick={resetImageCustomization}
+                                className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
+                              >
+                                <RotateCcw className="w-3 h-3" />
+                                Reset
+                              </button>
+                            </div>
                             {selectedTemplate.imageUrl ? (
                               <div className="bg-white p-4 rounded border space-y-4">
                                 {/* Canvas for customized image */}
@@ -704,23 +713,17 @@ export default function Outreach() {
                                   </div>
                                 </div>
                                 
-                                <div className="flex justify-center items-center gap-4">
+                                <div className="flex justify-end">
                                   <Button
                                     onClick={downloadCustomizedImage}
                                     size="sm"
                                     disabled={!customImageUrl}
-                                    className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400"
+                                    variant="outline"
+                                    className="text-xs"
                                   >
                                     <Download className="w-3 h-3 mr-1" />
-                                    Download
+                                    Download Image
                                   </Button>
-                                  <button
-                                    onClick={resetImageCustomization}
-                                    className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
-                                  >
-                                    <RotateCcw className="w-3 h-3" />
-                                    Reset
-                                  </button>
                                 </div>
                               </div>
                             ) : (
@@ -737,6 +740,15 @@ export default function Outreach() {
                           <div>
                             <div className="flex items-center justify-between mb-2">
                               <div className="text-sm font-medium text-gray-900">Post Content:</div>
+                              {isEditingContent && (
+                                <button
+                                  onClick={resetContentEditing}
+                                  className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
+                                >
+                                  <RotateCcw className="w-3 h-3" />
+                                  Reset
+                                </button>
+                              )}
                               <div className="text-xs text-gray-500">
                                 {(() => {
                                   const cleanContent = cleanContentForDisplay(selectedTemplate.content);
@@ -759,14 +771,7 @@ export default function Outreach() {
                                   className="text-sm min-h-[120px] resize-none"
                                   placeholder="Edit your post content..."
                                 />
-                                <div className="flex items-center justify-between">
-                                  <button
-                                    onClick={resetContentEditing}
-                                    className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
-                                  >
-                                    <RotateCcw className="w-3 h-3" />
-                                    Reset
-                                  </button>
+                                <div className="flex justify-end">
                                   <Button
                                     onClick={saveEditedContent}
                                     size="sm"
