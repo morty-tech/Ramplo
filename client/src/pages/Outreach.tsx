@@ -336,6 +336,13 @@ export default function Outreach() {
       // Show success state on the customize button
       setIsAICustomizationSuccess(true);
       
+      // Clear the customization form for next use
+      setCustomizationForm({
+        recipientType: "realtor",
+        tone: "professional",
+        keyPoints: ""
+      });
+      
       // Close the AI customization modal
       setIsAICustomizationOpen(false);
     },
