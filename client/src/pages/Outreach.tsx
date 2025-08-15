@@ -178,6 +178,7 @@ export default function Outreach() {
     keyPoints: ""
   });
   const [isAICustomizationSuccess, setIsAICustomizationSuccess] = useState(false);
+  const [showAICustomizedNotification, setShowAICustomizedNotification] = useState(false);
   const { toast } = useToast();
 
   // Fetch templates from API filtered by type
@@ -310,18 +311,31 @@ export default function Outreach() {
           if (data.content) newAnimatingFields.content = true;
         }
         
-        // Trigger animation with a slight delay to see the flash
+        // Trigger double flash animation with slight delay
         setTimeout(() => {
           setAnimatingFields(newAnimatingFields);
         }, 100);
         
+        // First flash clear
+        setTimeout(() => {
+          setAnimatingFields({});
+        }, 600);
+        
+        // Second flash
+        setTimeout(() => {
+          setAnimatingFields(newAnimatingFields);
+        }, 800);
+        
+        // Final clear
+        setTimeout(() => {
+          setAnimatingFields({});
+        }, 1400);
+        
         // Set AI customized indicators (persist)
         setAiCustomizedFields(prev => ({ ...prev, ...newAnimatingFields }));
         
-        // Clear animation after 3 seconds
-        setTimeout(() => {
-          setAnimatingFields({});
-        }, 3100);
+        // Show on-page notification
+        setShowAICustomizedNotification(true);
       }
       
       // Show success state on the customize button
@@ -508,6 +522,7 @@ export default function Outreach() {
     // Clear AI customized indicators and success state when template changes
     setAiCustomizedFields({});
     setIsAICustomizationSuccess(false);
+    setShowAICustomizedNotification(false);
   }, [selectedTemplate, activeTemplateType]);
 
   // Auto-apply changes when inline settings change
@@ -710,6 +725,22 @@ export default function Outreach() {
                             ))}
                           </SelectContent>
                         </Select>
+                        
+                        {/* AI Customized Notification */}
+                        {showAICustomizedNotification && (
+                          <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-center gap-2">
+                            <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                            </svg>
+                            <span className="text-sm text-blue-700 font-medium">Template customized with AI</span>
+                            <button 
+                              onClick={() => setShowAICustomizedNotification(false)}
+                              className="ml-auto text-blue-400 hover:text-blue-600"
+                            >
+                              <X className="w-4 h-4" />
+                            </button>
+                          </div>
+                        )}
                       </div>
                       {isAICustomizationSuccess ? (
                         <div className="text-xs text-green-600 flex items-center gap-1">
