@@ -7,20 +7,22 @@ const openai = new OpenAI({
 
 interface CustomizationRequest {
   template: {
+    id: string;
     name: string;
-    subject: string;
+    templateType: string;
+    subject?: string;
     content: string;
   };
   userProfile: UserProfile;
   customization: {
-    recipientType: string;
+    recipientType?: string;
     tone: string;
     keyPoints: string;
   };
 }
 
 export async function customizeTemplate(request: CustomizationRequest): Promise<{
-  subject: string;
+  subject?: string;
   content: string;
 }> {
   const { template, userProfile, customization } = request;
@@ -28,7 +30,12 @@ export async function customizeTemplate(request: CustomizationRequest): Promise<
   // Build personalization context from user profile
   const profileContext = buildProfileContext(userProfile);
   
-  const prompt = `You are an AI assistant helping a mortgage loan officer customize an email template.
+  // Create template-type specific prompt
+  let prompt = '';
+  let responseFormat = '';
+  
+  if (template.templateType === 'email') {
+    prompt = `You are an AI assistant helping a mortgage loan officer customize an email template.
 
 LOAN OFFICER PROFILE:
 ${profileContext}
@@ -56,6 +63,62 @@ Respond with JSON in this exact format:
   "subject": "customized subject line",
   "content": "customized email content"
 }`;
+  } else if (template.templateType === 'social-media') {
+    prompt = `You are an AI assistant helping a mortgage loan officer customize a social media post template.
+
+LOAN OFFICER PROFILE:
+${profileContext}
+
+ORIGINAL SOCIAL MEDIA POST:
+${template.content}
+
+CUSTOMIZATION REQUIREMENTS:
+- Tone: ${customization.tone}
+- Key Points to Include: ${customization.keyPoints}
+
+INSTRUCTIONS:
+1. Personalize the post using the loan officer's specific details and experience
+2. Adjust the tone to match the requested style (${customization.tone})
+3. Incorporate the key points naturally into the post
+4. Keep the core message and purpose of the original post
+5. Replace placeholder variables like [YOUR_NAME] with actual profile information where available
+6. Make the post engaging and authentic
+7. Keep appropriate length for social media (concise but impactful)
+8. Include relevant hashtags if appropriate
+
+Respond with JSON in this exact format:
+{
+  "content": "customized social media post content"
+}`;
+  } else if (template.templateType === 'phone-script') {
+    prompt = `You are an AI assistant helping a mortgage loan officer customize a phone script template.
+
+LOAN OFFICER PROFILE:
+${profileContext}
+
+ORIGINAL PHONE SCRIPT:
+${template.content}
+
+CUSTOMIZATION REQUIREMENTS:
+- Recipient Type: ${customization.recipientType}
+- Tone: ${customization.tone}
+- Key Points to Include: ${customization.keyPoints}
+
+INSTRUCTIONS:
+1. Personalize the script using the loan officer's specific details and experience
+2. Adjust the tone to match the requested style (${customization.tone})
+3. Incorporate the key points naturally into the conversation flow
+4. Keep the core structure and purpose of the original script
+5. Replace placeholder variables like [YOUR_NAME] with actual profile information where available
+6. Make the script sound natural and conversational
+7. Maintain appropriate pause points and response opportunities
+8. Keep the script professional but personable
+
+Respond with JSON in this exact format:
+{
+  "content": "customized phone script content"
+}`;
+  }
 
   try {
     const response = await openai.chat.completions.create({
@@ -67,10 +130,18 @@ Respond with JSON in this exact format:
 
     const result = JSON.parse(response.choices[0].message.content || "{}");
     
-    return {
-      subject: result.subject || template.subject,
-      content: result.content || template.content,
-    };
+    // Return appropriate fields based on template type
+    if (template.templateType === 'email') {
+      return {
+        subject: result.subject || template.subject,
+        content: result.content || template.content,
+      };
+    } else {
+      // For social-media and phone-script, only return content
+      return {
+        content: result.content || template.content,
+      };
+    }
   } catch (error: any) {
     console.error("AI customization error:", error);
     
@@ -138,7 +209,7 @@ function buildProfileContext(profile: UserProfile): string {
 }
 
 function fallbackCustomization(request: CustomizationRequest): {
-  subject: string;
+  subject?: string;
   content: string;
 } {
   const { template, userProfile, customization } = request;
@@ -159,37 +230,59 @@ function fallbackCustomization(request: CustomizationRequest): {
   };
   
   // Apply replacements
+  if (customizedSubject) {
+    Object.entries(replacements).forEach(([placeholder, value]) => {
+      customizedSubject = customizedSubject!.replace(new RegExp(placeholder, 'g'), value);
+    });
+  }
   Object.entries(replacements).forEach(([placeholder, value]) => {
-    customizedSubject = customizedSubject.replace(new RegExp(placeholder, 'g'), value);
     customizedContent = customizedContent.replace(new RegExp(placeholder, 'g'), value);
   });
   
-  // Add key points if provided
+  // Add key points based on template type
   if (customization.keyPoints.trim()) {
-    const keyPointsSection = `\n\nKey highlights:\n• ${customization.keyPoints.split(',').map(point => point.trim()).join('\n• ')}\n`;
-    
-    // Insert before signature or at the end
-    if (customizedContent.includes('Best regards') || customizedContent.includes('Sincerely')) {
-      customizedContent = customizedContent.replace(
-        /(Best regards|Sincerely)/,
-        keyPointsSection + '$1'
-      );
-    } else {
+    if (template.templateType === 'email') {
+      const keyPointsSection = `\n\nKey highlights:\n• ${customization.keyPoints.split(',').map(point => point.trim()).join('\n• ')}\n`;
+      
+      // Insert before signature or at the end
+      if (customizedContent.includes('Best regards') || customizedContent.includes('Sincerely')) {
+        customizedContent = customizedContent.replace(
+          /(Best regards|Sincerely)/,
+          keyPointsSection + '$1'
+        );
+      } else {
+        customizedContent += keyPointsSection;
+      }
+    } else if (template.templateType === 'social-media') {
+      // For social media, add key points as additional content
+      customizedContent += `\n\n${customization.keyPoints}`;
+    } else if (template.templateType === 'phone-script') {
+      // For phone scripts, integrate key points into talking points
+      const keyPointsSection = `\n\n[KEY TALKING POINTS: ${customization.keyPoints}]\n`;
       customizedContent += keyPointsSection;
     }
   }
   
-  // Adjust tone in subject line
-  if (customization.tone === 'friendly') {
-    customizedSubject = customizedSubject.replace(/^(.*?)$/, "👋 $1");
-  } else if (customization.tone === 'urgent') {
-    customizedSubject = `⚡ ${customizedSubject}`;
+  // Adjust tone in subject line (only for email)
+  if (template.templateType === 'email' && customizedSubject) {
+    if (customization.tone === 'friendly') {
+      customizedSubject = customizedSubject.replace(/^(.*?)$/, "👋 $1");
+    } else if (customization.tone === 'urgent') {
+      customizedSubject = `⚡ ${customizedSubject}`;
+    }
   }
   
-  return {
-    subject: customizedSubject,
-    content: customizedContent
-  };
+  // Return appropriate fields based on template type
+  if (template.templateType === 'email') {
+    return {
+      subject: customizedSubject,
+      content: customizedContent
+    };
+  } else {
+    return {
+      content: customizedContent
+    };
+  }
 }
 
 // Deal Coach AI Service

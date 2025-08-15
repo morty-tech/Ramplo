@@ -313,7 +313,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { customizeTemplate } = await import("./aiService");
       
       const customizedTemplate = await customizeTemplate({
-        template,
+        template: {
+          id: template.id || '',
+          name: template.name,
+          templateType: template.templateType,
+          subject: template.subject,
+          content: template.content
+        },
         userProfile,
         customization: { recipientType, tone, keyPoints }
       });
