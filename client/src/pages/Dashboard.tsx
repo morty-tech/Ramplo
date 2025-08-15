@@ -219,8 +219,8 @@ export default function Dashboard() {
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             {profile?.firstName || user?.firstName || 'there'}, let's Ramp!
           </h1>
-          <p className="text-gray-600">Week {currentWeek} of 14.</p>
-          <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide">This week's focus is {getWeekFocus(currentWeek)}</p>
+          <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide">Week {currentWeek} of 14</p>
+          <p className="text-gray-600">This week's focus is {getWeekFocus(currentWeek)}</p>
         </div>
         
         {/* Performance Score - aligned with headline on medium+ screens */}
