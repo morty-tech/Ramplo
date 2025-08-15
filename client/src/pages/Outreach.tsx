@@ -311,31 +311,26 @@ export default function Outreach() {
           if (data.content) newAnimatingFields.content = true;
         }
         
-        // Trigger double flash animation with slight delay
+        // Trigger animation with slight delay to see the flash
         setTimeout(() => {
           setAnimatingFields(newAnimatingFields);
         }, 100);
         
-        // First flash clear
+        // Clear animation after 3 seconds
         setTimeout(() => {
           setAnimatingFields({});
-        }, 600);
-        
-        // Second flash
-        setTimeout(() => {
-          setAnimatingFields(newAnimatingFields);
-        }, 800);
-        
-        // Final clear
-        setTimeout(() => {
-          setAnimatingFields({});
-        }, 1400);
+        }, 3100);
         
         // Set AI customized indicators (persist)
         setAiCustomizedFields(prev => ({ ...prev, ...newAnimatingFields }));
         
         // Show on-page notification
         setShowAICustomizedNotification(true);
+        
+        // Auto-dismiss notification after 10 seconds
+        setTimeout(() => {
+          setShowAICustomizedNotification(false);
+        }, 10000);
       }
       
       // Show success state on the customize button
