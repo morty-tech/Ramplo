@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -11,7 +11,7 @@ import { Task } from "@shared/schema";
 import TaskDetailModal from "@/components/TaskDetailModal";
 import { Check, Clock, Calendar, Eye } from "lucide-react";
 
-const TOTAL_WEEKS = 13;
+const TOTAL_WEEKS = 14;
 
 export default function Roadmap() {
   const { progress } = useAuth();
@@ -22,8 +22,6 @@ export default function Roadmap() {
   
   const currentWeek = progress?.currentWeek || 1;
   const completedTasks = progress?.tasksCompleted || 0;
-  const totalTasks = 155; // Mock total tasks for 13 weeks
-  const overallProgress = (completedTasks / totalTasks) * 100;
   const daysRemaining = 90 - ((currentWeek - 1) * 7 + (progress?.currentDay || 1));
 
   // Query for all tasks to enable detailed view
@@ -31,6 +29,15 @@ export default function Roadmap() {
     queryKey: ["/api/tasks"],
     queryFn: async () => {
       const response = await apiRequest("GET", "/api/tasks");
+      return response.json();
+    },
+  });
+
+  // Query for the foundation roadmap structure
+  const { data: roadmapData } = useQuery({
+    queryKey: ["/api/roadmap/select"],
+    queryFn: async () => {
+      const response = await apiRequest("GET", "/api/roadmap/select");
       return response.json();
     },
   });
@@ -56,82 +63,31 @@ export default function Roadmap() {
     return allTasks.find(task => task.title.toLowerCase().includes(taskTitle.toLowerCase()));
   };
 
-  const weeks = [
-    {
-      week: 1,
-      title: "Foundation",
-      description: "Set up your systems, CRM, and basic marketing materials.",
-      tasks: [
-        "Complete CRM setup",
-        "Create professional email signature", 
-        "Build initial contact list",
-        "Set up social media profiles",
-        "Create first week of content"
-      ],
-      status: currentWeek > 1 ? "completed" : currentWeek === 1 ? "current" : "upcoming"
-    },
-    {
-      week: 2,
-      title: "Network Building",
-      description: "Begin outreach to realtors and build your professional network.",
-      tasks: [
-        "Send 15 realtor introduction emails",
-        "Attend 2 networking events",
-        "Create LinkedIn content plan",
-        "Schedule follow-up calls",
-        "Join local real estate groups"
-      ],
-      status: currentWeek > 2 ? "completed" : currentWeek === 2 ? "current" : "upcoming"
-    },
-    {
-      week: 3,
-      title: "Marketing Launch",
-      description: "Launch your marketing campaigns and start generating leads.",
-      tasks: [
-        "Launch first-time buyer campaign",
-        "Create educational content series",
-        "Set up referral partner program",
-        "Track and optimize campaigns",
-        "Schedule client consultations"
-      ],
-      status: currentWeek > 3 ? "completed" : currentWeek === 3 ? "current" : "upcoming"
-    },
-    {
-      week: 4,
-      title: "Pipeline Development",
-      description: "Focus on converting leads into applications and building your pipeline.",
-      tasks: [
-        "Follow up with all warm leads",
-        "Process 3 loan applications",
-        "Expand realtor partnerships",
-        "Launch HELOC campaign",
-        "Optimize conversion rates"
-      ],
-      status: currentWeek > 4 ? "completed" : currentWeek === 4 ? "current" : "upcoming"
-    },
-    {
-      week: 5,
-      title: "Relationship Nurturing",
-      description: "Strengthen existing relationships and continue building new connections.",
-      tasks: [
-        "Host client appreciation event",
-        "Create referral incentive program",
-        "Develop strategic partnerships"
-      ],
-      status: currentWeek > 5 ? "completed" : currentWeek === 5 ? "current" : "upcoming"
-    },
-    {
-      week: 6,
-      title: "Advanced Strategies",
-      description: "Implement advanced marketing tactics and refine your approach.",
-      tasks: [
-        "Launch video marketing campaign",
-        "Analyze and optimize processes",
-        "Expand market reach"
-      ],
-      status: currentWeek > 6 ? "completed" : currentWeek === 6 ? "current" : "upcoming"
+  // Calculate totals after allTasks is available
+  const totalTasks = allTasks.length; // Actual number of tasks from foundation roadmap
+  const overallProgress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+
+  // Generate weeks from foundation roadmap data
+  const weeks = React.useMemo(() => {
+    if (!roadmapData?.selectedRoadmap?.weeklyTasks) {
+      return [];
     }
-  ];
+
+    return roadmapData.selectedRoadmap.weeklyTasks.map((weekData: any) => ({
+      week: weekData.week,
+      title: weekData.theme,
+      description: `Week ${weekData.week} focuses on ${weekData.theme.toLowerCase()}.`,
+      tasks: weekData.dailyTasks
+        .reduce((acc: string[], task: any) => {
+          if (!acc.includes(task.title)) {
+            acc.push(task.title);
+          }
+          return acc;
+        }, [])
+        .slice(0, 5), // Show first 5 unique tasks
+      status: currentWeek > weekData.week ? "completed" : currentWeek === weekData.week ? "current" : "upcoming"
+    }));
+  }, [roadmapData, currentWeek]);
 
   return (
     <div className="p-6">
@@ -171,7 +127,7 @@ export default function Roadmap() {
 
       {/* Weekly Breakdown */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {weeks.map((week) => (
+        {weeks.map((week: any) => (
           <Card 
             key={week.week} 
             className={`${
@@ -203,7 +159,7 @@ export default function Roadmap() {
             <CardContent>
               <p className="text-sm text-gray-600 mb-4">{week.description}</p>
               <div className="space-y-2">
-                {week.tasks.map((task, index) => {
+                {week.tasks.map((task: string, index: number) => {
                   const taskObj = getTaskForTitle(task);
                   const isClickable = taskObj && (taskObj.detailedDescription || taskObj.externalLinks?.length || taskObj.internalLinks?.length);
                   
@@ -267,37 +223,7 @@ export default function Roadmap() {
           </Card>
         ))}
 
-        {/* Preview cards for remaining weeks */}
-        {Array.from({ length: Math.max(0, TOTAL_WEEKS - weeks.length) }, (_, i) => (
-          <Card key={weeks.length + i + 1} className="opacity-75">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-lg">
-                  Week {weeks.length + i + 1}: Advanced Training
-                </CardTitle>
-                <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-bold">{weeks.length + i + 1}</span>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-gray-600 mb-4">
-                Advanced strategies and techniques for scaling your business.
-              </p>
-              <div className="space-y-2">
-                {[1, 2, 3].map((index) => (
-                  <div key={index} className="flex items-center text-sm">
-                    <div className="h-2 w-2 bg-gray-300 rounded-full mr-2" />
-                    <span className="text-gray-500">Advanced strategy {index}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 pt-4 border-t border-gray-200">
-                <Badge variant="secondary">Coming Soon</Badge>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+        {/* All weeks are now populated from real roadmap data */}
       </div>
 
       {/* Call to Action */}
