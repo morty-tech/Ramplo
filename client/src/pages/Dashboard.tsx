@@ -214,11 +214,65 @@ export default function Dashboard() {
   return (
     <div className="p-6 mx-4 md:mx-8">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          {profile?.firstName || user?.firstName || 'there'}, let's Ramp!
-        </h1>
-        <p className="text-gray-600">This week is all about {getWeekFocus(currentWeek)}</p>
+      <div className="mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            {profile?.firstName || user?.firstName || 'there'}, let's Ramp!
+          </h1>
+          <p className="text-gray-600">This week is all about {getWeekFocus(currentWeek)}</p>
+        </div>
+        
+        {/* Performance Score - aligned with headline on large screens */}
+        <div className="flex flex-col items-center mt-4 lg:mt-0">
+          <div className="relative w-16 h-16">
+            {/* Background circle */}
+            <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
+              <circle
+                cx="32"
+                cy="32" 
+                r="28"
+                fill="none"
+                stroke="#f3f4f6"
+                strokeWidth="6"
+              />
+              
+              {/* Performance level arc */}
+              <circle
+                cx="32"
+                cy="32"
+                r="28"
+                fill="none"
+                stroke={performanceLevel.color}
+                strokeWidth="6"
+                strokeLinecap="round"
+                strokeDasharray={`${(performanceScore / 100) * 176} 176`}
+                className="transition-all duration-500"
+              />
+            </svg>
+            
+            {/* Score in circle */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <div className="text-lg font-bold text-gray-900">{performanceScore}</div>
+            </div>
+          </div>
+          
+          <div className="text-center mt-1">
+            <div className="text-xs font-medium text-gray-900">{performanceLevel.level}</div>
+            <div className="flex items-center gap-1 text-xs text-gray-500 justify-center">
+              Ramp Performance
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button className="hover:text-gray-700">
+                    <Info className="h-3 w-3" />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent className="max-w-[300px]">
+                  <p>Your daily performance score combines task completion with client outreach activity</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Week Progress Banner & Stats Cards */}
@@ -226,70 +280,18 @@ export default function Dashboard() {
         {/* Week Progress Banner */}
         <Card className="mb-6">
           <CardContent className="px-6 py-2">
-            <div className="flex items-center justify-between">
-              <div className="flex-1">
-                <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                  Week {currentWeek} of 14
-                </h2>
-                <div className="space-y-1">
-                  <p className="text-gray-900 font-medium">Focus: {getWeekFocus(currentWeek)}</p>
-                  {lastWeekFocus && (
-                    <p className="text-sm text-gray-500">Last week: {lastWeekFocus}</p>
-                  )}
-                  {nextWeekFocus && (
-                    <p className="text-sm text-gray-500">Next week: {nextWeekFocus}</p>
-                  )}
-                </div>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="relative w-16 h-16">
-                  {/* Background circle */}
-                  <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
-                    <circle
-                      cx="32"
-                      cy="32" 
-                      r="28"
-                      fill="none"
-                      stroke="#f3f4f6"
-                      strokeWidth="6"
-                    />
-                    
-                    {/* Performance level arc */}
-                    <circle
-                      cx="32"
-                      cy="32"
-                      r="28"
-                      fill="none"
-                      stroke={performanceLevel.color}
-                      strokeWidth="6"
-                      strokeLinecap="round"
-                      strokeDasharray={`${(performanceScore / 100) * 176} 176`}
-                      className="transition-all duration-500"
-                    />
-                  </svg>
-                  
-                  {/* Score in circle */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <div className="text-lg font-bold text-gray-900">{performanceScore}</div>
-                  </div>
-                </div>
-                
-                <div className="text-center mt-1">
-                  <div className="text-xs font-medium text-gray-900">{performanceLevel.level}</div>
-                  <div className="flex items-center gap-1 text-xs text-gray-500 justify-center">
-                    Ramp Performance
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button className="hover:text-gray-700">
-                          <Info className="h-3 w-3" />
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent className="max-w-[300px]">
-                        <p>Your daily performance score combines task completion with client outreach activity</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </div>
-                </div>
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900 mb-2">
+                Week {currentWeek} of 14
+              </h2>
+              <div className="space-y-1">
+                <p className="text-gray-900 font-medium">Focus: {getWeekFocus(currentWeek)}</p>
+                {lastWeekFocus && (
+                  <p className="text-sm text-gray-500">Last week: {lastWeekFocus}</p>
+                )}
+                {nextWeekFocus && (
+                  <p className="text-sm text-gray-500">Next week: {nextWeekFocus}</p>
+                )}
               </div>
             </div>
           </CardContent>
