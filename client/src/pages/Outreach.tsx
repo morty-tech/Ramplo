@@ -67,6 +67,21 @@ const getCharacterLimit = (platform?: string): number => {
   return matchedPlatform ? PLATFORM_LIMITS[matchedPlatform as keyof typeof PLATFORM_LIMITS] : PLATFORM_LIMITS.General;
 };
 
+// Generate random background color
+const generateRandomColor = (): string => {
+  const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FCEA2B', '#FF9FF3', '#54A0FF', '#5F27CD', '#00D2D3', '#FF9F43'];
+  return colors[Math.floor(Math.random() * colors.length)];
+};
+
+// Get default text based on template
+const getDefaultText = (templateName?: string): string => {
+  if (!templateName) return 'Your Mortgage Partner';
+  if (templateName.toLowerCase().includes('realtor')) return 'Partner with Us';
+  if (templateName.toLowerCase().includes('first-time')) return 'First Home Dreams';
+  if (templateName.toLowerCase().includes('rate')) return 'Great Rates Available';
+  return 'Your Mortgage Partner';
+};
+
 // Email analysis functions
 const getReadabilityScore = (content: string): string => {
   if (!content || typeof content !== 'string') return "N/A";
@@ -128,7 +143,7 @@ export default function Outreach() {
   const [inlineImageSettings, setInlineImageSettings] = useState({
     text: '',
     textColor: '#ffffff',
-    backgroundColor: '#000000',
+    backgroundColor: generateRandomColor(),
     fontSize: 24,
     textX: 50,
     textY: 50
@@ -355,8 +370,14 @@ export default function Outreach() {
       ctx.fillStyle = inlineImageSettings.backgroundColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
-      // Draw image
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      // Draw image smaller (80% size) and centered to show background
+      const imageScale = 0.8;
+      const scaledWidth = canvas.width * imageScale;
+      const scaledHeight = canvas.height * imageScale;
+      const offsetX = (canvas.width - scaledWidth) / 2;
+      const offsetY = (canvas.height - scaledHeight) / 2;
+      
+      ctx.drawImage(img, offsetX, offsetY, scaledWidth, scaledHeight);
       
       // Draw text if provided
       if (inlineImageSettings.text.trim()) {
@@ -396,13 +417,24 @@ export default function Outreach() {
     setInlineImageSettings({
       text: '',
       textColor: '#ffffff',
-      backgroundColor: '#000000',
+      backgroundColor: generateRandomColor(),
       fontSize: 24,
       textX: 50,
       textY: 50
     });
     setCustomImageUrl('');
   };
+
+  // Set defaults when template changes
+  useEffect(() => {
+    if (selectedTemplate && activeTemplateType === 'social-media') {
+      setInlineImageSettings(prev => ({
+        ...prev,
+        text: prev.text || getDefaultText(selectedTemplate.name),
+        backgroundColor: prev.backgroundColor || generateRandomColor()
+      }));
+    }
+  }, [selectedTemplate, activeTemplateType]);
 
   const templateTypeIcons = {
     email: Mail,
