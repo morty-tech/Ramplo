@@ -695,13 +695,11 @@ async function generateTasksFromRoadmap(userId: string, roadmap: any) {
     }
   }
   
-  console.log(`Personalizing ${baseTasks.length} foundation tasks for user profile`);
+  console.log(`Creating ${baseTasks.length} foundation tasks (skipping AI personalization for faster loading)`);
   
-  // Personalize tasks using AI based on user profile
-  const personalizedTasks = await personalizeFoundationTasks(baseTasks, userProfile);
-  
-  // Create personalized tasks in database
-  const tasksToCreate = personalizedTasks.map(task => ({
+  // Skip AI personalization for faster initial loading - use base tasks directly
+  // TODO: Consider adding background personalization later
+  const tasksToCreate = baseTasks.map(task => ({
     userId,
     title: task.title,
     description: task.description,
