@@ -668,7 +668,7 @@ export default function Outreach() {
             <CardContent>
               {selectedTemplate && (
                 <>
-                  <div className="mb-6">
+                  <div className="mb-4">
                     <div className="flex items-center justify-between">
                       <h3 className="text-xl font-bold text-gray-900">{selectedTemplate.name}</h3>
                       <button
