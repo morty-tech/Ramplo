@@ -690,18 +690,33 @@ export default function Outreach() {
                           {/* Subject Line */}
                           <div>
                             <div className="flex items-center justify-between mb-2">
-                              <div className="text-sm font-medium text-gray-900">Subject Line:</div>
-                              {isEditingSubject && (
-                                <button
-                                  onClick={resetSubjectEditing}
-                                  className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
-                                >
-                                  <RotateCcw className="w-3 h-3" />
-                                  Reset
-                                </button>
-                              )}
-                              <div className="text-xs text-gray-500">
-                                {(selectedTemplate.subject || '').length} characters
+                              <div className="flex items-center gap-3">
+                                <div className="text-sm font-medium text-gray-900">Subject Line:</div>
+                                {!isEditingSubject && (
+                                  <Button
+                                    onClick={() => copyToClipboard(selectedTemplate.subject || '')}
+                                    size="sm"
+                                    variant="outline"
+                                    className="text-xs h-6 px-2"
+                                  >
+                                    <Copy className="w-3 h-3 mr-1" />
+                                    Copy Subject
+                                  </Button>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-3">
+                                {isEditingSubject && (
+                                  <button
+                                    onClick={resetSubjectEditing}
+                                    className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
+                                  >
+                                    <RotateCcw className="w-3 h-3" />
+                                    Reset
+                                  </button>
+                                )}
+                                <div className="text-xs text-gray-500">
+                                  {(selectedTemplate.subject || '').length} characters
+                                </div>
                               </div>
                             </div>
                             {isEditingSubject ? (
@@ -739,17 +754,6 @@ export default function Outreach() {
                                     Click to edit
                                   </div>
                                 </div>
-                                <div className="flex justify-end">
-                                  <Button
-                                    onClick={() => copyToClipboard(selectedTemplate.subject || '')}
-                                    size="sm"
-                                    variant="outline"
-                                    className="text-xs"
-                                  >
-                                    <Copy className="w-3 h-3 mr-1" />
-                                    Copy Subject
-                                  </Button>
-                                </div>
                               </div>
                             )}
                           </div>
@@ -757,18 +761,33 @@ export default function Outreach() {
                           {/* Email Body */}
                           <div>
                             <div className="flex items-center justify-between mb-2">
-                              <div className="text-sm font-medium text-gray-900">Email Body:</div>
-                              {isEditingBody && (
-                                <button
-                                  onClick={resetBodyEditing}
-                                  className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
-                                >
-                                  <RotateCcw className="w-3 h-3" />
-                                  Reset
-                                </button>
-                              )}
-                              <div className="text-xs text-gray-500">
-                                {selectedTemplate.content.split(/\s+/).length} words
+                              <div className="flex items-center gap-3">
+                                <div className="text-sm font-medium text-gray-900">Email Body:</div>
+                                {!isEditingBody && (
+                                  <Button
+                                    onClick={() => copyToClipboard(selectedTemplate.content)}
+                                    size="sm"
+                                    variant="outline"
+                                    className="text-xs h-6 px-2"
+                                  >
+                                    <Copy className="w-3 h-3 mr-1" />
+                                    Copy Body
+                                  </Button>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-3">
+                                {isEditingBody && (
+                                  <button
+                                    onClick={resetBodyEditing}
+                                    className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
+                                  >
+                                    <RotateCcw className="w-3 h-3" />
+                                    Reset
+                                  </button>
+                                )}
+                                <div className="text-xs text-gray-500">
+                                  {selectedTemplate.content.split(/\s+/).length} words
+                                </div>
                               </div>
                             </div>
                             {isEditingBody ? (
@@ -806,17 +825,6 @@ export default function Outreach() {
                                     Click to edit
                                   </div>
                                 </div>
-                                <div className="flex justify-end">
-                                  <Button
-                                    onClick={() => copyToClipboard(selectedTemplate.content)}
-                                    size="sm"
-                                    variant="outline"
-                                    className="text-xs"
-                                  >
-                                    <Copy className="w-3 h-3 mr-1" />
-                                    Copy Body
-                                  </Button>
-                                </div>
                               </div>
                             )}
                           </div>
@@ -831,7 +839,21 @@ export default function Outreach() {
                           {/* Image Preview with Inline Customization - Above content */}
                           <div>
                             <div className="flex items-center justify-between mb-2">
-                              <div className="text-sm font-medium text-gray-900">Image Preview:</div>
+                              <div className="flex items-center gap-3">
+                                <div className="text-sm font-medium text-gray-900">Image Preview:</div>
+                                {selectedTemplate?.imageUrl && (
+                                  <Button
+                                    onClick={downloadCustomizedImage}
+                                    size="sm"
+                                    disabled={!customImageUrl}
+                                    variant="outline"
+                                    className="text-xs h-6 px-2"
+                                  >
+                                    <Download className="w-3 h-3 mr-1" />
+                                    Download
+                                  </Button>
+                                )}
+                              </div>
                               <div className="flex items-center gap-3">
                                 <button
                                   onClick={() => setIsImageLibraryOpen(true)}
@@ -959,47 +981,48 @@ export default function Outreach() {
                                 )}
                               </div>
                             )}
-                            {selectedTemplate?.imageUrl && (
-                              <div className="flex justify-end mt-2">
-                                <Button
-                                  onClick={downloadCustomizedImage}
-                                  size="sm"
-                                  disabled={!customImageUrl}
-                                  variant="outline"
-                                  className="text-xs"
-                                >
-                                  <Download className="w-3 h-3 mr-1" />
-                                  Download Image
-                                </Button>
-                              </div>
-                            )}
                           </div>
                           
                           {/* Post Content - Below image */}
                           <div>
                             <div className="flex items-center justify-between mb-2">
-                              <div className="text-sm font-medium text-gray-900">Post Content:</div>
-                              {isEditingContent && (
-                                <button
-                                  onClick={resetContentEditing}
-                                  className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
-                                >
-                                  <RotateCcw className="w-3 h-3" />
-                                  Reset
-                                </button>
-                              )}
-                              <div className="text-xs text-gray-500">
-                                {(() => {
-                                  const cleanContent = cleanContentForDisplay(selectedTemplate.content);
-                                  const charLimit = getCharacterLimit(selectedTemplate.platform);
-                                  const isOverLimit = cleanContent.length > charLimit;
-                                  return (
-                                    <span className={isOverLimit ? 'text-red-600 font-medium' : 'text-gray-500'}>
-                                      {cleanContent.length}/{charLimit} characters
-                                      {selectedTemplate.platform && ` (${selectedTemplate.platform})`}
-                                    </span>
-                                  );
-                                })()}
+                              <div className="flex items-center gap-3">
+                                <div className="text-sm font-medium text-gray-900">Post Content:</div>
+                                {!isEditingContent && (
+                                  <Button
+                                    onClick={() => copyToClipboard(cleanContentForDisplay(selectedTemplate.content))}
+                                    size="sm"
+                                    variant="outline"
+                                    className="text-xs h-6 px-2"
+                                  >
+                                    <Copy className="w-3 h-3 mr-1" />
+                                    Copy Content
+                                  </Button>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-3">
+                                {isEditingContent && (
+                                  <button
+                                    onClick={resetContentEditing}
+                                    className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
+                                  >
+                                    <RotateCcw className="w-3 h-3" />
+                                    Reset
+                                  </button>
+                                )}
+                                <div className="text-xs text-gray-500">
+                                  {(() => {
+                                    const cleanContent = cleanContentForDisplay(selectedTemplate.content);
+                                    const charLimit = getCharacterLimit(selectedTemplate.platform);
+                                    const isOverLimit = cleanContent.length > charLimit;
+                                    return (
+                                      <span className={isOverLimit ? 'text-red-600 font-medium' : 'text-gray-500'}>
+                                        {cleanContent.length}/{charLimit} characters
+                                        {selectedTemplate.platform && ` (${selectedTemplate.platform})`}
+                                      </span>
+                                    );
+                                  })()}
+                                </div>
                               </div>
                             </div>
                             {isEditingContent ? (
@@ -1037,17 +1060,6 @@ export default function Outreach() {
                                     Click to edit
                                   </div>
                                 </div>
-                                <div className="flex justify-end">
-                                  <Button
-                                    onClick={() => copyToClipboard(cleanContentForDisplay(selectedTemplate.content))}
-                                    size="sm"
-                                    variant="outline"
-                                    className="text-xs"
-                                  >
-                                    <Copy className="w-3 h-3 mr-1" />
-                                    Copy Content
-                                  </Button>
-                                </div>
                               </div>
                             )}
                             {(() => {
@@ -1072,18 +1084,33 @@ export default function Outreach() {
                       <>
                         <div>
                           <div className="flex items-center justify-between mb-2">
-                            <div className="text-sm font-medium text-gray-900">Call Script:</div>
-                            {isEditingScript && (
-                              <button
-                                onClick={resetScriptEditing}
-                                className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
-                              >
-                                <RotateCcw className="w-3 h-3" />
-                                Reset
-                              </button>
-                            )}
-                            <div className="text-xs text-gray-500">
-                              {selectedTemplate.content.split(/\s+/).length} words • ~{Math.ceil(selectedTemplate.content.split(/\s+/).length / 150)} min read
+                            <div className="flex items-center gap-3">
+                              <div className="text-sm font-medium text-gray-900">Call Script:</div>
+                              {!isEditingScript && (
+                                <Button
+                                  onClick={() => copyToClipboard(selectedTemplate.content)}
+                                  size="sm"
+                                  variant="outline"
+                                  className="text-xs h-6 px-2"
+                                >
+                                  <Copy className="w-3 h-3 mr-1" />
+                                  Copy Script
+                                </Button>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-3">
+                              {isEditingScript && (
+                                <button
+                                  onClick={resetScriptEditing}
+                                  className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
+                                >
+                                  <RotateCcw className="w-3 h-3" />
+                                  Reset
+                                </button>
+                              )}
+                              <div className="text-xs text-gray-500">
+                                {selectedTemplate.content.split(/\s+/).length} words • ~{Math.ceil(selectedTemplate.content.split(/\s+/).length / 150)} min read
+                              </div>
                             </div>
                           </div>
                           {isEditingScript ? (
@@ -1120,17 +1147,6 @@ export default function Outreach() {
                                 <div className="text-xs text-gray-400 mt-2 opacity-0 hover:opacity-100 transition-opacity">
                                   Click to edit
                                 </div>
-                              </div>
-                              <div className="flex justify-end">
-                                <Button
-                                  onClick={() => copyToClipboard(selectedTemplate.content)}
-                                  size="sm"
-                                  variant="outline"
-                                  className="text-xs"
-                                >
-                                  <Copy className="w-3 h-3 mr-1" />
-                                  Copy Script
-                                </Button>
                               </div>
                             </div>
                           )}
