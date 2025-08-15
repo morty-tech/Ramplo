@@ -63,7 +63,7 @@ function useCountUp(end: number, duration: number = 1000, delay: number = 0) {
 }
 
 export default function Dashboard() {
-  const { user, progress } = useAuth();
+  const { user, profile, progress } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
@@ -216,7 +216,7 @@ export default function Dashboard() {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          {user?.firstName || 'there'}, let's Ramp!
+          {profile?.firstName || user?.firstName || 'there'}, let's Ramp!
         </h1>
         <p className="text-gray-600">This week is all about {getWeekFocus(currentWeek)}</p>
       </div>
