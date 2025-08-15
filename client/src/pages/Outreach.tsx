@@ -448,6 +448,30 @@ export default function Outreach() {
     }
   }, [inlineImageSettings, selectedTemplate?.imageUrl, activeTemplateType]);
 
+  // Download customized image
+  const downloadCustomizedImage = () => {
+    const canvas = canvasRef.current;
+    if (!canvas || !customImageUrl) return;
+    
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+      
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${selectedTemplate?.name.replace(/[^a-z0-9]/gi, '_').toLowerCase() || 'custom'}_social_post.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      toast({
+        title: "Download Started",
+        description: "Your customized image is being downloaded.",
+      });
+    }, 'image/png');
+  };
+
   const templateTypeIcons = {
     email: Mail,
     "social-media": MessageSquare,
@@ -664,11 +688,13 @@ export default function Outreach() {
                                 
                                 <div className="flex justify-center gap-2">
                                   <Button
-                                    onClick={updateCanvasImage}
+                                    onClick={downloadCustomizedImage}
                                     size="sm"
-                                    className="bg-blue-600 hover:bg-blue-700"
+                                    disabled={!customImageUrl}
+                                    className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400"
                                   >
-                                    Apply Changes
+                                    <Download className="w-3 h-3 mr-1" />
+                                    Download
                                   </Button>
                                   <Button
                                     onClick={resetImageCustomization}
