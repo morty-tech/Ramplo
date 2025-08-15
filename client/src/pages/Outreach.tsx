@@ -714,7 +714,7 @@ export default function Outreach() {
                       <div className="flex-1 mr-4">
                         <p className="text-sm text-gray-600 mb-2">Select a template to customize and use</p>
                         <Select value={selectedTemplateId} onValueChange={setSelectedTemplateId}>
-                          <SelectTrigger className="w-full max-w-md h-12 text-lg font-semibold bg-white border-2 border-gray-200 hover:border-gray-300 focus:border-blue-500">
+                          <SelectTrigger className="w-full max-w-md h-12 text-lg font-semibold bg-transparent border-0 border-b-2 border-gray-300 hover:border-gray-400 focus:border-blue-500 rounded-none px-0">
                             <SelectValue placeholder="Choose template" />
                           </SelectTrigger>
                           <SelectContent>
