@@ -134,7 +134,7 @@ export default function Outreach() {
   const customizeTemplateMutation = useMutation({
     mutationFn: async (data: { templateId: string; customization: typeof customizationForm }) => {
       const response = await apiRequest("POST", `/api/templates/${data.templateId}/customize`, data.customization);
-      return response;
+      return await response.json();
     },
     onSuccess: (data: any) => {
       toast({
