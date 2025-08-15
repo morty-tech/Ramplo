@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,7 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Copy, Wand2, Edit, Plus, Download, BarChart3, X, Save, Loader2, Mail, MessageSquare, Phone, Image, Upload, Palette } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
+import { Copy, Wand2, Edit, Plus, Download, BarChart3, X, Save, Loader2, Mail, MessageSquare, Phone, Image, Upload, Palette, Type } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ObjectUploader } from "@/components/ObjectUploader";
 import { ImageEditor } from "@/components/ImageEditor";
@@ -124,6 +125,16 @@ export default function Outreach() {
   const [selectedImageId, setSelectedImageId] = useState<string>("");
   const [isImageEditorOpen, setIsImageEditorOpen] = useState(false);
   const [editingImage, setEditingImage] = useState<TemplateImage | null>(null);
+  const [inlineImageSettings, setInlineImageSettings] = useState({
+    text: '',
+    textColor: '#ffffff',
+    backgroundColor: '#000000',
+    fontSize: 24,
+    textX: 50,
+    textY: 50
+  });
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [customImageUrl, setCustomImageUrl] = useState<string>('');
   const [customizationForm, setCustomizationForm] = useState({
     recipientType: "realtor",
     tone: "professional",
@@ -311,7 +322,7 @@ export default function Outreach() {
   };
 
   const handleImageUploadComplete = (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
-    if (result.successful.length > 0) {
+    if (result.successful && result.successful.length > 0) {
       const upload = result.successful[0];
       uploadImageMutation.mutate({
         imageURL: upload.uploadURL || '',
@@ -320,6 +331,77 @@ export default function Outreach() {
         imageAlt: 'User uploaded image'
       });
     }
+  };
+
+  // Update canvas with customized image
+  const updateCanvasImage = () => {
+    if (!selectedTemplate?.imageUrl) return;
+    
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    const img = new window.Image() as HTMLImageElement;
+    img.crossOrigin = 'anonymous';
+    
+    img.onload = () => {
+      // Set canvas size
+      canvas.width = Math.min(img.width, 400);
+      canvas.height = (canvas.width / img.width) * img.height;
+      
+      // Clear and set background
+      ctx.fillStyle = inlineImageSettings.backgroundColor;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw image
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      
+      // Draw text if provided
+      if (inlineImageSettings.text.trim()) {
+        ctx.font = `${inlineImageSettings.fontSize}px Arial`;
+        ctx.fillStyle = inlineImageSettings.textColor;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        
+        // Calculate text position
+        const x = (inlineImageSettings.textX / 100) * canvas.width;
+        const y = (inlineImageSettings.textY / 100) * canvas.height;
+        
+        // Add text shadow for better visibility
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+        ctx.shadowBlur = 4;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+        
+        ctx.fillText(inlineImageSettings.text, x, y);
+        
+        // Reset shadow
+        ctx.shadowColor = 'transparent';
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
+      }
+      
+      // Convert canvas to data URL and set as custom image
+      setCustomImageUrl(canvas.toDataURL('image/png'));
+    };
+    
+    img.src = selectedTemplate.imageUrl;
+  };
+
+  // Reset image customization
+  const resetImageCustomization = () => {
+    setInlineImageSettings({
+      text: '',
+      textColor: '#ffffff',
+      backgroundColor: '#000000',
+      fontSize: 24,
+      textX: 50,
+      textY: 50
+    });
+    setCustomImageUrl('');
   };
 
   const templateTypeIcons = {
@@ -444,17 +526,114 @@ export default function Outreach() {
                     {activeTemplateType === "social-media" && (
                       <>
                         <div className="space-y-6">
-                          {/* Image Preview - Above content */}
+                          {/* Image Preview with Inline Customization - Above content */}
                           <div>
                             <div className="text-sm font-medium text-gray-900 mb-2">Image Preview:</div>
                             {selectedTemplate.imageUrl ? (
-                              <div className="bg-white p-4 rounded border">
-                                <img 
-                                  src={selectedTemplate.imageUrl} 
-                                  alt={selectedTemplate.imageAlt || "Template image"}
-                                  className="w-full max-w-md h-48 object-cover rounded mx-auto"
-                                />
-                                <p className="text-xs text-gray-500 mt-2 text-center">{selectedTemplate.imageAlt}</p>
+                              <div className="bg-white p-4 rounded border space-y-4">
+                                {/* Canvas for customized image */}
+                                <div className="flex justify-center">
+                                  <canvas 
+                                    ref={canvasRef}
+                                    className="max-w-md h-48 border rounded shadow-sm"
+                                    style={{ display: customImageUrl ? 'block' : 'none' }}
+                                  />
+                                  {!customImageUrl && (
+                                    <img 
+                                      src={selectedTemplate.imageUrl} 
+                                      alt={selectedTemplate.imageAlt || "Template image"}
+                                      className="w-full max-w-md h-48 object-cover rounded mx-auto"
+                                    />
+                                  )}
+                                </div>
+                                
+                                {/* Inline Image Customization Controls */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                                  <div className="space-y-3">
+                                    <div>
+                                      <Label className="text-xs font-medium flex items-center gap-1">
+                                        <Type className="w-3 h-3" />
+                                        Text Overlay
+                                      </Label>
+                                      <Input
+                                        value={inlineImageSettings.text}
+                                        onChange={(e) => setInlineImageSettings(prev => ({...prev, text: e.target.value}))}
+                                        placeholder="Add text..."
+                                        className="text-sm h-8"
+                                      />
+                                    </div>
+                                    
+                                    <div>
+                                      <Label className="text-xs font-medium">Text Color</Label>
+                                      <div className="flex gap-2">
+                                        <input
+                                          type="color"
+                                          value={inlineImageSettings.textColor}
+                                          onChange={(e) => setInlineImageSettings(prev => ({...prev, textColor: e.target.value}))}
+                                          className="w-8 h-8 border rounded cursor-pointer"
+                                        />
+                                        <Input
+                                          value={inlineImageSettings.textColor}
+                                          onChange={(e) => setInlineImageSettings(prev => ({...prev, textColor: e.target.value}))}
+                                          className="text-xs h-8 flex-1"
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  
+                                  <div className="space-y-3">
+                                    <div>
+                                      <Label className="text-xs font-medium flex items-center gap-1">
+                                        <Palette className="w-3 h-3" />
+                                        Background
+                                      </Label>
+                                      <div className="flex gap-2">
+                                        <input
+                                          type="color"
+                                          value={inlineImageSettings.backgroundColor}
+                                          onChange={(e) => setInlineImageSettings(prev => ({...prev, backgroundColor: e.target.value}))}
+                                          className="w-8 h-8 border rounded cursor-pointer"
+                                        />
+                                        <Input
+                                          value={inlineImageSettings.backgroundColor}
+                                          onChange={(e) => setInlineImageSettings(prev => ({...prev, backgroundColor: e.target.value}))}
+                                          className="text-xs h-8 flex-1"
+                                        />
+                                      </div>
+                                    </div>
+                                    
+                                    <div>
+                                      <Label className="text-xs font-medium">
+                                        Font Size: {inlineImageSettings.fontSize}px
+                                      </Label>
+                                      <Slider
+                                        value={[inlineImageSettings.fontSize]}
+                                        onValueChange={([value]) => setInlineImageSettings(prev => ({...prev, fontSize: value}))}
+                                        min={12}
+                                        max={48}
+                                        step={2}
+                                        className="w-full"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                                <div className="flex justify-center gap-2">
+                                  <Button
+                                    onClick={updateCanvasImage}
+                                    size="sm"
+                                    className="bg-blue-600 hover:bg-blue-700"
+                                  >
+                                    Apply Changes
+                                  </Button>
+                                  <Button
+                                    onClick={resetImageCustomization}
+                                    size="sm"
+                                    variant="outline"
+                                  >
+                                    Reset
+                                  </Button>
+                                </div>
                               </div>
                             ) : (
                               <div className="bg-white p-4 rounded border h-48 flex items-center justify-center text-gray-400">
