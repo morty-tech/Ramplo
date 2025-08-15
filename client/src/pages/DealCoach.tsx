@@ -274,7 +274,7 @@ export default function DealCoach() {
                   <Button
                     key={scenario.id}
                     variant="outline"
-                    className="w-full text-left p-3 h-auto justify-start"
+                    className="w-full text-left p-3 h-auto justify-start hover:bg-blue-50 hover:border-blue-300 transition-colors"
                     onClick={() => handleScenarioClick(scenario)}
                   >
                     <div>
@@ -295,10 +295,15 @@ export default function DealCoach() {
             <CardContent>
               <div className="space-y-4">
                 {sessions.slice(0, 3).map((session: any, index) => (
-                  <div key={session.id} className="p-3 bg-gray-50 rounded-lg">
-                    <div className="text-sm font-medium text-gray-900 mb-1 line-clamp-2">
+                  <div key={session.id} className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
+                    <div className="text-sm font-medium text-gray-900 mb-2 line-clamp-2">
                       {session.challenges}
                     </div>
+                    {session.aiResponse && (
+                      <div className="text-xs text-blue-600 mb-2 line-clamp-3 bg-blue-50 p-2 rounded border-l-2 border-blue-300">
+                        <strong>AI Response:</strong> {session.aiResponse}
+                      </div>
+                    )}
                     <div className="text-xs text-gray-600 flex items-center">
                       <Clock className="w-3 h-3 mr-1" />
                       {new Date(session.createdAt).toLocaleDateString()}
