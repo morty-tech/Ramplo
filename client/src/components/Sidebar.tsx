@@ -28,7 +28,7 @@ const navigation = [
 
 export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
   const [location, setLocation] = useLocation();
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const [showText, setShowText] = useState(isExpanded);
 
   const handleLogout = async () => {
@@ -120,13 +120,13 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
             <div className="flex items-center px-2 py-2 mb-2">
               <div className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
                 <span className="text-white text-sm font-medium">
-                  {user?.firstName?.[0]}{user?.lastName?.[0]}
+                  {profile?.firstName?.[0] || user?.firstName?.[0]}{profile?.lastName?.[0] || user?.lastName?.[0]}
                 </span>
               </div>
               {showText && (
                 <div className="flex-1 min-w-0 transition-opacity duration-200 opacity-100">
                   <div className="text-sm font-medium text-white truncate">
-                    {user?.firstName} {user?.lastName}
+                    {profile?.firstName || user?.firstName} {profile?.lastName || user?.lastName}
                   </div>
                   <div className="text-xs text-white text-opacity-70 truncate">
                     {user?.email}
@@ -146,7 +146,7 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
           <div className="flex flex-col items-center space-y-2">
             <div className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
               <span className="text-white text-sm font-medium">
-                {user?.firstName?.[0]}{user?.lastName?.[0]}
+                {profile?.firstName?.[0] || user?.firstName?.[0]}{profile?.lastName?.[0] || user?.lastName?.[0]}
               </span>
             </div>
             <button
