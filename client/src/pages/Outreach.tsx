@@ -842,7 +842,11 @@ export default function Outreach() {
                             ) : (
                               <div className="space-y-2">
                                 <div 
-                                  className="text-sm text-gray-900 bg-white p-3 rounded border cursor-pointer hover:bg-gray-50 transition-colors italic"
+                                  className={`text-sm text-gray-900 bg-white p-3 rounded border cursor-pointer hover:bg-gray-50 transition-all duration-3000 italic ${
+                                    animatingFields.subject 
+                                      ? 'bg-blue-50 border-blue-300 shadow-sm' 
+                                      : ''
+                                  }`}
                                   onClick={startEditingSubject}
                                 >
                                   {selectedTemplate.subject || 'No subject line'}
@@ -927,7 +931,11 @@ export default function Outreach() {
                             ) : (
                               <div className="space-y-2">
                                 <div 
-                                  className="text-sm text-gray-900 whitespace-pre-wrap bg-white p-4 rounded border min-h-[200px] cursor-pointer hover:bg-gray-50 transition-colors font-mono"
+                                  className={`text-sm text-gray-900 whitespace-pre-wrap bg-white p-4 rounded border min-h-[200px] cursor-pointer hover:bg-gray-50 transition-all duration-3000 font-mono ${
+                                    animatingFields.body 
+                                      ? 'bg-blue-50 border-blue-300 shadow-sm' 
+                                      : ''
+                                  }`}
                                   onClick={startEditingBody}
                                 >
                                   {selectedTemplate.content}
@@ -1176,7 +1184,11 @@ export default function Outreach() {
                             ) : (
                               <div className="space-y-2">
                                 <div 
-                                  className="text-sm text-gray-900 bg-white p-4 rounded border min-h-[120px] cursor-pointer hover:bg-gray-50 transition-colors"
+                                  className={`text-sm text-gray-900 bg-white p-4 rounded border min-h-[120px] cursor-pointer hover:bg-gray-50 transition-all duration-3000 ${
+                                    animatingFields.content 
+                                      ? 'bg-blue-50 border-blue-300 shadow-sm' 
+                                      : ''
+                                  }`}
                                   onClick={startEditingContent}
                                 >
                                   {cleanContentForDisplay(selectedTemplate.content)}
@@ -1278,7 +1290,11 @@ export default function Outreach() {
                           ) : (
                             <div className="space-y-2">
                               <div 
-                                className="text-sm text-gray-900 whitespace-pre-wrap bg-white p-4 rounded border min-h-[300px] cursor-pointer hover:bg-gray-50 transition-colors font-mono"
+                                className={`text-sm text-gray-900 whitespace-pre-wrap bg-white p-4 rounded border min-h-[300px] cursor-pointer hover:bg-gray-50 transition-all duration-3000 font-mono ${
+                                  animatingFields.script 
+                                    ? 'bg-blue-50 border-blue-300 shadow-sm' 
+                                    : ''
+                                }`}
                                 onClick={startEditingScript}
                               >
                                 {selectedTemplate.content}
