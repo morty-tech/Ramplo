@@ -381,7 +381,7 @@ export default function Outreach() {
       
       // Draw text if provided
       if (inlineImageSettings.text.trim()) {
-        ctx.font = `${inlineImageSettings.fontSize}px Arial`;
+        ctx.font = `bold ${inlineImageSettings.fontSize}px Arial`;
         ctx.fillStyle = inlineImageSettings.textColor;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -425,7 +425,7 @@ export default function Outreach() {
     setCustomImageUrl('');
   };
 
-  // Set defaults when template changes
+  // Set defaults and auto-apply when template changes
   useEffect(() => {
     if (selectedTemplate && activeTemplateType === 'social-media') {
       setInlineImageSettings(prev => ({
@@ -433,8 +433,20 @@ export default function Outreach() {
         text: prev.text || getDefaultText(selectedTemplate.name),
         backgroundColor: prev.backgroundColor || generateRandomColor()
       }));
+      
+      // Auto-apply changes after a short delay to ensure state is updated
+      setTimeout(() => {
+        updateCanvasImage();
+      }, 100);
     }
   }, [selectedTemplate, activeTemplateType]);
+
+  // Auto-apply changes when inline settings change
+  useEffect(() => {
+    if (selectedTemplate?.imageUrl && activeTemplateType === 'social-media') {
+      updateCanvasImage();
+    }
+  }, [inlineImageSettings, selectedTemplate?.imageUrl, activeTemplateType]);
 
   const templateTypeIcons = {
     email: Mail,
