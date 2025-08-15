@@ -160,6 +160,7 @@ export const dailyLoanActions = pgTable("daily_loan_actions", {
 export const marketingTemplates = pgTable("marketing_templates", {
   id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
   name: varchar("name").notNull(),
+  type: varchar("type"), // Legacy field for backwards compatibility
   templateType: varchar("template_type").notNull(), // email, social-media, phone-script
   category: varchar("category").notNull(), // realtor, heloc, fthb, preapproval, referral
   subject: varchar("subject"), // For email templates
@@ -168,6 +169,7 @@ export const marketingTemplates = pgTable("marketing_templates", {
   imageAlt: varchar("image_alt"), // Alt text for images
   platform: varchar("platform"), // For social media: linkedin, facebook, instagram, etc.
   scriptType: varchar("script_type"), // For phone scripts: cold-call, follow-up, etc.
+  userId: uuid("user_id").references(() => users.id), // For user-specific customized templates
   isDefault: boolean("is_default").default(true),
   createdAt: timestamp("created_at").defaultNow(),
 });
