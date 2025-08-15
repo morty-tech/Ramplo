@@ -687,25 +687,9 @@ export default function Outreach() {
         <div className="lg:col-span-2">
           <Card>
             <CardHeader>
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <CardTitle>{templateTypeLabels[activeTemplateType]}</CardTitle>
-                  <p className="text-sm text-gray-600 mt-1">Select a template to customize and use</p>
-                </div>
-                <div className="w-64">
-                  <Select value={selectedTemplateId} onValueChange={setSelectedTemplateId}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Choose template" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {templates.map((template) => (
-                        <SelectItem key={template.id} value={template.id}>
-                          {template.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+              <div className="mb-4">
+                <CardTitle>{templateTypeLabels[activeTemplateType]}</CardTitle>
+                <p className="text-sm text-gray-600 mt-1">Select a template to customize and use</p>
               </div>
             </CardHeader>
 
@@ -714,7 +698,23 @@ export default function Outreach() {
                 <>
                   <div className="mb-2">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-bold text-gray-900">{selectedTemplate.name}</h3>
+                      <div className="flex-1 mr-4">
+                        <Select value={selectedTemplateId} onValueChange={setSelectedTemplateId}>
+                          <SelectTrigger className="w-full max-w-md h-12 text-lg font-semibold bg-white border-2 border-gray-200 hover:border-gray-300 focus:border-blue-500">
+                            <SelectValue placeholder="Choose template" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {templates.map((template) => (
+                              <SelectItem key={template.id} value={template.id} className="text-base py-3">
+                                <div className="flex flex-col">
+                                  <span className="font-medium">{template.name}</span>
+                                  <span className="text-xs text-gray-500">{template.category}</span>
+                                </div>
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
                       {isAICustomizationSuccess ? (
                         <div className="text-xs text-green-600 flex items-center gap-1">
                           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
