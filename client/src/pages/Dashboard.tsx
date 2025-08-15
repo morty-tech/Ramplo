@@ -67,6 +67,7 @@ export default function Dashboard() {
   const queryClient = useQueryClient();
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const [completingTaskId, setCompletingTaskId] = useState<string | null>(null);
 
   const { data: todayTasks = [] } = useQuery<Task[]>({
     queryKey: ["/api/tasks", `week=${progress?.currentWeek || 1}&day=${progress?.currentDay || 1}`],
@@ -90,14 +91,23 @@ export default function Dashboard() {
   const completeTaskMutation = useMutation({
     mutationFn: (taskId: string) => apiRequest("PATCH", `/api/tasks/${taskId}/complete`),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/tasks"] });
-      setIsTaskModalOpen(false);
-      toast({
-        title: "Task completed!",
-        description: "Great job staying on track!",
-      });
+      // Add a delay to show the completion animation
+      setTimeout(() => {
+        setCompletingTaskId(null);
+        queryClient.invalidateQueries({ queryKey: ["/api/tasks"] });
+        setIsTaskModalOpen(false);
+        toast({
+          title: "Task completed!",
+          description: "Great job staying on track!",
+        });
+      }, 600); // 600ms delay to show animation
     },
   });
+
+  const handleTaskComplete = (taskId: string) => {
+    setCompletingTaskId(taskId);
+    completeTaskMutation.mutate(taskId);
+  };
 
   const handleTaskClick = (task: Task) => {
     setSelectedTask(task);
@@ -323,29 +333,57 @@ export default function Dashboard() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {todayTasks.map((task: Task) => (
+                {todayTasks.map((task: Task) => {
+                  const isCompleting = completingTaskId === task.id;
+                  const isCompleted = task.completed;
+                  
+                  return (
                   <div
                     key={task.id}
-                    className={`flex items-start space-x-4 p-4 border border-gray-200 rounded-lg hover:border-primary transition-colors cursor-pointer ${
-                      task.completed ? 'opacity-50' : ''
+                    className={`flex items-start space-x-4 p-4 border rounded-lg cursor-pointer transition-all duration-300 ${
+                      isCompleting 
+                        ? 'border-green-300 bg-green-50 scale-[1.02] shadow-md' 
+                        : isCompleted 
+                        ? 'border-gray-200 bg-gray-50 opacity-75' 
+                        : 'border-gray-200 hover:border-primary hover:shadow-sm bg-white'
                     }`}
                     onClick={() => handleTaskClick(task)}
                   >
-                    <Checkbox
-                      checked={!!task.completed}
-                      onCheckedChange={(checked) => {
-                        if (checked && !task.completed) {
-                          completeTaskMutation.mutate(task.id);
-                        }
-                      }}
-                      disabled={!!task.completed}
-                      className="mt-1"
-                      onClick={(e) => e.stopPropagation()}
-                    />
+                    <div className="relative">
+                      <Checkbox
+                        checked={isCompleted || isCompleting}
+                        onCheckedChange={(checked) => {
+                          if (checked && !task.completed && !isCompleting) {
+                            handleTaskComplete(task.id);
+                          }
+                        }}
+                        disabled={isCompleted || isCompleting}
+                        className={`mt-1 h-5 w-5 border-2 transition-all duration-200 ${
+                          isCompleting 
+                            ? 'border-green-500 bg-green-500 animate-pulse' 
+                            : isCompleted 
+                            ? 'border-green-500 bg-green-500' 
+                            : 'border-gray-300 hover:border-primary hover:bg-primary/5'
+                        }`}
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                      {isCompleting && (
+                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-ping"></div>
+                      )}
+                    </div>
                     <div className="flex-grow">
                       <div className="flex items-center justify-between">
-                        <h3 className={`font-medium text-gray-900 ${task.completed ? 'line-through' : ''}`}>
+                        <h3 className={`font-medium transition-all duration-300 ${
+                          isCompleting 
+                            ? 'text-green-700' 
+                            : isCompleted 
+                            ? 'text-gray-500 line-through' 
+                            : 'text-gray-900'
+                        }`}>
                           {task.title}
+                          {isCompleting && (
+                            <span className="ml-2 text-green-600 animate-bounce">✓</span>
+                          )}
                         </h3>
                         <Button
                           variant="ghost"
@@ -359,9 +397,24 @@ export default function Dashboard() {
                           <Eye className="w-4 h-4" />
                         </Button>
                       </div>
-                      <p className="text-sm text-gray-600 mt-1">{task.description}</p>
+                      <p className={`text-sm mt-1 transition-colors duration-300 ${
+                        isCompleting 
+                          ? 'text-green-600' 
+                          : isCompleted 
+                          ? 'text-gray-400' 
+                          : 'text-gray-600'
+                      }`}>{task.description}</p>
                       <div className="flex items-center mt-2 space-x-4">
-                        <Badge variant="secondary" className="text-xs">
+                        <Badge 
+                          variant="secondary" 
+                          className={`text-xs transition-colors duration-300 ${
+                            isCompleting 
+                              ? 'bg-green-100 text-green-700' 
+                              : isCompleted 
+                              ? 'bg-gray-100 text-gray-400' 
+                              : ''
+                          }`}
+                        >
                           {task.category}
                         </Badge>
                         <span className="text-xs text-gray-500 flex items-center">
@@ -372,7 +425,8 @@ export default function Dashboard() {
                       </div>
                     </div>
                   </div>
-                ))}
+                  );
+                })}
 
                 {todayTasks.length === 0 && (
                   <div className="text-center py-8 text-gray-500">
