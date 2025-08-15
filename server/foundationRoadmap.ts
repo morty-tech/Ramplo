@@ -1465,6 +1465,117 @@ export const FOUNDATION_ROADMAP = {
           "estimatedMinutes": 30
         }
       ]
+    },
+    {
+      "week": 14,
+      "theme": "Systemize & Review",
+      "dailyTasks": [
+        {
+          "day": 1,
+          "title": "Metrics review",
+          "description": "Assess outreach volume, conversions, time-on-task.",
+          "category": "strategy",
+          "estimatedMinutes": 25
+        },
+        {
+          "day": 1,
+          "title": "Refinement",
+          "description": "Update scripts and task lists based on results.",
+          "category": "strategy",
+          "estimatedMinutes": 20
+        },
+        {
+          "day": 1,
+          "title": "Next month plan",
+          "description": "Outline next 4 weeks based on what worked.",
+          "category": "strategy",
+          "estimatedMinutes": 25
+        },
+        {
+          "day": 2,
+          "title": "File tidy",
+          "description": "Organize CRM, notes, and docs.",
+          "category": "admin",
+          "estimatedMinutes": 20
+        },
+        {
+          "day": 2,
+          "title": "Metrics review",
+          "description": "Assess outreach volume, conversions, time-on-task.",
+          "category": "strategy",
+          "estimatedMinutes": 25
+        },
+        {
+          "day": 2,
+          "title": "Refinement",
+          "description": "Update scripts and task lists based on results.",
+          "category": "strategy",
+          "estimatedMinutes": 20
+        },
+        {
+          "day": 3,
+          "title": "Next month plan",
+          "description": "Outline next 4 weeks based on what worked.",
+          "category": "strategy",
+          "estimatedMinutes": 25
+        },
+        {
+          "day": 3,
+          "title": "File tidy",
+          "description": "Organize CRM, notes, and docs.",
+          "category": "admin",
+          "estimatedMinutes": 20
+        },
+        {
+          "day": 3,
+          "title": "Metrics review",
+          "description": "Assess outreach volume, conversions, time-on-task.",
+          "category": "strategy",
+          "estimatedMinutes": 25
+        },
+        {
+          "day": 4,
+          "title": "Refinement",
+          "description": "Update scripts and task lists based on results.",
+          "category": "strategy",
+          "estimatedMinutes": 20
+        },
+        {
+          "day": 4,
+          "title": "Next month plan",
+          "description": "Outline next 4 weeks based on what worked.",
+          "category": "strategy",
+          "estimatedMinutes": 25
+        },
+        {
+          "day": 4,
+          "title": "File tidy",
+          "description": "Organize CRM, notes, and docs.",
+          "category": "admin",
+          "estimatedMinutes": 20
+        },
+        {
+          "day": 5,
+          "title": "Metrics review",
+          "description": "Assess outreach volume, conversions, time-on-task.",
+          "category": "strategy",
+          "estimatedMinutes": 25
+        },
+        {
+          "day": 5,
+          "title": "Refinement",
+          "description": "Update scripts and task lists based on results.",
+          "category": "strategy",
+          "estimatedMinutes": 20
+        },
+        {
+          "day": 5,
+          "title": "Next month plan",
+          "description": "Outline next 4 weeks based on what worked.",
+          "category": "strategy",
+          "estimatedMinutes": 25
+        }
+      ]
     }
   ]
 };
