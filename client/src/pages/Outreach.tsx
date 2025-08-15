@@ -177,6 +177,7 @@ export default function Outreach() {
     tone: "professional",
     keyPoints: ""
   });
+  const [isAICustomizationSuccess, setIsAICustomizationSuccess] = useState(false);
   const { toast } = useToast();
 
   // Fetch templates from API filtered by type
@@ -281,11 +282,6 @@ export default function Outreach() {
       return await response.json();
     },
     onSuccess: (data: any) => {
-      toast({
-        title: "Template Customized",
-        description: "Template updated with your customizations.",
-      });
-      
       // Auto-save the changes first
       if (selectedTemplate) {
         const updates: any = {};
@@ -322,6 +318,9 @@ export default function Outreach() {
           setAnimatingFields({});
         }, 3100);
       }
+      
+      // Show success state on the customize button
+      setIsAICustomizationSuccess(true);
       
       // Close the AI customization modal
       setIsAICustomizationOpen(false);
@@ -501,8 +500,9 @@ export default function Outreach() {
     setEditedBody('');
     setIsEditingScript(false);
     setEditedScript('');
-    // Clear AI customized indicators when template changes
+    // Clear AI customized indicators and success state when template changes
     setAiCustomizedFields({});
+    setIsAICustomizationSuccess(false);
   }, [selectedTemplate, activeTemplateType]);
 
   // Auto-apply changes when inline settings change
@@ -715,13 +715,22 @@ export default function Outreach() {
                   <div className="mb-2">
                     <div className="flex items-center justify-between">
                       <h3 className="text-xl font-bold text-gray-900">{selectedTemplate.name}</h3>
-                      <button
-                        onClick={() => setIsAICustomizationOpen(true)}
-                        className="text-xs text-orange-600 hover:text-orange-700 flex items-center gap-1"
-                      >
-                        <Wand2 className="w-3 h-3" />
-                        Customize with AI
-                      </button>
+                      {isAICustomizationSuccess ? (
+                        <div className="text-xs text-green-600 flex items-center gap-1">
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          AI Customized
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => setIsAICustomizationOpen(true)}
+                          className="text-xs text-orange-600 hover:text-orange-700 flex items-center gap-1"
+                        >
+                          <Wand2 className="w-3 h-3" />
+                          Customize with AI
+                        </button>
+                      )}
                     </div>
                   </div>
 
