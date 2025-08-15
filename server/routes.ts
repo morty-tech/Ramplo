@@ -542,6 +542,57 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // AI-powered roadmap selection
+  app.post("/api/roadmap/select", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const userId = req.session.user.id;
+      const userProfile = await storage.getUserProfile(userId);
+      
+      if (!userProfile) {
+        return res.status(400).json({ message: "User profile required for roadmap selection" });
+      }
+      
+      // Import roadmap service dynamically
+      const { selectOptimalRoadmap } = await import("./roadmapService");
+      
+      const roadmapSelection = await selectOptimalRoadmap(userProfile);
+      
+      res.json(roadmapSelection);
+    } catch (error) {
+      console.error("Error selecting roadmap:", error);
+      if (error.message.includes("API key")) {
+        return res.status(500).json({ message: "AI service not configured" });
+      }
+      res.status(500).json({ message: "Failed to select optimal roadmap" });
+    }
+  });
+
+  // AI-powered email template selection
+  app.post("/api/templates/select", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const userId = req.session.user.id;
+      const { limit = 5 } = req.body;
+      const userProfile = await storage.getUserProfile(userId);
+      
+      if (!userProfile) {
+        return res.status(400).json({ message: "User profile required for template selection" });
+      }
+      
+      // Import roadmap service dynamically
+      const { selectRelevantEmailTemplates } = await import("./roadmapService");
+      
+      const templateSelection = await selectRelevantEmailTemplates(userProfile, limit);
+      
+      res.json(templateSelection);
+    } catch (error) {
+      console.error("Error selecting email templates:", error);
+      if (error.message.includes("API key")) {
+        return res.status(500).json({ message: "AI service not configured" });
+      }
+      res.status(500).json({ message: "Failed to select relevant templates" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
