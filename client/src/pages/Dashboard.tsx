@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useAuth } from "@/hooks/useAuth";
@@ -25,6 +25,41 @@ import {
   Info,
   Eye
 } from "lucide-react";
+
+// Ticker animation hook for counting numbers
+function useCountUp(end: number, duration: number = 1000, delay: number = 0) {
+  const [count, setCount] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setHasStarted(true);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  useEffect(() => {
+    if (!hasStarted) return;
+
+    let startTimestamp: number | null = null;
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      
+      // Easing function for smooth animation
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(easeOut * end));
+      
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    };
+    requestAnimationFrame(step);
+  }, [end, duration, hasStarted]);
+
+  return count;
+}
 
 export default function Dashboard() {
   const { user, progress } = useAuth();
@@ -75,6 +110,10 @@ export default function Dashboard() {
   const todayTasksCompleted = todayTasks.filter((task: Task) => task.completed).length;
   const todayTasksTotal = todayTasks.length;
 
+  // Ticker animations for daily tasks
+  const animatedCompleted = useCountUp(todayTasksCompleted, 800, 200);
+  const animatedTotal = useCountUp(todayTasksTotal, 800, 400);
+
   // Calculate performance score based on tasks and connections
   const taskCompletionRate = todayTasksTotal > 0 ? (todayTasksCompleted / todayTasksTotal) * 100 : 0;
   const totalConnections = todayConnections ? (todayConnections.phoneCalls || 0) + (todayConnections.textMessages || 0) + (todayConnections.emails || 0) : 0;
@@ -118,7 +157,7 @@ export default function Dashboard() {
   const stats = [
     {
       title: "Today's Tasks",
-      value: `${todayTasksCompleted}/${todayTasksTotal}`,
+      value: `${animatedCompleted}/${animatedTotal}`,
       icon: FileText,
       color: "text-blue-600",
       bgColor: "bg-blue-100",
@@ -295,13 +334,13 @@ export default function Dashboard() {
                     onClick={() => handleTaskClick(task)}
                   >
                     <Checkbox
-                      checked={task.completed}
+                      checked={!!task.completed}
                       onCheckedChange={(checked) => {
                         if (checked && !task.completed) {
                           completeTaskMutation.mutate(task.id);
                         }
                       }}
-                      disabled={task.completed}
+                      disabled={!!task.completed}
                       className="mt-1"
                       onClick={(e) => e.stopPropagation()}
                     />

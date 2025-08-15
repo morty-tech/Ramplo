@@ -72,7 +72,7 @@ export default function Onboarding() {
     setShowOnboardingComplete(true);
 
     // Cycle through loading messages
-    const stepDuration = 1500; // 1.5 seconds per step
+    const stepDuration = 2500; // 2.5 seconds per step
     const messageInterval = setInterval(() => {
       setLoadingStep(prev => {
         if (prev >= loadingMessages.length - 1) {
