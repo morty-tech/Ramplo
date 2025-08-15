@@ -142,12 +142,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         onboardingCompleted: true,
       });
 
-      await storage.createUserProfile(profileData);
+      const userProfile = await storage.createUserProfile(profileData);
       
-      // Generate initial tasks based on profile
-      console.log("Starting task generation for user:", userId);
-      await generateInitialTasks(userId, profileData);
-      console.log("Task generation completed for user:", userId);
+      // Generate AI-powered roadmap and tasks based on profile
+      console.log("Starting AI roadmap selection for user:", userId);
+      await generatePersonalizedRoadmap(userId, userProfile);
+      console.log("AI roadmap selection and task generation completed for user:", userId);
 
       res.json({ message: "Onboarding completed" });
     } catch (error) {
@@ -598,7 +598,63 @@ export async function registerRoutes(app: Express): Promise<Server> {
 }
 
 // Helper functions
-async function generateInitialTasks(userId: string, profile: any) {
+async function generatePersonalizedRoadmap(userId: string, profile: any) {
+  try {
+    // Import and use AI roadmap selection service
+    const { selectOptimalRoadmap } = await import("./roadmapService");
+    
+    // Get AI-selected roadmap based on user profile
+    const roadmapSelection = await selectOptimalRoadmap(profile);
+    
+    if (!roadmapSelection?.selectedRoadmap) {
+      console.log("No roadmap selected by AI, falling back to default tasks");
+      await generateDefaultTasks(userId, profile);
+      return;
+    }
+    
+    console.log(`AI selected roadmap: ${roadmapSelection.selectedRoadmap.name}`);
+    
+    // Generate tasks from the AI-selected roadmap
+    await generateTasksFromRoadmap(userId, roadmapSelection.selectedRoadmap);
+    
+  } catch (error) {
+    console.error("Error in AI roadmap generation:", error);
+    // Fallback to default tasks if AI fails
+    await generateDefaultTasks(userId, profile);
+  }
+}
+
+async function generateTasksFromRoadmap(userId: string, roadmap: any) {
+  // Extract tasks from the AI-selected roadmap
+  const tasksToCreate = [];
+  
+  for (const weekData of roadmap.weeklyTasks || []) {
+    for (const dailyTask of weekData.dailyTasks || []) {
+      tasksToCreate.push({
+        userId,
+        title: dailyTask.title,
+        description: dailyTask.description,
+        detailedDescription: dailyTask.detailedDescription || null,
+        externalLinks: dailyTask.externalLinks || null,
+        internalLinks: dailyTask.internalLinks || null,
+        category: dailyTask.category,
+        estimatedMinutes: dailyTask.estimatedMinutes,
+        week: weekData.week,
+        day: dailyTask.day,
+        completed: false,
+      });
+    }
+  }
+  
+  // Create all tasks in database
+  for (const taskData of tasksToCreate) {
+    await storage.createTask(taskData);
+  }
+  
+  console.log(`Created ${tasksToCreate.length} personalized tasks from AI roadmap`);
+}
+
+async function generateDefaultTasks(userId: string, profile: any) {
   // Calculate smart start date based on current day of week
   const now = new Date();
   const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
