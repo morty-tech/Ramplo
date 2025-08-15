@@ -34,7 +34,7 @@ export default function Roadmap() {
   });
 
   // Query for the foundation roadmap structure
-  const { data: roadmapData } = useQuery({
+  const { data: roadmapData, isLoading: roadmapLoading } = useQuery({
     queryKey: ["/api/roadmap/select"],
     queryFn: async () => {
       const response = await apiRequest("POST", "/api/roadmap/select", {});
@@ -69,42 +69,42 @@ export default function Roadmap() {
 
   // Generate weeks from foundation roadmap data
   const weeks = React.useMemo(() => {
-    console.log('Roadmap data:', roadmapData); // Debug log
-    
-    if (!roadmapData?.selectedRoadmap?.weeklyTasks) {
-      // Fallback: use actual tasks data to generate basic weeks
-      if (allTasks.length > 0) {
-        const tasksByWeek = allTasks.reduce((acc: Record<number, Task[]>, task) => {
-          if (!acc[task.week]) acc[task.week] = [];
-          acc[task.week].push(task);
-          return acc;
-        }, {});
-        
-        return Object.entries(tasksByWeek).map(([weekNum, weekTasks]) => ({
-          week: parseInt(weekNum),
-          title: `Week ${weekNum}`,
-          description: `Week ${weekNum} tasks and activities.`,
-          tasks: weekTasks.slice(0, 5).map(t => t.title),
-          status: currentWeek > parseInt(weekNum) ? "completed" : currentWeek === parseInt(weekNum) ? "current" : "upcoming"
-        })).sort((a, b) => a.week - b.week);
-      }
-      return [];
+    // Prioritize roadmap data if available
+    if (roadmapData?.selectedRoadmap?.weeklyTasks?.length > 0) {
+      return roadmapData.selectedRoadmap.weeklyTasks.map((weekData: any) => ({
+        week: weekData.week,
+        title: weekData.theme,
+        description: `Week ${weekData.week} focuses on ${weekData.theme.toLowerCase()}.`,
+        tasks: weekData.dailyTasks
+          .reduce((acc: string[], task: any) => {
+            if (!acc.includes(task.title)) {
+              acc.push(task.title);
+            }
+            return acc;
+          }, [])
+          .slice(0, 5), // Show first 5 unique tasks
+        status: currentWeek > weekData.week ? "completed" : currentWeek === weekData.week ? "current" : "upcoming"
+      }));
     }
 
-    return roadmapData.selectedRoadmap.weeklyTasks.map((weekData: any) => ({
-      week: weekData.week,
-      title: weekData.theme,
-      description: `Week ${weekData.week} focuses on ${weekData.theme.toLowerCase()}.`,
-      tasks: weekData.dailyTasks
-        .reduce((acc: string[], task: any) => {
-          if (!acc.includes(task.title)) {
-            acc.push(task.title);
-          }
-          return acc;
-        }, [])
-        .slice(0, 5), // Show first 5 unique tasks
-      status: currentWeek > weekData.week ? "completed" : currentWeek === weekData.week ? "current" : "upcoming"
-    }));
+    // Fallback: use actual tasks data to generate basic weeks
+    if (allTasks.length > 0) {
+      const tasksByWeek = allTasks.reduce((acc: Record<number, Task[]>, task) => {
+        if (!acc[task.week]) acc[task.week] = [];
+        acc[task.week].push(task);
+        return acc;
+      }, {});
+      
+      return Object.entries(tasksByWeek).map(([weekNum, weekTasks]) => ({
+        week: parseInt(weekNum),
+        title: `Week ${weekNum}`,
+        description: `Week ${weekNum} tasks and activities.`,
+        tasks: weekTasks.slice(0, 5).map(t => t.title),
+        status: currentWeek > parseInt(weekNum) ? "completed" : currentWeek === parseInt(weekNum) ? "current" : "upcoming"
+      })).sort((a, b) => a.week - b.week);
+    }
+    
+    return [];
   }, [roadmapData, currentWeek, allTasks]);
 
   return (
@@ -144,8 +144,17 @@ export default function Roadmap() {
       </Card>
 
       {/* Weekly Breakdown */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {weeks.map((week: any) => (
+      {roadmapLoading ? (
+        <div className="text-center py-8">
+          <div className="text-lg text-gray-600">Loading your personalized roadmap...</div>
+        </div>
+      ) : weeks.length === 0 ? (
+        <div className="text-center py-8">
+          <div className="text-lg text-gray-600">No roadmap data available</div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {weeks.map((week: any) => (
           <Card 
             key={week.week} 
             className={`${
@@ -240,9 +249,8 @@ export default function Roadmap() {
             </CardContent>
           </Card>
         ))}
-
-        {/* All weeks are now populated from real roadmap data */}
-      </div>
+        </div>
+      )}
 
       {/* Call to Action */}
       <Card className="mt-8 bg-primary text-white">
