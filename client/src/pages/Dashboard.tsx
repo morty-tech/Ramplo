@@ -349,7 +349,7 @@ export default function Dashboard() {
                     }`}
                     onClick={() => handleTaskClick(task)}
                   >
-                    <div className="relative">
+                    <div className="relative flex items-center">
                       <Checkbox
                         checked={isCompleted || isCompleting}
                         onCheckedChange={(checked) => {
@@ -358,7 +358,7 @@ export default function Dashboard() {
                           }
                         }}
                         disabled={isCompleted || isCompleting}
-                        className={`mt-1 h-5 w-5 border-2 transition-all duration-200 ${
+                        className={`h-5 w-5 border-2 transition-all duration-200 ${
                           isCompleting 
                             ? 'border-green-500 bg-green-500 animate-pulse' 
                             : isCompleted 
@@ -372,7 +372,7 @@ export default function Dashboard() {
                       )}
                     </div>
                     <div className="flex-grow">
-                      <div className="flex items-center justify-between">
+                      <div>
                         <h3 className={`font-medium transition-all duration-300 ${
                           isCompleting 
                             ? 'text-green-700' 
@@ -385,17 +385,6 @@ export default function Dashboard() {
                             <span className="ml-2 text-green-600 animate-bounce">✓</span>
                           )}
                         </h3>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="text-gray-500 hover:text-primary"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleTaskClick(task);
-                          }}
-                        >
-                          <Eye className="w-4 h-4" />
-                        </Button>
                       </div>
                       <p className={`text-sm mt-1 transition-colors duration-300 ${
                         isCompleting 
