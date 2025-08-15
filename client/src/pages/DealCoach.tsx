@@ -255,24 +255,6 @@ export default function DealCoach() {
                     <p className="text-blue-700">{latestSession.aiResponse}</p>
                   </div>
                 </div>
-                
-                <div className="mt-6 pt-6 border-t border-gray-200">
-                  <h4 className="font-medium text-gray-900 mb-3">Helpful Resources:</h4>
-                  <div className="space-y-2">
-                    <a href="#" className="flex items-center text-sm text-primary hover:text-blue-700 transition-colors">
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      Credit Score Improvement Guide
-                    </a>
-                    <a href="#" className="flex items-center text-sm text-primary hover:text-blue-700 transition-colors">
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      FHA Loan Requirements Checklist
-                    </a>
-                    <a href="#" className="flex items-center text-sm text-primary hover:text-blue-700 transition-colors">
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      Gift Funds Documentation Template
-                    </a>
-                  </div>
-                </div>
               </CardContent>
             </Card>
           )}
@@ -339,19 +321,7 @@ export default function DealCoach() {
             </CardContent>
           </Card>
 
-          {/* Expert Tips */}
-          <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white">
-            <CardContent className="p-6">
-              <h3 className="font-bold mb-3 flex items-center">
-                <Lightbulb className="w-5 h-5 mr-2" />
-                Pro Tip
-              </h3>
-              <p className="text-sm opacity-90">
-                Always have backup loan options ready before submitting the primary application. 
-                This saves time if issues arise during underwriting.
-              </p>
-            </CardContent>
-          </Card>
+
         </div>
       </div>
     </div>

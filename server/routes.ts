@@ -281,8 +281,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
         userId,
       });
 
-      // Generate AI response (mock for now)
-      const aiResponse = generateDealCoachResponse(sessionData);
+      // Get user profile for personalized coaching
+      const userProfile = await storage.getUserProfile(userId);
+      
+      if (!userProfile) {
+        return res.status(400).json({ message: "User profile required for deal coaching" });
+      }
+
+      // Generate AI response using OpenAI
+      const { generateDealCoachAdvice } = await import("./aiService");
+      const aiResponse = await generateDealCoachAdvice({
+        dealDetails: sessionData.dealDetails,
+        challenge: sessionData.challenge,
+        userProfile
+      });
+      
       sessionData.aiResponse = aiResponse;
 
       const session = await storage.createDealCoachSession(sessionData);
@@ -644,20 +657,4 @@ async function generateInitialTasks(userId: string, profile: any) {
   }
 }
 
-function generateDealCoachResponse(sessionData: any): string {
-  // Mock AI response - in production, integrate with OpenAI or similar
-  const responses = {
-    credit: "For credit challenges, consider requesting a rapid rescore and explore alternative loan programs like FHA.",
-    income: "For self-employed borrowers, ensure you have 2 years of tax returns and consider bank statement programs.",
-    appraisal: "For low appraisals, options include renegotiating price, bringing additional funds, or requesting a second appraisal.",
-    default: "Based on your situation, I recommend documenting all borrower information thoroughly and preparing alternative loan scenarios."
-  };
 
-  const challenges = sessionData.challenges?.toLowerCase() || '';
-  
-  if (challenges.includes('credit')) return responses.credit;
-  if (challenges.includes('income') || challenges.includes('self-employed')) return responses.income;
-  if (challenges.includes('appraisal')) return responses.appraisal;
-  
-  return responses.default;
-}
