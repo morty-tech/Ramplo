@@ -216,9 +216,9 @@ export default function Dashboard() {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Welcome back, {user?.firstName || 'there'}!
+          {user?.firstName || 'there'}, let's Ramp!
         </h1>
-        <p className="text-gray-600">Here's your progress on your 90-day ramp plan.</p>
+        <p className="text-gray-600">This week is all about {getWeekFocus(currentWeek)}</p>
       </div>
 
       {/* Week Progress Banner & Stats Cards */}
