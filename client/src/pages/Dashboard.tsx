@@ -276,29 +276,8 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Week Progress Banner & Stats Cards */}
+      {/* Stats Cards */}
       <TooltipProvider>
-        {/* Week Progress Banner */}
-        <Card className="mb-6">
-          <CardContent className="px-6 py-2">
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                Week {currentWeek} of 14
-              </h2>
-              <div className="space-y-1">
-                <p className="text-gray-900 font-medium">Focus: {getWeekFocus(currentWeek)}</p>
-                {lastWeekFocus && (
-                  <p className="text-sm text-gray-500">Last week: {lastWeekFocus}</p>
-                )}
-                {nextWeekFocus && (
-                  <p className="text-sm text-gray-500">Next week: {nextWeekFocus}</p>
-                )}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat) => (
             <Card key={stat.title}>
