@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -63,6 +63,7 @@ const getCTAStrength = (content: string): string => {
 
 export default function Outreach() {
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>("");
+  const [selectedTemplate, setSelectedTemplate] = useState<MarketingTemplate | null>(null);
   const [editingTemplate, setEditingTemplate] = useState<MarketingTemplate | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [customizationForm, setCustomizationForm] = useState({
@@ -82,7 +83,11 @@ export default function Outreach() {
     setSelectedTemplateId(templates[0].id);
   }
 
-  const selectedTemplate = templates.find((t: MarketingTemplate) => t.id === selectedTemplateId);
+  // Update selected template when template ID changes
+  useEffect(() => {
+    const template = templates.find(t => t.id === selectedTemplateId);
+    setSelectedTemplate(template || null);
+  }, [selectedTemplateId, templates]);
 
   // Update template mutation
   const updateTemplateMutation = useMutation({
@@ -121,23 +126,26 @@ export default function Outreach() {
       const response = await apiRequest("POST", `/api/templates/${data.templateId}/customize`, data.customization);
       return response;
     },
-    onSuccess: (data) => {
+    onSuccess: (data: any) => {
       toast({
         title: "Template Customized",
-        description: "AI has personalized your template based on your profile.",
+        description: "Your template has been personalized. Click 'Edit Template' to review and save changes.",
       });
       
-      // Update the editing template with customized content
+      // Update the selected template with customized content for preview
       if (selectedTemplate) {
+        setSelectedTemplate({
+          ...selectedTemplate,
+          subject: data.subject,
+          content: data.content
+        });
+        
+        // Prepare editing template for when user clicks edit
         setEditingTemplate({
           ...selectedTemplate,
           subject: data.subject,
           content: data.content
         });
-        // Only open the dialog if it's not already open
-        if (!isEditDialogOpen) {
-          setIsEditDialogOpen(true);
-        }
       }
     },
     onError: (error) => {
