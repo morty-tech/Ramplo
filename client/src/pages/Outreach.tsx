@@ -592,19 +592,6 @@ export default function Outreach() {
                         )}
                       </div>
                     </div>
-                    <Button 
-                      onClick={() => {
-                        let textToCopy = selectedTemplate.content;
-                        if (activeTemplateType === "email" && selectedTemplate.subject) {
-                          textToCopy = `Subject: ${selectedTemplate.subject}\n\n${selectedTemplate.content}`;
-                        }
-                        copyToClipboard(textToCopy);
-                      }}
-                      className="bg-primary hover:bg-blue-700"
-                    >
-                      <Copy className="w-4 h-4 mr-2" />
-                      Copy Template
-                    </Button>
                   </div>
 
                   <div className="bg-gray-50 rounded-lg p-6 mb-6">
@@ -769,7 +756,7 @@ export default function Outreach() {
                                 <Textarea
                                   value={editedContent}
                                   onChange={(e) => setEditedContent(e.target.value)}
-                                  className="text-sm min-h-[200px] resize-none"
+                                  className="text-sm min-h-[120px] resize-none"
                                   placeholder="Edit your post content..."
                                 />
                                 <div className="flex items-center justify-between">
@@ -796,13 +783,26 @@ export default function Outreach() {
                                 </div>
                               </div>
                             ) : (
-                              <div 
-                                className="text-sm text-gray-900 bg-white p-4 rounded border min-h-[200px] cursor-pointer hover:bg-gray-50 transition-colors"
-                                onClick={startEditingContent}
-                              >
-                                {cleanContentForDisplay(selectedTemplate.content)}
-                                <div className="text-xs text-gray-400 mt-2 opacity-0 hover:opacity-100 transition-opacity">
-                                  Click to edit
+                              <div className="space-y-2">
+                                <div 
+                                  className="text-sm text-gray-900 bg-white p-4 rounded border min-h-[120px] cursor-pointer hover:bg-gray-50 transition-colors"
+                                  onClick={startEditingContent}
+                                >
+                                  {cleanContentForDisplay(selectedTemplate.content)}
+                                  <div className="text-xs text-gray-400 mt-2 opacity-0 hover:opacity-100 transition-opacity">
+                                    Click to edit
+                                  </div>
+                                </div>
+                                <div className="flex justify-end">
+                                  <Button
+                                    onClick={() => copyToClipboard(cleanContentForDisplay(selectedTemplate.content))}
+                                    size="sm"
+                                    variant="outline"
+                                    className="text-xs"
+                                  >
+                                    <Copy className="w-3 h-3 mr-1" />
+                                    Copy Content
+                                  </Button>
                                 </div>
                               </div>
                             )}
