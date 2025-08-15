@@ -220,7 +220,7 @@ export default function Dashboard() {
             {profile?.firstName || user?.firstName || 'there'}, let's Ramp!
           </h1>
           <p className="text-gray-600">Welcome to Week {currentWeek}.</p>
-          <p className="text-gray-600">This week's focus is: {getWeekFocus(currentWeek)}</p>
+          <p className="text-gray-600">This week's focus is {getWeekFocus(currentWeek)}</p>
         </div>
         
         {/* Performance Score - aligned with headline on medium+ screens */}
