@@ -144,10 +144,15 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
           </div>
         ) : (
           <div className="flex flex-col items-center space-y-2">
-            <div className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-              <span className="text-white text-sm font-medium">
-                {user?.firstName?.[0]}{user?.lastName?.[0]}
-              </span>
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                <span className="text-white text-sm font-medium">
+                  {user?.firstName?.[0]}{user?.lastName?.[0]}
+                </span>
+              </div>
+              <div className="text-xs font-medium text-white truncate max-w-[100px]">
+                {user?.firstName} {user?.lastName}
+              </div>
             </div>
             <button
               onClick={handleLogout}
