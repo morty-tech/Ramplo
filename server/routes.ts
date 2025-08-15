@@ -8,6 +8,55 @@ import { storage } from "./storage";
 import { sendMagicLink, verifyMagicLink, createOrGetUser, requireAuth, isMortyEmail } from "./auth";
 import { insertUserProfileSchema, insertDealCoachSessionSchema } from "@shared/schema";
 import { FOUNDATION_ROADMAP } from "./foundationRoadmap";
+import OpenAI from "openai";
+
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY }) : null;
+
+// Helper function to build user profile context for AI
+function buildUserContext(profile: any): string {
+  const context = [];
+  
+  if (profile?.firstName) {
+    context.push(`Name: ${profile.firstName}`);
+  }
+  
+  if (profile?.experienceLevel) {
+    context.push(`Experience: ${profile.experienceLevel}`);
+  }
+  
+  if (profile?.focus && profile.focus.length > 0) {
+    context.push(`Primary Focus: ${profile.focus[0]}`);
+    if (profile.focus.length > 1) {
+      context.push(`Secondary Focus: ${profile.focus.slice(1).join(", ")}`);
+    }
+  }
+  
+  if (profile?.borrowerTypes && profile.borrowerTypes.length > 0) {
+    context.push(`Target Borrowers: ${profile.borrowerTypes.join(", ")}`);
+  }
+  
+  if (profile?.timeAvailableWeekday) {
+    context.push(`Daily Time Available: ${profile.timeAvailableWeekday} minutes`);
+  }
+  
+  if (profile?.outreachComfort) {
+    context.push(`Outreach Comfort: ${profile.outreachComfort}`);
+  }
+  
+  if (profile?.tonePreference) {
+    context.push(`Communication Style: ${profile.tonePreference}`);
+  }
+  
+  if (profile?.markets && profile.markets.length > 0) {
+    context.push(`Markets: ${profile.markets.join(", ")}`);
+  }
+  
+  if (profile?.goals) {
+    context.push(`90-Day Goals: ${profile.goals}`);
+  }
+  
+  return context.join("\n");
+}
 
 // Extend session data
 declare module 'express-session' {
@@ -626,33 +675,51 @@ async function generatePersonalizedRoadmap(userId: string, profile: any) {
 }
 
 async function generateTasksFromRoadmap(userId: string, roadmap: any) {
-  // Extract tasks from the AI-selected roadmap
-  const tasksToCreate = [];
+  // Get user profile for personalization
+  const userProfile = await storage.getUserProfile(userId);
+  
+  // Extract tasks from the foundation roadmap and personalize them
+  const baseTasks = [];
   
   for (const weekData of roadmap.weeklyTasks || []) {
     for (const dailyTask of weekData.dailyTasks || []) {
-      tasksToCreate.push({
-        userId,
+      baseTasks.push({
         title: dailyTask.title,
         description: dailyTask.description,
-        detailedDescription: dailyTask.detailedDescription || null,
-        externalLinks: dailyTask.externalLinks || null,
-        internalLinks: dailyTask.internalLinks || null,
         category: dailyTask.category,
         estimatedMinutes: dailyTask.estimatedMinutes,
         week: weekData.week,
         day: dailyTask.day,
-        completed: false,
+        theme: weekData.theme
       });
     }
   }
   
-  // Create all tasks in database
+  console.log(`Personalizing ${baseTasks.length} foundation tasks for user profile`);
+  
+  // Personalize tasks using AI based on user profile
+  const personalizedTasks = await personalizeFoundationTasks(baseTasks, userProfile);
+  
+  // Create personalized tasks in database
+  const tasksToCreate = personalizedTasks.map(task => ({
+    userId,
+    title: task.title,
+    description: task.description,
+    detailedDescription: task.detailedDescription || null,
+    externalLinks: task.externalLinks || null,
+    internalLinks: task.internalLinks || null,
+    category: task.category,
+    estimatedMinutes: task.estimatedMinutes,
+    week: task.week,
+    day: task.day,
+    completed: false,
+  }));
+  
   for (const taskData of tasksToCreate) {
     await storage.createTask(taskData);
   }
   
-  console.log(`Created ${tasksToCreate.length} personalized tasks from AI roadmap`);
+  console.log(`Created ${tasksToCreate.length} personalized tasks from foundation roadmap`);
 }
 
 async function generateDefaultTasks(userId: string, profile: any) {
@@ -732,5 +799,99 @@ async function generateDefaultTasks(userId: string, profile: any) {
     console.log(`Updated user progress to day ${currentBusinessDay}`);
   }
 }
+
+// AI personalization function for foundation tasks
+async function personalizeFoundationTasks(baseTasks: any[], userProfile: any): Promise<any[]> {
+  if (!openai) {
+    console.log('OpenAI not configured, returning base tasks without personalization');
+    return baseTasks;
+  }
+
+  try {
+    // Build user context for personalization
+    const profileContext = buildUserContext(userProfile);
+    
+    // Group tasks by week for efficient processing
+    const tasksByWeek = baseTasks.reduce((acc: Record<string, any[]>, task) => {
+      if (!acc[task.week]) acc[task.week] = [];
+      acc[task.week].push(task);
+      return acc;
+    }, {});
+    
+    const personalizedTasks: any[] = [];
+    
+    // Process each week's tasks
+    for (const [week, weekTasks] of Object.entries(tasksByWeek)) {
+      const weekTasksArray = weekTasks as any[];
+      const taskSummary = weekTasksArray.map((task: any) => ({
+        title: task.title,
+        description: task.description,
+        category: task.category
+      }));
+      
+      const prompt = `You are an expert mortgage industry consultant. Personalize these foundation tasks for a loan officer based on their profile.
+
+User Profile:
+${profileContext}
+
+Week ${week} Tasks to Personalize:
+${JSON.stringify(taskSummary, null, 2)}
+
+Personalize each task by:
+1. Adapting descriptions to their focus areas (${userProfile?.focus?.join(', ') || 'general'})
+2. Adjusting language for their experience level (${userProfile?.experienceLevel || 'new'})
+3. Adding relevant context for their target borrowers (${userProfile?.borrowerTypes?.join(', ') || 'general'})
+4. Keeping original structure and categories
+
+Respond in JSON format:
+{
+  "personalizedTasks": [
+    {
+      "title": "personalized title",
+      "description": "personalized description with specific focus",
+      "category": "original category",
+      "detailedDescription": "optional detailed guidance specific to their profile"
+    }
+  ]
+}`;
+
+      const response = await openai.chat.completions.create({
+        model: "gpt-4o",
+        messages: [{ role: "user", content: prompt }],
+        response_format: { type: "json_object" },
+        max_tokens: 2000
+      });
+
+      const result = JSON.parse(response.choices[0].message.content!);
+      
+      // Merge personalized content with original task structure
+      weekTasksArray.forEach((originalTask: any, index: number) => {
+        const personalizedTask = result.personalizedTasks[index];
+        if (personalizedTask) {
+          personalizedTasks.push({
+            ...originalTask,
+            title: personalizedTask.title || originalTask.title,
+            description: personalizedTask.description || originalTask.description,
+            detailedDescription: personalizedTask.detailedDescription || null
+          });
+        } else {
+          personalizedTasks.push(originalTask);
+        }
+      });
+      
+      // Add delay to respect rate limits
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    
+    console.log(`Successfully personalized ${personalizedTasks.length} tasks`);
+    return personalizedTasks;
+    
+  } catch (error) {
+    console.error('Error personalizing tasks:', error);
+    console.log('Falling back to base tasks');
+    return baseTasks;
+  }
+}
+
 
 
