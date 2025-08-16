@@ -303,10 +303,10 @@ export default function Dashboard() {
           
           <div className="relative overflow-hidden rounded-lg bg-white px-0 pt-0 pb-4 shadow-sm sm:px-0">
             {todaysObjective && (
-              <div className="bg-slate-100 text-slate-700 px-4 py-3 sm:px-6 mb-4">
+              <div className="bg-white border-b border-gray-200 px-4 py-3 sm:px-6 mb-4">
                 <div className="text-left">
-                  <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Today's goal:</span>
-                  <span className="text-sm font-medium text-slate-700 ml-2">{todaysObjective}</span>
+                  <span className="text-xs font-semibold text-forest-600 uppercase tracking-wide">Today's goal:</span>
+                  <span className="text-sm font-medium text-forest-800 ml-2">{todaysObjective}</span>
                 </div>
               </div>
             )}
