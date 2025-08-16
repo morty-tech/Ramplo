@@ -13,6 +13,7 @@ export default {
       colors: {
         // Brand Colors
         forest: {
+          50: "hsl(150, 23%, 96%)",
           200: "hsl(150, 23%, 85%)",
           400: "hsl(155, 20%, 44%)",
           600: "hsl(155, 46%, 26%)",
