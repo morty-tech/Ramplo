@@ -89,40 +89,45 @@ export default function ClientConnectionTracker() {
       </div>
       
       <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
-        <div className="space-y-4">
-          {connectionTypes.map((type) => (
-            <div key={type.key} className="flex items-center justify-between py-2">
-              <div className="flex items-center gap-3">
-                <div className="absolute rounded-md bg-tealwave-400 p-2">
-                  <type.icon aria-hidden="true" className="size-5 text-white" />
+        <div className="space-y-0">
+          {connectionTypes.map((type, index) => (
+            <div key={type.key}>
+              <div className="flex items-center justify-between py-4">
+                <div className="flex items-center gap-3">
+                  <div className="absolute rounded-md bg-tealwave-400 p-2">
+                    <type.icon aria-hidden="true" className="size-5 text-white" />
+                  </div>
+                  <div className="ml-14">
+                    <p className="text-sm font-medium text-gray-500">{type.label}</p>
+                    <p className="text-2xl font-semibold text-gray-900">{todayConnections?.[type.key] || 0}</p>
+                  </div>
                 </div>
-                <div className="ml-14">
-                  <p className="text-sm font-medium text-gray-500">{type.label}</p>
-                  <p className="text-2xl font-semibold text-gray-900">{todayConnections?.[type.key] || 0}</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => adjustCount(type.key, false)}
-                  disabled={updateConnectionsMutation.isPending || !todayConnections?.[type.key]}
-                  className="h-7 w-7 p-0"
-                >
-                  <Minus className="w-3 h-3" />
-                </Button>
                 
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => adjustCount(type.key, true)}
-                  disabled={updateConnectionsMutation.isPending}
-                  className="h-7 w-7 p-0"
-                >
-                  <Plus className="w-3 h-3" />
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => adjustCount(type.key, false)}
+                    disabled={updateConnectionsMutation.isPending || !todayConnections?.[type.key]}
+                    className="h-7 w-7 p-0"
+                  >
+                    <Minus className="w-3 h-3" />
+                  </Button>
+                  
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => adjustCount(type.key, true)}
+                    disabled={updateConnectionsMutation.isPending}
+                    className="h-7 w-7 p-0"
+                  >
+                    <Plus className="w-3 h-3" />
+                  </Button>
+                </div>
               </div>
+              {index < connectionTypes.length - 1 && (
+                <div className="border-b border-gray-100"></div>
+              )}
             </div>
           ))}
         </div>

@@ -471,8 +471,8 @@ export default function Dashboard() {
             </h3>
             
             <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between py-2 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/outreach'}>
+              <div className="space-y-0">
+                <div className="flex items-center justify-between py-4 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/outreach'}>
                   <div className="flex items-center gap-3">
                     <div className="absolute rounded-md bg-slate-500 p-2">
                       <Send aria-hidden="true" className="size-5 text-white" />
@@ -484,7 +484,9 @@ export default function Dashboard() {
                   </div>
                 </div>
                 
-                <div className="flex items-center justify-between py-2 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/deal-coach'}>
+                <div className="border-b border-gray-100"></div>
+                
+                <div className="flex items-center justify-between py-4 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/deal-coach'}>
                   <div className="flex items-center gap-3">
                     <div className="absolute rounded-md bg-slate-500 p-2">
                       <UserCheck aria-hidden="true" className="size-5 text-white" />
@@ -496,7 +498,9 @@ export default function Dashboard() {
                   </div>
                 </div>
                 
-                <div className="flex items-center justify-between py-2 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/roadmap'}>
+                <div className="border-b border-gray-100"></div>
+                
+                <div className="flex items-center justify-between py-4 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/roadmap'}>
                   <div className="flex items-center gap-3">
                     <div className="absolute rounded-md bg-slate-500 p-2">
                       <Map aria-hidden="true" className="size-5 text-white" />
