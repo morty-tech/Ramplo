@@ -325,7 +325,7 @@ export default function Dashboard() {
                 const isExpanded = expandedTaskId === task.id;
                 
                 return (
-                  <li key={task.id} className="transition-all duration-200">
+                  <li key={task.id} className={`transition-all duration-200 ${isCompleted ? 'bg-green-50/50' : ''}`}>
                     <div className="flex items-start justify-between gap-x-6">
                       <div className={`min-w-0 flex-grow cursor-pointer ${isExpanded ? 'pt-5 pb-2' : 'py-5'}`} onClick={() => handleTaskClick(task)}>
                         <div className="flex items-start gap-x-3">
