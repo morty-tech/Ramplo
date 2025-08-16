@@ -326,8 +326,8 @@ export default function Dashboard() {
                 
                 return (
                   <li key={task.id} className="transition-all duration-200">
-                    <div className="flex items-center justify-between gap-x-6 py-5">
-                      <div className="min-w-0 flex-grow cursor-pointer" onClick={() => handleTaskClick(task)}>
+                    <div className="flex items-start justify-between gap-x-6">
+                      <div className="min-w-0 flex-grow cursor-pointer py-5" onClick={() => handleTaskClick(task)}>
                         <div className="flex items-start gap-x-3">
                           <p className={`text-sm/6 font-semibold transition-all duration-300 ${
                             isCompleting 
@@ -368,9 +368,9 @@ export default function Dashboard() {
                                   ? 'bg-forest-100 text-forest-800'
                                   : ['Research', 'Market Analysis', 'Lead Generation'].includes(task.category)
                                   ? 'bg-tealwave-100 text-tealwave-800'
-                                  : ['Social Media', 'Content Creation', 'Marketing'].includes(task.category)
+                                  : ['Social Media', 'Content Creation', 'Marketing', 'Branding'].includes(task.category)
                                   ? 'bg-lime-100 text-lime-800'
-                                  : ['Admin', 'Planning', 'Setup'].includes(task.category)
+                                  : ['Admin', 'Planning', 'Setup', 'Organization'].includes(task.category)
                                   ? 'bg-slate-100 text-slate-800'
                                   : 'bg-gray-100 text-gray-800'
                               }`}>
@@ -380,7 +380,7 @@ export default function Dashboard() {
                           </div>
                         )}
                       </div>
-                      <div className="flex flex-none items-center gap-x-4">
+                      <div className="flex flex-none items-center gap-x-4 py-5">
                         {!isCompleted && (
                           <Button
                             onClick={(e) => {
