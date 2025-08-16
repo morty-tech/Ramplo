@@ -989,7 +989,7 @@ export default function Onboarding() {
               )}
 
               {/* Navigation */}
-              <div className="flex justify-between items-center pt-2">
+              <div className="flex justify-between items-center">
                 {step > 1 && (
                   <Button
                     type="button"
