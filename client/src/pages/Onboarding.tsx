@@ -299,7 +299,7 @@ export default function Onboarding() {
                   </div>
                   
                   <div>
-                    <Label className="font-medium block mb-2">UP TO 4 MARKETS YOU SERVE OR WANT TO SERVE</Label>
+                    <Label className="font-medium block mb-2">Up To 4 Markets You Serve Or Want To Serve</Label>
                     <div className="max-w-md">
                       <TagInput
                         value={formData.markets}
