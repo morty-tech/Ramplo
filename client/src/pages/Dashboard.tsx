@@ -296,8 +296,8 @@ export default function Dashboard() {
               className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5"
             >
               <dt>
-                <div className="absolute rounded-md bg-limeglow-400 p-3">
-                  <item.icon aria-hidden="true" className="size-6 text-forest-800" />
+                <div className="absolute rounded-md bg-forest-600 p-3">
+                  <item.icon aria-hidden="true" className="size-6 text-white" />
                 </div>
                 <p className="ml-16 truncate text-sm font-medium text-gray-500">{item.name}</p>
               </dt>
