@@ -62,11 +62,11 @@ export function TagInput({ value, onChange, placeholder, maxTags, className }: T
       {value.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {value.map((tag) => (
-            <span key={tag} className="inline-flex items-center gap-x-0.5 rounded-md bg-tealwave-200 px-2 py-1 text-xs font-medium text-tealwave-800">
+            <span key={tag} className="inline-flex items-center gap-x-0.5 rounded-md bg-forest-200 px-2 py-1 text-xs font-medium text-forest-800">
               {tag}
-              <button type="button" onClick={() => removeTag(tag)} className="group relative -mr-1 size-3.5 rounded-xs hover:bg-tealwave-400/20">
+              <button type="button" onClick={() => removeTag(tag)} className="group relative -mr-1 size-3.5 rounded-xs hover:bg-forest-400/20">
                 <span className="sr-only">Remove</span>
-                <svg viewBox="0 0 14 14" className="size-3.5 stroke-tealwave-600 group-hover:stroke-tealwave-800">
+                <svg viewBox="0 0 14 14" className="size-3.5 stroke-forest-600 group-hover:stroke-forest-800">
                   <path d="M4 4l6 6m0-6l-6 6" />
                 </svg>
                 <span className="absolute -inset-1" />
