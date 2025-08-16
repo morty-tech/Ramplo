@@ -53,6 +53,20 @@ export default function Onboarding() {
   const totalSteps = 7; // Reduced from 9 since we removed licensing step
   const progress = (step / totalSteps) * 100;
 
+  const getHeaderText = () => {
+    const firstName = formData.firstName || "there";
+    switch (step) {
+      case 1: return "First, let's personalize your 90-day ramp plan.";
+      case 2: return `${firstName}, we're excited to start ramping!`;
+      case 3: return `Great! Now let's focus on your loan expertise, ${firstName}.`;
+      case 4: return "Perfect! Let's talk about your target borrowers.";
+      case 5: return `Now, let's plan your daily schedule, ${firstName}.`;
+      case 6: return "Almost there! Let's set your communication style.";
+      case 7: return `Last step, ${firstName}! What are your 90-day goals?`;
+      default: return "Let's continue building your ramp plan.";
+    }
+  };
+
   const handleArrayChange = (field: keyof typeof formData, value: string, checked: boolean) => {
     setFormData(prev => ({
       ...prev,
@@ -212,7 +226,7 @@ export default function Onboarding() {
 
         <div className="sm:mx-auto sm:w-full sm:max-w-3xl mb-6">
           <div className="text-center mb-4">
-            <p className="text-xl font-semibold text-white">First, let's personalize your 90-day ramp plan.</p>
+            <p className="text-xl font-semibold text-white">{getHeaderText()}</p>
           </div>
           
           <div className="mb-4">
