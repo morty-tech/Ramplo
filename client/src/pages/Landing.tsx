@@ -313,38 +313,37 @@ export default function Landing() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:mx-0">
             <h2 className="text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">
-              We approach work as a place to make the world better
+              Supercharge your business with the power of AI
             </h2>
             <p className="mt-6 text-base/7 text-gray-600">
-              Diam nunc lacus lacus aliquam turpis enim. Eget hac velit est euismod lacus. Est non placerat nam arcu. Cras
-              purus nibh cursus sit eu in id. Integer vel nibh.
+              We turn your ambition into real connections, quality leads, and closed loans.
             </p>
           </div>
           <div className="mx-auto mt-16 flex max-w-2xl flex-col gap-8 lg:mx-0 lg:mt-20 lg:max-w-none lg:flex-row lg:items-end">
             <div className="flex flex-col-reverse justify-between gap-x-16 gap-y-8 rounded-2xl bg-forest-50 p-8 sm:w-3/4 sm:max-w-md sm:flex-row-reverse sm:items-end lg:w-72 lg:max-w-none lg:flex-none lg:flex-col lg:items-start">
-              <p className="flex-none text-3xl font-bold tracking-tight text-forest-800">250k</p>
+              <p className="flex-none text-3xl font-bold tracking-tight text-forest-800">90 days</p>
               <div className="sm:w-80 sm:shrink lg:w-auto lg:flex-none">
-                <p className="text-lg font-semibold tracking-tight text-forest-800">Users on the platform</p>
-                <p className="mt-2 text-base/7 text-forest-600">Vel labore deleniti veniam consequuntur sunt nobis.</p>
+                <p className="text-lg font-semibold tracking-tight text-forest-800">to results</p>
+                <p className="mt-2 text-base/7 text-forest-600">Ramp faster with a proven framework that gets you from day one to closing deals in just three months.</p>
               </div>
             </div>
             <div className="flex flex-col-reverse justify-between gap-x-16 gap-y-8 rounded-2xl bg-forest-800 p-8 sm:flex-row-reverse sm:items-end lg:w-full lg:max-w-sm lg:flex-auto lg:flex-col lg:items-start lg:gap-y-44">
-              <p className="flex-none text-3xl font-bold tracking-tight text-white">$8.9 billion</p>
+              <p className="flex-none text-3xl font-bold tracking-tight text-white">10x faster</p>
               <div className="sm:w-80 sm:shrink lg:w-auto lg:flex-none">
                 <p className="text-lg font-semibold tracking-tight text-white">
-                  We're proud that our customers have made over $8 billion in total revenue.
+                  ramp
                 </p>
                 <p className="mt-2 text-base/7 text-forest-200">
-                  Eu duis porta aliquam ornare. Elementum eget magna egestas.
+                  Skip the trial and error — our AI daily action plans keep you focused on what matters most.
                 </p>
               </div>
             </div>
             <div className="flex flex-col-reverse justify-between gap-x-16 gap-y-8 rounded-2xl bg-tealwave-600 p-8 sm:w-11/12 sm:max-w-xl sm:flex-row-reverse sm:items-end lg:w-full lg:max-w-none lg:flex-auto lg:flex-col lg:items-start lg:gap-y-28">
-              <p className="flex-none text-3xl font-bold tracking-tight text-white">401,093</p>
+              <p className="flex-none text-3xl font-bold tracking-tight text-white">100%</p>
               <div className="sm:w-80 sm:shrink lg:w-auto lg:flex-none">
-                <p className="text-lg font-semibold tracking-tight text-white">Transactions this year</p>
+                <p className="text-lg font-semibold tracking-tight text-white">personalized</p>
                 <p className="mt-2 text-base/7 text-tealwave-200">
-                  Eu duis porta aliquam ornare. Elementum eget magna egestas. Eu duis porta aliquam ornare.
+                  Your plan, your outreach, your templates — all tailored to your market, your style, and your goals.
                 </p>
               </div>
             </div>
