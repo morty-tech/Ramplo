@@ -363,7 +363,7 @@ export default function Dashboard() {
                               <p className="truncate">{task.description}</p>
                             </div>
                             <div>
-                              <p className={`mt-0.5 rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset ${
+                              <p className={`inline-block rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset ${
                                 ['outreach', 'client calls', 'follow-up'].includes(task.category?.toLowerCase() || '') 
                                   ? 'bg-forest-50 text-forest-700 ring-forest-600/20'
                                   : ['research', 'market analysis', 'lead generation'].includes(task.category?.toLowerCase() || '')
