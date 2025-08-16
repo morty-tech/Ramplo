@@ -306,8 +306,8 @@ export default function Dashboard() {
             {todaysObjective && (
               <div className="bg-white border-b border-gray-200 px-4 py-3 sm:px-6 mb-4">
                 <div className="text-left">
-                  <div className="text-sm uppercase text-slate-800 font-semibold">Today's goal:</div>
-                  <div className="text-slate-800">{todaysObjective}</div>
+                  
+                  <div className="text-slate-800 text-base"><span className="font-semibold">Today you will</span> {todaysObjective?.charAt(0).toLowerCase() + todaysObjective?.slice(1)}</div>
                 </div>
               </div>
             )}
@@ -332,7 +332,7 @@ export default function Dashboard() {
                         </div>
                         <div className={`min-w-0 flex-grow cursor-pointer ${isExpanded ? 'pt-5 pb-2' : 'py-5'}`} onClick={() => handleTaskClick(task)}>
                           <div className="flex items-start gap-x-3">
-                            <p className={`text-lg font-semibold transition-all duration-300 ${
+                            <p className={`text-base font-semibold transition-all duration-300 ${
                               isCompleting 
                                 ? 'text-green-700' 
                                 : isCompleted 
