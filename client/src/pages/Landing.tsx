@@ -73,43 +73,76 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-blue-50 to-indigo-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Get Your First 3 Deals in
-              <span className="text-blue-600"> 90 Days</span>
-            </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              RampLO is an AI-powered 90-day training program designed to help mortgage loan officers 
-              secure their first deals through personalized daily tasks, client tracking, and expert coaching.
-            </p>
-            
-            {/* Email Signup */}
-            <form onSubmit={handleGetStarted} className="max-w-md mx-auto mb-8">
-              <div className="flex gap-3">
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1"
-                  required
-                />
-                <Button 
-                  type="submit" 
-                  disabled={isLoading}
-                  className="bg-blue-600 hover:bg-blue-700 px-8"
-                >
-                  {isLoading ? "Sending..." : "Get Started"}
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </div>
-            </form>
+      <div className="bg-forest-800">
+        <div className="relative isolate px-6 pt-14 lg:px-8">
+          <div
+            aria-hidden="true"
+            className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+          >
+            <div
+              style={{
+                clipPath:
+                  'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+              }}
+              className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-forest-400 to-limeglow-400 opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+            />
+          </div>
+          
+          {/* Centered Logo */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-white">RampLO</h1>
+          </div>
 
-            <p className="text-sm text-gray-500">
-              Free for Morty users • $49/month for others • No commitment required
-            </p>
+          <div className="mx-auto max-w-2xl py-16 sm:py-24 lg:py-32">
+            <div className="text-center">
+              <h1 className="text-5xl font-semibold tracking-tight text-balance text-white sm:text-7xl">
+                Get Your First 3 Deals in
+                <span className="text-limeglow-400"> 90 Days</span>
+              </h1>
+              <p className="mt-8 text-lg font-medium text-pretty text-slate-200 sm:text-xl/8">
+                RampLO is an AI-powered 90-day training program designed to help mortgage loan officers 
+                secure their first deals through personalized daily tasks, client tracking, and expert coaching.
+              </p>
+              
+              {/* Email Signup */}
+              <form onSubmit={handleGetStarted} className="mt-10 max-w-md mx-auto mb-8">
+                <div className="flex gap-3">
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="flex-1 bg-white/10 border-white/20 text-white placeholder:text-slate-300"
+                    required
+                  />
+                  <Button 
+                    type="submit" 
+                    disabled={isLoading}
+                    className="bg-limeglow-600 text-forest-800 hover:bg-limeglow-500 px-8 font-semibold"
+                  >
+                    {isLoading ? "Sending..." : "Get Started"}
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </div>
+              </form>
+
+              <p className="text-sm text-slate-300">
+                Free for Morty users • $49/month for others • No commitment required
+              </p>
+            </div>
+          </div>
+          
+          <div
+            aria-hidden="true"
+            className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
+          >
+            <div
+              style={{
+                clipPath:
+                  'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+              }}
+              className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-tealwave-400 to-forest-600 opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
+            />
           </div>
         </div>
       </div>
