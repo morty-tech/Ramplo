@@ -374,7 +374,7 @@ export default function Onboarding() {
                       ].map((focus) => (
                         <div
                           key={focus.value}
-                          className={`p-4 border-2 rounded-lg cursor-pointer transition-colors ${
+                          className={`px-6 py-3 border-2 rounded-lg cursor-pointer transition-colors ${
                             formData.focus.includes(focus.value)
                               ? "border-forest-600 bg-forest-50"
                               : "border-gray-200 hover:border-forest-400"
@@ -488,7 +488,7 @@ export default function Onboarding() {
                       {borrowerTypeOptions.map((type) => (
                         <div
                           key={type.value}
-                          className={`p-3 border-2 rounded-lg cursor-pointer transition-colors ${
+                          className={`px-6 py-3 border-2 rounded-lg cursor-pointer transition-colors ${
                             formData.borrowerTypes.includes(type.value)
                               ? "border-forest-600 bg-forest-50"
                               : "border-gray-200 hover:border-forest-400"
@@ -780,7 +780,7 @@ export default function Onboarding() {
                           {networkSourceOptions.map((source) => (
                             <div
                               key={source.value}
-                              className={`p-3 border-2 rounded-lg cursor-pointer transition-colors ${
+                              className={`px-6 py-3 border-2 rounded-lg cursor-pointer transition-colors ${
                                 formData.networkSources.includes(source.value)
                                   ? "border-forest-600 bg-forest-50"
                                   : "border-gray-200 hover:border-forest-400"
@@ -954,7 +954,7 @@ export default function Onboarding() {
                         {communicationChannelOptions.map((channel) => (
                           <div
                             key={channel.value}
-                            className={`p-4 border-2 rounded-lg cursor-pointer transition-colors ${
+                            className={`px-6 py-3 border-2 rounded-lg cursor-pointer transition-colors ${
                               formData.preferredChannels.includes(channel.value)
                                 ? "border-forest-600 bg-forest-50"
                                 : "border-gray-200 hover:border-forest-400"
