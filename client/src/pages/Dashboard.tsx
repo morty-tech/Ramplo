@@ -297,7 +297,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-between mb-5">
             <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2">
               <Calendar className="w-5 h-5" />
-{profile?.firstName || user?.firstName || 'Your'}'s Tasks for {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+              {profile?.firstName || user?.firstName || 'Your'}'s Tasks for {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
             </h3>
           </div>
           
@@ -312,7 +312,7 @@ export default function Dashboard() {
             )}
             
             <ul role="list" className="divide-y divide-gray-100 px-4 sm:px-6">
-              {todayTasks.map((task: Task) => {
+              {todayTasks.map((task: Task, index: number) => {
                 const isCompleting = completingTaskId === task.id;
                 const isCompleted = task.completed;
                 
@@ -321,47 +321,56 @@ export default function Dashboard() {
                 return (
                   <li key={task.id} className={`transition-all duration-200 ${isCompleted ? 'bg-green-50/50' : ''}`}>
                     <div className="flex items-start justify-between gap-x-6">
-                      <div className={`min-w-0 flex-grow cursor-pointer ${isExpanded ? 'pt-5 pb-2' : 'py-5'}`} onClick={() => handleTaskClick(task)}>
-                        <div className="flex items-start gap-x-3">
-                          <p className={`text-base font-semibold transition-all duration-300 ${
-                            isCompleting 
-                              ? 'text-green-700' 
-                              : isCompleted 
-                              ? 'text-gray-500 line-through' 
-                              : 'text-gray-900'
-                          }`}>
-                            {task.title}
-                            {isCompleting && (
-                              <span className="ml-2 text-green-600 animate-bounce">✓</span>
-                            )}
-                          </p>
-                          <p className={`mt-0.5 rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset ${
-                            ['outreach', 'client calls', 'follow-up'].includes(task.category?.toLowerCase() || '') 
-                              ? 'bg-forest-50 text-forest-700 ring-forest-600/20'
-                              : ['research', 'market analysis', 'lead generation'].includes(task.category?.toLowerCase() || '')
-                              ? 'bg-teal-50 text-teal-700 ring-teal-600/20'
-                              : ['social media', 'content creation', 'marketing', 'branding'].includes(task.category?.toLowerCase() || '')
-                              ? 'bg-lime-50 text-lime-700 ring-lime-600/20'
-                              : ['admin', 'planning', 'setup', 'organization'].includes(task.category?.toLowerCase() || '')
-                              ? 'bg-slate-50 text-slate-700 ring-slate-600/20'
-                              : 'bg-gray-50 text-gray-600 ring-gray-500/10'
-                          }`}>
-                            {task.category}
-                          </p>
+                      <div className="flex items-start gap-x-4">
+                        <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold ${
+                          isCompleted 
+                            ? 'bg-forest-100 text-forest-600' 
+                            : 'bg-gray-100 text-gray-600'
+                        }`}>
+                          {index + 1}
                         </div>
-                        {!isExpanded && (
-                          <div className="mt-1 space-y-1">
-                            <div className="flex items-center gap-x-2 text-xs/5 text-gray-500">
-                              <p className="whitespace-nowrap">
-                                Est. {task.estimatedMinutes} min
-                              </p>
-                              <svg viewBox="0 0 2 2" className="size-0.5 fill-current">
-                                <circle r={1} cx={1} cy={1} />
-                              </svg>
-                              <p className="truncate">{task.description}</p>
-                            </div>
+                        <div className={`min-w-0 flex-grow cursor-pointer ${isExpanded ? 'pt-5 pb-2' : 'py-5'}`} onClick={() => handleTaskClick(task)}>
+                          <div className="flex items-start gap-x-3">
+                            <p className={`text-base font-semibold transition-all duration-300 ${
+                              isCompleting 
+                                ? 'text-green-700' 
+                                : isCompleted 
+                                ? 'text-gray-500 line-through' 
+                                : 'text-gray-900'
+                            }`}>
+                              {task.title}
+                              {isCompleting && (
+                                <span className="ml-2 text-green-600 animate-bounce">✓</span>
+                              )}
+                            </p>
+                            <p className={`mt-0.5 rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset ${
+                              ['outreach', 'client calls', 'follow-up'].includes(task.category?.toLowerCase() || '') 
+                                ? 'bg-forest-50 text-forest-700 ring-forest-600/20'
+                                : ['research', 'market analysis', 'lead generation'].includes(task.category?.toLowerCase() || '')
+                                ? 'bg-teal-50 text-teal-700 ring-teal-600/20'
+                                : ['social media', 'content creation', 'marketing', 'branding'].includes(task.category?.toLowerCase() || '')
+                                ? 'bg-lime-50 text-lime-700 ring-lime-600/20'
+                                : ['admin', 'planning', 'setup', 'organization'].includes(task.category?.toLowerCase() || '')
+                                ? 'bg-slate-50 text-slate-700 ring-slate-600/20'
+                                : 'bg-gray-50 text-gray-600 ring-gray-500/10'
+                            }`}>
+                              {task.category}
+                            </p>
                           </div>
-                        )}
+                          {!isExpanded && (
+                            <div className="mt-1 space-y-1">
+                              <div className="flex items-center gap-x-2 text-xs/5 text-gray-500">
+                                <p className="whitespace-nowrap">
+                                  Est. {task.estimatedMinutes} min
+                                </p>
+                                <svg viewBox="0 0 2 2" className="size-0.5 fill-current">
+                                  <circle r={1} cx={1} cy={1} />
+                                </svg>
+                                <p className="truncate">{task.description}</p>
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </div>
                       <div className="flex flex-none items-center gap-x-4 py-5">
                         {isCompleted ? (
