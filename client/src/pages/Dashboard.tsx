@@ -231,9 +231,20 @@ export default function Dashboard() {
           </h1>
         </div>
         
-        {/* Week indicator - aligned with headline on medium+ screens */}
-        <div className="flex flex-col items-end mt-4 md:mt-0 text-right">
-          <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Week {currentWeek} of 14</p>
+        {/* Week indicator with progress - aligned with headline on medium+ screens */}
+        <div className="flex flex-col items-end mt-4 md:mt-0 text-right min-w-[160px]">
+          <div className="flex items-center gap-2 mb-2">
+            <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Week {currentWeek} of 14</p>
+            <span className="text-xs font-semibold text-forest-600 bg-forest-50 px-2 py-1 rounded-full">
+              {Math.round((currentWeek / 14) * 100)}%
+            </span>
+          </div>
+          <div className="w-full">
+            <Progress 
+              value={(currentWeek / 14) * 100} 
+              className="h-2 w-full bg-gray-200" 
+            />
+          </div>
         </div>
       </div>
 
