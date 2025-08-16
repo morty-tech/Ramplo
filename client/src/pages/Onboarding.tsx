@@ -854,7 +854,7 @@ export default function Onboarding() {
                           ].map((channel) => (
                             <div
                               key={channel.value}
-                              className={`px-6 py-3 border-2 rounded-lg cursor-pointer transition-colors ${
+                              className={`px-6 py-2 border-2 rounded-lg cursor-pointer transition-colors ${
                                 formData.socialChannelsUsed.includes(channel.value)
                                   ? "border-forest-600 bg-forest-50"
                                   : "border-gray-200 hover:border-forest-400"
