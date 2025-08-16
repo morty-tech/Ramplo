@@ -2,10 +2,6 @@ import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
 
 export default function Login() {
@@ -52,90 +48,87 @@ export default function Login() {
 
   if (linkSent) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-forest-800 to-tealwave-800 px-4">
-        <Card className="w-full max-w-md shadow-2xl border-0 bg-white">
-          <CardContent className="pt-6 text-center bg-white rounded-lg">
+      <div className="min-h-screen bg-gradient-to-br from-forest-800 to-tealwave-800">
+        <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+          <div className="sm:mx-auto sm:w-full sm:max-w-sm text-center">
             <div className="w-16 h-16 bg-limeglow-400 rounded-full flex items-center justify-center mx-auto mb-6">
               <svg className="w-8 h-8 text-forest-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Check your email</h2>
-            <p className="text-gray-600 mb-6">
-              We've sent a secure login link to <strong>{email}</strong>
+            <h2 className="text-2xl font-bold text-white mb-4">Check your email</h2>
+            <p className="text-gray-300 mb-8">
+              We've sent a secure login link to <strong className="text-white">{email}</strong>
             </p>
-            <Button 
-              variant="outline" 
+            <button
               onClick={() => setLinkSent(false)}
-              className="w-full border-gray-300 text-gray-700 hover:bg-gray-50"
+              className="flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               Send another link
-            </Button>
-          </CardContent>
-        </Card>
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-forest-800 to-tealwave-800 px-4">
-      <div
-        className="absolute inset-0 bg-gradient-to-r from-forest-800/90 to-tealwave-800/90 pointer-events-none"
-        style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0)`,
-          backgroundSize: '50px 50px'
-        }}
-      />
-      <Card className="w-full max-w-md shadow-2xl border-0 relative z-10 bg-white">
-        <CardHeader className="text-center pb-8 bg-white rounded-t-lg">
-          <CardTitle className="text-3xl font-bold text-gray-900 mb-2">RampLO</CardTitle>
-          <p className="text-gray-600">AI-Powered 90-Day Training for Mortgage Loan Officers</p>
-        </CardHeader>
-        <CardContent className="bg-white rounded-b-lg">
+    <div className="min-h-screen bg-gradient-to-br from-forest-800 to-tealwave-800">
+      <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <div className="mx-auto h-10 w-10 bg-white rounded-lg flex items-center justify-center">
+            <span className="text-forest-800 font-bold text-xl">R</span>
+          </div>
+          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">Sign in to your account</h2>
+        </div>
+
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <Label htmlFor="email" className="text-gray-700 font-medium">Email Address</Label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email address"
-                required
-                className="mt-2 border-gray-300 focus:border-forest-600 focus:ring-forest-600"
-              />
+              <label htmlFor="email" className="block text-sm/6 font-medium text-gray-100">
+                Email address
+              </label>
+              <div className="mt-2">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  autoComplete="email"
+                  placeholder="Enter your email address"
+                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-limeglow-400 sm:text-sm/6"
+                />
+              </div>
             </div>
-            
-            <Button 
-              type="submit" 
-              disabled={isLoading || !email}
-              className="w-full bg-forest-800 hover:bg-forest-600 text-white font-semibold py-3 transition-all duration-200 shadow-lg hover:shadow-xl"
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Sending...
-                </>
-              ) : (
-                "Sign In with Magic Link"
-              )}
-            </Button>
+
+            <div>
+              <button
+                type="submit"
+                disabled={isLoading || !email}
+                className="flex w-full justify-center rounded-md bg-forest-600 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-forest-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  "Sign in with Magic Link"
+                )}
+              </button>
+            </div>
           </form>
-          
-          <p className="mt-6 text-center text-sm text-gray-600">
-            We'll send you a secure link to access your dashboard.
-          </p>
-          
-          <div className="mt-6 text-center">
-            <a 
-              href="/" 
-              className="text-sm text-gray-500 hover:text-forest-600 transition-colors duration-200"
-            >
-              ← Back to homepage
+
+          <p className="mt-10 text-center text-sm/6 text-gray-400">
+            New to RampLO?{' '}
+            <a href="/" className="font-semibold text-limeglow-400 hover:text-limeglow-300">
+              Learn more
             </a>
-          </div>
-        </CardContent>
-      </Card>
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
