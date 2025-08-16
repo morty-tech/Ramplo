@@ -332,7 +332,7 @@ export default function Onboarding() {
                         <label
                           key={option.value}
                           aria-label={option.label}
-                          className={`group relative block rounded-lg border px-6 py-2 cursor-pointer transition-colors ${
+                          className={`group relative block rounded-lg border px-6 py-3 cursor-pointer transition-colors ${
                             formData.experienceLevel === option.value 
                               ? 'border-forest-600 bg-forest-50 ring-2 ring-forest-600' 
                               : 'border-slate-400 bg-white hover:border-forest-400'
@@ -346,7 +346,7 @@ export default function Onboarding() {
                             type="radio"
                             className="absolute inset-0 appearance-none focus:outline-none"
                           />
-                          <span className="font-medium text-gray-900">{option.label}</span>
+                          <span className="text-sm font-normal text-gray-900">{option.label}</span>
                         </label>
                       ))}
                     </div>
