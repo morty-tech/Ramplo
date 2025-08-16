@@ -413,7 +413,7 @@ export default function Onboarding() {
                         <label htmlFor="otherFocus" className="block text-sm/6 font-medium text-gray-900">
                           Please specify your other loan focus
                         </label>
-                        <div className="mt-2">
+                        <div className="mt-2 max-w-md">
                           <input
                             id="otherFocus"
                             name="otherFocus"
@@ -518,7 +518,7 @@ export default function Onboarding() {
                         <label htmlFor="otherBorrowerType" className="block text-sm/6 font-medium text-gray-900">
                           Please specify your other borrower type
                         </label>
-                        <div className="mt-2">
+                        <div className="mt-2 max-w-md">
                           <input
                             id="otherBorrowerType"
                             name="otherBorrowerType"
