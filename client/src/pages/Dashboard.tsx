@@ -194,7 +194,7 @@ export default function Dashboard() {
     },
     { 
       id: 2, 
-      name: "Client Connects", 
+      name: "Daily Client Connects", 
       stat: totalConnections.toString(), 
       icon: UsersIcon, 
       change: totalConnections > 0 ? `+${totalConnections}` : '0', 
@@ -250,7 +250,7 @@ export default function Dashboard() {
       <div className="mb-8">
         <h3 className="text-base font-semibold text-gray-900 mb-5 flex items-center gap-2">
           <Target className="w-5 h-5" />
-          Today's Performance
+          Your Performance
         </h3>
         
         <dl className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -297,7 +297,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-between mb-5">
             <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2">
               <Calendar className="w-5 h-5" />
-{profile?.firstName || user?.firstName || 'Your'}'s Tasks
+{profile?.firstName || user?.firstName || 'Your'}'s Tasks Today
             </h3>
             <span className="text-sm text-gray-600">
               {new Date().toLocaleDateString('en-US', { 
@@ -312,10 +312,9 @@ export default function Dashboard() {
           <div className="relative overflow-hidden rounded-lg bg-white px-0 pt-0 pb-4 shadow-sm sm:px-0">
             {todaysObjective && (
               <div className="bg-forest-600 text-white px-4 py-4 sm:px-6 mb-4">
-                <div className="flex items-center text-sm">
-                  <Target className="w-4 h-4 mr-2 text-white" />
-                  <span className="font-medium text-white">Today's Focus:</span>
-                  <span className="ml-1">{todaysObjective}</span>
+                <div className="text-center">
+                  <div className="text-xs font-semibold text-white/80 uppercase tracking-wide mb-1">Today's Focus</div>
+                  <div className="text-base font-medium text-white">{todaysObjective}</div>
                 </div>
               </div>
             )}
