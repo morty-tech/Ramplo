@@ -107,7 +107,7 @@ export default function Login() {
             </form>
           </div>
 
-          <p className="mt-6 text-center text-sm/6 text-gray-400">
+          <p className="mt-6 text-center text-sm/6 text-gray-300">
             New to RampLO?{' '}
             <a href="/" className="font-semibold text-limeglow-400 hover:text-limeglow-300 ml-2">
               Learn more
