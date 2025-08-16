@@ -299,21 +299,13 @@ export default function Dashboard() {
               <Calendar className="w-5 h-5" />
 {profile?.firstName || user?.firstName || 'Your'}'s Tasks Today
             </h3>
-            <span className="text-sm text-gray-600">
-              {new Date().toLocaleDateString('en-US', { 
-                weekday: 'long',
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-              })}
-            </span>
           </div>
           
           <div className="relative overflow-hidden rounded-lg bg-white px-0 pt-0 pb-4 shadow-sm sm:px-0">
             {todaysObjective && (
               <div className="bg-forest-600 text-white px-4 py-4 sm:px-6 mb-4">
                 <div className="text-center">
-                  <div className="text-xs font-semibold text-white/80 uppercase tracking-wide mb-1">Today's Focus</div>
+                  <div className="text-xs font-semibold text-white/80 uppercase tracking-wide mb-1">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })} Focus</div>
                   <div className="text-base font-medium text-white">{todaysObjective}</div>
                 </div>
               </div>
