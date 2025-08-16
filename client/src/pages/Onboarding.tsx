@@ -180,34 +180,45 @@ export default function Onboarding() {
   // Loading screen component
   if (showOnboardingComplete) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Card className="w-full max-w-md">
-          <CardContent className="p-8 text-center">
-            <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Hang tight — we're building your ramp to success!</h2>
-            <div className="space-y-3">
-              {loadingMessages.map((message, index) => (
-                <div key={index} className={`flex items-center justify-center space-x-2 text-sm ${
-                  index < loadingStep ? 'text-green-600' : 
-                  index === loadingStep ? 'text-primary' : 'text-gray-400'
-                }`}>
-                  {index < loadingStep && (
-                    <div className="w-4 h-4 bg-green-600 rounded-full flex items-center justify-center">
-                      <div className="w-2 h-2 bg-white rounded-full"></div>
-                    </div>
-                  )}
-                  {index === loadingStep && (
-                    <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-                  )}
-                  {index > loadingStep && (
-                    <div className="w-4 h-4 border-2 border-gray-300 rounded-full"></div>
-                  )}
-                  <span>{message}</span>
-                </div>
-              ))}
+      <div className="min-h-screen bg-gradient-to-br from-forest-800 to-tealwave-800">
+        <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+            <div className="flex items-center justify-center">
+              <div className="h-10 w-10 bg-white rounded-lg flex items-center justify-center mr-3">
+                <span className="text-forest-800 font-bold text-xl">R</span>
+              </div>
+              <span className="text-white font-bold text-2xl">RampLO</span>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+
+          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
+            <div className="bg-white rounded-lg p-8 shadow-xl text-center">
+              <div className="w-16 h-16 border-4 border-forest-600 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Hang tight — we're building your ramp to success!</h2>
+              <div className="space-y-4">
+                {loadingMessages.map((message, index) => (
+                  <div key={index} className={`flex items-center justify-center space-x-2 text-sm ${
+                    index < loadingStep ? 'text-green-600' : 
+                    index === loadingStep ? 'text-forest-600' : 'text-gray-400'
+                  }`}>
+                    {index < loadingStep && (
+                      <div className="w-4 h-4 bg-green-600 rounded-full flex items-center justify-center">
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      </div>
+                    )}
+                    {index === loadingStep && (
+                      <div className="w-4 h-4 border-2 border-forest-600 border-t-transparent rounded-full animate-spin"></div>
+                    )}
+                    {index > loadingStep && (
+                      <div className="w-4 h-4 border-2 border-gray-300 rounded-full"></div>
+                    )}
+                    <span className="font-medium">{message}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
