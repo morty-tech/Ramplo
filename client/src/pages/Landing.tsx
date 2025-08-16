@@ -356,16 +356,13 @@ export default function Landing() {
       </div>
 
       {/* Footer */}
-      <div className="py-12 bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h3 className="text-2xl font-bold text-white mb-4">RampLO</h3>
-            <p className="text-gray-400">
-              AI-powered 90-day ramp plan for mortgage loan officers
-            </p>
-          </div>
+      <footer className="bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-center lg:px-8">
+          <p className="text-center text-sm/6 text-gray-600">
+            &copy; 2024 RampLO. All rights reserved.
+          </p>
         </div>
-      </div>
+      </footer>
     </div>
   );
 }
