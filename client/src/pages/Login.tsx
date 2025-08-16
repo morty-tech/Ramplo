@@ -53,8 +53,8 @@ export default function Login() {
   if (linkSent) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-forest-800 to-tealwave-800 px-4">
-        <Card className="w-full max-w-md shadow-2xl border-0">
-          <CardContent className="pt-6 text-center">
+        <Card className="w-full max-w-md shadow-2xl border-0 bg-white">
+          <CardContent className="pt-6 text-center bg-white rounded-lg">
             <div className="w-16 h-16 bg-limeglow-400 rounded-full flex items-center justify-center mx-auto mb-6">
               <svg className="w-8 h-8 text-forest-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -86,12 +86,12 @@ export default function Login() {
           backgroundSize: '50px 50px'
         }}
       />
-      <Card className="w-full max-w-md shadow-2xl border-0 relative z-10">
-        <CardHeader className="text-center pb-8">
+      <Card className="w-full max-w-md shadow-2xl border-0 relative z-10 bg-white">
+        <CardHeader className="text-center pb-8 bg-white rounded-t-lg">
           <CardTitle className="text-3xl font-bold text-gray-900 mb-2">RampLO</CardTitle>
           <p className="text-gray-600">AI-Powered 90-Day Training for Mortgage Loan Officers</p>
         </CardHeader>
-        <CardContent>
+        <CardContent className="bg-white rounded-b-lg">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <Label htmlFor="email" className="text-gray-700 font-medium">Email Address</Label>
