@@ -261,7 +261,7 @@ export default function Onboarding() {
                           value={formData.firstName}
                           onChange={(e) => setFormData(prev => ({ ...prev, firstName: e.target.value }))}
                           placeholder="Riley"
-                          className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
+                          className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
                         />
                       </div>
                     </div>
@@ -277,7 +277,7 @@ export default function Onboarding() {
                           value={formData.lastName}
                           onChange={(e) => setFormData(prev => ({ ...prev, lastName: e.target.value }))}
                           placeholder="Parker"
-                          className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
+                          className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
                         />
                       </div>
                     </div>
@@ -429,7 +429,7 @@ export default function Onboarding() {
                             value={formData.otherFocus}
                             onChange={(e) => setFormData(prev => ({ ...prev, otherFocus: e.target.value }))}
                             placeholder="e.g., Bridge loans, Construction loans, Jumbo loans"
-                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
+                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
                           />
                         </div>
                       </div>
@@ -520,7 +520,7 @@ export default function Onboarding() {
                             value={formData.otherBorrowerType}
                             onChange={(e) => setFormData(prev => ({ ...prev, otherBorrowerType: e.target.value }))}
                             placeholder="e.g., Foreign nationals, Self-employed, Bank statement loans"
-                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
+                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
                           />
                         </div>
                       </div>
@@ -671,7 +671,7 @@ export default function Onboarding() {
                                     value={formData.crmName}
                                     onChange={(e) => setFormData(prev => ({ ...prev, crmName: e.target.value }))}
                                     placeholder="e.g., Salesforce, HubSpot, Top Producer"
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
+                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
                                   />
                                 </div>
                               </div>
@@ -688,7 +688,7 @@ export default function Onboarding() {
                                     value={formData.clientListOther}
                                     onChange={(e) => setFormData(prev => ({ ...prev, clientListOther: e.target.value }))}
                                     placeholder="e.g., In my head, business cards, notebook, Google Docs"
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
+                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
                                   />
                                 </div>
                               </div>
@@ -809,7 +809,7 @@ export default function Onboarding() {
                                       socialLinks: { ...prev.socialLinks, [channel]: e.target.value }
                                     }))}
                                     placeholder={`https://${channel}.com/yourprofile`}
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
+                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
                                   />
                                 </div>
                               </div>
@@ -945,7 +945,7 @@ export default function Onboarding() {
                       onChange={(e) => setFormData(prev => ({ ...prev, goals: e.target.value }))}
                       placeholder="e.g., Close my first 3 loans, build relationships with 20 realtors, establish a consistent social media presence..."
                       rows={4}
-                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
+                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
                     />
                   </div>
                   <p className="text-sm text-gray-600 mt-2">
