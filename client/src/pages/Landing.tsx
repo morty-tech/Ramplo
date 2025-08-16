@@ -13,7 +13,8 @@ import {
   Bot,
   ArrowRight,
   Star,
-  Send
+  Send,
+  User
 } from "lucide-react";
 
 export default function Landing() {
@@ -246,46 +247,73 @@ export default function Landing() {
       </div>
 
       {/* How It Works */}
-      <div className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              How It Works
-            </h2>
-            <p className="text-xl text-gray-600">
-              Simple steps to launch your mortgage career
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">
-                1
+      <div className="bg-white py-24">
+        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+          <div className="relative isolate overflow-hidden bg-forest-800 px-6 py-20 sm:rounded-3xl sm:px-10 sm:py-24 lg:py-24 xl:px-24">
+            <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-center lg:gap-y-0">
+              <div className="lg:row-start-2 lg:max-w-md">
+                <h2 className="text-3xl font-semibold tracking-tight text-balance text-white sm:text-4xl">
+                  How It Works
+                </h2>
+                <p className="mt-6 text-lg/8 text-slate-300">
+                  Simple steps to launch your mortgage career and secure your first deals in 90 days.
+                </p>
               </div>
-              <h3 className="text-xl font-semibold mb-4">Complete Your Profile</h3>
-              <p className="text-gray-600">
-                Tell us about your experience, market focus, and goals. Our AI creates a personalized 90-day plan just for you.
-              </p>
+              <div className="relative -z-20 max-w-xl min-w-full rounded-xl lg:row-span-4 lg:w-[64rem] lg:max-w-none flex items-center justify-center bg-gradient-to-br from-tealwave-600 to-limeglow-600 p-16 shadow-xl ring-1 ring-white/10">
+                <div className="text-center">
+                  <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Target className="w-12 h-12 text-forest-800" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-2">90-Day Success Plan</h3>
+                  <p className="text-limeglow-200">Your personalized roadmap to closing deals</p>
+                </div>
+              </div>
+              <div className="max-w-xl lg:row-start-3 lg:mt-10 lg:max-w-md lg:border-t lg:border-white/10 lg:pt-10">
+                <dl className="max-w-xl space-y-8 text-base/7 text-slate-300 lg:max-w-none">
+                  <div className="relative">
+                    <dt className="ml-9 inline-block font-semibold text-white">
+                      <User
+                        aria-hidden="true"
+                        className="absolute top-1 left-1 size-5 text-limeglow-400"
+                      />
+                      Complete Your Profile
+                    </dt>{' '}
+                    <dd className="inline">Tell us about your experience, market focus, and goals. Our AI creates a personalized 90-day plan just for you.</dd>
+                  </div>
+                  <div className="relative">
+                    <dt className="ml-9 inline-block font-semibold text-white">
+                      <Calendar
+                        aria-hidden="true"
+                        className="absolute top-1 left-1 size-5 text-limeglow-400"
+                      />
+                      Follow Daily Tasks
+                    </dt>{' '}
+                    <dd className="inline">Complete 3-5 personalized tasks each day. Track your connections and watch your pipeline grow consistently.</dd>
+                  </div>
+                  <div className="relative">
+                    <dt className="ml-9 inline-block font-semibold text-white">
+                      <TrendingUp
+                        aria-hidden="true"
+                        className="absolute top-1 left-1 size-5 text-limeglow-400"
+                      />
+                      Close Your First Deals
+                    </dt>{' '}
+                    <dd className="inline">Use AI coaching and proven templates to convert leads into closed loans. Achieve your first 1-3 deals in 90 days.</dd>
+                  </div>
+                </dl>
+              </div>
             </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">
-                2
-              </div>
-              <h3 className="text-xl font-semibold mb-4">Follow Daily Tasks</h3>
-              <p className="text-gray-600">
-                Complete 3-5 personalized tasks each day. Track your connections and watch your pipeline grow consistently.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">
-                3
-              </div>
-              <h3 className="text-xl font-semibold mb-4">Close Your First Deals</h3>
-              <p className="text-gray-600">
-                Use AI coaching and proven templates to convert leads into closed loans. Achieve your first 1-3 deals in 90 days.
-              </p>
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute top-1/2 left-12 -z-10 -translate-y-1/2 transform-gpu blur-3xl lg:top-auto lg:-bottom-48 lg:translate-y-0"
+            >
+              <div
+                style={{
+                  clipPath:
+                    'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+                }}
+                className="aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-tealwave-400 to-limeglow-600 opacity-25"
+              />
             </div>
           </div>
         </div>
