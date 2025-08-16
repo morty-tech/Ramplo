@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid'
+import { CalendarIcon, UsersIcon, HomeIcon, FireIcon } from '@heroicons/react/24/outline'
 import { apiRequest } from "@/lib/queryClient";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -26,6 +28,10 @@ import {
   Eye,
   Target
 } from "lucide-react";
+
+function classNames(...classes: (string | boolean | undefined)[]) {
+  return classes.filter(Boolean).join(' ')
+}
 
 // Ticker animation hook for counting numbers
 function useCountUp(end: number, duration: number = 1000, delay: number = 0) {
@@ -180,34 +186,37 @@ export default function Dashboard() {
   const nextWeekFocus = currentWeek < 14 ? getWeekFocus(currentWeek + 1) : null;
 
   const stats = [
-    {
-      title: "Today's Tasks",
-      value: `${animatedCompleted}/${animatedTotal}`,
-      icon: FileText,
-      color: "text-blue-600",
-      bgColor: "bg-blue-100",
+    { 
+      id: 1, 
+      name: "Today's Tasks", 
+      stat: `${animatedCompleted}/${animatedTotal}`, 
+      icon: CalendarIcon, 
+      change: todayTasksCompleted > 0 ? `+${todayTasksCompleted}` : '0', 
+      changeType: todayTasksCompleted > 0 ? 'increase' : 'neutral' as const
     },
-    {
-      title: "Client Connects Today", 
-      value: todayConnections ? (todayConnections.phoneCalls || 0) + (todayConnections.textMessages || 0) + (todayConnections.emails || 0) : 0,
-      icon: UserCheck,
-      color: "text-green-600",
-      bgColor: "bg-green-100",
+    { 
+      id: 2, 
+      name: "Client Connects", 
+      stat: totalConnections.toString(), 
+      icon: UsersIcon, 
+      change: totalConnections > 0 ? `+${totalConnections}` : '0', 
+      changeType: totalConnections > 0 ? 'increase' : 'neutral' as const
     },
-    {
-      title: "Ramp Run",
-      value: progress?.rampRunDays || 0,
-      icon: Flame,
-      color: "text-orange-600", 
-      bgColor: "bg-orange-100",
-      tooltip: "Number of days you've completed all tasks and made client connections"
+    { 
+      id: 3, 
+      name: "Ramp Run Days", 
+      stat: (progress?.rampRunDays || 0).toString(), 
+      icon: FireIcon, 
+      change: progress?.rampRunDays && progress.rampRunDays > 0 ? `${progress.rampRunDays} days` : '0', 
+      changeType: progress?.rampRunDays && progress.rampRunDays > 0 ? 'increase' : 'neutral' as const
     },
-    {
-      title: "Closed Loans",
-      value: progress?.loansClosed || 0,
-      icon: Home,
-      color: "text-purple-600", 
-      bgColor: "bg-purple-100",
+    { 
+      id: 4, 
+      name: "Closed Loans", 
+      stat: (progress?.loansClosed || 0).toString(), 
+      icon: HomeIcon, 
+      change: progress?.loansClosed && progress.loansClosed > 0 ? `${progress.loansClosed} total` : '0', 
+      changeType: progress?.loansClosed && progress.loansClosed > 0 ? 'increase' : 'neutral' as const
     },
   ];
 
@@ -277,39 +286,51 @@ export default function Dashboard() {
       </div>
 
       {/* Stats Cards */}
-      <TooltipProvider>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {stats.map((stat) => (
-            <Card key={stat.title}>
-              <CardContent className="px-6 py-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
-                    <div className="flex items-center gap-1 text-sm text-gray-600">
-                      {stat.title}
-                      {stat.tooltip && (
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <button className="hover:text-gray-600">
-                              <Info className="h-3 w-3 text-gray-400" />
-                            </button>
-                          </TooltipTrigger>
-                          <TooltipContent className="max-w-[300px]">
-                            <p>{stat.tooltip}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      )}
-                    </div>
-                  </div>
-                  <div className={`w-12 h-12 ${stat.bgColor} rounded-full flex items-center justify-center`}>
-                    <stat.icon className={`${stat.color} text-xl`} />
+      <div className="mb-8">
+        <h3 className="text-base font-semibold text-gray-900 mb-5">Today's Performance</h3>
+        
+        <dl className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {stats.map((item) => (
+            <div
+              key={item.id}
+              className="relative overflow-hidden rounded-lg bg-white px-4 pt-5 pb-12 shadow-sm sm:px-6 sm:pt-6"
+            >
+              <dt>
+                <div className="absolute rounded-md bg-forest-600 p-3">
+                  <item.icon aria-hidden="true" className="size-6 text-white" />
+                </div>
+                <p className="ml-16 truncate text-sm font-medium text-gray-500">{item.name}</p>
+              </dt>
+              <dd className="ml-16 flex items-baseline pb-6 sm:pb-7">
+                <p className="text-2xl font-semibold text-gray-900">{item.stat}</p>
+                {item.changeType !== 'neutral' && (
+                  <p
+                    className={classNames(
+                      item.changeType === 'increase' ? 'text-green-600' : 'text-red-600',
+                      'ml-2 flex items-baseline text-sm font-semibold',
+                    )}
+                  >
+                    {item.changeType === 'increase' ? (
+                      <ArrowUpIcon aria-hidden="true" className="size-5 shrink-0 self-center text-green-500" />
+                    ) : (
+                      <ArrowDownIcon aria-hidden="true" className="size-5 shrink-0 self-center text-red-500" />
+                    )}
+                    <span className="sr-only"> {item.changeType === 'increase' ? 'Increased' : 'Decreased'} by </span>
+                    {item.change}
+                  </p>
+                )}
+                <div className="absolute inset-x-0 bottom-0 bg-gray-50 px-4 py-4 sm:px-6">
+                  <div className="text-sm">
+                    <span className="font-medium text-forest-600 cursor-pointer hover:text-forest-500">
+                      Today's progress<span className="sr-only"> {item.name} stats</span>
+                    </span>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </dd>
+            </div>
           ))}
-        </div>
-      </TooltipProvider>
+        </dl>
+      </div>
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
