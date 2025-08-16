@@ -471,31 +471,42 @@ export default function Dashboard() {
             </h3>
             
             <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
-              <div className="space-y-3">
-                <Button 
-                  variant="outline" 
-                  className="w-full justify-start hover:bg-blue-50 hover:text-blue-600 hover:border-blue-600"
-                  onClick={() => window.location.href = '/outreach'}
-                >
-                  <Send className="w-4 h-4 mr-3" />
-                  Browse Templates
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full justify-start hover:bg-blue-50 hover:text-blue-600 hover:border-blue-600"
-                  onClick={() => window.location.href = '/deal-coach'}
-                >
-                  <UserCheck className="w-4 h-4 mr-3" />
-                  Ask Deal Coach
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full justify-start hover:bg-blue-50 hover:text-blue-600 hover:border-blue-600"
-                  onClick={() => window.location.href = '/roadmap'}
-                >
-                  <Map className="w-4 h-4 mr-3" />
-                  View Roadmap
-                </Button>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between py-2 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/outreach'}>
+                  <div className="flex items-center gap-3">
+                    <div className="absolute rounded-md bg-forest-500 p-3">
+                      <Send aria-hidden="true" className="size-6 text-white" />
+                    </div>
+                    <div className="ml-16">
+                      <p className="text-sm font-medium text-gray-500">Templates</p>
+                      <p className="text-lg font-semibold text-gray-900">Browse Templates</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between py-2 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/deal-coach'}>
+                  <div className="flex items-center gap-3">
+                    <div className="absolute rounded-md bg-forest-500 p-3">
+                      <UserCheck aria-hidden="true" className="size-6 text-white" />
+                    </div>
+                    <div className="ml-16">
+                      <p className="text-sm font-medium text-gray-500">AI Assistant</p>
+                      <p className="text-lg font-semibold text-gray-900">Ask Deal Coach</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between py-2 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/roadmap'}>
+                  <div className="flex items-center gap-3">
+                    <div className="absolute rounded-md bg-forest-500 p-3">
+                      <Map aria-hidden="true" className="size-6 text-white" />
+                    </div>
+                    <div className="ml-16">
+                      <p className="text-sm font-medium text-gray-500">Progress</p>
+                      <p className="text-lg font-semibold text-gray-900">View Roadmap</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

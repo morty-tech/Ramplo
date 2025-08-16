@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
-import { Phone, MessageSquare, Mail, Plus, Minus } from "lucide-react";
+import { Handshake, MessageSquare, Mail, Plus, Minus } from "lucide-react";
 
 interface DailyConnections {
   phoneCalls: number;
@@ -59,7 +59,7 @@ export default function ClientConnectionTracker() {
     {
       key: "phoneCalls" as keyof DailyConnections,
       label: "Phone Calls",
-      icon: Phone,
+      icon: Handshake,
     },
     {
       key: "textMessages" as keyof DailyConnections,
@@ -80,7 +80,7 @@ export default function ClientConnectionTracker() {
     <div>
       <div className="flex items-center justify-between mb-5">
         <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2">
-          <Phone className="w-5 h-5" />
+          <Handshake className="w-5 h-5" />
           Client Connections
         </h3>
         <span className="text-sm text-gray-600">
