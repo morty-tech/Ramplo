@@ -141,7 +141,7 @@ export default function Landing() {
       </div>
 
       {/* Features Section */}
-      <div className="relative isolate overflow-hidden bg-white pt-24 pb-12 sm:pt-32 sm:pb-16">
+      <div className="relative isolate overflow-hidden bg-white pt-20 pb-8 sm:pt-24 sm:pb-12">
         <svg
           aria-hidden="true"
           className="absolute inset-0 -z-10 size-full mask-[radial-gradient(100%_100%_at_top_right,white,transparent)] stroke-slate-200/30"
@@ -236,7 +236,7 @@ export default function Landing() {
       </div>
 
       {/* How It Works */}
-      <div className="bg-white pt-12 pb-24 sm:pt-16">
+      <div className="bg-white pt-12 pb-16 sm:pt-16">
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="relative isolate overflow-hidden bg-forest-800 px-6 py-20 sm:rounded-3xl sm:px-10 sm:py-24 lg:py-24 xl:px-24">
             <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-center lg:gap-y-0">
@@ -310,7 +310,7 @@ export default function Landing() {
 
       {/* CTA Section */}
       <div className="bg-white">
-        <div className="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
+        <div className="mx-auto max-w-7xl py-8 sm:px-6 lg:px-8">
           <div className="relative isolate overflow-hidden bg-limeglow-600 px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
             <h2 className="text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">
               Ready to Ramp?
@@ -340,28 +340,15 @@ export default function Landing() {
             <p className="mt-6 text-sm text-gray-600">
               Free for Morty users • $49/month for others • No commitment required
             </p>
-            <svg
-              viewBox="0 0 1024 1024"
-              aria-hidden="true"
-              className="absolute top-1/2 left-1/2 -z-10 size-256 -translate-x-1/2 mask-[radial-gradient(closest-side,white,transparent)]"
-            >
-              <circle r={512} cx={512} cy={512} fill="url(#lime-gradient)" fillOpacity="0.7" />
-              <defs>
-                <radialGradient id="lime-gradient">
-                  <stop stopColor="#84cc16" />
-                  <stop offset={1} stopColor="#22c55e" />
-                </radialGradient>
-              </defs>
-            </svg>
           </div>
         </div>
       </div>
 
       {/* Footer */}
       <footer className="bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-center lg:px-8">
+        <div className="mx-auto max-w-7xl px-6 py-8 md:flex md:items-center md:justify-center lg:px-8">
           <p className="text-center text-sm/6 text-gray-600">
-            &copy; 2024 RampLO. All rights reserved.
+            &copy; 2025 RampLO. All rights reserved.
           </p>
         </div>
       </footer>
