@@ -69,7 +69,7 @@ export default function Landing() {
       </header>
 
       {/* Hero Section */}
-      <div className="bg-tealwave-800 min-h-screen flex items-center justify-center">
+      <div className="bg-forest-800 min-h-screen flex items-center justify-center">
         <div className="relative isolate px-6 pt-14 lg:px-8">
           <div
             aria-hidden="true"
@@ -236,7 +236,7 @@ export default function Landing() {
       </div>
 
       {/* How It Works */}
-      <div className="bg-white pt-12 pb-16 sm:pt-16">
+      <div className="bg-white py-12 sm:pt-16">
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="relative isolate overflow-hidden bg-forest-800 px-6 py-20 sm:rounded-3xl sm:px-10 sm:py-24 lg:py-24 xl:px-24">
             <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-center lg:gap-y-0">
@@ -309,11 +309,11 @@ export default function Landing() {
       </div>
 
       {/* Stats Section */}
-      <div className="bg-white py-24 sm:py-32">
+      <div className="bg-white py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:mx-0">
             <h2 className="text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">
-              Supercharge your business with the power of AI
+              Supercharge your career with the power of AI
             </h2>
             <p className="mt-6 text-base/7 text-gray-600">
               We turn your ambition into real connections, quality leads, and closed loans.
@@ -323,7 +323,7 @@ export default function Landing() {
             <div className="flex flex-col-reverse justify-between gap-x-16 gap-y-8 rounded-2xl bg-forest-50 p-8 sm:w-3/4 sm:max-w-md sm:flex-row-reverse sm:items-end lg:w-72 lg:max-w-none lg:flex-none lg:flex-col lg:items-start">
               <p className="flex-none text-3xl font-bold tracking-tight text-forest-800">90 days</p>
               <div className="sm:w-80 sm:shrink lg:w-auto lg:flex-none">
-                <p className="text-lg font-semibold tracking-tight text-forest-800">to results</p>
+                <p className="text-lg font-semibold tracking-tight text-forest-800">Days to real results</p>
                 <p className="mt-2 text-base/7 text-forest-600">Ramp faster with a proven framework that gets you from day one to closing deals in just three months.</p>
               </div>
             </div>
@@ -331,7 +331,7 @@ export default function Landing() {
               <p className="flex-none text-3xl font-bold tracking-tight text-white">10x faster</p>
               <div className="sm:w-80 sm:shrink lg:w-auto lg:flex-none">
                 <p className="text-lg font-semibold tracking-tight text-white">
-                  ramp
+                  Faster ramp with AI
                 </p>
                 <p className="mt-2 text-base/7 text-forest-200">
                   Skip the trial and error — our AI daily action plans keep you focused on what matters most.
@@ -341,7 +341,7 @@ export default function Landing() {
             <div className="flex flex-col-reverse justify-between gap-x-16 gap-y-8 rounded-2xl bg-tealwave-600 p-8 sm:w-11/12 sm:max-w-xl sm:flex-row-reverse sm:items-end lg:w-full lg:max-w-none lg:flex-auto lg:flex-col lg:items-start lg:gap-y-28">
               <p className="flex-none text-3xl font-bold tracking-tight text-white">100%</p>
               <div className="sm:w-80 sm:shrink lg:w-auto lg:flex-none">
-                <p className="text-lg font-semibold tracking-tight text-white">personalized</p>
+                <p className="text-lg font-semibold tracking-tight text-white">Personalized on RampLO</p>
                 <p className="mt-2 text-base/7 text-tealwave-200">
                   Your plan, your outreach, your templates — all tailored to your market, your style, and your goals.
                 </p>
