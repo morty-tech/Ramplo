@@ -325,11 +325,7 @@ export default function Dashboard() {
                       <div className="flex items-start gap-x-2">
                         {!isCompleted && (
                           <div className="relative top-6">
-                            <ChevronRight className="w-8 h-8 text-transparent bg-gradient-to-br from-limeglow-400 to-limeglow-600 bg-clip-text" style={{
-                              background: 'linear-gradient(135deg, #a3e635, #65a30d)',
-                              WebkitBackgroundClip: 'text',
-                              WebkitTextFillColor: 'transparent'
-                            }} />
+                            <ChevronRight className="w-8 h-8 text-limeglow-400" />
                           </div>
                         )}
                         <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-xl font-black relative top-5 shadow-lg transition-all duration-300 ${
