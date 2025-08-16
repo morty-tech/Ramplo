@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Phone, MessageSquare, Mail, Plus, Minus } from "lucide-react";
 
@@ -84,62 +83,65 @@ export default function ClientConnectionTracker() {
     (todayConnections.phoneCalls || 0) + (todayConnections.textMessages || 0) + (todayConnections.emails || 0) : 0;
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+    <div>
+      <div className="mb-5">
+        <h3 className="text-base font-semibold text-gray-900 mb-1 flex items-center gap-2">
           <Phone className="w-5 h-5" />
           Client Connections
-        </CardTitle>
+        </h3>
         <p className="text-sm text-gray-600">
           Today's total: {todayTotal} connections
         </p>
-      </CardHeader>
-      <CardContent className="space-y-2">
-        {connectionTypes.map((type) => (
-          <div key={type.key} className="flex items-center justify-between p-2 border rounded-lg">
-            <div className="flex items-center gap-2">
-              <div className={`w-8 h-8 ${type.bgColor} rounded-full flex items-center justify-center`}>
-                <type.icon className={`${type.color} w-4 h-4`} />
-              </div>
-              <div className="font-medium text-sm">{type.label}</div>
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => adjustCount(type.key, false)}
-                disabled={updateConnectionsMutation.isPending || !todayConnections?.[type.key]}
-                className="h-7 w-7 p-0"
-              >
-                <Minus className="w-3 h-3" />
-              </Button>
-              
-              <div className="w-8 text-center font-medium text-sm">
-                {todayConnections?.[type.key] || 0}
+      </div>
+      
+      <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
+        <div className="space-y-2">
+          {connectionTypes.map((type) => (
+            <div key={type.key} className="flex items-center justify-between p-2 border rounded-lg">
+              <div className="flex items-center gap-2">
+                <div className={`w-8 h-8 ${type.bgColor} rounded-full flex items-center justify-center`}>
+                  <type.icon className={`${type.color} w-4 h-4`} />
+                </div>
+                <div className="font-medium text-sm">{type.label}</div>
               </div>
               
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => adjustCount(type.key, true)}
-                disabled={updateConnectionsMutation.isPending}
-                className="h-7 w-7 p-0"
-              >
-                <Plus className="w-3 h-3" />
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => adjustCount(type.key, false)}
+                  disabled={updateConnectionsMutation.isPending || !todayConnections?.[type.key]}
+                  className="h-7 w-7 p-0"
+                >
+                  <Minus className="w-3 h-3" />
+                </Button>
+                
+                <div className="w-8 text-center font-medium text-sm">
+                  {todayConnections?.[type.key] || 0}
+                </div>
+                
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => adjustCount(type.key, true)}
+                  disabled={updateConnectionsMutation.isPending}
+                  className="h-7 w-7 p-0"
+                >
+                  <Plus className="w-3 h-3" />
+                </Button>
+              </div>
             </div>
-          </div>
-        ))}
-        
-        <div className="pt-4 border-t">
-          <div className="text-center">
-            <div className="text-sm text-gray-600">
-              Click + or - to instantly update your daily totals
+          ))}
+          
+          <div className="pt-4 border-t">
+            <div className="text-center">
+              <div className="text-sm text-gray-600">
+                Click + or - to instantly update your daily totals
+              </div>
             </div>
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

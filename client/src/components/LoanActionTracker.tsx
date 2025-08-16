@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileCheck, DollarSign, Home, Plus, Minus } from "lucide-react";
 
@@ -84,17 +83,19 @@ export default function LoanActionTracker() {
     : 0;
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+    <div>
+      <div className="mb-5">
+        <h3 className="text-base font-semibold text-gray-900 mb-1 flex items-center gap-2">
           <FileCheck className="w-5 h-5" />
           Loan Actions
-        </CardTitle>
+        </h3>
         <p className="text-sm text-gray-600">
           Today's total: {todayTotal} actions
         </p>
-      </CardHeader>
-      <CardContent className="space-y-2">
+      </div>
+      
+      <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
+        <div className="space-y-2">
         {actionTypes.map((type) => (
           <div key={type.key} className="flex items-center justify-between p-2 border rounded-lg">
             <div className="flex items-center gap-2">
@@ -131,7 +132,8 @@ export default function LoanActionTracker() {
             </div>
           </div>
         ))}
-      </CardContent>
-    </Card>
+        </div>
+      </div>
+    </div>
   );
 }

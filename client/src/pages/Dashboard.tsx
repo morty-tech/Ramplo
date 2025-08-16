@@ -250,7 +250,10 @@ export default function Dashboard() {
 
       {/* Stats Cards */}
       <div className="mb-8">
-        <h3 className="text-base font-semibold text-gray-900 mb-5">Today's Performance</h3>
+        <h3 className="text-base font-semibold text-gray-900 mb-5 flex items-center gap-2">
+          <Target className="w-5 h-5" />
+          Today's Performance
+        </h3>
         
         <dl className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((item) => (
@@ -294,7 +297,10 @@ export default function Dashboard() {
         {/* Today's Tasks */}
         <div className="lg:col-span-2">
           <div className="flex items-center justify-between mb-5">
-            <h3 className="text-base font-semibold text-gray-900">Today's Tasks</h3>
+            <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2">
+              <Calendar className="w-5 h-5" />
+              Today's Tasks
+            </h3>
             <span className="text-sm text-gray-600">
               {new Date().toLocaleDateString('en-US', { 
                 weekday: 'long',
@@ -426,14 +432,13 @@ export default function Dashboard() {
           <LoanActionTracker />
 
           {/* Quick Actions */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Send className="w-5 h-5" />
-                Quick Actions
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
+          <div>
+            <h3 className="text-base font-semibold text-gray-900 mb-5 flex items-center gap-2">
+              <Send className="w-5 h-5" />
+              Quick Actions
+            </h3>
+            
+            <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
               <div className="space-y-3">
                 <Button 
                   variant="outline" 
@@ -460,8 +465,8 @@ export default function Dashboard() {
                   View Roadmap
                 </Button>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       </div>
 
