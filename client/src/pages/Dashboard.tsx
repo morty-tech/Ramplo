@@ -372,7 +372,7 @@ export default function Dashboard() {
                       </div>
                       <div className="flex flex-none items-center gap-x-4 py-5">
                         {isCompleted ? (
-                          <div className="flex items-center gap-2 mr-6">
+                          <div className="flex items-center gap-2 mr-3">
                             <span className="text-xs font-semibold text-forest-600 uppercase tracking-wide">Completed</span>
                             <Check className="w-5 h-5 text-forest-600" />
                           </div>
