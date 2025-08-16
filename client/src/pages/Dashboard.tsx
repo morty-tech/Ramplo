@@ -325,7 +325,7 @@ export default function Dashboard() {
                         <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-xl font-black relative top-5 shadow-lg transition-all duration-300 ${
                           isCompleted 
                             ? 'bg-gray-100 text-gray-600 shadow-gray-200' 
-                            : 'bg-limeglow-400 text-forest-800 shadow-limeglow-200 hover:shadow-xl hover:scale-105'
+                            : 'bg-limeglow-400 text-forest-800 shadow-lg shadow-lime-200 hover:shadow-xl hover:scale-105'
                         }`}>
                           {index + 1}
                         </div>
