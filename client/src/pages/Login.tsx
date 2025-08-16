@@ -76,8 +76,11 @@ export default function Login() {
     <div className="min-h-screen bg-gradient-to-br from-forest-800 to-tealwave-800">
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <div className="mx-auto h-10 w-10 bg-white rounded-lg flex items-center justify-center">
-            <span className="text-forest-800 font-bold text-xl">R</span>
+          <div className="flex items-center justify-center">
+            <div className="h-10 w-10 bg-white rounded-lg flex items-center justify-center mr-3">
+              <span className="text-forest-800 font-bold text-xl">R</span>
+            </div>
+            <span className="text-white font-bold text-2xl">RampLO</span>
           </div>
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">Sign in to your account</h2>
         </div>
@@ -123,7 +126,7 @@ export default function Login() {
 
           <p className="mt-10 text-center text-sm/6 text-gray-400">
             New to RampLO?{' '}
-            <a href="/" className="font-semibold text-limeglow-400 hover:text-limeglow-300">
+            <a href="/" className="font-semibold text-limeglow-400 hover:text-limeglow-300 ml-2">
               Learn more
             </a>
           </p>
