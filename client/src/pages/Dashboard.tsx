@@ -325,12 +325,8 @@ export default function Dashboard() {
                 const isExpanded = expandedTaskId === task.id;
                 
                 return (
-                  <li key={task.id} className={`transition-all duration-200 ${
-                    isExpanded ? 'bg-gray-50 -mx-4 sm:-mx-6 rounded-lg' : ''
-                  }`}>
-                    <div className={`flex items-center justify-between gap-x-6 py-5 ${
-                      isExpanded ? 'px-8 sm:px-10' : 'px-0'
-                    }`}>
+                  <li key={task.id} className="transition-all duration-200">
+                    <div className="flex items-center justify-between gap-x-6 py-5">
                       <div className="min-w-0 flex-grow cursor-pointer" onClick={() => handleTaskClick(task)}>
                         <div className="flex items-start gap-x-3">
                           <p className={`text-sm/6 font-semibold transition-all duration-300 ${
@@ -390,7 +386,7 @@ export default function Dashboard() {
                     </div>
                     
                     {isExpanded && (
-                      <div className="px-8 sm:px-10 pb-5 border-t border-gray-200 mt-2 pt-4">
+                      <div className="pb-5 border-t border-gray-200 mt-2 pt-4">
                         <div className="space-y-4">
                           <div>
                             <h4 className="text-sm font-medium text-gray-900 mb-2">Description</h4>
