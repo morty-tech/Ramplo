@@ -255,7 +255,7 @@ export default function Onboarding() {
                         id="firstName"
                         value={formData.firstName}
                         onChange={(e) => setFormData(prev => ({ ...prev, firstName: e.target.value }))}
-                        placeholder="John"
+                        placeholder="Riley"
                       />
                     </div>
                     <div>
@@ -264,7 +264,7 @@ export default function Onboarding() {
                         id="lastName"
                         value={formData.lastName}
                         onChange={(e) => setFormData(prev => ({ ...prev, lastName: e.target.value }))}
-                        placeholder="Smith"
+                        placeholder="Parker"
                       />
                     </div>
                   </div>
