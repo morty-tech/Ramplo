@@ -352,20 +352,33 @@ export default function Dashboard() {
                           )}
                         </div>
                         {!isExpanded && (
-                          <div className="mt-1 flex items-center gap-x-2 text-xs/5 text-gray-500">
-                            <p className="whitespace-nowrap">
-                              Est. {task.estimatedMinutes} min
-                            </p>
-                            <svg viewBox="0 0 2 2" className="size-0.5 fill-current">
-                              <circle r={1} cx={1} cy={1} />
-                            </svg>
-                            <Badge className="bg-forest-600 text-white text-xs hover:bg-forest-700">
-                              {task.category}
-                            </Badge>
-                            <svg viewBox="0 0 2 2" className="size-0.5 fill-current">
-                              <circle r={1} cx={1} cy={1} />
-                            </svg>
-                            <p className="truncate">{task.description}</p>
+                          <div className="mt-1 space-y-1">
+                            <div className="flex items-center gap-x-2 text-xs/5 text-gray-500">
+                              <p className="whitespace-nowrap">
+                                Est. {task.estimatedMinutes} min
+                              </p>
+                              <svg viewBox="0 0 2 2" className="size-0.5 fill-current">
+                                <circle r={1} cx={1} cy={1} />
+                              </svg>
+                              <p className="truncate">{task.description}</p>
+                            </div>
+                            <div>
+                              <Badge className={`text-xs ${
+                                task.category.toLowerCase().includes('call') || task.category.toLowerCase().includes('phone') 
+                                  ? 'bg-forest-100 text-forest-800'
+                                  : task.category.toLowerCase().includes('email') || task.category.toLowerCase().includes('message')
+                                  ? 'bg-limeglow-100 text-limeglow-800'
+                                  : task.category.toLowerCase().includes('research') || task.category.toLowerCase().includes('study')
+                                  ? 'bg-tealwave-100 text-tealwave-800'
+                                  : task.category.toLowerCase().includes('network') || task.category.toLowerCase().includes('connect')
+                                  ? 'bg-forest-100 text-forest-800'
+                                  : task.category.toLowerCase().includes('social') || task.category.toLowerCase().includes('media')
+                                  ? 'bg-limeglow-100 text-limeglow-800'
+                                  : 'bg-gray-100 text-gray-800'
+                              }`}>
+                                {task.category}
+                              </Badge>
+                            </div>
                           </div>
                         )}
                       </div>
