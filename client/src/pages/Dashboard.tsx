@@ -230,9 +230,10 @@ export default function Dashboard() {
           </h1>
         </div>
         
-        {/* Week indicator - aligned with headline on medium+ screens */}
-        <div className="flex flex-col items-center mt-4 md:mt-0">
-          <p>Week {currentWeek} of 14</p>
+        {/* Week focus and indicator - aligned with headline on medium+ screens */}
+        <div className="flex flex-col items-end mt-4 md:mt-0 text-right">
+          <p className="text-gray-600 text-sm mb-1">This week's focus is {getWeekFocus(currentWeek)}</p>
+          <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Week {currentWeek} of 14</p>
         </div>
       </div>
 
