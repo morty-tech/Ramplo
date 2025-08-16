@@ -341,37 +341,25 @@ export default function Landing() {
               Free for Morty users • $49/month for others • No commitment required
             </p>
             
-            {/* Arrow paths - straight up */}
+            {/* Animated diagonal lines */}
             <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-              {/* Arrow path 1 */}
-              <svg className="absolute bottom-0 left-[15%] w-12 h-24 animate-[arrowRise_8s_ease-out_infinite]" viewBox="0 0 24 48">
-                <path d="M12 48 L12 8 L8 12 M12 8 L16 12" stroke="#22c55e" strokeWidth="1.5" fill="none" opacity="0.3" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              {/* Diagonal line 1 */}
+              <div className="absolute w-px h-32 bg-gradient-to-t from-transparent via-green-400 to-transparent opacity-30 animate-[slide_8s_linear_infinite] -top-16 left-1/4 transform rotate-12"></div>
               
-              {/* Arrow path 2 */}
-              <svg className="absolute bottom-0 left-[35%] w-10 h-20 animate-[arrowRise_10s_ease-out_infinite_2s]" viewBox="0 0 20 40">
-                <path d="M10 40 L10 6 L7 10 M10 6 L13 10" stroke="#84cc16" strokeWidth="1.5" fill="none" opacity="0.25" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              {/* Diagonal line 2 */}
+              <div className="absolute w-px h-24 bg-gradient-to-t from-transparent via-lime-400 to-transparent opacity-25 animate-[slide_6s_linear_infinite_2s] -top-12 left-1/2 transform rotate-15"></div>
               
-              {/* Arrow path 3 */}
-              <svg className="absolute bottom-0 left-[55%] w-14 h-28 animate-[arrowRise_12s_ease-out_infinite_4s]" viewBox="0 0 28 56">
-                <path d="M14 56 L14 10 L10 14 M14 10 L18 14" stroke="#16a34a" strokeWidth="1.5" fill="none" opacity="0.35" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              {/* Diagonal line 3 */}
+              <div className="absolute w-px h-40 bg-gradient-to-t from-transparent via-green-500 to-transparent opacity-20 animate-[slide_10s_linear_infinite_1s] -top-20 right-1/3 transform rotate-8"></div>
               
-              {/* Arrow path 4 */}
-              <svg className="absolute bottom-0 left-[75%] w-8 h-16 animate-[arrowRise_6s_ease-out_infinite_1s]" viewBox="0 0 16 32">
-                <path d="M8 32 L8 4 L5 8 M8 4 L11 8" stroke="#65a30d" strokeWidth="1.5" fill="none" opacity="0.2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              {/* Diagonal line 4 */}
+              <div className="absolute w-px h-28 bg-gradient-to-t from-transparent via-lime-500 to-transparent opacity-35 animate-[slide_7s_linear_infinite_3s] -top-14 left-1/6 transform rotate-20"></div>
               
-              {/* Arrow path 5 */}
-              <svg className="absolute bottom-0 left-[25%] w-10 h-22 animate-[arrowRise_14s_ease-out_infinite_3s]" viewBox="0 0 20 44">
-                <path d="M10 44 L10 8 L7 12 M10 8 L13 12" stroke="#22d3ee" strokeWidth="1.5" fill="none" opacity="0.15" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              {/* Diagonal line 5 */}
+              <div className="absolute w-px h-36 bg-gradient-to-t from-transparent via-green-300 to-transparent opacity-15 animate-[slide_9s_linear_infinite_4s] -top-18 right-1/4 transform rotate-10"></div>
               
-              {/* Arrow path 6 */}
-              <svg className="absolute bottom-0 left-[65%] w-12 h-24 animate-[arrowRise_9s_ease-out_infinite_5s]" viewBox="0 0 24 48">
-                <path d="M12 48 L12 10 L8 14 M12 10 L16 14" stroke="#a3e635" strokeWidth="1.5" fill="none" opacity="0.3" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              {/* Diagonal line 6 */}
+              <div className="absolute w-px h-20 bg-gradient-to-t from-transparent via-lime-600 to-transparent opacity-40 animate-[slide_5s_linear_infinite_1.5s] -top-10 left-3/4 transform rotate-18"></div>
             </div>
           </div>
         </div>
