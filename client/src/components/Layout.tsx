@@ -11,10 +11,10 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
-  const { isMortyUser } = useAuth();
+  const { isMortyUser, profile } = useAuth();
   const [location] = useLocation();
   
-  const isOnboarding = location === "/onboarding";
+  const isOnboarding = location === "/onboarding" || (location === "/" && !profile?.onboardingCompleted);
 
   return (
     <div className="min-h-screen bg-gray-50">
