@@ -334,7 +334,7 @@ export default function Onboarding() {
                           aria-label={option.label}
                           className={`group relative block rounded-lg border px-6 py-3 cursor-pointer transition-colors ${
                             formData.experienceLevel === option.value 
-                              ? 'border-forest-600 bg-forest-25 ring-2 ring-forest-600' 
+                              ? 'border-forest-600 bg-forest-200 ring-2 ring-forest-600' 
                               : 'border-slate-400 bg-white hover:border-forest-400'
                           }`}
                         >
