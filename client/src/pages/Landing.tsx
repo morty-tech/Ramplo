@@ -341,25 +341,30 @@ export default function Landing() {
               Free for Morty users • $49/month for others • No commitment required
             </p>
             
-            {/* Animated diagonal lines */}
+            {/* Particle effect */}
             <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-              {/* Diagonal line 1 */}
-              <div className="absolute w-px h-32 bg-gradient-to-t from-transparent via-green-400 to-transparent opacity-30 animate-[slide_8s_linear_infinite] -top-16 left-1/4 transform rotate-12"></div>
+              {/* Small particles */}
+              <div className="absolute w-1 h-1 bg-green-400 rounded-full animate-[drift_12s_linear_infinite] bottom-0 left-[10%]"></div>
+              <div className="absolute w-1.5 h-1.5 bg-lime-400 rounded-full animate-[drift_15s_linear_infinite_2s] bottom-0 left-[25%]"></div>
+              <div className="absolute w-0.5 h-0.5 bg-green-500 rounded-full animate-[drift_10s_linear_infinite_4s] bottom-0 left-[40%]"></div>
+              <div className="absolute w-2 h-2 bg-lime-300 rounded-full animate-[drift_18s_linear_infinite_1s] bottom-0 left-[55%]"></div>
+              <div className="absolute w-1 h-1 bg-green-300 rounded-full animate-[drift_14s_linear_infinite_3s] bottom-0 left-[70%]"></div>
+              <div className="absolute w-1.5 h-1.5 bg-lime-500 rounded-full animate-[drift_16s_linear_infinite_5s] bottom-0 left-[85%]"></div>
               
-              {/* Diagonal line 2 */}
-              <div className="absolute w-px h-24 bg-gradient-to-t from-transparent via-lime-400 to-transparent opacity-25 animate-[slide_6s_linear_infinite_2s] -top-12 left-1/2 transform rotate-15"></div>
+              {/* Medium particles */}
+              <div className="absolute w-1 h-1 bg-green-400 rounded-full animate-[drift_13s_linear_infinite_6s] bottom-0 left-[15%]"></div>
+              <div className="absolute w-0.5 h-0.5 bg-lime-400 rounded-full animate-[drift_11s_linear_infinite_7s] bottom-0 left-[35%]"></div>
+              <div className="absolute w-2 h-2 bg-green-200 rounded-full animate-[drift_20s_linear_infinite_2.5s] bottom-0 left-[50%]"></div>
+              <div className="absolute w-1 h-1 bg-lime-600 rounded-full animate-[drift_17s_linear_infinite_4.5s] bottom-0 left-[65%]"></div>
+              <div className="absolute w-1.5 h-1.5 bg-green-500 rounded-full animate-[drift_9s_linear_infinite_6.5s] bottom-0 left-[80%]"></div>
               
-              {/* Diagonal line 3 */}
-              <div className="absolute w-px h-40 bg-gradient-to-t from-transparent via-green-500 to-transparent opacity-20 animate-[slide_10s_linear_infinite_1s] -top-20 right-1/3 transform rotate-8"></div>
-              
-              {/* Diagonal line 4 */}
-              <div className="absolute w-px h-28 bg-gradient-to-t from-transparent via-lime-500 to-transparent opacity-35 animate-[slide_7s_linear_infinite_3s] -top-14 left-1/6 transform rotate-20"></div>
-              
-              {/* Diagonal line 5 */}
-              <div className="absolute w-px h-36 bg-gradient-to-t from-transparent via-green-300 to-transparent opacity-15 animate-[slide_9s_linear_infinite_4s] -top-18 right-1/4 transform rotate-10"></div>
-              
-              {/* Diagonal line 6 */}
-              <div className="absolute w-px h-20 bg-gradient-to-t from-transparent via-lime-600 to-transparent opacity-40 animate-[slide_5s_linear_infinite_1.5s] -top-10 left-3/4 transform rotate-18"></div>
+              {/* Large particles */}
+              <div className="absolute w-0.5 h-0.5 bg-lime-200 rounded-full animate-[drift_22s_linear_infinite_8s] bottom-0 left-[5%]"></div>
+              <div className="absolute w-2.5 h-2.5 bg-green-300 rounded-full animate-[drift_8s_linear_infinite_1.5s] bottom-0 left-[30%]"></div>
+              <div className="absolute w-1 h-1 bg-lime-500 rounded-full animate-[drift_19s_linear_infinite_3.5s] bottom-0 left-[45%]"></div>
+              <div className="absolute w-1.5 h-1.5 bg-green-400 rounded-full animate-[drift_21s_linear_infinite_5.5s] bottom-0 left-[60%]"></div>
+              <div className="absolute w-0.5 h-0.5 bg-lime-300 rounded-full animate-[drift_7s_linear_infinite_7.5s] bottom-0 left-[75%]"></div>
+              <div className="absolute w-1 h-1 bg-green-600 rounded-full animate-[drift_25s_linear_infinite_9s] bottom-0 left-[90%]"></div>
             </div>
           </div>
         </div>
