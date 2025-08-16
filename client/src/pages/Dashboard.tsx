@@ -297,15 +297,15 @@ export default function Dashboard() {
           <div className="flex items-center justify-between mb-5">
             <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2">
               <Calendar className="w-5 h-5" />
-{profile?.firstName || user?.firstName || 'Your'}'s Tasks Today
+{profile?.firstName || user?.firstName || 'Your'}'s Tasks for {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
             </h3>
           </div>
           
           <div className="relative overflow-hidden rounded-lg bg-white px-0 pt-0 pb-4 shadow-sm sm:px-0">
             {todaysObjective && (
-              <div className="bg-forest-500 text-white px-4 py-4 sm:px-6 mb-4">
+              <div className="bg-forest-400 text-white px-4 py-4 sm:px-6 mb-4">
                 <div className="text-center">
-                  <div className="text-xs font-semibold text-white/80 uppercase tracking-wide mb-1">Focus for {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</div>
+                  <div className="text-xs font-semibold text-white/80 uppercase tracking-wide mb-1">Focus for Today</div>
                   <div className="text-base font-medium text-white">{todaysObjective}</div>
                 </div>
               </div>
