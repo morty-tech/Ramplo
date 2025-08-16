@@ -53,6 +53,12 @@ export function TagInput({ value, onChange, placeholder, maxTags, className }: T
         </Button>
       </div>
       
+      {maxTags && (
+        <p className="text-xs text-gray-500">
+          {value.length}/{maxTags} {maxTags === 1 ? 'item' : 'items'} selected
+        </p>
+      )}
+      
       {value.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {value.map((tag) => (
@@ -68,12 +74,6 @@ export function TagInput({ value, onChange, placeholder, maxTags, className }: T
             </span>
           ))}
         </div>
-      )}
-      
-      {maxTags && (
-        <p className="text-xs text-gray-500">
-          {value.length}/{maxTags} {maxTags === 1 ? 'item' : 'items'} selected
-        </p>
       )}
     </div>
   );
