@@ -101,7 +101,7 @@ export default function Login() {
                   required
                   autoComplete="email"
                   placeholder="Enter your email address"
-                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-limeglow-400 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white/20 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/30 placeholder:text-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-limeglow-400 sm:text-sm/6"
                 />
               </div>
             </div>
@@ -110,7 +110,7 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={isLoading || !email}
-                className="flex w-full justify-center rounded-md bg-forest-600 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-forest-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest-400 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex w-full justify-center rounded-md bg-forest-400 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-limeglow-600 hover:text-forest-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-limeglow-400 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
                   <>
