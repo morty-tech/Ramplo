@@ -4,6 +4,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import EmailConfirmation from "@/components/EmailConfirmation";
+import TransparentFooter from "@/components/TransparentFooter";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -114,6 +115,8 @@ export default function Login() {
           </p>
         </div>
       </div>
+      
+      <TransparentFooter />
     </div>
   );
 }

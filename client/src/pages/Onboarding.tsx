@@ -11,6 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { TagInput } from "@/components/ui/tag-input";
+import TransparentFooter from "@/components/TransparentFooter";
 import { Loader2, User, Clock, Target, Users, MessageSquare, TrendingUp, X } from "lucide-react";
 
 export default function Onboarding() {
@@ -219,6 +220,8 @@ export default function Onboarding() {
             </div>
           </div>
         </div>
+        
+        <TransparentFooter />
       </div>
     );
   }
@@ -1097,6 +1100,8 @@ export default function Onboarding() {
           </div>
         </div>
       </div>
+      
+      <TransparentFooter />
     </div>
   );
 }
