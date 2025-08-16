@@ -225,10 +225,10 @@ export default function Dashboard() {
       {/* Header */}
       <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between">
         <div>
+          <p className="text-gray-600 mb-1">Hi {profile?.firstName || user?.firstName || 'there'}!</p>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            My Weekly Focus: {getWeekFocus(currentWeek)}
+            Your Weekly Focus: {getWeekFocus(currentWeek)}
           </h1>
-          <p className="text-gray-600">Hello {profile?.firstName || user?.firstName || 'there'}, let's ramp!</p>
         </div>
         
         {/* Week indicator - aligned with headline on medium+ screens */}
