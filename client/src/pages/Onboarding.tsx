@@ -442,12 +442,18 @@ export default function Onboarding() {
                           { value: "not-sure", label: "Not Sure" },
                           { value: "other", label: "Other" },
                         ].find(opt => opt.value === focusType);
+                        
+                        // Use custom input for "other" if available
+                        const displayLabel = focusType === "other" && formData.otherFocus 
+                          ? formData.otherFocus 
+                          : option?.label;
+                        
                         return (
                           <div
                             key={focusType}
                             className="inline-flex items-center gap-1 px-3 py-1 bg-forest-200 text-forest-800 rounded-full text-sm"
                           >
-                            {option?.label}
+                            {displayLabel}
                             <button
                               type="button"
                               onClick={() => handleArrayChange("focus", focusType, false)}
@@ -533,12 +539,18 @@ export default function Onboarding() {
                     <div className="flex flex-wrap gap-2 mt-2">
                       {formData.borrowerTypes.map((type) => {
                         const option = borrowerTypeOptions.find(opt => opt.value === type);
+                        
+                        // Use custom input for "other" if available
+                        const displayLabel = type === "other" && formData.otherBorrowerType 
+                          ? formData.otherBorrowerType 
+                          : option?.label;
+                        
                         return (
                           <div
                             key={type}
                             className="inline-flex items-center gap-1 px-3 py-1 bg-forest-200 text-forest-800 rounded-full text-sm"
                           >
-                            {option?.label}
+                            {displayLabel}
                             <button
                               type="button"
                               onClick={() => handleArrayChange("borrowerTypes", type, false)}
