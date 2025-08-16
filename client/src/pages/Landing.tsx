@@ -341,36 +341,26 @@ export default function Landing() {
               Free for Morty users • $49/month for others • No commitment required
             </p>
             
-            {/* Arrow paths */}
+            {/* Wave animation */}
             <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-              {/* Arrow path 1 */}
-              <svg className="absolute bottom-0 left-[15%] w-12 h-24 animate-[arrowRise_8s_ease-out_infinite]" viewBox="0 0 24 48">
-                <path d="M8 48 L18 8 L14 12 M18 8 L22 12" stroke="#22c55e" strokeWidth="1.5" fill="none" opacity="0.3" strokeLinecap="round" strokeLinejoin="round"/>
+              {/* Wave layer 1 */}
+              <svg className="absolute bottom-0 left-0 w-full h-24 animate-[wave_8s_ease-in-out_infinite]" viewBox="0 0 400 100" preserveAspectRatio="none">
+                <path d="M0,60 Q100,20 200,60 T400,60 L400,100 L0,100 Z" fill="#22c55e" opacity="0.1"/>
               </svg>
               
-              {/* Arrow path 2 */}
-              <svg className="absolute bottom-0 left-[35%] w-10 h-20 animate-[arrowRise_10s_ease-out_infinite_2s]" viewBox="0 0 20 40">
-                <path d="M6 40 L16 6 L12 10 M16 6 L20 10" stroke="#84cc16" strokeWidth="1.5" fill="none" opacity="0.25" strokeLinecap="round" strokeLinejoin="round"/>
+              {/* Wave layer 2 */}
+              <svg className="absolute bottom-0 left-0 w-full h-20 animate-[wave_12s_ease-in-out_infinite_2s]" viewBox="0 0 400 80" preserveAspectRatio="none">
+                <path d="M0,50 Q150,10 300,50 T600,50 L600,80 L0,80 Z" fill="#84cc16" opacity="0.15"/>
               </svg>
               
-              {/* Arrow path 3 */}
-              <svg className="absolute bottom-0 left-[55%] w-14 h-28 animate-[arrowRise_12s_ease-out_infinite_4s]" viewBox="0 0 28 56">
-                <path d="M8 56 L20 10 L16 14 M20 10 L24 14" stroke="#16a34a" strokeWidth="1.5" fill="none" opacity="0.35" strokeLinecap="round" strokeLinejoin="round"/>
+              {/* Wave layer 3 */}
+              <svg className="absolute bottom-0 left-0 w-full h-16 animate-[wave_15s_ease-in-out_infinite_4s]" viewBox="0 0 400 64" preserveAspectRatio="none">
+                <path d="M0,40 Q80,5 160,40 T320,40 T480,40 L480,64 L0,64 Z" fill="#16a34a" opacity="0.08"/>
               </svg>
               
-              {/* Arrow path 4 */}
-              <svg className="absolute bottom-0 left-[75%] w-8 h-16 animate-[arrowRise_6s_ease-out_infinite_1s]" viewBox="0 0 16 32">
-                <path d="M4 32 L12 4 L8 8 M12 4 L16 8" stroke="#65a30d" strokeWidth="1.5" fill="none" opacity="0.2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              
-              {/* Curved arrow path 1 */}
-              <svg className="absolute bottom-0 left-[25%] w-16 h-32 animate-[arrowRise_14s_ease-out_infinite_3s]" viewBox="0 0 32 64">
-                <path d="M4 64 Q12 40 28 16 L24 20 M28 16 L32 20" stroke="#22d3ee" strokeWidth="1.5" fill="none" opacity="0.15" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              
-              {/* Curved arrow path 2 */}
-              <svg className="absolute bottom-0 left-[65%] w-12 h-24 animate-[arrowRise_9s_ease-out_infinite_5s]" viewBox="0 0 24 48">
-                <path d="M6 48 Q12 30 20 12 L16 16 M20 12 L24 16" stroke="#a3e635" strokeWidth="1.5" fill="none" opacity="0.3" strokeLinecap="round" strokeLinejoin="round"/>
+              {/* Wave layer 4 */}
+              <svg className="absolute bottom-0 left-0 w-full h-12 animate-[wave_10s_ease-in-out_infinite_1s]" viewBox="0 0 400 48" preserveAspectRatio="none">
+                <path d="M0,30 Q120,8 240,30 T480,30 L480,48 L0,48 Z" fill="#65a30d" opacity="0.12"/>
               </svg>
             </div>
           </div>
