@@ -284,7 +284,7 @@ export default function Onboarding() {
                   </div>
                   
                   <div>
-                    <Label className="font-medium block mb-2">Markets/Cities You Serve</Label>
+                    <Label className="font-medium block mb-2">Up to 4 Markets You Serve or want to serve</Label>
                     <div className="max-w-md">
                       <TagInput
                         value={formData.markets}
@@ -293,9 +293,6 @@ export default function Onboarding() {
                         maxTags={4}
                       />
                     </div>
-                    <p className="text-sm text-gray-600 mt-2">
-                      Add up to 4 cities or market areas where you primarily work
-                    </p>
                   </div>
                 </div>
               )}
