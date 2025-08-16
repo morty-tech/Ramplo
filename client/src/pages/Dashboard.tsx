@@ -309,16 +309,18 @@ export default function Dashboard() {
             </span>
           </div>
           
-          <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
+          <div className="relative overflow-hidden rounded-lg bg-white px-0 pt-0 pb-4 shadow-sm sm:px-0">
             {todaysObjective && (
-              <div className="flex items-center text-sm text-gray-600 mb-4">
-                <Target className="w-4 h-4 mr-2 text-blue-600" />
-                <span className="font-medium text-blue-700">Today's Focus:</span>
-                <span className="ml-1">{todaysObjective}</span>
+              <div className="bg-forest-600 text-white px-4 py-4 sm:px-6 mb-4">
+                <div className="flex items-center text-sm">
+                  <Target className="w-4 h-4 mr-2 text-white" />
+                  <span className="font-medium text-white">Today's Focus:</span>
+                  <span className="ml-1">{todaysObjective}</span>
+                </div>
               </div>
             )}
             
-            <ul role="list" className="divide-y divide-gray-100">
+            <ul role="list" className="divide-y divide-gray-100 px-4 sm:px-6">
               {todayTasks.map((task: Task) => {
                 const isCompleting = completingTaskId === task.id;
                 const isCompleted = task.completed;
