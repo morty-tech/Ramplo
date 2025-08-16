@@ -317,7 +317,7 @@ export default function Dashboard() {
               </div>
             )}
             
-            <ul role="list" className="divide-y divide-gray-100 -mx-4 sm:-mx-6">
+            <ul role="list" className="divide-y divide-gray-100">
               {todayTasks.map((task: Task) => {
                 const isCompleting = completingTaskId === task.id;
                 const isCompleted = task.completed;
@@ -326,9 +326,11 @@ export default function Dashboard() {
                 
                 return (
                   <li key={task.id} className={`transition-all duration-200 ${
-                    isExpanded ? 'bg-gray-50 mx-4 sm:mx-6 rounded-lg' : ''
+                    isExpanded ? 'bg-gray-50 -mx-4 sm:-mx-6 rounded-lg' : ''
                   }`}>
-                    <div className="flex items-center justify-between gap-x-6 py-5 px-4 sm:px-6">
+                    <div className={`flex items-center justify-between gap-x-6 py-5 ${
+                      isExpanded ? 'px-8 sm:px-10' : 'px-0'
+                    }`}>
                       <div className="min-w-0 flex-grow cursor-pointer" onClick={() => handleTaskClick(task)}>
                         <div className="flex items-start gap-x-3">
                           <p className={`text-sm/6 font-semibold transition-all duration-300 ${
@@ -388,7 +390,7 @@ export default function Dashboard() {
                     </div>
                     
                     {isExpanded && (
-                      <div className="px-4 sm:px-6 pb-5 border-t border-gray-200 mt-2 pt-4">
+                      <div className="px-8 sm:px-10 pb-5 border-t border-gray-200 mt-2 pt-4">
                         <div className="space-y-4">
                           <div>
                             <h4 className="text-sm font-medium text-gray-900 mb-2">Description</h4>
@@ -411,10 +413,10 @@ export default function Dashboard() {
                             </div>
                           </div>
                           
-                          {task.details && (
+                          {task.detailedDescription && (
                             <div>
                               <h4 className="text-sm font-medium text-gray-900 mb-2">Additional Details</h4>
-                              <p className="text-sm text-gray-600">{task.details}</p>
+                              <p className="text-sm text-gray-600">{task.detailedDescription}</p>
                             </div>
                           )}
                         </div>
@@ -425,7 +427,7 @@ export default function Dashboard() {
               })}
               
               {todayTasks.length === 0 && (
-                <li className="text-center py-8 text-gray-500 px-4 sm:px-6">
+                <li className="text-center py-8 text-gray-500">
                   <Calendar className="w-12 h-12 mx-auto mb-4 text-gray-300" />
                   <p>No tasks scheduled for today</p>
                 </li>
