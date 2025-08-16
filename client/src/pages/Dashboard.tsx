@@ -369,7 +369,7 @@ export default function Dashboard() {
                                   : ['Research', 'Market Analysis', 'Lead Generation'].includes(task.category)
                                   ? 'bg-tealwave-100 text-tealwave-800'
                                   : ['Social Media', 'Content Creation', 'Marketing'].includes(task.category)
-                                  ? 'bg-neon-100 text-neon-800'
+                                  ? 'bg-lime-100 text-lime-800'
                                   : ['Admin', 'Planning', 'Setup'].includes(task.category)
                                   ? 'bg-slate-100 text-slate-800'
                                   : 'bg-gray-100 text-gray-800'
