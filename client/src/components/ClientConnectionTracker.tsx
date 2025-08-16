@@ -60,22 +60,16 @@ export default function ClientConnectionTracker() {
       key: "phoneCalls" as keyof DailyConnections,
       label: "Phone Calls",
       icon: Phone,
-      color: "text-blue-600",
-      bgColor: "bg-blue-100",
     },
     {
       key: "textMessages" as keyof DailyConnections,
       label: "Text Messages", 
       icon: MessageSquare,
-      color: "text-green-600",
-      bgColor: "bg-green-100",
     },
     {
       key: "emails" as keyof DailyConnections,
       label: "Emails",
       icon: Mail,
-      color: "text-purple-600",
-      bgColor: "bg-purple-100",
     },
   ];
 
@@ -95,14 +89,17 @@ export default function ClientConnectionTracker() {
       </div>
       
       <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
-        <div className="space-y-2">
+        <div className="space-y-4">
           {connectionTypes.map((type) => (
-            <div key={type.key} className="flex items-center justify-between p-2 border rounded-lg">
-              <div className="flex items-center gap-2">
-                <div className={`w-8 h-8 ${type.bgColor} rounded-full flex items-center justify-center`}>
-                  <type.icon className={`${type.color} w-4 h-4`} />
+            <div key={type.key} className="flex items-center justify-between py-2">
+              <div className="flex items-center gap-3">
+                <div className="absolute rounded-md bg-forest-500 p-3">
+                  <type.icon aria-hidden="true" className="size-6 text-white" />
                 </div>
-                <div className="font-medium text-sm">{type.label}</div>
+                <div className="ml-16">
+                  <p className="text-sm font-medium text-gray-500">{type.label}</p>
+                  <p className="text-2xl font-semibold text-gray-900">{todayConnections?.[type.key] || 0}</p>
+                </div>
               </div>
               
               <div className="flex items-center gap-2">
@@ -116,10 +113,6 @@ export default function ClientConnectionTracker() {
                   <Minus className="w-3 h-3" />
                 </Button>
                 
-                <div className="w-8 text-center font-medium text-sm">
-                  {todayConnections?.[type.key] || 0}
-                </div>
-                
                 <Button
                   variant="outline"
                   size="sm"
@@ -132,14 +125,6 @@ export default function ClientConnectionTracker() {
               </div>
             </div>
           ))}
-          
-          <div className="pt-4 border-t">
-            <div className="text-center">
-              <div className="text-sm text-gray-600">
-                Click + or - to instantly update your daily totals
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

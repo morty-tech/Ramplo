@@ -59,22 +59,16 @@ export default function LoanActionTracker() {
       key: "preapprovals" as keyof LoanActions,
       label: "Preapprovals",
       icon: FileCheck,
-      color: "text-blue-600",
-      bgColor: "bg-blue-100",
     },
     {
       key: "applications" as keyof LoanActions,
       label: "Applications", 
       icon: DollarSign,
-      color: "text-green-600",
-      bgColor: "bg-green-100",
     },
     {
       key: "closings" as keyof LoanActions,
       label: "Closings",
       icon: Home,
-      color: "text-purple-600",
-      bgColor: "bg-purple-100",
     },
   ];
 
@@ -95,43 +89,42 @@ export default function LoanActionTracker() {
       </div>
       
       <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
-        <div className="space-y-2">
-        {actionTypes.map((type) => (
-          <div key={type.key} className="flex items-center justify-between p-2 border rounded-lg">
-            <div className="flex items-center gap-2">
-              <div className={`w-8 h-8 ${type.bgColor} rounded-full flex items-center justify-center`}>
-                <type.icon className={`${type.color} w-4 h-4`} />
-              </div>
-              <div className="font-medium text-sm">{type.label}</div>
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => adjustCount(type.key, false)}
-                disabled={updateLoanActionsMutation.isPending || !todayLoanActions?.[type.key]}
-                className="h-7 w-7 p-0"
-              >
-                <Minus className="w-3 h-3" />
-              </Button>
-              
-              <div className="w-8 text-center font-medium text-sm">
-                {todayLoanActions?.[type.key] || 0}
+        <div className="space-y-4">
+          {actionTypes.map((type) => (
+            <div key={type.key} className="flex items-center justify-between py-2">
+              <div className="flex items-center gap-3">
+                <div className="absolute rounded-md bg-forest-500 p-3">
+                  <type.icon aria-hidden="true" className="size-6 text-white" />
+                </div>
+                <div className="ml-16">
+                  <p className="text-sm font-medium text-gray-500">{type.label}</p>
+                  <p className="text-2xl font-semibold text-gray-900">{todayLoanActions?.[type.key] || 0}</p>
+                </div>
               </div>
               
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => adjustCount(type.key, true)}
-                disabled={updateLoanActionsMutation.isPending}
-                className="h-7 w-7 p-0"
-              >
-                <Plus className="w-3 h-3" />
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => adjustCount(type.key, false)}
+                  disabled={updateLoanActionsMutation.isPending || !todayLoanActions?.[type.key]}
+                  className="h-7 w-7 p-0"
+                >
+                  <Minus className="w-3 h-3" />
+                </Button>
+                
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => adjustCount(type.key, true)}
+                  disabled={updateLoanActionsMutation.isPending}
+                  className="h-7 w-7 p-0"
+                >
+                  <Plus className="w-3 h-3" />
+                </Button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
         </div>
       </div>
     </div>
