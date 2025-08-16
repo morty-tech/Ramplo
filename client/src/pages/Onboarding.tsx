@@ -212,7 +212,7 @@ export default function Onboarding() {
 
         <div className="sm:mx-auto sm:w-full sm:max-w-3xl mb-6">
           <div className="text-center mb-4">
-            <p className="text-xl font-semibold text-white">Help us personalize your 90-day ramp plan with a few quick questions.</p>
+            <p className="text-xl font-semibold text-white">First, let's personalize your 90-day ramp plan.</p>
           </div>
           
           <div className="mb-4">
@@ -242,7 +242,7 @@ export default function Onboarding() {
               {step === 1 && (
                 <div className="space-y-6">
                   <div className="flex items-center mb-4">
-                    <User className="w-6 h-6 text-blue-600 mr-3" />
+                    <User className="w-6 h-6 text-forest-800 mr-3" />
                     <Label className="text-lg font-medium text-gray-900">
                       Let's start with your basic information
                     </Label>
@@ -288,7 +288,7 @@ export default function Onboarding() {
               {step === 2 && (
                 <div>
                   <div className="flex items-center mb-4">
-                    <TrendingUp className="w-6 h-6 text-purple-600 mr-3" />
+                    <TrendingUp className="w-6 h-6 text-forest-800 mr-3" />
                     <Label className="text-lg font-medium text-gray-900">
                       What's your experience level as a mortgage loan officer?
                     </Label>
@@ -510,7 +510,7 @@ export default function Onboarding() {
                 <div className="space-y-8">
                   <div>
                     <div className="flex items-center mb-4">
-                      <Clock className="w-6 h-6 text-orange-600 mr-3" />
+                      <Clock className="w-6 h-6 text-forest-800 mr-3" />
                       <Label className="text-lg font-medium text-gray-900">
                         How much time can you dedicate to prospecting per weekday?
                       </Label>
@@ -571,7 +571,7 @@ export default function Onboarding() {
 
                   <div className="space-y-6">
                     <div className="flex items-center mb-4">
-                      <Users className="w-6 h-6 text-green-600 mr-3" />
+                      <Users className="w-6 h-6 text-forest-800 mr-3" />
                       <Label className="text-lg font-medium text-gray-900">
                         Tell us about your existing network assets
                       </Label>
@@ -787,7 +787,7 @@ export default function Onboarding() {
                 <div className="space-y-8">
                   <div>
                     <div className="flex items-center mb-4">
-                      <MessageSquare className="w-6 h-6 text-blue-600 mr-3" />
+                      <MessageSquare className="w-6 h-6 text-forest-800 mr-3" />
                       <Label className="text-lg font-medium text-gray-900">
                         What's your preferred communication tone?
                       </Label>
