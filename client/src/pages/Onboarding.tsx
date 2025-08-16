@@ -221,7 +221,9 @@ export default function Onboarding() {
           </div>
         </div>
         
-        <TransparentFooter />
+        <div className="mt-16">
+          <TransparentFooter />
+        </div>
       </div>
     );
   }
@@ -1101,7 +1103,9 @@ export default function Onboarding() {
         </div>
       </div>
       
-      <TransparentFooter />
+      <div className="mt-16">
+        <TransparentFooter />
+      </div>
     </div>
   );
 }
