@@ -259,7 +259,7 @@ export default function Landing() {
                   Simple steps to launch your mortgage career and secure your first deals in 90 days.
                 </p>
               </div>
-              <div className="relative -z-20 max-w-xl min-w-full rounded-xl lg:row-span-4 lg:w-[64rem] lg:max-w-none flex items-center justify-center bg-gradient-to-br from-tealwave-600 to-limeglow-600 p-16 shadow-xl ring-1 ring-white/10">
+              <div className="relative -z-20 max-w-xl min-w-full min-h-[32rem] rounded-xl lg:row-span-4 lg:w-[64rem] lg:max-w-none flex items-center justify-center bg-gradient-to-br from-tealwave-600 to-limeglow-600 py-24 px-16 shadow-xl ring-1 ring-white/10">
                 <div className="text-center">
                   <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
                     <Target className="w-12 h-12 text-forest-800" />
