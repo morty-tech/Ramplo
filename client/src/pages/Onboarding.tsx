@@ -210,18 +210,17 @@ export default function Onboarding() {
           </div>
         </div>
 
-        <div className="sm:mx-auto sm:w-full sm:max-w-3xl mb-8">
-          <div className="text-center mb-6">
-            <h1 className="text-3xl font-bold text-white mb-2">Welcome to RampLO!</h1>
-            <p className="text-gray-300">Help us personalize your 90-day ramp plan with a few quick questions.</p>
+        <div className="sm:mx-auto sm:w-full sm:max-w-3xl mb-6">
+          <div className="text-center mb-4">
+            <p className="text-xl font-semibold text-white">Help us personalize your 90-day ramp plan with a few quick questions.</p>
           </div>
           
-          <div className="mb-8">
+          <div className="mb-4">
             <div className="flex justify-between text-sm text-gray-300 mb-2">
               <span>Progress</span>
               <span>{Math.round(progress)}%</span>
             </div>
-            <Progress value={progress} className="h-2" />
+            <Progress value={progress} className="h-2 bg-white/20 [&>div]:bg-limeglow-400" />
           </div>
         </div>
 
