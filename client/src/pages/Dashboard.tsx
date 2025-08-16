@@ -364,13 +364,13 @@ export default function Dashboard() {
                             </div>
                             <div>
                               <Badge className={`text-xs ${
-                                ['Outreach', 'Client Calls', 'Follow-up'].includes(task.category) 
+                                ['outreach', 'client calls', 'follow-up'].includes(task.category?.toLowerCase() || '') 
                                   ? 'bg-forest-100 text-forest-800'
-                                  : ['Research', 'Market Analysis', 'Lead Generation'].includes(task.category)
+                                  : ['research', 'market analysis', 'lead generation'].includes(task.category?.toLowerCase() || '')
                                   ? 'bg-tealwave-100 text-tealwave-800'
-                                  : ['Social Media', 'Content Creation', 'Marketing', 'Branding'].includes(task.category)
+                                  : ['social media', 'content creation', 'marketing', 'branding'].includes(task.category?.toLowerCase() || '')
                                   ? 'bg-lime-100 text-lime-800'
-                                  : ['Admin', 'Planning', 'Setup', 'Organization'].includes(task.category)
+                                  : ['admin', 'planning', 'setup', 'organization'].includes(task.category?.toLowerCase() || '')
                                   ? 'bg-slate-100 text-slate-800'
                                   : 'bg-gray-100 text-gray-800'
                               }`}>
