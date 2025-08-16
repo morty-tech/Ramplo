@@ -321,8 +321,8 @@ export default function Dashboard() {
                 
                 return (
                   <li key={task.id} className="transition-all duration-200 group">
-                    <div className="flex items-start justify-between gap-x-6">
-                      <div className="flex items-start gap-x-4">
+                    <div className="flex items-start justify-between gap-x-2 md:gap-x-6">
+                      <div className="flex items-start gap-x-2 md:gap-x-4 flex-1 min-w-0">
                         <div className={`flex-shrink-0 w-10 h-10 rounded-md flex items-center justify-center text-xl font-black relative top-5 shadow-lg transition-all duration-300 cursor-pointer ${
                           isCompleted 
                             ? 'bg-forest-500 text-white shadow-gray-200' 
@@ -332,7 +332,7 @@ export default function Dashboard() {
                         </div>
                         <div className={`min-w-0 flex-grow cursor-pointer ${isExpanded ? 'pt-5 pb-2' : 'py-5'}`} onClick={() => handleTaskClick(task)}>
                           <div className="flex items-start gap-x-3">
-                            <p className={`text-base font-semibold transition-all duration-300 ${
+                            <p className={`text-lg font-semibold transition-all duration-300 ${
                               isCompleting 
                                 ? 'text-green-700' 
                                 : isCompleted 
@@ -373,7 +373,7 @@ export default function Dashboard() {
                           )}
                         </div>
                       </div>
-                      <div className="flex flex-none items-center gap-x-4 py-5">
+                      <div className="flex flex-none items-center py-5 min-w-0">
                         {!isCompleted && !isExpanded && (
                           <Button
                             onClick={(e) => {
@@ -383,7 +383,7 @@ export default function Dashboard() {
                               }
                             }}
                             disabled={isCompleting}
-                            className={`rounded-md px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 border ${
+                            className={`rounded-md px-2 md:px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 border whitespace-nowrap ${
                               isCompleting
                                 ? 'bg-green-500 text-white border-green-500'
                                 : 'bg-white text-forest-600 border-forest-600 hover:bg-forest-200'
