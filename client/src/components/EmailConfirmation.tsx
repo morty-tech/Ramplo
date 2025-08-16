@@ -1,3 +1,5 @@
+import TransparentFooter from "@/components/TransparentFooter";
+
 interface EmailConfirmationProps {
   email: string;
   onSendAnother: () => void;
@@ -43,6 +45,8 @@ export default function EmailConfirmation({ email, onSendAnother }: EmailConfirm
           </p>
         </div>
       </div>
+      
+      <TransparentFooter />
     </div>
   );
 }
