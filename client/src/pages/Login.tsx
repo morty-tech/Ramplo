@@ -133,10 +133,10 @@ export default function Login() {
                   className="flex w-full justify-center rounded-md bg-limeglow-400 px-3 py-1.5 text-sm/6 font-semibold text-forest-800 hover:bg-limeglow-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-limeglow-400 disabled:bg-limeglow-600 disabled:text-forest-800 disabled:cursor-not-allowed shadow-lg"
                 >
                   {isLoading ? (
-                    <>
+                    <div className="flex items-center justify-center">
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       Sending...
-                    </>
+                    </div>
                   ) : (
                     "Sign in with Magic Link"
                   )}
