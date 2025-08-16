@@ -52,11 +52,11 @@ export default function Login() {
 
   if (linkSent) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-        <Card className="w-full max-w-md">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-forest-800 to-tealwave-800 px-4">
+        <Card className="w-full max-w-md shadow-2xl border-0">
           <CardContent className="pt-6 text-center">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-16 h-16 bg-limeglow-400 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-8 h-8 text-forest-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
@@ -67,7 +67,7 @@ export default function Login() {
             <Button 
               variant="outline" 
               onClick={() => setLinkSent(false)}
-              className="w-full"
+              className="w-full border-gray-300 text-gray-700 hover:bg-gray-50"
             >
               Send another link
             </Button>
@@ -78,16 +78,23 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold text-gray-900">RampLO</CardTitle>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-forest-800 to-tealwave-800 px-4">
+      <div
+        className="absolute inset-0 bg-gradient-to-r from-forest-800/90 to-tealwave-800/90 pointer-events-none"
+        style={{
+          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0)`,
+          backgroundSize: '50px 50px'
+        }}
+      />
+      <Card className="w-full max-w-md shadow-2xl border-0 relative z-10">
+        <CardHeader className="text-center pb-8">
+          <CardTitle className="text-3xl font-bold text-gray-900 mb-2">RampLO</CardTitle>
           <p className="text-gray-600">AI-Powered 90-Day Training for Mortgage Loan Officers</p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <Label htmlFor="email">Email Address</Label>
+              <Label htmlFor="email" className="text-gray-700 font-medium">Email Address</Label>
               <Input
                 id="email"
                 type="email"
@@ -95,14 +102,14 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email address"
                 required
-                className="mt-2"
+                className="mt-2 border-gray-300 focus:border-forest-600 focus:ring-forest-600"
               />
             </div>
             
             <Button 
               type="submit" 
               disabled={isLoading || !email}
-              className="w-full bg-primary hover:bg-blue-700"
+              className="w-full bg-forest-800 hover:bg-forest-600 text-white font-semibold py-3 transition-all duration-200 shadow-lg hover:shadow-xl"
             >
               {isLoading ? (
                 <>
@@ -118,6 +125,15 @@ export default function Login() {
           <p className="mt-6 text-center text-sm text-gray-600">
             We'll send you a secure link to access your dashboard.
           </p>
+          
+          <div className="mt-6 text-center">
+            <a 
+              href="/" 
+              className="text-sm text-gray-500 hover:text-forest-600 transition-colors duration-200"
+            >
+              ← Back to homepage
+            </a>
+          </div>
         </CardContent>
       </Card>
     </div>
