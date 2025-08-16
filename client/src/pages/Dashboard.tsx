@@ -403,7 +403,7 @@ export default function Dashboard() {
                     
                     {isExpanded && (
                       <>
-                        <div className="pb-5">
+                        <div className="pb-5 ml-12">
                         <div className="space-y-2">
                           <div>
                             <p className="text-sm text-gray-600">{task.description}</p>
