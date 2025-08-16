@@ -112,3 +112,25 @@
     -webkit-line-clamp: 3;
   }
 }
+
+/* Floating animation for geometric shapes */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.1;
+  }
+  25% {
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+    opacity: 0.6;
+  }
+  75% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-40px) rotate(360deg);
+    opacity: 0.1;
+  }
+}
