@@ -373,7 +373,8 @@ export default function Dashboard() {
                       {!isExpanded && (
                         <div className="flex flex-none items-center gap-x-4 py-5">
                           {isCompleted ? (
-                            <div className="mr-6">
+                            <div className="flex items-center gap-2 mr-6">
+                              <span className="text-sm font-medium text-forest-600">Completed</span>
                               <Check className="w-5 h-5 text-forest-600" />
                             </div>
                           ) : (
@@ -402,7 +403,8 @@ export default function Dashboard() {
                       <>
                         {isCompleted && (
                           <div className="flex justify-end pt-5">
-                            <div className="mr-6">
+                            <div className="flex items-center gap-2 mr-6">
+                              <span className="text-sm font-medium text-forest-600">Completed</span>
                               <Check className="w-5 h-5 text-forest-600" />
                             </div>
                           </div>
