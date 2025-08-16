@@ -154,7 +154,7 @@ export default function Landing() {
       <div className="relative isolate overflow-hidden bg-white py-24 sm:py-32">
         <svg
           aria-hidden="true"
-          className="absolute inset-0 -z-10 size-full mask-[radial-gradient(100%_100%_at_top_right,white,transparent)] stroke-slate-200"
+          className="absolute inset-0 -z-10 size-full mask-[radial-gradient(100%_100%_at_top_right,white,transparent)] stroke-slate-200/30"
         >
           <defs>
             <pattern
@@ -168,7 +168,7 @@ export default function Landing() {
               <path d="M.5 200V.5H200" fill="none" />
             </pattern>
           </defs>
-          <svg x="50%" y={-1} className="overflow-visible fill-slate-200/30">
+          <svg x="50%" y={-1} className="overflow-visible fill-slate-200/10">
             <path
               d="M-200 0h201v201h-201Z M600 0h201v201h-201Z M-400 600h201v201h-201Z M200 800h201v201h-201Z"
               strokeWidth={0}
