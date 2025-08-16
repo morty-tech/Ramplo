@@ -432,7 +432,15 @@ export default function Onboarding() {
                     </p>
                     
                     <div className="flex flex-wrap gap-2 mt-2">
-                      {formData.focus.map((focusType) => {
+                      {formData.focus
+                        .filter(focusType => {
+                          // Only show "other" if there's custom text entered
+                          if (focusType === "other") {
+                            return formData.otherFocus && formData.otherFocus.trim();
+                          }
+                          return true;
+                        })
+                        .map((focusType) => {
                         const option = [
                           { value: "purchase", label: "Purchase Loans" },
                           { value: "refi", label: "Refinancing" },
@@ -440,11 +448,10 @@ export default function Onboarding() {
                           { value: "investor-dscr", label: "Investor (DSCR)" },
                           { value: "non-qm", label: "Non-QM" },
                           { value: "not-sure", label: "Not Sure" },
-                          { value: "other", label: "Other" },
                         ].find(opt => opt.value === focusType);
                         
-                        // Use custom input for "other" if available
-                        const displayLabel = focusType === "other" && formData.otherFocus 
+                        // Use custom input for "other"
+                        const displayLabel = focusType === "other" 
                           ? formData.otherFocus 
                           : option?.label;
                         
@@ -537,11 +544,19 @@ export default function Onboarding() {
                     </p>
                     
                     <div className="flex flex-wrap gap-2 mt-2">
-                      {formData.borrowerTypes.map((type) => {
+                      {formData.borrowerTypes
+                        .filter(type => {
+                          // Only show "other" if there's custom text entered
+                          if (type === "other") {
+                            return formData.otherBorrowerType && formData.otherBorrowerType.trim();
+                          }
+                          return true;
+                        })
+                        .map((type) => {
                         const option = borrowerTypeOptions.find(opt => opt.value === type);
                         
-                        // Use custom input for "other" if available
-                        const displayLabel = type === "other" && formData.otherBorrowerType 
+                        // Use custom input for "other"
+                        const displayLabel = type === "other" 
                           ? formData.otherBorrowerType 
                           : option?.label;
                         
