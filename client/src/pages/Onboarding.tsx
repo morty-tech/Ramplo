@@ -285,12 +285,14 @@ export default function Onboarding() {
                   
                   <div>
                     <Label className="font-medium block mb-2">Markets/Cities You Serve</Label>
-                    <TagInput
-                      value={formData.markets}
-                      onChange={(values) => handleTaggedArrayChange("markets", values)}
-                      placeholder="Enter city or market area (e.g., Los Angeles)"
-                      maxTags={4}
-                    />
+                    <div className="max-w-md">
+                      <TagInput
+                        value={formData.markets}
+                        onChange={(values) => handleTaggedArrayChange("markets", values)}
+                        placeholder="Enter city or market area (e.g., Los Angeles)"
+                        maxTags={4}
+                      />
+                    </div>
                     <p className="text-sm text-gray-600 mt-2">
                       Add up to 4 cities or market areas where you primarily work
                     </p>
