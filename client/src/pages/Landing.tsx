@@ -341,32 +341,25 @@ export default function Landing() {
               Free for Morty users • $49/month for others • No commitment required
             </p>
             
-            {/* Floating geometric shapes */}
+            {/* Animated diagonal lines */}
             <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-              {/* Circle 1 */}
-              <div className="absolute w-6 h-6 bg-green-400 rounded-full opacity-20 animate-[float_6s_ease-in-out_infinite] top-10 left-10"></div>
-              {/* Triangle 1 */}
-              <div className="absolute w-8 h-8 opacity-15 animate-[float_8s_ease-in-out_infinite_2s] top-20 right-20" 
-                   style={{
-                     background: 'linear-gradient(45deg, transparent 50%, #22c55e 50%)',
-                     clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)'
-                   }}>
-              </div>
-              {/* Square 1 */}
-              <div className="absolute w-4 h-4 bg-lime-400 opacity-25 animate-[float_7s_ease-in-out_infinite_1s] top-32 left-1/4 rotate-45"></div>
-              {/* Circle 2 */}
-              <div className="absolute w-3 h-3 bg-green-500 rounded-full opacity-30 animate-[float_9s_ease-in-out_infinite_3s] top-40 right-1/3"></div>
-              {/* Triangle 2 */}
-              <div className="absolute w-5 h-5 opacity-20 animate-[float_10s_ease-in-out_infinite_4s] top-16 left-1/2"
-                   style={{
-                     background: '#84cc16',
-                     clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)'
-                   }}>
-              </div>
-              {/* Circle 3 */}
-              <div className="absolute w-8 h-8 bg-green-300 rounded-full opacity-15 animate-[float_11s_ease-in-out_infinite_5s] top-8 right-10"></div>
-              {/* Square 2 */}
-              <div className="absolute w-6 h-6 bg-lime-500 opacity-20 animate-[float_8s_ease-in-out_infinite_2.5s] top-44 left-16 rotate-12"></div>
+              {/* Diagonal line 1 */}
+              <div className="absolute w-px h-32 bg-gradient-to-t from-transparent via-green-400 to-transparent opacity-30 animate-[slide_8s_linear_infinite] -top-16 left-1/4 transform rotate-12"></div>
+              
+              {/* Diagonal line 2 */}
+              <div className="absolute w-px h-24 bg-gradient-to-t from-transparent via-lime-400 to-transparent opacity-25 animate-[slide_6s_linear_infinite_2s] -top-12 left-1/2 transform rotate-15"></div>
+              
+              {/* Diagonal line 3 */}
+              <div className="absolute w-px h-40 bg-gradient-to-t from-transparent via-green-500 to-transparent opacity-20 animate-[slide_10s_linear_infinite_1s] -top-20 right-1/3 transform rotate-8"></div>
+              
+              {/* Diagonal line 4 */}
+              <div className="absolute w-px h-28 bg-gradient-to-t from-transparent via-lime-500 to-transparent opacity-35 animate-[slide_7s_linear_infinite_3s] -top-14 left-1/6 transform rotate-20"></div>
+              
+              {/* Diagonal line 5 */}
+              <div className="absolute w-px h-36 bg-gradient-to-t from-transparent via-green-300 to-transparent opacity-15 animate-[slide_9s_linear_infinite_4s] -top-18 right-1/4 transform rotate-10"></div>
+              
+              {/* Diagonal line 6 */}
+              <div className="absolute w-px h-20 bg-gradient-to-t from-transparent via-lime-600 to-transparent opacity-40 animate-[slide_5s_linear_infinite_1.5s] -top-10 left-3/4 transform rotate-18"></div>
             </div>
           </div>
         </div>
