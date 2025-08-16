@@ -320,35 +320,38 @@ export default function Landing() {
       </div>
 
       {/* CTA Section */}
-      <div className="py-20 bg-blue-600">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Ready to Launch Your Mortgage Career?
-          </h2>
-          <p className="text-xl text-blue-100 mb-8">
-            Join loan officers who are already using RampLO to build successful careers
-          </p>
-          
-          <form onSubmit={handleGetStarted} className="max-w-md mx-auto">
-            <div className="flex gap-3">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 bg-white"
-                required
-              />
-              <Button 
-                type="submit" 
-                disabled={isLoading}
-                className="bg-white text-blue-600 hover:bg-gray-100 px-8"
-              >
-                {isLoading ? "Sending..." : "Start Free"}
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
+      <div className="bg-tealwave-600">
+        <div className="px-6 py-24 sm:py-32 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">
+              Ready to Launch Your Mortgage Career?
+            </h2>
+            <p className="mx-auto mt-6 max-w-xl text-lg/8 text-pretty text-tealwave-200">
+              Join loan officers who are already using RampLO to build successful careers and secure their first deals.
+            </p>
+            <div className="mt-10 flex items-center justify-center gap-x-6">
+              <form onSubmit={handleGetStarted} className="flex gap-3">
+                <Input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="bg-white text-gray-900 placeholder:text-gray-500"
+                  required
+                />
+                <Button 
+                  type="submit" 
+                  disabled={isLoading}
+                  className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-tealwave-600 hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  {isLoading ? "Sending..." : "Get Started"}
+                </Button>
+              </form>
             </div>
-          </form>
+            <p className="mt-6 text-sm text-tealwave-200">
+              Free for Morty users • $49/month for others • No commitment required
+            </p>
+          </div>
         </div>
       </div>
 
