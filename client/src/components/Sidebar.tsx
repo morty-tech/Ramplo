@@ -54,9 +54,9 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
 
   return (
     <div className={cn(
-      "fixed inset-y-0 left-0 z-50 bg-white shadow-lg transition-all duration-300 flex flex-col",
+      "fixed inset-y-0 left-0 z-50 bg-forest-800 shadow-lg transition-all duration-300 flex flex-col",
       isExpanded ? "w-64" : "w-16"
-    )} style={{ backgroundColor: 'hsl(217, 91%, 60%)' }}>
+    )}>
       
       {/* Header */}
       <div className="flex items-center justify-center h-16 px-4 flex-shrink-0">
