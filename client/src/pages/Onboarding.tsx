@@ -322,18 +322,17 @@ export default function Onboarding() {
                     </Label>
                   </div>
                   <fieldset aria-label="Experience level">
-                    <div className="space-y-4">
+                    <div className="space-y-2">
                       {[
-                        { value: "new", label: "New to the industry", desc: "Just getting started" },
-                        { value: "<1y", label: "Less than 1 year", desc: "Building foundational skills" },
-                        { value: "1-3y", label: "1-3 years", desc: "Growing experience" },
-                        { value: "3+", label: "3+ years", desc: "Seasoned professional" },
+                        { value: "new", label: "New to the industry. I'm just getting started" },
+                        { value: "<1y", label: "Less than 1 year. I'm building foundational skills" },
+                        { value: "1-3y", label: "1-3 years. I'm growing my experience" },
+                        { value: "3+", label: "3+ years. I'm a seasoned professional" },
                       ].map((option) => (
                         <label
                           key={option.value}
                           aria-label={option.label}
-                          aria-description={option.desc}
-                          className={`group relative block rounded-lg border px-6 py-4 cursor-pointer transition-colors ${
+                          className={`group relative block rounded-lg border px-6 py-2 cursor-pointer transition-colors ${
                             formData.experienceLevel === option.value 
                               ? 'border-forest-600 bg-forest-50 ring-2 ring-forest-600' 
                               : 'border-slate-400 bg-white hover:border-forest-400'
@@ -347,10 +346,7 @@ export default function Onboarding() {
                             type="radio"
                             className="absolute inset-0 appearance-none focus:outline-none"
                           />
-                          <span className="flex flex-col">
-                            <span className="font-medium text-gray-900">{option.label}</span>
-                            <span className="text-slate-600">{option.desc}</span>
-                          </span>
+                          <span className="font-medium text-gray-900">{option.label}</span>
                         </label>
                       ))}
                     </div>
