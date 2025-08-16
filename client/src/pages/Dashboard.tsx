@@ -305,7 +305,7 @@ export default function Dashboard() {
             {todaysObjective && (
               <div className="bg-forest-500 text-white px-4 py-3 sm:px-6 mb-4">
                 <div className="text-center">
-                  <span className="text-sm font-medium text-white">Today you will {todaysObjective}</span>
+                  <span className="text-sm font-medium text-white">Today's goal: {todaysObjective}</span>
                 </div>
               </div>
             )}
