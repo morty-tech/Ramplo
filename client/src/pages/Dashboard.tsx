@@ -474,10 +474,10 @@ export default function Dashboard() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between py-2 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/outreach'}>
                   <div className="flex items-center gap-3">
-                    <div className="absolute rounded-md bg-slate-500 p-3">
-                      <Send aria-hidden="true" className="size-6 text-white" />
+                    <div className="absolute rounded-md bg-slate-500 p-2">
+                      <Send aria-hidden="true" className="size-5 text-white" />
                     </div>
-                    <div className="ml-16">
+                    <div className="ml-14">
                       <p className="text-sm font-medium text-gray-500">Templates</p>
                       <p className="text-lg font-semibold text-gray-900">Browse Templates</p>
                     </div>
@@ -486,10 +486,10 @@ export default function Dashboard() {
                 
                 <div className="flex items-center justify-between py-2 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/deal-coach'}>
                   <div className="flex items-center gap-3">
-                    <div className="absolute rounded-md bg-slate-500 p-3">
-                      <UserCheck aria-hidden="true" className="size-6 text-white" />
+                    <div className="absolute rounded-md bg-slate-500 p-2">
+                      <UserCheck aria-hidden="true" className="size-5 text-white" />
                     </div>
-                    <div className="ml-16">
+                    <div className="ml-14">
                       <p className="text-sm font-medium text-gray-500">AI Assistant</p>
                       <p className="text-lg font-semibold text-gray-900">Ask Deal Coach</p>
                     </div>
@@ -498,10 +498,10 @@ export default function Dashboard() {
                 
                 <div className="flex items-center justify-between py-2 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/roadmap'}>
                   <div className="flex items-center gap-3">
-                    <div className="absolute rounded-md bg-slate-500 p-3">
-                      <Map aria-hidden="true" className="size-6 text-white" />
+                    <div className="absolute rounded-md bg-slate-500 p-2">
+                      <Map aria-hidden="true" className="size-5 text-white" />
                     </div>
-                    <div className="ml-16">
+                    <div className="ml-14">
                       <p className="text-sm font-medium text-gray-500">Progress</p>
                       <p className="text-lg font-semibold text-gray-900">View Roadmap</p>
                     </div>
