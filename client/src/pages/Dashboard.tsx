@@ -374,30 +374,23 @@ export default function Dashboard() {
                         </div>
                       </div>
                       <div className="flex flex-none items-center gap-x-4 py-5">
-                        {isCompleted ? (
-                          <div className="flex items-center gap-2 mr-3">
-                            <span className="text-xs font-semibold text-forest-600 uppercase tracking-wide">Completed</span>
-                            <Check className="w-5 h-5 text-forest-600" />
-                          </div>
-                        ) : (
-                          !isExpanded && (
-                            <Button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                if (!isCompleting) {
-                                  handleTaskComplete(task.id);
-                                }
-                              }}
-                              disabled={isCompleting}
-                              className={`rounded-md px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 border ${
-                                isCompleting
-                                  ? 'bg-green-500 text-white border-green-500'
-                                  : 'bg-white text-forest-600 border-forest-600 hover:bg-forest-200'
-                              }`}
-                            >
-                              {isCompleting ? 'Completing...' : 'Mark Completed'}
-                            </Button>
-                          )
+                        {!isCompleted && !isExpanded && (
+                          <Button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (!isCompleting) {
+                                handleTaskComplete(task.id);
+                              }
+                            }}
+                            disabled={isCompleting}
+                            className={`rounded-md px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 border ${
+                              isCompleting
+                                ? 'bg-green-500 text-white border-green-500'
+                                : 'bg-white text-forest-600 border-forest-600 hover:bg-forest-200'
+                            }`}
+                          >
+                            {isCompleting ? 'Completing...' : 'Mark Completed'}
+                          </Button>
                         )}
                       </div>
                     </div>
