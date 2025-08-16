@@ -321,7 +321,12 @@ export default function Dashboard() {
                 return (
                   <li key={task.id} className="transition-all duration-200">
                     <div className="flex items-start justify-between gap-x-6">
-                      <div className="flex items-start gap-x-4">
+                      <div className="flex items-start gap-x-2">
+                        {!isCompleted && (
+                          <div className="text-2xl font-bold text-limeglow-400 relative top-6">
+                            ›
+                          </div>
+                        )}
                         <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-xl font-black relative top-5 shadow-lg transition-all duration-300 ${
                           isCompleted 
                             ? 'bg-gray-100 text-gray-600 shadow-gray-200' 
