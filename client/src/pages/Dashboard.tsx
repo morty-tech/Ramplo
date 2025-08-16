@@ -393,7 +393,7 @@ export default function Dashboard() {
                     
                     {isExpanded && (
                       <div className="pb-5 mt-2">
-                        <div className="space-y-3">
+                        <div className="space-y-1">
                           <div>
                             <p className="text-sm text-gray-600">{task.description}</p>
                           </div>
