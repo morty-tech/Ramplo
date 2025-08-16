@@ -319,45 +319,17 @@ export default function Dashboard() {
                 <span className="ml-1">{todaysObjective}</span>
               </div>
             )}
-              <div className="space-y-4">
-                {todayTasks.map((task: Task) => {
-                  const isCompleting = completingTaskId === task.id;
-                  const isCompleted = task.completed;
-                  
-                  return (
-                  <div
-                    key={task.id}
-                    className={`flex items-center space-x-4 p-4 border rounded-lg cursor-pointer transition-all duration-300 ${
-                      isCompleting 
-                        ? 'border-green-300 bg-green-50 scale-[1.02] shadow-md' 
-                        : isCompleted 
-                        ? 'border-gray-200 bg-gray-50 opacity-75' 
-                        : 'border-gray-200 hover:border-primary hover:shadow-sm bg-white'
-                    }`}
-                    onClick={() => handleTaskClick(task)}
-                  >
-                    <div className="relative flex items-center">
-                      <Checkbox
-                        checked={isCompleted || isCompleting}
-                        onCheckedChange={(checked) => {
-                          if (checked && !task.completed && !isCompleting) {
-                            handleTaskComplete(task.id);
-                          }
-                        }}
-                        disabled={isCompleted || isCompleting}
-                        className={`h-5 w-5 border-2 transition-all duration-200 ${
-                          isCompleting 
-                            ? 'border-green-500 bg-green-500 animate-pulse' 
-                            : isCompleted 
-                            ? 'border-green-500 bg-green-500' 
-                            : 'border-gray-300 hover:border-primary hover:bg-primary/5'
-                        }`}
-                        onClick={(e) => e.stopPropagation()}
-                      />
-                    </div>
-                    <div className="flex-grow">
-                      <div>
-                        <h3 className={`font-medium transition-all duration-300 ${
+            
+            <ul role="list" className="divide-y divide-gray-100">
+              {todayTasks.map((task: Task) => {
+                const isCompleting = completingTaskId === task.id;
+                const isCompleted = task.completed;
+                
+                return (
+                  <li key={task.id} className="flex items-center justify-between gap-x-6 py-5">
+                    <div className="min-w-0 flex-grow cursor-pointer" onClick={() => handleTaskClick(task)}>
+                      <div className="flex items-start gap-x-3">
+                        <p className={`text-sm/6 font-semibold transition-all duration-300 ${
                           isCompleting 
                             ? 'text-green-700' 
                             : isCompleted 
@@ -368,57 +340,58 @@ export default function Dashboard() {
                           {isCompleting && (
                             <span className="ml-2 text-green-600 animate-bounce">✓</span>
                           )}
-                        </h3>
+                        </p>
+                        {isCompleted ? (
+                          <p className="mt-0.5 rounded-md bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                            Complete
+                          </p>
+                        ) : (
+                          <p className="mt-0.5 rounded-md bg-gray-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+                            Pending
+                          </p>
+                        )}
                       </div>
-                      <p className={`text-sm mt-1 transition-colors duration-300 ${
-                        isCompleting 
-                          ? 'text-green-600' 
-                          : isCompleted 
-                          ? 'text-gray-400' 
-                          : 'text-gray-600'
-                      }`}>{task.description}</p>
-                      <div className="flex items-center mt-2 space-x-4">
-                        <Badge 
-                          variant="secondary" 
-                          className={`text-xs transition-colors duration-300 ${
-                            isCompleting 
-                              ? 'bg-green-100 text-green-700' 
-                              : isCompleted 
-                              ? 'bg-gray-100 text-gray-400' 
-                              : ''
-                          }`}
-                        >
-                          {task.category}
-                        </Badge>
-                        <span className="text-xs text-gray-500 flex items-center">
-                          <Clock className="w-3 h-3 mr-1" />
+                      <div className="mt-1 flex items-center gap-x-2 text-xs/5 text-gray-500">
+                        <p className="whitespace-nowrap">
                           Est. {task.estimatedMinutes} min
-                        </span>
-                        <span className="text-xs text-blue-600 font-medium">Click for details</span>
+                        </p>
+                        <svg viewBox="0 0 2 2" className="size-0.5 fill-current">
+                          <circle r={1} cx={1} cy={1} />
+                        </svg>
+                        <p className="truncate">{task.description}</p>
                       </div>
                     </div>
-                  </div>
-                  );
-                })}
-
-                {todayTasks.length === 0 && (
-                  <div className="text-center py-8 text-gray-500">
-                    <Calendar className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-                    <p>No tasks scheduled for today</p>
-                  </div>
-                )}
-              </div>
-
-              {todayTasks.length > 0 && (
-                <div className="mt-6 pt-6 border-t border-gray-200">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm text-gray-600">
-                      Progress: {completedTasks.length} of {todayTasks.length} tasks completed
-                    </span>
-                  </div>
-                  <Progress value={progressPercentage} className="h-2" />
-                </div>
+                    <div className="flex flex-none items-center gap-x-4">
+                      {!isCompleted && (
+                        <Button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (!isCompleting) {
+                              handleTaskComplete(task.id);
+                            }
+                          }}
+                          disabled={isCompleting}
+                          className={`rounded-md px-2.5 py-1.5 text-sm font-semibold shadow-xs transition-all duration-200 ${
+                            isCompleting
+                              ? 'bg-green-500 text-white'
+                              : 'bg-white text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
+                          }`}
+                        >
+                          {isCompleting ? 'Completing...' : 'Completed'}
+                        </Button>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+              
+              {todayTasks.length === 0 && (
+                <li className="text-center py-8 text-gray-500">
+                  <Calendar className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+                  <p>No tasks scheduled for today</p>
+                </li>
               )}
+            </ul>
           </div>
         </div>
 
