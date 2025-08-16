@@ -72,8 +72,7 @@ export default function Dashboard() {
   const { user, profile, progress } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
-  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const [expandedTaskId, setExpandedTaskId] = useState<string | null>(null);
   const [completingTaskId, setCompletingTaskId] = useState<string | null>(null);
 
   const { data: todayTasks = [] } = useQuery<Task[]>({
@@ -102,7 +101,6 @@ export default function Dashboard() {
       setTimeout(() => {
         setCompletingTaskId(null);
         queryClient.invalidateQueries({ queryKey: ["/api/tasks"] });
-        setIsTaskModalOpen(false);
         toast({
           title: "Task completed!",
           description: "Great job staying on track!",
@@ -117,8 +115,7 @@ export default function Dashboard() {
   };
 
   const handleTaskClick = (task: Task) => {
-    setSelectedTask(task);
-    setIsTaskModalOpen(true);
+    setExpandedTaskId(expandedTaskId === task.id ? null : task.id);
   };
 
   const completedTasks = todayTasks.filter((task: Task) => task.completed);
@@ -325,62 +322,104 @@ export default function Dashboard() {
                 const isCompleting = completingTaskId === task.id;
                 const isCompleted = task.completed;
                 
+                const isExpanded = expandedTaskId === task.id;
+                
                 return (
-                  <li key={task.id} className="flex items-center justify-between gap-x-6 py-5">
-                    <div className="min-w-0 flex-grow cursor-pointer" onClick={() => handleTaskClick(task)}>
-                      <div className="flex items-start gap-x-3">
-                        <p className={`text-sm/6 font-semibold transition-all duration-300 ${
-                          isCompleting 
-                            ? 'text-green-700' 
-                            : isCompleted 
-                            ? 'text-gray-500 line-through' 
-                            : 'text-gray-900'
-                        }`}>
-                          {task.title}
-                          {isCompleting && (
-                            <span className="ml-2 text-green-600 animate-bounce">✓</span>
+                  <li key={task.id} className={`transition-all duration-200 ${
+                    isExpanded ? 'bg-gray-50 rounded-lg' : ''
+                  }`}>
+                    <div className="flex items-center justify-between gap-x-6 py-5">
+                      <div className="min-w-0 flex-grow cursor-pointer" onClick={() => handleTaskClick(task)}>
+                        <div className="flex items-start gap-x-3">
+                          <p className={`text-sm/6 font-semibold transition-all duration-300 ${
+                            isCompleting 
+                              ? 'text-green-700' 
+                              : isCompleted 
+                              ? 'text-gray-500 line-through' 
+                              : 'text-gray-900'
+                          }`}>
+                            {task.title}
+                            {isCompleting && (
+                              <span className="ml-2 text-green-600 animate-bounce">✓</span>
+                            )}
+                          </p>
+                          {isCompleted ? (
+                            <p className="mt-0.5 rounded-md bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                              Complete
+                            </p>
+                          ) : (
+                            <p className="mt-0.5 rounded-md bg-gray-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+                              Open
+                            </p>
                           )}
-                        </p>
-                        {isCompleted ? (
-                          <p className="mt-0.5 rounded-md bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                            Complete
-                          </p>
-                        ) : (
-                          <p className="mt-0.5 rounded-md bg-gray-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
-                            Open
-                          </p>
+                        </div>
+                        {!isExpanded && (
+                          <div className="mt-1 flex items-center gap-x-2 text-xs/5 text-gray-500">
+                            <p className="whitespace-nowrap">
+                              Est. {task.estimatedMinutes} min
+                            </p>
+                            <svg viewBox="0 0 2 2" className="size-0.5 fill-current">
+                              <circle r={1} cx={1} cy={1} />
+                            </svg>
+                            <p className="truncate">{task.description}</p>
+                          </div>
                         )}
                       </div>
-                      <div className="mt-1 flex items-center gap-x-2 text-xs/5 text-gray-500">
-                        <p className="whitespace-nowrap">
-                          Est. {task.estimatedMinutes} min
-                        </p>
-                        <svg viewBox="0 0 2 2" className="size-0.5 fill-current">
-                          <circle r={1} cx={1} cy={1} />
-                        </svg>
-                        <p className="truncate">{task.description}</p>
+                      <div className="flex flex-none items-center gap-x-4">
+                        {!isCompleted && (
+                          <Button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (!isCompleting) {
+                                handleTaskComplete(task.id);
+                              }
+                            }}
+                            disabled={isCompleting}
+                            className={`rounded-md px-2.5 py-1.5 text-sm font-semibold shadow-xs transition-all duration-200 ${
+                              isCompleting
+                                ? 'bg-green-500 text-white'
+                                : 'bg-white text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
+                            }`}
+                          >
+                            {isCompleting ? 'Completing...' : 'Completed'}
+                          </Button>
+                        )}
                       </div>
                     </div>
-                    <div className="flex flex-none items-center gap-x-4">
-                      {!isCompleted && (
-                        <Button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (!isCompleting) {
-                              handleTaskComplete(task.id);
-                            }
-                          }}
-                          disabled={isCompleting}
-                          className={`rounded-md px-2.5 py-1.5 text-sm font-semibold shadow-xs transition-all duration-200 ${
-                            isCompleting
-                              ? 'bg-green-500 text-white'
-                              : 'bg-white text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
-                          }`}
-                        >
-                          {isCompleting ? 'Completing...' : 'Completed'}
-                        </Button>
-                      )}
-                    </div>
+                    
+                    {isExpanded && (
+                      <div className="px-6 pb-5 border-t border-gray-200 mt-2 pt-4">
+                        <div className="space-y-4">
+                          <div>
+                            <h4 className="text-sm font-medium text-gray-900 mb-2">Description</h4>
+                            <p className="text-sm text-gray-600">{task.description}</p>
+                          </div>
+                          
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <h4 className="text-sm font-medium text-gray-900 mb-1">Category</h4>
+                              <Badge variant="secondary" className="text-xs">
+                                {task.category}
+                              </Badge>
+                            </div>
+                            <div>
+                              <h4 className="text-sm font-medium text-gray-900 mb-1">Estimated Time</h4>
+                              <p className="text-sm text-gray-600 flex items-center">
+                                <Clock className="w-3 h-3 mr-1" />
+                                {task.estimatedMinutes} minutes
+                              </p>
+                            </div>
+                          </div>
+                          
+                          {task.details && (
+                            <div>
+                              <h4 className="text-sm font-medium text-gray-900 mb-2">Additional Details</h4>
+                              <p className="text-sm text-gray-600">{task.details}</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </li>
                 );
               })}
@@ -443,14 +482,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Task Detail Modal */}
-      <TaskDetailModal
-        task={selectedTask}
-        isOpen={isTaskModalOpen}
-        onClose={() => setIsTaskModalOpen(false)}
-        onComplete={completeTaskMutation.mutate}
-        isCompleting={completeTaskMutation.isPending}
-      />
     </div>
   );
 }
