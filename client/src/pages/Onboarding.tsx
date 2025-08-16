@@ -321,30 +321,40 @@ export default function Onboarding() {
                       What's your experience level as a mortgage loan officer?
                     </Label>
                   </div>
-                  <RadioGroup
-                    value={formData.experienceLevel}
-                    onValueChange={(value) => setFormData(prev => ({ ...prev, experienceLevel: value }))}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-4"
-                  >
-                    {[
-                      { value: "new", label: "New to the industry", desc: "Just getting started" },
-                      { value: "<1y", label: "Less than 1 year", desc: "Building foundational skills" },
-                      { value: "1-3y", label: "1-3 years", desc: "Growing experience" },
-                      { value: "3+", label: "3+ years", desc: "Seasoned professional" },
-                    ].map((option) => (
-                      <Label
-                        key={option.value}
-                        htmlFor={`exp-${option.value}`}
-                        className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
-                      >
-                        <RadioGroupItem value={option.value} id={`exp-${option.value}`} className="mr-3" />
-                        <div>
-                          <div className="font-medium">{option.label}</div>
-                          <div className="text-sm text-gray-600">{option.desc}</div>
-                        </div>
-                      </Label>
-                    ))}
-                  </RadioGroup>
+                  <fieldset aria-label="Experience level">
+                    <div className="space-y-4">
+                      {[
+                        { value: "new", label: "New to the industry", desc: "Just getting started" },
+                        { value: "<1y", label: "Less than 1 year", desc: "Building foundational skills" },
+                        { value: "1-3y", label: "1-3 years", desc: "Growing experience" },
+                        { value: "3+", label: "3+ years", desc: "Seasoned professional" },
+                      ].map((option) => (
+                        <label
+                          key={option.value}
+                          aria-label={option.label}
+                          aria-description={option.desc}
+                          className={`group relative block rounded-lg border px-6 py-4 cursor-pointer transition-colors ${
+                            formData.experienceLevel === option.value 
+                              ? 'border-forest-600 bg-forest-50 ring-2 ring-forest-600' 
+                              : 'border-slate-400 bg-white hover:border-forest-400'
+                          }`}
+                        >
+                          <input
+                            value={option.value}
+                            checked={formData.experienceLevel === option.value}
+                            onChange={(e) => setFormData(prev => ({ ...prev, experienceLevel: e.target.value }))}
+                            name="experience"
+                            type="radio"
+                            className="absolute inset-0 appearance-none focus:outline-none"
+                          />
+                          <span className="flex flex-col">
+                            <span className="font-medium text-gray-900">{option.label}</span>
+                            <span className="text-slate-600">{option.desc}</span>
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </fieldset>
                 </div>
               )}
 
@@ -557,29 +567,39 @@ export default function Onboarding() {
                         How much time can you dedicate to prospecting per weekday?
                       </Label>
                     </div>
-                    <RadioGroup
-                      value={formData.timeAvailableWeekday}
-                      onValueChange={(value) => setFormData(prev => ({ ...prev, timeAvailableWeekday: value }))}
-                      className="grid grid-cols-1 md:grid-cols-3 gap-4"
-                    >
-                      {[
-                        { value: "30", label: "30 minutes", desc: "Quick daily activities" },
-                        { value: "60", label: "60 minutes", desc: "Focused prospecting time" },
-                        { value: "90+", label: "90+ minutes", desc: "Deep relationship building" },
-                      ].map((time) => (
-                        <Label
-                          key={time.value}
-                          htmlFor={`time-${time.value}`}
-                          className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
-                        >
-                          <RadioGroupItem value={time.value} id={`time-${time.value}`} className="mr-3" />
-                          <div>
-                            <div className="font-medium">{time.label}</div>
-                            <div className="text-sm text-gray-600">{time.desc}</div>
-                          </div>
-                        </Label>
-                      ))}
-                    </RadioGroup>
+                    <fieldset aria-label="Time available">
+                      <div className="space-y-4">
+                        {[
+                          { value: "30", label: "30 minutes", desc: "Quick daily activities" },
+                          { value: "60", label: "60 minutes", desc: "Focused prospecting time" },
+                          { value: "90+", label: "90+ minutes", desc: "Deep relationship building" },
+                        ].map((time) => (
+                          <label
+                            key={time.value}
+                            aria-label={time.label}
+                            aria-description={time.desc}
+                            className={`group relative block rounded-lg border px-6 py-4 cursor-pointer transition-colors ${
+                              formData.timeAvailableWeekday === time.value 
+                                ? 'border-forest-600 bg-tealwave-200 ring-2 ring-forest-600' 
+                                : 'border-slate-400 bg-white hover:border-forest-400'
+                            }`}
+                          >
+                            <input
+                              value={time.value}
+                              checked={formData.timeAvailableWeekday === time.value}
+                              onChange={(e) => setFormData(prev => ({ ...prev, timeAvailableWeekday: e.target.value }))}
+                              name="timeAvailable"
+                              type="radio"
+                              className="absolute inset-0 appearance-none focus:outline-none"
+                            />
+                            <span className="flex flex-col">
+                              <span className="font-medium text-gray-900">{time.label}</span>
+                              <span className="text-slate-600">{time.desc}</span>
+                            </span>
+                          </label>
+                        ))}
+                      </div>
+                    </fieldset>
                   </div>
 
                   <div>
