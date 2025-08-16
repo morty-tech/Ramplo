@@ -72,7 +72,7 @@ export default function Login() {
               </p>
               <button
                 onClick={() => setLinkSent(false)}
-                className="flex w-full justify-center rounded-md bg-limeglow-400 px-3 py-2 text-sm font-semibold text-forest-800 hover:bg-limeglow-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-limeglow-400 disabled:bg-gray-400 disabled:text-gray-700 disabled:cursor-not-allowed shadow-lg"
+                className="flex w-full justify-center rounded-md bg-limeglow-400 px-3 py-2 text-sm font-semibold text-forest-800 hover:bg-limeglow-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-limeglow-400 disabled:bg-limeglow-600 disabled:text-forest-800 disabled:cursor-not-allowed shadow-lg"
               >
                 Send another link
               </button>
@@ -130,7 +130,7 @@ export default function Login() {
                 <button
                   type="submit"
                   disabled={isLoading || !email}
-                  className="flex w-full justify-center rounded-md bg-limeglow-400 px-3 py-1.5 text-sm/6 font-semibold text-forest-800 hover:bg-limeglow-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-limeglow-400 disabled:bg-gray-400 disabled:text-gray-700 disabled:cursor-not-allowed shadow-lg"
+                  className="flex w-full justify-center rounded-md bg-limeglow-400 px-3 py-1.5 text-sm/6 font-semibold text-forest-800 hover:bg-limeglow-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-limeglow-400 disabled:bg-limeglow-600 disabled:text-forest-800 disabled:cursor-not-allowed shadow-lg"
                 >
                   {isLoading ? (
                     <>
