@@ -474,7 +474,7 @@ export default function Dashboard() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between py-2 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/outreach'}>
                   <div className="flex items-center gap-3">
-                    <div className="absolute rounded-md bg-forest-500 p-3">
+                    <div className="absolute rounded-md bg-slate-500 p-3">
                       <Send aria-hidden="true" className="size-6 text-white" />
                     </div>
                     <div className="ml-16">
@@ -486,7 +486,7 @@ export default function Dashboard() {
                 
                 <div className="flex items-center justify-between py-2 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/deal-coach'}>
                   <div className="flex items-center gap-3">
-                    <div className="absolute rounded-md bg-forest-500 p-3">
+                    <div className="absolute rounded-md bg-slate-500 p-3">
                       <UserCheck aria-hidden="true" className="size-6 text-white" />
                     </div>
                     <div className="ml-16">
@@ -498,7 +498,7 @@ export default function Dashboard() {
                 
                 <div className="flex items-center justify-between py-2 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/roadmap'}>
                   <div className="flex items-center gap-3">
-                    <div className="absolute rounded-md bg-forest-500 p-3">
+                    <div className="absolute rounded-md bg-slate-500 p-3">
                       <Map aria-hidden="true" className="size-6 text-white" />
                     </div>
                     <div className="ml-16">
