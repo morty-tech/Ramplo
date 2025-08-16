@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import EmailConfirmation from "@/components/EmailConfirmation";
 import { 
   TrendingUp, 
   Users, 
@@ -48,28 +49,7 @@ export default function Landing() {
   };
 
   if (linkSent) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-        <Card className="w-full max-w-md">
-          <CardContent className="pt-6 text-center">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <CheckCircle className="w-8 h-8 text-green-600" />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Check your email</h2>
-            <p className="text-gray-600 mb-6">
-              We've sent a secure login link to <strong>{email}</strong>
-            </p>
-            <Button 
-              variant="outline" 
-              onClick={() => setLinkSent(false)}
-              className="w-full"
-            >
-              Send another link
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
+    return <EmailConfirmation email={email} onSendAnother={() => setLinkSent(false)} />;
   }
 
   return (
