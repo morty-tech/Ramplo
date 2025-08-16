@@ -585,7 +585,7 @@ export default function Onboarding() {
                         ].map((time) => (
                           <label
                             key={time.value}
-                            aria-label={time.label}
+                            aria-label={`${time.first} ${time.second}`}
                             className={`group relative block rounded-lg border px-6 py-3 cursor-pointer transition-colors ${
                               formData.timeAvailableWeekday === time.value 
                                 ? 'border-forest-600 bg-forest-50 ring-2 ring-forest-600' 
@@ -623,7 +623,7 @@ export default function Onboarding() {
                         ].map((comfort) => (
                           <label
                             key={comfort.value}
-                            aria-label={comfort.label}
+                            aria-label={`${comfort.first} ${comfort.second}`}
                             className={`group relative block rounded-lg border px-6 py-3 cursor-pointer transition-colors ${
                               formData.outreachComfort === comfort.value 
                                 ? 'border-forest-600 bg-forest-50 ring-2 ring-forest-600' 
@@ -904,7 +904,7 @@ export default function Onboarding() {
                         ].map((tone) => (
                           <label
                             key={tone.value}
-                            aria-label={tone.label}
+                            aria-label={`${tone.first} ${tone.second}`}
                             className={`group relative block rounded-lg border px-6 py-3 cursor-pointer transition-colors ${
                               formData.tonePreference === tone.value 
                                 ? 'border-forest-600 bg-forest-50 ring-2 ring-forest-600' 
