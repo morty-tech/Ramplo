@@ -301,7 +301,7 @@ export default function Dashboard() {
                 </div>
                 <p className="ml-16 truncate text-sm font-medium text-gray-500">{item.name}</p>
               </dt>
-              <dd className="ml-16 flex items-baseline pb-6 sm:pb-7">
+              <dd className="ml-16 flex items-baseline pb-2">
                 <p className="text-2xl font-semibold text-gray-900">{item.stat}</p>
                 {item.changeType !== 'neutral' && (
                   <p
