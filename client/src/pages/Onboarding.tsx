@@ -364,20 +364,20 @@ export default function Onboarding() {
                   <div className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {[
-                        { value: "purchase", label: "Purchase Loans", desc: "Home buying transactions" },
-                        { value: "refi", label: "Refinancing", desc: "Rate & term, cash-out refis" },
-                        { value: "heloc", label: "HELOC", desc: "Home equity lines of credit" },
-                        { value: "investor-dscr", label: "Investor (DSCR)", desc: "Investment property loans" },
-                        { value: "non-qm", label: "Non-QM", desc: "Non-qualified mortgages" },
-                        { value: "not-sure", label: "Not Sure", desc: "Still exploring my options" },
-                        { value: "other", label: "Other", desc: "Something else not listed" },
+                        { value: "purchase", label: "Purchase Loans" },
+                        { value: "refi", label: "Refinancing" },
+                        { value: "heloc", label: "HELOC" },
+                        { value: "investor-dscr", label: "Investor (DSCR)" },
+                        { value: "non-qm", label: "Non-QM" },
+                        { value: "not-sure", label: "Not Sure" },
+                        { value: "other", label: "Other" },
                       ].map((focus) => (
                         <div
                           key={focus.value}
                           className={`p-4 border-2 rounded-lg cursor-pointer transition-colors ${
                             formData.focus.includes(focus.value)
-                              ? "border-primary bg-primary/5"
-                              : "border-gray-200 hover:border-primary/50"
+                              ? "border-forest-600 bg-forest-50"
+                              : "border-gray-200 hover:border-forest-400"
                           } ${formData.focus.length >= 3 && !formData.focus.includes(focus.value) ? "opacity-50 cursor-not-allowed" : ""}`}
                           onClick={() => {
                             if (formData.focus.includes(focus.value)) {
@@ -390,7 +390,6 @@ export default function Onboarding() {
                           <div className="flex items-center justify-between">
                             <div>
                               <div className="font-medium">{focus.label}</div>
-                              <div className="text-sm text-gray-600">{focus.desc}</div>
                             </div>
                             {formData.focus.includes(focus.value) && (
                               <button
@@ -399,7 +398,7 @@ export default function Onboarding() {
                                   e.stopPropagation();
                                   handleArrayChange("focus", focus.value, false);
                                 }}
-                                className="p-1 hover:bg-primary/20 rounded-full"
+                                className="p-1 hover:bg-forest-400/20 rounded-full"
                               >
                                 <X className="w-4 h-4" />
                               </button>
@@ -421,13 +420,13 @@ export default function Onboarding() {
                         return (
                           <div
                             key={focusType}
-                            className="inline-flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary rounded-full text-sm"
+                            className="inline-flex items-center gap-1 px-3 py-1 bg-forest-200 text-forest-800 rounded-full text-sm"
                           >
                             {option?.label}
                             <button
                               type="button"
                               onClick={() => handleArrayChange("focus", focusType, false)}
-                              className="p-0.5 hover:bg-primary/20 rounded-full"
+                              className="p-0.5 hover:bg-forest-400/20 rounded-full"
                             >
                               <X className="w-3 h-3" />
                             </button>
@@ -476,8 +475,8 @@ export default function Onboarding() {
                           key={type.value}
                           className={`p-3 border-2 rounded-lg cursor-pointer transition-colors ${
                             formData.borrowerTypes.includes(type.value)
-                              ? "border-primary bg-primary/5"
-                              : "border-gray-200 hover:border-primary/50"
+                              ? "border-forest-600 bg-forest-50"
+                              : "border-gray-200 hover:border-forest-400"
                           } ${formData.borrowerTypes.length >= 4 && !formData.borrowerTypes.includes(type.value) ? "opacity-50 cursor-not-allowed" : ""}`}
                           onClick={() => {
                             if (formData.borrowerTypes.includes(type.value)) {
@@ -496,7 +495,7 @@ export default function Onboarding() {
                                   e.stopPropagation();
                                   handleArrayChange("borrowerTypes", type.value, false);
                                 }}
-                                className="p-1 hover:bg-primary/20 rounded-full"
+                                className="p-1 hover:bg-forest-400/20 rounded-full"
                               >
                                 <X className="w-4 h-4" />
                               </button>
@@ -512,13 +511,13 @@ export default function Onboarding() {
                         return (
                           <div
                             key={type}
-                            className="inline-flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary rounded-full text-sm"
+                            className="inline-flex items-center gap-1 px-3 py-1 bg-forest-200 text-forest-800 rounded-full text-sm"
                           >
                             {option?.label}
                             <button
                               type="button"
                               onClick={() => handleArrayChange("borrowerTypes", type, false)}
-                              className="p-0.5 hover:bg-primary/20 rounded-full"
+                              className="p-0.5 hover:bg-forest-400/20 rounded-full"
                             >
                               <X className="w-3 h-3" />
                             </button>
@@ -564,19 +563,18 @@ export default function Onboarding() {
                       </Label>
                     </div>
                     <fieldset aria-label="Time available">
-                      <div className="space-y-4">
+                      <div className="space-y-2">
                         {[
-                          { value: "30", label: "30 minutes", desc: "Quick daily activities" },
-                          { value: "60", label: "60 minutes", desc: "Focused prospecting time" },
-                          { value: "90+", label: "90+ minutes", desc: "Deep relationship building" },
+                          { value: "30", label: "30 minutes. Quick daily activities" },
+                          { value: "60", label: "60 minutes. Focused prospecting time" },
+                          { value: "90+", label: "90+ minutes. Deep relationship building" },
                         ].map((time) => (
                           <label
                             key={time.value}
                             aria-label={time.label}
-                            aria-description={time.desc}
-                            className={`group relative block rounded-lg border px-6 py-4 cursor-pointer transition-colors ${
+                            className={`group relative block rounded-lg border px-6 py-3 cursor-pointer transition-colors ${
                               formData.timeAvailableWeekday === time.value 
-                                ? 'border-forest-600 bg-tealwave-200 ring-2 ring-forest-600' 
+                                ? 'border-forest-600 bg-forest-50 ring-2 ring-forest-600' 
                                 : 'border-slate-400 bg-white hover:border-forest-400'
                             }`}
                           >
@@ -588,10 +586,7 @@ export default function Onboarding() {
                               type="radio"
                               className="absolute inset-0 appearance-none focus:outline-none"
                             />
-                            <span className="flex flex-col">
-                              <span className="font-medium text-gray-900">{time.label}</span>
-                              <span className="text-slate-600">{time.desc}</span>
-                            </span>
+                            <span className="text-sm font-normal text-gray-900">{time.label}</span>
                           </label>
                         ))}
                       </div>
@@ -602,29 +597,35 @@ export default function Onboarding() {
                     <Label className="text-lg font-medium text-gray-900 mb-4 block">
                       How comfortable are you with outreach activities?
                     </Label>
-                    <RadioGroup
-                      value={formData.outreachComfort}
-                      onValueChange={(value) => setFormData(prev => ({ ...prev, outreachComfort: value }))}
-                      className="grid grid-cols-1 md:grid-cols-3 gap-4"
-                    >
-                      {[
-                        { value: "low", label: "Low", desc: "Prefer warm introductions" },
-                        { value: "medium", label: "Medium", desc: "Willing to reach out with preparation" },
-                        { value: "high", label: "High", desc: "Comfortable with cold outreach" },
-                      ].map((comfort) => (
-                        <Label
-                          key={comfort.value}
-                          htmlFor={`comfort-${comfort.value}`}
-                          className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
-                        >
-                          <RadioGroupItem value={comfort.value} id={`comfort-${comfort.value}`} className="mr-3" />
-                          <div>
-                            <div className="font-medium">{comfort.label}</div>
-                            <div className="text-sm text-gray-600">{comfort.desc}</div>
-                          </div>
-                        </Label>
-                      ))}
-                    </RadioGroup>
+                    <fieldset aria-label="Outreach comfort">
+                      <div className="space-y-2">
+                        {[
+                          { value: "low", label: "Low. I prefer warm introductions" },
+                          { value: "medium", label: "Medium. I'm willing to reach out with preparation" },
+                          { value: "high", label: "High. I'm comfortable with cold outreach" },
+                        ].map((comfort) => (
+                          <label
+                            key={comfort.value}
+                            aria-label={comfort.label}
+                            className={`group relative block rounded-lg border px-6 py-3 cursor-pointer transition-colors ${
+                              formData.outreachComfort === comfort.value 
+                                ? 'border-forest-600 bg-forest-50 ring-2 ring-forest-600' 
+                                : 'border-slate-400 bg-white hover:border-forest-400'
+                            }`}
+                          >
+                            <input
+                              value={comfort.value}
+                              checked={formData.outreachComfort === comfort.value}
+                              onChange={(e) => setFormData(prev => ({ ...prev, outreachComfort: e.target.value }))}
+                              name="outreachComfort"
+                              type="radio"
+                              className="absolute inset-0 appearance-none focus:outline-none"
+                            />
+                            <span className="text-sm font-normal text-gray-900">{comfort.label}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </fieldset>
                   </div>
 
                   <div className="space-y-6">
@@ -667,27 +668,36 @@ export default function Onboarding() {
                           <div className="space-y-4 ml-6 border-l-2 border-primary/20 pl-4">
                             <div>
                               <Label className="font-medium block mb-2">Where does your client list live?</Label>
-                              <RadioGroup
-                                value={formData.clientListLocation}
-                                onValueChange={(value) => setFormData(prev => ({ ...prev, clientListLocation: value }))}
-                                className="grid grid-cols-2 gap-2"
-                              >
-                                {[
-                                  { value: "crm", label: "CRM System" },
-                                  { value: "excel", label: "Excel File" },
-                                  { value: "email", label: "Email Contacts" },
-                                  { value: "other", label: "Other" },
-                                ].map((option) => (
-                                  <Label
-                                    key={option.value}
-                                    htmlFor={`client-${option.value}`}
-                                    className="flex items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
-                                  >
-                                    <RadioGroupItem value={option.value} id={`client-${option.value}`} className="mr-2" />
-                                    <span className="text-sm font-medium">{option.label}</span>
-                                  </Label>
-                                ))}
-                              </RadioGroup>
+                              <fieldset aria-label="Client list location">
+                                <div className="space-y-2">
+                                  {[
+                                    { value: "crm", label: "CRM System" },
+                                    { value: "excel", label: "Excel File" },
+                                    { value: "email", label: "Email Contacts" },
+                                    { value: "other", label: "Other" },
+                                  ].map((option) => (
+                                    <label
+                                      key={option.value}
+                                      aria-label={option.label}
+                                      className={`group relative block rounded-lg border px-6 py-3 cursor-pointer transition-colors ${
+                                        formData.clientListLocation === option.value 
+                                          ? 'border-forest-600 bg-forest-50 ring-2 ring-forest-600' 
+                                          : 'border-slate-400 bg-white hover:border-forest-400'
+                                      }`}
+                                    >
+                                      <input
+                                        value={option.value}
+                                        checked={formData.clientListLocation === option.value}
+                                        onChange={(e) => setFormData(prev => ({ ...prev, clientListLocation: e.target.value }))}
+                                        name="clientListLocation"
+                                        type="radio"
+                                        className="absolute inset-0 appearance-none focus:outline-none"
+                                      />
+                                      <span className="text-sm font-normal text-gray-900">{option.label}</span>
+                                    </label>
+                                  ))}
+                                </div>
+                              </fieldset>
                             </div>
                             
                             {formData.clientListLocation === "crm" && (
@@ -737,8 +747,8 @@ export default function Onboarding() {
                               key={source.value}
                               className={`p-3 border-2 rounded-lg cursor-pointer transition-colors ${
                                 formData.networkSources.includes(source.value)
-                                  ? "border-primary bg-primary/5"
-                                  : "border-gray-200 hover:border-primary/50"
+                                  ? "border-forest-600 bg-forest-50"
+                                  : "border-gray-200 hover:border-forest-400"
                               }`}
                               onClick={() => {
                                 if (formData.networkSources.includes(source.value)) {
@@ -757,7 +767,7 @@ export default function Onboarding() {
                                       e.stopPropagation();
                                       handleArrayChange("networkSources", source.value, false);
                                     }}
-                                    className="p-1 hover:bg-primary/20 rounded-full"
+                                    className="p-1 hover:bg-forest-400/20 rounded-full"
                                   >
                                     <X className="w-4 h-4" />
                                   </button>
@@ -774,13 +784,13 @@ export default function Onboarding() {
                               return (
                                 <div
                                   key={source}
-                                  className="inline-flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary rounded-full text-sm"
+                                  className="inline-flex items-center gap-1 px-3 py-1 bg-forest-200 text-forest-800 rounded-full text-sm"
                                 >
                                   {option?.label}
                                   <button
                                     type="button"
                                     onClick={() => handleArrayChange("networkSources", source, false)}
-                                    className="p-0.5 hover:bg-primary/20 rounded-full"
+                                    className="p-0.5 hover:bg-forest-400/20 rounded-full"
                                   >
                                     <X className="w-3 h-3" />
                                   </button>
@@ -865,29 +875,35 @@ export default function Onboarding() {
                         What's your preferred communication tone?
                       </Label>
                     </div>
-                    <RadioGroup
-                      value={formData.tonePreference}
-                      onValueChange={(value) => setFormData(prev => ({ ...prev, tonePreference: value }))}
-                      className="grid grid-cols-1 md:grid-cols-3 gap-4"
-                    >
-                      {[
-                        { value: "professional", label: "Professional", desc: "Formal and business-focused" },
-                        { value: "friendly", label: "Friendly", desc: "Warm and approachable" },
-                        { value: "direct", label: "Direct", desc: "Straight to the point" },
-                      ].map((tone) => (
-                        <Label
-                          key={tone.value}
-                          htmlFor={`tone-${tone.value}`}
-                          className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
-                        >
-                          <RadioGroupItem value={tone.value} id={`tone-${tone.value}`} className="mr-3" />
-                          <div>
-                            <div className="font-medium">{tone.label}</div>
-                            <div className="text-sm text-gray-600">{tone.desc}</div>
-                          </div>
-                        </Label>
-                      ))}
-                    </RadioGroup>
+                    <fieldset aria-label="Communication tone">
+                      <div className="space-y-2">
+                        {[
+                          { value: "professional", label: "Professional. Formal and business-focused" },
+                          { value: "friendly", label: "Friendly. Warm and approachable" },
+                          { value: "direct", label: "Direct. Straight to the point" },
+                        ].map((tone) => (
+                          <label
+                            key={tone.value}
+                            aria-label={tone.label}
+                            className={`group relative block rounded-lg border px-6 py-3 cursor-pointer transition-colors ${
+                              formData.tonePreference === tone.value 
+                                ? 'border-forest-600 bg-forest-50 ring-2 ring-forest-600' 
+                                : 'border-slate-400 bg-white hover:border-forest-400'
+                            }`}
+                          >
+                            <input
+                              value={tone.value}
+                              checked={formData.tonePreference === tone.value}
+                              onChange={(e) => setFormData(prev => ({ ...prev, tonePreference: e.target.value }))}
+                              name="tonePreference"
+                              type="radio"
+                              className="absolute inset-0 appearance-none focus:outline-none"
+                            />
+                            <span className="text-sm font-normal text-gray-900">{tone.label}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </fieldset>
                   </div>
 
                   <div>
@@ -902,8 +918,8 @@ export default function Onboarding() {
                             key={channel.value}
                             className={`p-4 border-2 rounded-lg cursor-pointer transition-colors ${
                               formData.preferredChannels.includes(channel.value)
-                                ? "border-primary bg-primary/5"
-                                : "border-gray-200 hover:border-primary/50"
+                                ? "border-forest-600 bg-forest-50"
+                                : "border-gray-200 hover:border-forest-400"
                             } ${formData.preferredChannels.length >= 3 && !formData.preferredChannels.includes(channel.value) ? "opacity-50 cursor-not-allowed" : ""}`}
                             onClick={() => {
                               if (formData.preferredChannels.includes(channel.value)) {
@@ -922,7 +938,7 @@ export default function Onboarding() {
                                     e.stopPropagation();
                                     handleArrayChange("preferredChannels", channel.value, false);
                                   }}
-                                  className="p-1 hover:bg-primary/20 rounded-full"
+                                  className="p-1 hover:bg-forest-400/20 rounded-full"
                                 >
                                   <X className="w-4 h-4" />
                                 </button>
@@ -938,13 +954,13 @@ export default function Onboarding() {
                           return (
                             <div
                               key={channel}
-                              className="inline-flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary rounded-full text-sm"
+                              className="inline-flex items-center gap-1 px-3 py-1 bg-forest-200 text-forest-800 rounded-full text-sm"
                             >
                               {option?.label}
                               <button
                                 type="button"
                                 onClick={() => handleArrayChange("preferredChannels", channel, false)}
-                                className="p-0.5 hover:bg-primary/20 rounded-full"
+                                className="p-0.5 hover:bg-forest-400/20 rounded-full"
                               >
                                 <X className="w-3 h-3" />
                               </button>
