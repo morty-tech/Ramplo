@@ -93,7 +93,7 @@ export default function ClientConnectionTracker() {
           {connectionTypes.map((type) => (
             <div key={type.key} className="flex items-center justify-between py-2">
               <div className="flex items-center gap-3">
-                <div className="absolute rounded-md bg-tealwave-500 p-3">
+                <div className="absolute rounded-md bg-tealwave-600 p-3">
                   <type.icon aria-hidden="true" className="size-6 text-white" />
                 </div>
                 <div className="ml-16">
