@@ -181,25 +181,33 @@ export default function Dashboard() {
 
   const stats = [
     {
-      title: "Days to real results",
-      value: "90",
-      icon: Target,
+      title: "Today's Tasks",
+      value: `${animatedCompleted}/${animatedTotal}`,
+      icon: FileText,
       color: "text-blue-600",
       bgColor: "bg-blue-100",
     },
     {
-      title: "Faster ramp with AI", 
-      value: "10x",
-      icon: Flame,
-      color: "text-orange-600",
-      bgColor: "bg-orange-100",
+      title: "Client Connects Today", 
+      value: todayConnections ? (todayConnections.phoneCalls || 0) + (todayConnections.textMessages || 0) + (todayConnections.emails || 0) : 0,
+      icon: UserCheck,
+      color: "text-green-600",
+      bgColor: "bg-green-100",
     },
     {
-      title: "Personalized on RampLO",
-      value: "100%",
-      icon: UserCheck,
-      color: "text-green-600", 
-      bgColor: "bg-green-100",
+      title: "Ramp Run",
+      value: progress?.rampRunDays || 0,
+      icon: Flame,
+      color: "text-orange-600", 
+      bgColor: "bg-orange-100",
+      tooltip: "Number of days you've completed all tasks and made client connections"
+    },
+    {
+      title: "Closed Loans",
+      value: progress?.loansClosed || 0,
+      icon: Home,
+      color: "text-purple-600", 
+      bgColor: "bg-purple-100",
     },
   ];
 
@@ -277,8 +285,20 @@ export default function Dashboard() {
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
-                    <div className="text-sm text-gray-600">
+                    <div className="flex items-center gap-1 text-sm text-gray-600">
                       {stat.title}
+                      {stat.tooltip && (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button className="hover:text-gray-600">
+                              <Info className="h-3 w-3 text-gray-400" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent className="max-w-[300px]">
+                            <p>{stat.tooltip}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      )}
                     </div>
                   </div>
                   <div className={`w-12 h-12 ${stat.bgColor} rounded-full flex items-center justify-center`}>
