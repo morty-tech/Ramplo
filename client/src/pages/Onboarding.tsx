@@ -237,7 +237,7 @@ export default function Onboarding() {
                   e.preventDefault();
                 }
               }
-            }} className="space-y-8">
+            }} className="space-y-4">
               {/* Step 1: Personal Info with Multiple Cities */}
               {step === 1 && (
                 <div className="space-y-6">
