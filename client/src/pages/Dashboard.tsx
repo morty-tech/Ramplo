@@ -363,19 +363,19 @@ export default function Dashboard() {
                               <p className="truncate">{task.description}</p>
                             </div>
                             <div>
-                              <Badge className={`text-xs ${
+                              <p className={`mt-0.5 rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset ${
                                 ['outreach', 'client calls', 'follow-up'].includes(task.category?.toLowerCase() || '') 
-                                  ? 'bg-forest-100 text-forest-800'
+                                  ? 'bg-forest-50 text-forest-700 ring-forest-600/20'
                                   : ['research', 'market analysis', 'lead generation'].includes(task.category?.toLowerCase() || '')
-                                  ? 'bg-tealwave-100 text-tealwave-800'
+                                  ? 'bg-teal-50 text-teal-700 ring-teal-600/20'
                                   : ['social media', 'content creation', 'marketing', 'branding'].includes(task.category?.toLowerCase() || '')
-                                  ? 'bg-lime-100 text-lime-800'
+                                  ? 'bg-lime-50 text-lime-700 ring-lime-600/20'
                                   : ['admin', 'planning', 'setup', 'organization'].includes(task.category?.toLowerCase() || '')
-                                  ? 'bg-slate-100 text-slate-800'
-                                  : 'bg-gray-100 text-gray-800'
+                                  ? 'bg-slate-50 text-slate-700 ring-slate-600/20'
+                                  : 'bg-gray-50 text-gray-600 ring-gray-500/10'
                               }`}>
                                 {task.category}
-                              </Badge>
+                              </p>
                             </div>
                           </div>
                         )}
