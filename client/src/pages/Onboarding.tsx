@@ -854,14 +854,18 @@ export default function Onboarding() {
                           ].map((channel) => (
                             <Label
                               key={channel.value}
-                              className="flex items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors"
+                              className={`flex items-center px-6 py-3 border-2 rounded-lg cursor-pointer transition-colors ${
+                                formData.socialChannelsUsed.includes(channel.value)
+                                  ? "border-forest-600 bg-forest-50"
+                                  : "border-gray-200 hover:border-forest-400"
+                              }`}
                             >
                               <Checkbox
                                 checked={formData.socialChannelsUsed.includes(channel.value)}
                                 onCheckedChange={(checked) => handleArrayChange("socialChannelsUsed", channel.value, checked as boolean)}
-                                className="mr-2"
+                                className="mr-3 data-[state=checked]:bg-forest-600 data-[state=checked]:border-forest-600"
                               />
-                              <span className="text-sm font-medium">{channel.label}</span>
+                              <span className="text-sm font-normal">{channel.label}</span>
                             </Label>
                           ))}
                         </div>
