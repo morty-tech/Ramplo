@@ -341,15 +341,19 @@ export default function Dashboard() {
                               <span className="ml-2 text-green-600 animate-bounce">✓</span>
                             )}
                           </p>
-                          {isCompleted ? (
-                            <p className="mt-0.5 rounded-md bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                              Complete
-                            </p>
-                          ) : (
-                            <p className="mt-0.5 rounded-md bg-gray-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
-                              Open
-                            </p>
-                          )}
+                          <p className={`mt-0.5 rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset ${
+                            ['outreach', 'client calls', 'follow-up'].includes(task.category?.toLowerCase() || '') 
+                              ? 'bg-forest-50 text-forest-700 ring-forest-600/20'
+                              : ['research', 'market analysis', 'lead generation'].includes(task.category?.toLowerCase() || '')
+                              ? 'bg-teal-50 text-teal-700 ring-teal-600/20'
+                              : ['social media', 'content creation', 'marketing', 'branding'].includes(task.category?.toLowerCase() || '')
+                              ? 'bg-lime-50 text-lime-700 ring-lime-600/20'
+                              : ['admin', 'planning', 'setup', 'organization'].includes(task.category?.toLowerCase() || '')
+                              ? 'bg-slate-50 text-slate-700 ring-slate-600/20'
+                              : 'bg-gray-50 text-gray-600 ring-gray-500/10'
+                          }`}>
+                            {task.category}
+                          </p>
                         </div>
                         {!isExpanded && (
                           <div className="mt-1 space-y-1">
@@ -361,21 +365,6 @@ export default function Dashboard() {
                                 <circle r={1} cx={1} cy={1} />
                               </svg>
                               <p className="truncate">{task.description}</p>
-                            </div>
-                            <div>
-                              <p className={`inline-block rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset ${
-                                ['outreach', 'client calls', 'follow-up'].includes(task.category?.toLowerCase() || '') 
-                                  ? 'bg-forest-50 text-forest-700 ring-forest-600/20'
-                                  : ['research', 'market analysis', 'lead generation'].includes(task.category?.toLowerCase() || '')
-                                  ? 'bg-teal-50 text-teal-700 ring-teal-600/20'
-                                  : ['social media', 'content creation', 'marketing', 'branding'].includes(task.category?.toLowerCase() || '')
-                                  ? 'bg-lime-50 text-lime-700 ring-lime-600/20'
-                                  : ['admin', 'planning', 'setup', 'organization'].includes(task.category?.toLowerCase() || '')
-                                  ? 'bg-slate-50 text-slate-700 ring-slate-600/20'
-                                  : 'bg-gray-50 text-gray-600 ring-gray-500/10'
-                              }`}>
-                                {task.category}
-                              </p>
                             </div>
                           </div>
                         )}
