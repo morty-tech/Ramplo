@@ -11,6 +11,32 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
+        // Brand Colors
+        forest: {
+          200: "hsl(150, 23%, 85%)",
+          400: "hsl(155, 20%, 44%)",
+          600: "hsl(155, 46%, 26%)",
+          800: "hsl(155, 63%, 15%)",
+        },
+        limeglow: {
+          200: "hsl(75, 100%, 91%)",
+          400: "hsl(75, 100%, 73%)",
+          600: "hsl(75, 72%, 58%)",
+          800: "hsl(75, 89%, 37%)",
+        },
+        tealwave: {
+          200: "hsl(169, 45%, 89%)",
+          400: "hsl(169, 43%, 63%)",
+          600: "hsl(169, 51%, 40%)",
+          800: "hsl(169, 75%, 22%)",
+        },
+        slate: {
+          200: "hsl(216, 12%, 90%)",
+          400: "hsl(216, 10%, 77%)",
+          600: "hsl(216, 8%, 52%)",
+          800: "hsl(216, 10%, 22%)",
+        },
+        // Shadcn/UI Color System
         background: "var(--background)",
         foreground: "var(--foreground)",
         card: {
