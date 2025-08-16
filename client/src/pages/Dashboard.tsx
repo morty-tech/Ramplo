@@ -347,7 +347,7 @@ export default function Dashboard() {
                           </p>
                         ) : (
                           <p className="mt-0.5 rounded-md bg-gray-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
-                            Pending
+                            Open
                           </p>
                         )}
                       </div>
