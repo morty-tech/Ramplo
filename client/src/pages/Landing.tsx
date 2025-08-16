@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -141,7 +142,13 @@ export default function Landing() {
       </div>
 
       {/* Features Section */}
-      <div className="relative isolate overflow-hidden bg-white pt-20 pb-8 sm:pt-24 sm:pb-12">
+      <motion.div 
+        className="relative isolate overflow-hidden bg-white pt-20 pb-8 sm:pt-24 sm:pb-12"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true, margin: "-100px" }}
+      >
         <svg
           aria-hidden="true"
           className="absolute inset-0 -z-10 size-full mask-[radial-gradient(100%_100%_at_top_right,white,transparent)] stroke-slate-200/30"
@@ -233,10 +240,16 @@ export default function Landing() {
             </dl>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* How It Works */}
-      <div className="bg-white py-12 sm:pt-16">
+      <motion.div 
+        className="bg-white py-12 sm:pt-16"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+        viewport={{ once: true, margin: "-100px" }}
+      >
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="relative isolate overflow-hidden bg-forest-800 px-6 py-20 sm:rounded-3xl sm:px-10 sm:py-24 lg:py-24 xl:px-24">
             <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-center lg:gap-y-0">
@@ -306,10 +319,16 @@ export default function Landing() {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Stats Section */}
-      <div className="bg-white py-16 sm:py-20">
+      <motion.div 
+        className="bg-white py-16 sm:py-20"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+        viewport={{ once: true, margin: "-100px" }}
+      >
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:mx-0">
             <h2 className="text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">
@@ -349,10 +368,16 @@ export default function Landing() {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* CTA Section */}
-      <div className="bg-white">
+      <motion.div 
+        className="bg-white"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+        viewport={{ once: true, margin: "-100px" }}
+      >
         <div className="mx-auto max-w-7xl py-8 sm:px-6 lg:px-8">
           <div className="relative isolate overflow-hidden bg-limeglow-600 px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
             <h2 className="text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">
@@ -406,7 +431,7 @@ export default function Landing() {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Footer */}
       <footer className="bg-white">
