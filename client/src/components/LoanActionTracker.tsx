@@ -92,7 +92,7 @@ export default function LoanActionTracker() {
         <div className="space-y-0">
           {actionTypes.map((type, index) => (
             <div key={type.key}>
-              <div className="flex items-center justify-between py-4">
+              <div className="flex items-center justify-between py-3">
                 <div className="flex items-center gap-3">
                   <div className="absolute rounded-md bg-tealwave-400 p-2">
                     <type.icon aria-hidden="true" className="size-5 text-white" />
