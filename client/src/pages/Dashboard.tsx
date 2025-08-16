@@ -305,9 +305,7 @@ export default function Dashboard() {
             {todaysObjective && (
               <div className="bg-forest-500 text-white px-4 py-3 sm:px-6 mb-4">
                 <div className="text-center">
-                  <span className="text-xs font-semibold text-white/80 uppercase tracking-wide">Focus for {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
-                  <span className="mx-2 text-white/60">•</span>
-                  <span className="text-sm font-medium text-white">{todaysObjective}</span>
+                  <span className="text-sm font-medium text-white">Today you will {todaysObjective}</span>
                 </div>
               </div>
             )}
