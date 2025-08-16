@@ -322,7 +322,11 @@ export default function Dashboard() {
                   <li key={task.id} className="transition-all duration-200">
                     <div className="flex items-start justify-between gap-x-6">
                       <div className="flex items-start gap-x-4">
-                        <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold relative top-5 bg-gray-100 text-gray-600">
+                        <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold relative top-5 ${
+                          isCompleted 
+                            ? 'bg-gray-100 text-gray-600' 
+                            : 'bg-lime-100 text-lime-700'
+                        }`}>
                           {index + 1}
                         </div>
                         <div className={`min-w-0 flex-grow cursor-pointer ${isExpanded ? 'pt-5 pb-2' : 'py-5'}`} onClick={() => handleTaskClick(task)}>
