@@ -329,7 +329,7 @@ export default function Dashboard() {
                     <div className="flex items-start justify-between gap-x-6">
                       <div className="min-w-0 flex-grow cursor-pointer py-5" onClick={() => handleTaskClick(task)}>
                         <div className="flex items-start gap-x-3">
-                          <p className={`text-sm/6 font-semibold transition-all duration-300 ${
+                          <p className={`text-base font-semibold transition-all duration-300 ${
                             isCompleting 
                               ? 'text-green-700' 
                               : isCompleted 
