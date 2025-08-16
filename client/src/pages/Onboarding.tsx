@@ -439,6 +439,8 @@ export default function Onboarding() {
                           { value: "heloc", label: "HELOC" },
                           { value: "investor-dscr", label: "Investor (DSCR)" },
                           { value: "non-qm", label: "Non-QM" },
+                          { value: "not-sure", label: "Not Sure" },
+                          { value: "other", label: "Other" },
                         ].find(opt => opt.value === focusType);
                         return (
                           <div
