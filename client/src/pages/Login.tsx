@@ -62,7 +62,7 @@ export default function Login() {
             </p>
             <button
               onClick={() => setLinkSent(false)}
-              className="flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="flex w-full justify-center rounded-md bg-limeglow-400 px-3 py-2 text-sm font-semibold text-forest-800 hover:bg-limeglow-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-limeglow-400 shadow-lg"
             >
               Send another link
             </button>
