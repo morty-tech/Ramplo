@@ -383,7 +383,7 @@ export default function Dashboard() {
                               className={`rounded-md px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 ${
                                 isCompleting
                                   ? 'bg-green-500 text-white'
-                                  : 'bg-lime-500 text-white hover:bg-lime-600'
+                                  : 'bg-limeglow-400 text-forest-800 hover:bg-limeglow-300'
                               }`}
                             >
                               {isCompleting ? 'Completing...' : 'Mark Completed'}
