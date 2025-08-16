@@ -69,7 +69,7 @@ export default function Landing() {
       </header>
 
       {/* Hero Section */}
-      <div className="bg-tealwave-800 min-h-screen">
+      <div className="bg-tealwave-800 min-h-screen flex items-center justify-center">
         <div className="relative isolate px-6 pt-14 lg:px-8">
           <div
             aria-hidden="true"
