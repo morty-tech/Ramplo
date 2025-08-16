@@ -12,7 +12,8 @@ import {
   CheckCircle, 
   Bot,
   ArrowRight,
-  Star
+  Star,
+  Send
 } from "lucide-react";
 
 export default function Landing() {
