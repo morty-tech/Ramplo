@@ -9,7 +9,7 @@
   --card-foreground: hsl(216, 10%, 22%); /* slate-800 */
   --popover: hsl(0, 0%, 100%);
   --popover-foreground: hsl(216, 10%, 22%); /* slate-800 */
-  --primary: hsl(155, 46%, 26%); /* forest-600 */
+  --primary: hsl(155, 63%, 15%); /* forest-800 */
   --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(169, 51%, 40%); /* tealwave-600 */
   --secondary-foreground: hsl(0, 0%, 100%);
@@ -21,20 +21,20 @@
   --destructive-foreground: hsl(0, 0%, 100%);
   --border: hsl(216, 12%, 90%); /* slate-200 */
   --input: hsl(216, 12%, 90%); /* slate-200 */
-  --ring: hsl(155, 46%, 26%); /* forest-600 */
-  --chart-1: hsl(155, 46%, 26%); /* forest-600 */
+  --ring: hsl(155, 63%, 15%); /* forest-800 */
+  --chart-1: hsl(155, 63%, 15%); /* forest-800 */
   --chart-2: hsl(169, 51%, 40%); /* tealwave-600 */
   --chart-3: hsl(75, 72%, 58%); /* limeglow-600 */
   --chart-4: hsl(155, 20%, 44%); /* forest-400 */
   --chart-5: hsl(169, 43%, 63%); /* tealwave-400 */
   --sidebar-background: hsl(0, 0%, 100%);
   --sidebar-foreground: hsl(216, 10%, 22%); /* slate-800 */
-  --sidebar-primary: hsl(155, 46%, 26%); /* forest-600 */
+  --sidebar-primary: hsl(155, 63%, 15%); /* forest-800 */
   --sidebar-primary-foreground: hsl(0, 0%, 100%);
   --sidebar-accent: hsl(216, 12%, 90%); /* slate-200 */
   --sidebar-accent-foreground: hsl(155, 46%, 26%); /* forest-600 */
   --sidebar-border: hsl(216, 12%, 90%); /* slate-200 */
-  --sidebar-ring: hsl(155, 46%, 26%); /* forest-600 */
+  --sidebar-ring: hsl(155, 63%, 15%); /* forest-800 */
   --font-sans: 'Inter', sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: 'Fira Code', monospace;
