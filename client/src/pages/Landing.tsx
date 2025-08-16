@@ -89,11 +89,11 @@ export default function Landing() {
           </div>
           
           {/* Centered Logo */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-4">
             <h1 className="text-3xl font-bold text-white">RampLO</h1>
           </div>
 
-          <div className="mx-auto max-w-2xl py-16 sm:py-24 lg:py-32">
+          <div className="mx-auto max-w-2xl py-8 sm:py-12 lg:py-16">
             <div className="text-center">
               <h1 className="text-5xl font-semibold tracking-tight text-balance text-white sm:text-7xl">
                 Get Your First 3 Deals in
