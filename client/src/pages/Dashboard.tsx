@@ -293,11 +293,11 @@ export default function Dashboard() {
           {stats.map((item) => (
             <div
               key={item.id}
-              className="relative overflow-hidden rounded-lg bg-white px-4 pt-5 pb-12 shadow-sm sm:px-6 sm:pt-6"
+              className="relative overflow-hidden rounded-lg bg-white px-4 pt-5 pb-6 shadow-sm sm:px-6 sm:pt-6"
             >
               <dt>
-                <div className="absolute rounded-md bg-forest-600 p-3">
-                  <item.icon aria-hidden="true" className="size-6 text-white" />
+                <div className="absolute rounded-md bg-limeglow-400 p-3">
+                  <item.icon aria-hidden="true" className="size-6 text-forest-800" />
                 </div>
                 <p className="ml-16 truncate text-sm font-medium text-gray-500">{item.name}</p>
               </dt>
@@ -319,13 +319,6 @@ export default function Dashboard() {
                     {item.change}
                   </p>
                 )}
-                <div className="absolute inset-x-0 bottom-0 bg-gray-50 px-4 py-4 sm:px-6">
-                  <div className="text-sm">
-                    <span className="font-medium text-forest-600 cursor-pointer hover:text-forest-500">
-                      Today's progress<span className="sr-only"> {item.name} stats</span>
-                    </span>
-                  </div>
-                </div>
               </dd>
             </div>
           ))}
