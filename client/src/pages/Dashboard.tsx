@@ -235,7 +235,7 @@ export default function Dashboard() {
         <div className="flex flex-col items-end mt-4 md:mt-0 text-right min-w-[160px]">
           <div className="flex items-center gap-2 mb-2">
             <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Week {currentWeek} of 14</p>
-            <span className="text-xs font-semibold text-forest-600 bg-forest-50 px-2 py-1 rounded-full">
+            <span className="text-xs font-semibold text-white bg-forest-600 px-2 py-1 rounded-full">
               {Math.round((currentWeek / 14) * 100)}%
             </span>
           </div>
