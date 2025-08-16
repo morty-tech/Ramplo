@@ -389,7 +389,7 @@ export default function Onboarding() {
                         >
                           <div className="flex items-center justify-between">
                             <div>
-                              <div className="font-medium">{focus.label}</div>
+                              <div className="text-sm font-normal">{focus.label}</div>
                             </div>
                             {formData.focus.includes(focus.value) && (
                               <button
@@ -487,7 +487,7 @@ export default function Onboarding() {
                           }}
                         >
                           <div className="flex items-center justify-between">
-                            <span className="font-medium">{type.label}</span>
+                            <span className="text-sm font-normal">{type.label}</span>
                             {formData.borrowerTypes.includes(type.value) && (
                               <button
                                 type="button"
@@ -759,7 +759,7 @@ export default function Onboarding() {
                               }}
                             >
                               <div className="flex items-center justify-between">
-                                <span className="text-sm font-medium">{source.label}</span>
+                                <span className="text-sm font-normal">{source.label}</span>
                                 {formData.networkSources.includes(source.value) && (
                                   <button
                                     type="button"
@@ -930,7 +930,7 @@ export default function Onboarding() {
                             }}
                           >
                             <div className="flex items-center justify-between">
-                              <span className="font-medium">{channel.label}</span>
+                              <span className="text-sm font-normal">{channel.label}</span>
                               {formData.preferredChannels.includes(channel.value) && (
                                 <button
                                   type="button"
