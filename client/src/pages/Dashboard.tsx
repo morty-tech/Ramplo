@@ -370,45 +370,35 @@ export default function Dashboard() {
                           </div>
                         )}
                       </div>
-                      {!isExpanded && (
-                        <div className="flex flex-none items-center gap-x-4 py-5">
-                          {isCompleted ? (
-                            <div className="flex items-center gap-2 mr-6">
-                              <span className="text-xs font-semibold text-forest-600 uppercase tracking-wide">Completed</span>
-                              <Check className="w-5 h-5 text-forest-600" />
-                            </div>
-                          ) : (
-                            <Button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                if (!isCompleting) {
-                                  handleTaskComplete(task.id);
-                                }
-                              }}
-                              disabled={isCompleting}
-                              className={`rounded-md px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 ${
-                                isCompleting
-                                  ? 'bg-green-500 text-white'
-                                  : 'bg-limeglow-400 text-forest-800 hover:bg-limeglow-300'
-                              }`}
-                            >
-                              {isCompleting ? 'Completing...' : 'Mark Completed'}
-                            </Button>
-                          )}
-                        </div>
-                      )}
+                      <div className="flex flex-none items-center gap-x-4 py-5">
+                        {isCompleted ? (
+                          <div className="flex items-center gap-2 mr-6">
+                            <span className="text-xs font-semibold text-forest-600 uppercase tracking-wide">Completed</span>
+                            <Check className="w-5 h-5 text-forest-600" />
+                          </div>
+                        ) : (
+                          <Button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (!isCompleting) {
+                                handleTaskComplete(task.id);
+                              }
+                            }}
+                            disabled={isCompleting}
+                            className={`rounded-md px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 ${
+                              isCompleting
+                                ? 'bg-green-500 text-white'
+                                : 'bg-limeglow-400 text-forest-800 hover:bg-limeglow-300'
+                            }`}
+                          >
+                            {isCompleting ? 'Completing...' : 'Mark Completed'}
+                          </Button>
+                        )}
+                      </div>
                     </div>
                     
                     {isExpanded && (
                       <>
-                        {isCompleted && (
-                          <div className="flex justify-end pt-5">
-                            <div className="flex items-center gap-2 mr-6">
-                              <span className="text-xs font-semibold text-forest-600 uppercase tracking-wide">Completed</span>
-                              <Check className="w-5 h-5 text-forest-600" />
-                            </div>
-                          </div>
-                        )}
                         <div className="pb-5">
                         <div className="space-y-2">
                           <div>
