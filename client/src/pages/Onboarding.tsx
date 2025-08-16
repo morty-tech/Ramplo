@@ -41,8 +41,6 @@ export default function Onboarding() {
   const [step, setStep] = useState(1);
   const [showOnboardingComplete, setShowOnboardingComplete] = useState(false);
   const [loadingStep, setLoadingStep] = useState(0);
-  const [animationDirection, setAnimationDirection] = useState<'next' | 'prev' | null>(null);
-  const [isAnimating, setIsAnimating] = useState(false);
   const { toast } = useToast();
 
   const loadingMessages = [
@@ -227,13 +225,7 @@ export default function Onboarding() {
         </div>
 
         <div className="sm:mx-auto sm:w-full sm:max-w-3xl">
-          <div className={`bg-white rounded-lg p-8 shadow-xl transition-all duration-500 ease-in-out ${
-            isAnimating 
-              ? animationDirection === 'next' 
-                ? 'transform translate-x-full opacity-0' 
-                : 'transform -translate-x-full opacity-0'
-              : 'transform translate-x-0 opacity-100'
-          }`}>
+          <div className="bg-white rounded-lg p-8 shadow-xl">
 
             <form onSubmit={handleSubmit} onKeyDown={(e) => {
               // Prevent Enter key from submitting form unless on final step
@@ -968,15 +960,7 @@ export default function Onboarding() {
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => {
-                      setAnimationDirection('prev');
-                      setIsAnimating(true);
-                      setTimeout(() => {
-                        setStep(step - 1);
-                        setIsAnimating(false);
-                        setAnimationDirection(null);
-                      }, 250);
-                    }}
+                    onClick={() => setStep(step - 1)}
                   >
                     Previous
                   </Button>
@@ -984,15 +968,7 @@ export default function Onboarding() {
                 {step < totalSteps ? (
                   <Button
                     type="button"
-                    onClick={() => {
-                      setAnimationDirection('next');
-                      setIsAnimating(true);
-                      setTimeout(() => {
-                        setStep(step + 1);
-                        setIsAnimating(false);
-                        setAnimationDirection(null);
-                      }, 250);
-                    }}
+                    onClick={() => setStep(step + 1)}
                     disabled={!canProceed()}
                     className="ml-auto"
                   >
