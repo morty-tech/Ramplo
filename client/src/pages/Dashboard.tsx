@@ -359,6 +359,12 @@ export default function Dashboard() {
                             <svg viewBox="0 0 2 2" className="size-0.5 fill-current">
                               <circle r={1} cx={1} cy={1} />
                             </svg>
+                            <Badge className="bg-forest-600 text-white text-xs hover:bg-forest-700">
+                              {task.category}
+                            </Badge>
+                            <svg viewBox="0 0 2 2" className="size-0.5 fill-current">
+                              <circle r={1} cx={1} cy={1} />
+                            </svg>
                             <p className="truncate">{task.description}</p>
                           </div>
                         )}
@@ -393,20 +399,12 @@ export default function Dashboard() {
                             <p className="text-sm text-gray-600">{task.description}</p>
                           </div>
                           
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <h4 className="text-sm font-medium text-gray-900 mb-1">Category</h4>
-                              <Badge variant="secondary" className="text-xs">
-                                {task.category}
-                              </Badge>
-                            </div>
-                            <div>
-                              <h4 className="text-sm font-medium text-gray-900 mb-1">Estimated Time</h4>
-                              <p className="text-sm text-gray-600 flex items-center">
-                                <Clock className="w-3 h-3 mr-1" />
-                                {task.estimatedMinutes} minutes
-                              </p>
-                            </div>
+                          <div>
+                            <h4 className="text-sm font-medium text-gray-900 mb-1">Estimated Time</h4>
+                            <p className="text-sm text-gray-600 flex items-center">
+                              <Clock className="w-3 h-3 mr-1" />
+                              {task.estimatedMinutes} minutes
+                            </p>
                           </div>
                           
                           {task.detailedDescription && (
