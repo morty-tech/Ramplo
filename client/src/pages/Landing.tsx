@@ -74,6 +74,20 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="absolute inset-x-0 top-0 z-50">
+        <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+          <div className="flex lg:flex-1">
+            <span className="text-2xl font-bold text-white">RampLO</span>
+          </div>
+          <div className="flex lg:flex-1 lg:justify-end">
+            <a href="/dashboard" className="text-sm font-semibold text-white hover:text-limeglow-400">
+              Log in <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </nav>
+      </header>
+
       {/* Hero Section */}
       <div className="bg-tealwave-800">
         <div className="relative isolate px-6 pt-14 lg:px-8">
