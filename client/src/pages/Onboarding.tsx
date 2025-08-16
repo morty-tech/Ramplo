@@ -579,9 +579,9 @@ export default function Onboarding() {
                     <fieldset aria-label="Time available">
                       <div className="space-y-2">
                         {[
-                          { value: "30", label: "30 minutes. Quick daily activities" },
-                          { value: "60", label: "60 minutes. Focused prospecting time" },
-                          { value: "90+", label: "90+ minutes. Deep relationship building" },
+                          { value: "30", first: "30 minutes.", second: "Quick daily activities" },
+                          { value: "60", first: "60 minutes.", second: "Focused prospecting time" },
+                          { value: "90+", first: "90+ minutes.", second: "Deep relationship building" },
                         ].map((time) => (
                           <label
                             key={time.value}
@@ -600,7 +600,10 @@ export default function Onboarding() {
                               type="radio"
                               className="absolute inset-0 appearance-none focus:outline-none"
                             />
-                            <span className="text-sm font-normal text-gray-900">{time.label}</span>
+                            <span className="text-sm text-gray-900">
+                              <span className="font-medium">{time.first}</span>
+                              <span className="font-normal"> {time.second}</span>
+                            </span>
                           </label>
                         ))}
                       </div>
@@ -614,9 +617,9 @@ export default function Onboarding() {
                     <fieldset aria-label="Outreach comfort">
                       <div className="space-y-2">
                         {[
-                          { value: "low", label: "Low. I prefer warm introductions" },
-                          { value: "medium", label: "Medium. I'm willing to reach out with preparation" },
-                          { value: "high", label: "High. I'm comfortable with cold outreach" },
+                          { value: "low", first: "Low.", second: "I prefer warm introductions" },
+                          { value: "medium", first: "Medium.", second: "I'm willing to reach out with preparation" },
+                          { value: "high", first: "High.", second: "I'm comfortable with cold outreach" },
                         ].map((comfort) => (
                           <label
                             key={comfort.value}
@@ -635,7 +638,10 @@ export default function Onboarding() {
                               type="radio"
                               className="absolute inset-0 appearance-none focus:outline-none"
                             />
-                            <span className="text-sm font-normal text-gray-900">{comfort.label}</span>
+                            <span className="text-sm text-gray-900">
+                              <span className="font-medium">{comfort.first}</span>
+                              <span className="font-normal"> {comfort.second}</span>
+                            </span>
                           </label>
                         ))}
                       </div>
@@ -892,9 +898,9 @@ export default function Onboarding() {
                     <fieldset aria-label="Communication tone">
                       <div className="space-y-2">
                         {[
-                          { value: "professional", label: "Professional. Formal and business-focused" },
-                          { value: "friendly", label: "Friendly. Warm and approachable" },
-                          { value: "direct", label: "Direct. Straight to the point" },
+                          { value: "professional", first: "Professional.", second: "Formal and business-focused" },
+                          { value: "friendly", first: "Friendly.", second: "Warm and approachable" },
+                          { value: "direct", first: "Direct.", second: "Straight to the point" },
                         ].map((tone) => (
                           <label
                             key={tone.value}
@@ -913,7 +919,10 @@ export default function Onboarding() {
                               type="radio"
                               className="absolute inset-0 appearance-none focus:outline-none"
                             />
-                            <span className="text-sm font-normal text-gray-900">{tone.label}</span>
+                            <span className="text-sm text-gray-900">
+                              <span className="font-medium">{tone.first}</span>
+                              <span className="font-normal"> {tone.second}</span>
+                            </span>
                           </label>
                         ))}
                       </div>
