@@ -78,7 +78,7 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
             aria-label="Expand menu"
           >
             <div className="w-6 h-6 bg-white rounded-sm flex items-center justify-center">
-              <span className="text-blue-600 text-xs font-bold">R</span>
+              <span className="text-forest-800 text-xs font-bold">R</span>
             </div>
           </button>
         )}
