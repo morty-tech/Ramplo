@@ -82,49 +82,52 @@ export default function Login() {
             </div>
             <span className="text-white font-bold text-2xl">RampLO</span>
           </div>
-          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">Sign in to your account</h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="email" className="block text-sm/6 font-medium text-gray-100">
-                Email address
-              </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  autoComplete="email"
-                  placeholder="Enter your email address"
-                  className="block w-full rounded-md bg-white/20 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/30 placeholder:text-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-limeglow-400 sm:text-sm/6"
-                />
+          <div className="bg-white rounded-lg p-8 shadow-xl">
+            <h2 className="text-center text-2xl/9 font-bold tracking-tight text-gray-900 mb-8">Sign in to your account</h2>
+            
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label htmlFor="email" className="block text-sm/6 font-medium text-gray-700">
+                  Email address
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    autoComplete="email"
+                    placeholder="Enter your email address"
+                    className="block w-full rounded-md border border-gray-300 px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-500 focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div>
-              <button
-                type="submit"
-                disabled={isLoading || !email}
-                className="flex w-full justify-center rounded-md bg-forest-400 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-limeglow-600 hover:text-forest-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-limeglow-400 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  "Sign in with Magic Link"
-                )}
-              </button>
-            </div>
-          </form>
+              <div>
+                <button
+                  type="submit"
+                  disabled={isLoading || !email}
+                  className="flex w-full justify-center rounded-md bg-limeglow-400 px-3 py-1.5 text-sm/6 font-semibold text-forest-800 hover:bg-limeglow-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-limeglow-400 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    "Sign in with Magic Link"
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
 
-          <p className="mt-10 text-center text-sm/6 text-gray-400">
+          <p className="mt-6 text-center text-sm/6 text-gray-400">
             New to RampLO?{' '}
             <a href="/" className="font-semibold text-limeglow-400 hover:text-limeglow-300 ml-2">
               Learn more
