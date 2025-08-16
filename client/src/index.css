@@ -116,7 +116,7 @@
 /* Arrow rise animation */
 @keyframes arrowRise {
   0% {
-    transform: translateY(100px);
+    transform: translateY(100px) translateX(-20px);
     opacity: 0;
   }
   20% {
@@ -124,10 +124,10 @@
   }
   80% {
     opacity: 1;
-    transform: translateY(-200px);
+    transform: translateY(-200px) translateX(40px);
   }
   100% {
-    transform: translateY(-300px);
+    transform: translateY(-300px) translateX(60px);
     opacity: 0;
   }
 }

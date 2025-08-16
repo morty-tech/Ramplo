@@ -345,32 +345,32 @@ export default function Landing() {
             <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
               {/* Arrow path 1 */}
               <svg className="absolute bottom-0 left-[15%] w-12 h-24 animate-[arrowRise_8s_ease-out_infinite]" viewBox="0 0 24 48">
-                <path d="M12 48 L12 8 L8 12 M12 8 L16 12" stroke="#22c55e" strokeWidth="1.5" fill="none" opacity="0.3" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M8 48 L18 8 L14 12 M18 8 L22 12" stroke="#22c55e" strokeWidth="1.5" fill="none" opacity="0.3" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
               
               {/* Arrow path 2 */}
               <svg className="absolute bottom-0 left-[35%] w-10 h-20 animate-[arrowRise_10s_ease-out_infinite_2s]" viewBox="0 0 20 40">
-                <path d="M10 40 L10 6 L7 10 M10 6 L13 10" stroke="#84cc16" strokeWidth="1.5" fill="none" opacity="0.25" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M6 40 L16 6 L12 10 M16 6 L20 10" stroke="#84cc16" strokeWidth="1.5" fill="none" opacity="0.25" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
               
               {/* Arrow path 3 */}
               <svg className="absolute bottom-0 left-[55%] w-14 h-28 animate-[arrowRise_12s_ease-out_infinite_4s]" viewBox="0 0 28 56">
-                <path d="M14 56 L14 10 L10 14 M14 10 L18 14" stroke="#16a34a" strokeWidth="1.5" fill="none" opacity="0.35" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M8 56 L20 10 L16 14 M20 10 L24 14" stroke="#16a34a" strokeWidth="1.5" fill="none" opacity="0.35" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
               
               {/* Arrow path 4 */}
               <svg className="absolute bottom-0 left-[75%] w-8 h-16 animate-[arrowRise_6s_ease-out_infinite_1s]" viewBox="0 0 16 32">
-                <path d="M8 32 L8 4 L5 8 M8 4 L11 8" stroke="#65a30d" strokeWidth="1.5" fill="none" opacity="0.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M4 32 L12 4 L8 8 M12 4 L16 8" stroke="#65a30d" strokeWidth="1.5" fill="none" opacity="0.2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
               
               {/* Curved arrow path 1 */}
               <svg className="absolute bottom-0 left-[25%] w-16 h-32 animate-[arrowRise_14s_ease-out_infinite_3s]" viewBox="0 0 32 64">
-                <path d="M8 64 Q16 40 24 16 L20 20 M24 16 L28 20" stroke="#22d3ee" strokeWidth="1.5" fill="none" opacity="0.15" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M4 64 Q12 40 28 16 L24 20 M28 16 L32 20" stroke="#22d3ee" strokeWidth="1.5" fill="none" opacity="0.15" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
               
               {/* Curved arrow path 2 */}
               <svg className="absolute bottom-0 left-[65%] w-12 h-24 animate-[arrowRise_9s_ease-out_infinite_5s]" viewBox="0 0 24 48">
-                <path d="M16 48 Q12 30 8 12 L12 16 M8 12 L4 16" stroke="#a3e635" strokeWidth="1.5" fill="none" opacity="0.3" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M6 48 Q12 30 20 12 L16 16 M20 12 L24 16" stroke="#a3e635" strokeWidth="1.5" fill="none" opacity="0.3" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
           </div>
