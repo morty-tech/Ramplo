@@ -41,6 +41,8 @@ export default function Onboarding() {
   const [step, setStep] = useState(1);
   const [showOnboardingComplete, setShowOnboardingComplete] = useState(false);
   const [loadingStep, setLoadingStep] = useState(0);
+  const [animationDirection, setAnimationDirection] = useState<'next' | 'prev' | null>(null);
+  const [isAnimating, setIsAnimating] = useState(false);
   const { toast } = useToast();
 
   const loadingMessages = [
@@ -238,7 +240,15 @@ export default function Onboarding() {
                 }
               }
             }} className="space-y-4">
-              {/* Step 1: Personal Info with Multiple Cities */}
+              {/* Step Content with Animation */}
+              <div className={`transition-all duration-300 ease-in-out ${
+                isAnimating 
+                  ? animationDirection === 'next' 
+                    ? 'transform translate-x-full opacity-0' 
+                    : 'transform -translate-x-full opacity-0'
+                  : 'transform translate-x-0 opacity-100'
+              }`}>
+                {/* Step 1: Personal Info with Multiple Cities */}
               {step === 1 && (
                 <div className="space-y-6">
                   <div className="flex items-center mb-4">
@@ -952,6 +962,7 @@ export default function Onboarding() {
                   </p>
                 </div>
               )}
+              </div>
 
               {/* Navigation */}
               <div className="flex justify-between items-center pt-6">
@@ -959,7 +970,15 @@ export default function Onboarding() {
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => setStep(step - 1)}
+                    onClick={() => {
+                      setAnimationDirection('prev');
+                      setIsAnimating(true);
+                      setTimeout(() => {
+                        setStep(step - 1);
+                        setIsAnimating(false);
+                        setAnimationDirection(null);
+                      }, 150);
+                    }}
                   >
                     Previous
                   </Button>
@@ -967,7 +986,15 @@ export default function Onboarding() {
                 {step < totalSteps ? (
                   <Button
                     type="button"
-                    onClick={() => setStep(step + 1)}
+                    onClick={() => {
+                      setAnimationDirection('next');
+                      setIsAnimating(true);
+                      setTimeout(() => {
+                        setStep(step + 1);
+                        setIsAnimating(false);
+                        setAnimationDirection(null);
+                      }, 150);
+                    }}
                     disabled={!canProceed()}
                     className="ml-auto"
                   >
