@@ -306,8 +306,8 @@ export default function Dashboard() {
             {todaysObjective && (
               <div className="bg-white border-b border-gray-200 px-4 py-3 sm:px-6 mb-4">
                 <div className="text-left">
-                  <span className="text-xs font-semibold text-forest-600 uppercase tracking-wide">Today's goal:</span>
-                  <span className="text-sm font-medium text-forest-800 ml-2">{todaysObjective}</span>
+                  <div>Today's goal:</div>
+                  <div>{todaysObjective}</div>
                 </div>
               </div>
             )}
