@@ -326,7 +326,7 @@ export default function Dashboard() {
                 
                 return (
                   <li key={task.id} className="transition-all duration-200">
-                    <div className="flex items-center justify-between gap-x-6 py-5 px-4 sm:px-6">
+                    <div className="flex items-center justify-between gap-x-6 py-5">
                       <div className="min-w-0 flex-grow cursor-pointer" onClick={() => handleTaskClick(task)}>
                         <div className="flex items-start gap-x-3">
                           <p className={`text-sm/6 font-semibold transition-all duration-300 ${
@@ -364,16 +364,14 @@ export default function Dashboard() {
                             </div>
                             <div>
                               <Badge className={`text-xs ${
-                                task.category.toLowerCase().includes('call') || task.category.toLowerCase().includes('phone') 
+                                ['Outreach', 'Client Calls', 'Follow-up'].includes(task.category) 
                                   ? 'bg-forest-100 text-forest-800'
-                                  : task.category.toLowerCase().includes('email') || task.category.toLowerCase().includes('message')
-                                  ? 'bg-limeglow-100 text-limeglow-800'
-                                  : task.category.toLowerCase().includes('research') || task.category.toLowerCase().includes('study')
+                                  : ['Research', 'Market Analysis', 'Lead Generation'].includes(task.category)
                                   ? 'bg-tealwave-100 text-tealwave-800'
-                                  : task.category.toLowerCase().includes('network') || task.category.toLowerCase().includes('connect')
-                                  ? 'bg-forest-100 text-forest-800'
-                                  : task.category.toLowerCase().includes('social') || task.category.toLowerCase().includes('media')
+                                  : ['Social Media', 'Content Creation', 'Marketing'].includes(task.category)
                                   ? 'bg-limeglow-100 text-limeglow-800'
+                                  : ['Admin', 'Planning', 'Setup'].includes(task.category)
+                                  ? 'bg-slate-100 text-slate-800'
                                   : 'bg-gray-100 text-gray-800'
                               }`}>
                                 {task.category}
