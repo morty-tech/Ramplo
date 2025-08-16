@@ -419,7 +419,7 @@ export default function Dashboard() {
                                 className={`rounded-md px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 ${
                                   isCompleting
                                     ? 'bg-green-500 text-white'
-                                    : 'bg-white text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
+                                    : 'bg-limeglow-400 text-forest-800 hover:bg-limeglow-300'
                                 }`}
                               >
                                 {isCompleting ? 'Completing...' : 'Mark Completed'}
