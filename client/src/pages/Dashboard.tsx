@@ -379,22 +379,24 @@ export default function Dashboard() {
                             <Check className="w-5 h-5 text-forest-600" />
                           </div>
                         ) : (
-                          <Button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              if (!isCompleting) {
-                                handleTaskComplete(task.id);
-                              }
-                            }}
-                            disabled={isCompleting}
-                            className={`rounded-md px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 ${
-                              isCompleting
-                                ? 'bg-green-500 text-white'
-                                : 'bg-limeglow-400 text-forest-800 hover:bg-limeglow-300'
-                            }`}
-                          >
-                            {isCompleting ? 'Completing...' : 'Mark Completed'}
-                          </Button>
+                          !isExpanded && (
+                            <Button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                if (!isCompleting) {
+                                  handleTaskComplete(task.id);
+                                }
+                              }}
+                              disabled={isCompleting}
+                              className={`rounded-md px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 ${
+                                isCompleting
+                                  ? 'bg-green-500 text-white'
+                                  : 'bg-limeglow-400 text-forest-800 hover:bg-limeglow-300'
+                              }`}
+                            >
+                              {isCompleting ? 'Completing...' : 'Mark Completed'}
+                            </Button>
+                          )
                         )}
                       </div>
                     </div>
