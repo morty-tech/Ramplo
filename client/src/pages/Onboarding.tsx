@@ -324,14 +324,14 @@ export default function Onboarding() {
                   <fieldset aria-label="Experience level">
                     <div className="space-y-2">
                       {[
-                        { value: "new", label: "New to the industry. I'm just getting started" },
-                        { value: "<1y", label: "Less than 1 year. I'm building foundational skills" },
-                        { value: "1-3y", label: "1-3 years. I'm growing my experience" },
-                        { value: "3+", label: "3+ years. I'm a seasoned professional" },
+                        { value: "new", first: "New to the industry.", second: "I'm just getting started" },
+                        { value: "<1y", first: "Less than 1 year.", second: "I'm building foundational skills" },
+                        { value: "1-3y", first: "1-3 years.", second: "I'm growing my experience" },
+                        { value: "3+", first: "3+ years.", second: "I'm a seasoned professional" },
                       ].map((option) => (
                         <label
                           key={option.value}
-                          aria-label={option.label}
+                          aria-label={`${option.first} ${option.second}`}
                           className={`group relative block rounded-lg border px-6 py-3 cursor-pointer transition-colors ${
                             formData.experienceLevel === option.value 
                               ? 'border-forest-600 bg-forest-50 ring-2 ring-forest-600' 
@@ -346,7 +346,10 @@ export default function Onboarding() {
                             type="radio"
                             className="absolute inset-0 appearance-none focus:outline-none"
                           />
-                          <span className="text-sm font-normal text-gray-900">{option.label}</span>
+                          <span className="text-sm text-gray-900">
+                            <span className="font-medium">{option.first}</span>
+                            <span className="font-normal"> {option.second}</span>
+                          </span>
                         </label>
                       ))}
                     </div>
