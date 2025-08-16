@@ -319,7 +319,7 @@ export default function Dashboard() {
                 const isExpanded = expandedTaskId === task.id;
                 
                 return (
-                  <li key={task.id} className={`transition-all duration-200 ${isCompleted ? 'bg-slate-50/50' : ''}`}>
+                  <li key={task.id} className={`transition-all duration-200 ${isCompleted ? 'bg-slate-100' : ''}`}>
                     <div className="flex items-start justify-between gap-x-6">
                       <div className="flex items-center gap-x-4">
                         <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold ${
