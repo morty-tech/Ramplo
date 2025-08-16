@@ -250,22 +250,36 @@ export default function Onboarding() {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="firstName" className="font-medium">First Name</Label>
-                      <Input
-                        id="firstName"
-                        value={formData.firstName}
-                        onChange={(e) => setFormData(prev => ({ ...prev, firstName: e.target.value }))}
-                        placeholder="Riley"
-                      />
+                      <label htmlFor="firstName" className="block text-sm/6 font-medium text-gray-900">
+                        First Name
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          id="firstName"
+                          name="firstName"
+                          type="text"
+                          value={formData.firstName}
+                          onChange={(e) => setFormData(prev => ({ ...prev, firstName: e.target.value }))}
+                          placeholder="Riley"
+                          className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-forest-600 sm:text-sm/6"
+                        />
+                      </div>
                     </div>
                     <div>
-                      <Label htmlFor="lastName" className="font-medium">Last Name</Label>
-                      <Input
-                        id="lastName"
-                        value={formData.lastName}
-                        onChange={(e) => setFormData(prev => ({ ...prev, lastName: e.target.value }))}
-                        placeholder="Parker"
-                      />
+                      <label htmlFor="lastName" className="block text-sm/6 font-medium text-gray-900">
+                        Last Name
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          id="lastName"
+                          name="lastName"
+                          type="text"
+                          value={formData.lastName}
+                          onChange={(e) => setFormData(prev => ({ ...prev, lastName: e.target.value }))}
+                          placeholder="Parker"
+                          className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-forest-600 sm:text-sm/6"
+                        />
+                      </div>
                     </div>
                   </div>
                   
@@ -404,13 +418,20 @@ export default function Onboarding() {
                     
                     {formData.focus.includes("other") && (
                       <div className="mt-4">
-                        <Label htmlFor="otherFocus" className="font-medium">Please specify your other loan focus</Label>
-                        <Input
-                          id="otherFocus"
-                          value={formData.otherFocus}
-                          onChange={(e) => setFormData(prev => ({ ...prev, otherFocus: e.target.value }))}
-                          placeholder="e.g., Bridge loans, Construction loans, Jumbo loans"
-                        />
+                        <label htmlFor="otherFocus" className="block text-sm/6 font-medium text-gray-900">
+                          Please specify your other loan focus
+                        </label>
+                        <div className="mt-2">
+                          <input
+                            id="otherFocus"
+                            name="otherFocus"
+                            type="text"
+                            value={formData.otherFocus}
+                            onChange={(e) => setFormData(prev => ({ ...prev, otherFocus: e.target.value }))}
+                            placeholder="e.g., Bridge loans, Construction loans, Jumbo loans"
+                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-forest-600 sm:text-sm/6"
+                          />
+                        </div>
                       </div>
                     )}
                     
@@ -488,13 +509,20 @@ export default function Onboarding() {
                     
                     {formData.borrowerTypes.includes("other") && (
                       <div className="mt-4">
-                        <Label htmlFor="otherBorrowerType" className="font-medium">Please specify your other borrower type</Label>
-                        <Input
-                          id="otherBorrowerType"
-                          value={formData.otherBorrowerType}
-                          onChange={(e) => setFormData(prev => ({ ...prev, otherBorrowerType: e.target.value }))}
-                          placeholder="e.g., Foreign nationals, Self-employed, Bank statement loans"
-                        />
+                        <label htmlFor="otherBorrowerType" className="block text-sm/6 font-medium text-gray-900">
+                          Please specify your other borrower type
+                        </label>
+                        <div className="mt-2">
+                          <input
+                            id="otherBorrowerType"
+                            name="otherBorrowerType"
+                            type="text"
+                            value={formData.otherBorrowerType}
+                            onChange={(e) => setFormData(prev => ({ ...prev, otherBorrowerType: e.target.value }))}
+                            placeholder="e.g., Foreign nationals, Self-employed, Bank statement loans"
+                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-forest-600 sm:text-sm/6"
+                          />
+                        </div>
                       </div>
                     )}
                     
@@ -634,25 +662,35 @@ export default function Onboarding() {
                             
                             {formData.clientListLocation === "crm" && (
                               <div>
-                                <Label htmlFor="crmName" className="font-medium">What CRM do you use?</Label>
-                                <Input
-                                  id="crmName"
-                                  value={formData.crmName}
-                                  onChange={(e) => setFormData(prev => ({ ...prev, crmName: e.target.value }))}
-                                  placeholder="e.g., Salesforce, HubSpot, Top Producer"
-                                />
+                                <label htmlFor="crmName" className="block text-sm/6 font-medium text-gray-900">What CRM do you use?</label>
+                                <div className="mt-2">
+                                  <input
+                                    id="crmName"
+                                    name="crmName"
+                                    type="text"
+                                    value={formData.crmName}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, crmName: e.target.value }))}
+                                    placeholder="e.g., Salesforce, HubSpot, Top Producer"
+                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-forest-600 sm:text-sm/6"
+                                  />
+                                </div>
                               </div>
                             )}
                             
                             {formData.clientListLocation === "other" && (
                               <div>
-                                <Label htmlFor="clientListOther" className="font-medium">Please explain where your client list lives</Label>
-                                <Input
-                                  id="clientListOther"
-                                  value={formData.clientListOther}
-                                  onChange={(e) => setFormData(prev => ({ ...prev, clientListOther: e.target.value }))}
-                                  placeholder="e.g., In my head, business cards, notebook, Google Docs"
-                                />
+                                <label htmlFor="clientListOther" className="block text-sm/6 font-medium text-gray-900">Please explain where your client list lives</label>
+                                <div className="mt-2">
+                                  <input
+                                    id="clientListOther"
+                                    name="clientListOther"
+                                    type="text"
+                                    value={formData.clientListOther}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, clientListOther: e.target.value }))}
+                                    placeholder="e.g., In my head, business cards, notebook, Google Docs"
+                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-forest-600 sm:text-sm/6"
+                                  />
+                                </div>
                               </div>
                             )}
                           </div>
@@ -757,18 +795,23 @@ export default function Onboarding() {
                           <div className="space-y-3">
                             {formData.socialChannelsUsed.map((channel) => (
                               <div key={channel}>
-                                <Label htmlFor={`social-${channel}`} className="text-sm font-medium capitalize">
+                                <label htmlFor={`social-${channel}`} className="block text-sm/6 font-medium text-gray-900 capitalize">
                                   {channel} Profile URL
-                                </Label>
-                                <Input
-                                  id={`social-${channel}`}
-                                  value={formData.socialLinks[channel] ?? ""}
-                                  onChange={(e) => setFormData(prev => ({
-                                    ...prev,
-                                    socialLinks: { ...prev.socialLinks, [channel]: e.target.value }
-                                  }))}
-                                  placeholder={`https://${channel}.com/yourprofile`}
-                                />
+                                </label>
+                                <div className="mt-2">
+                                  <input
+                                    id={`social-${channel}`}
+                                    name={`social-${channel}`}
+                                    type="url"
+                                    value={formData.socialLinks[channel] ?? ""}
+                                    onChange={(e) => setFormData(prev => ({
+                                      ...prev,
+                                      socialLinks: { ...prev.socialLinks, [channel]: e.target.value }
+                                    }))}
+                                    placeholder={`https://${channel}.com/yourprofile`}
+                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-forest-600 sm:text-sm/6"
+                                  />
+                                </div>
                               </div>
                             ))}
                           </div>
@@ -891,16 +934,20 @@ export default function Onboarding() {
               {/* Step 7: Goals */}
               {step === 7 && (
                 <div>
-                  <Label htmlFor="goals" className="text-lg font-medium text-gray-900 mb-4 block">
+                  <label htmlFor="goals" className="block text-sm/6 font-medium text-gray-900 mb-4">
                     What are your main goals for the next 90 days?
-                  </Label>
-                  <Textarea
-                    id="goals"
-                    value={formData.goals}
-                    onChange={(e) => setFormData(prev => ({ ...prev, goals: e.target.value }))}
-                    placeholder="e.g., Close my first 3 loans, build relationships with 20 realtors, establish a consistent social media presence..."
-                    rows={4}
-                  />
+                  </label>
+                  <div className="mt-2">
+                    <textarea
+                      id="goals"
+                      name="goals"
+                      value={formData.goals}
+                      onChange={(e) => setFormData(prev => ({ ...prev, goals: e.target.value }))}
+                      placeholder="e.g., Close my first 3 loans, build relationships with 20 realtors, establish a consistent social media presence..."
+                      rows={4}
+                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-forest-600 sm:text-sm/6"
+                    />
+                  </div>
                   <p className="text-sm text-gray-600 mt-2">
                     Be specific about what success looks like for you. This helps us tailor your daily tasks and priorities.
                   </p>
