@@ -303,7 +303,7 @@ export default function Dashboard() {
           
           <div className="relative overflow-hidden rounded-lg bg-white px-0 pt-0 pb-4 shadow-sm sm:px-0">
             {todaysObjective && (
-              <div className="bg-forest-600 text-white px-4 py-4 sm:px-6 mb-4">
+              <div className="bg-forest-500 text-white px-4 py-4 sm:px-6 mb-4">
                 <div className="text-center">
                   <div className="text-xs font-semibold text-white/80 uppercase tracking-wide mb-1">Focus for {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</div>
                   <div className="text-base font-medium text-white">{todaysObjective}</div>
