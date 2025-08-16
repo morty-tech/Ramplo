@@ -386,7 +386,7 @@ export default function Dashboard() {
                                   : 'bg-white text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
                               }`}
                             >
-                              {isCompleting ? 'Completing...' : 'Completed'}
+                              {isCompleting ? 'Completing...' : 'Mark Completed'}
                             </Button>
                           )}
                         </div>
@@ -423,7 +423,7 @@ export default function Dashboard() {
                                     : 'bg-white text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
                                 }`}
                               >
-                                {isCompleting ? 'Completing...' : 'Completed'}
+                                {isCompleting ? 'Completing...' : 'Mark Completed'}
                               </Button>
                             )}
                           </div>
