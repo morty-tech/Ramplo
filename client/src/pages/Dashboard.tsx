@@ -388,10 +388,10 @@ export default function Dashboard() {
                                 }
                               }}
                               disabled={isCompleting}
-                              className={`rounded-md px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 ${
+                              className={`rounded-md px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 border ${
                                 isCompleting
-                                  ? 'bg-green-500 text-white'
-                                  : 'bg-limeglow-400 text-forest-800 hover:bg-limeglow-300'
+                                  ? 'bg-green-500 text-white border-green-500'
+                                  : 'bg-white text-forest-600 border-forest-600 hover:bg-forest-200'
                               }`}
                             >
                               {isCompleting ? 'Completing...' : 'Mark Completed'}
@@ -425,10 +425,10 @@ export default function Dashboard() {
                                   }
                                 }}
                                 disabled={isCompleting}
-                                className={`rounded-md px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 ${
+                                className={`rounded-md px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 border ${
                                   isCompleting
-                                    ? 'bg-green-500 text-white'
-                                    : 'bg-limeglow-400 text-forest-800 hover:bg-limeglow-300'
+                                    ? 'bg-green-500 text-white border-green-500'
+                                    : 'bg-white text-forest-600 border-forest-600 hover:bg-forest-200'
                                 }`}
                               >
                                 {isCompleting ? 'Completing...' : 'Mark Completed'}
