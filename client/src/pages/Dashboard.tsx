@@ -402,8 +402,7 @@ export default function Dashboard() {
                           
                           <div className="flex items-center justify-between">
                             <div>
-                              <h4 className="text-sm font-medium text-gray-900 mb-1">Estimated Time</h4>
-                              <p className="text-sm text-gray-600 flex items-center">
+                              <p className="text-xs font-semibold text-forest-600 uppercase tracking-wide flex items-center">
                                 <Clock className="w-3 h-3 mr-1" />
                                 {task.estimatedMinutes} minutes
                               </p>
