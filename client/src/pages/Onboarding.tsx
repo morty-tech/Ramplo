@@ -227,7 +227,13 @@ export default function Onboarding() {
         </div>
 
         <div className="sm:mx-auto sm:w-full sm:max-w-3xl">
-          <div className="bg-white rounded-lg p-8 shadow-xl">
+          <div className={`bg-white rounded-lg p-8 shadow-xl transition-all duration-300 ease-in-out ${
+            isAnimating 
+              ? animationDirection === 'next' 
+                ? 'transform translate-x-full opacity-0' 
+                : 'transform -translate-x-full opacity-0'
+              : 'transform translate-x-0 opacity-100'
+          }`}>
 
             <form onSubmit={handleSubmit} onKeyDown={(e) => {
               // Prevent Enter key from submitting form unless on final step
@@ -240,14 +246,7 @@ export default function Onboarding() {
                 }
               }
             }} className="space-y-4">
-              {/* Step Content with Animation */}
-              <div className={`transition-all duration-300 ease-in-out ${
-                isAnimating 
-                  ? animationDirection === 'next' 
-                    ? 'transform translate-x-full opacity-0' 
-                    : 'transform -translate-x-full opacity-0'
-                  : 'transform translate-x-0 opacity-100'
-              }`}>
+              {/* Step Content */}
                 {/* Step 1: Personal Info with Multiple Cities */}
               {step === 1 && (
                 <div className="space-y-6">
@@ -962,7 +961,6 @@ export default function Onboarding() {
                   </p>
                 </div>
               )}
-              </div>
 
               {/* Navigation */}
               <div className="flex justify-between items-center pt-6">
