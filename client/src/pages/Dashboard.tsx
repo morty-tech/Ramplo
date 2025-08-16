@@ -369,7 +369,7 @@ export default function Dashboard() {
                           </div>
                         )}
                       </div>
-                      <div className="flex flex-none items-center gap-x-4 py-5">
+                      <div className={`flex flex-none items-center gap-x-4 ${isExpanded ? 'pt-5 pb-2' : 'py-5'}`}>
                         {!isCompleted && (
                           <Button
                             onClick={(e) => {
