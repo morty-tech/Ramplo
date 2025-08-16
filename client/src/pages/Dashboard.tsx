@@ -325,7 +325,7 @@ export default function Dashboard() {
                         <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold relative top-5 ${
                           isCompleted 
                             ? 'bg-gray-100 text-gray-600' 
-                            : 'bg-lime-400 text-lime-700'
+                            : 'bg-limeglow-400 text-forest-800'
                         }`}>
                           {index + 1}
                         </div>
