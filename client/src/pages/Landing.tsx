@@ -81,7 +81,7 @@ export default function Landing() {
             <span className="text-2xl font-bold text-white">RampLO</span>
           </div>
           <div className="flex lg:flex-1 lg:justify-end">
-            <a href="/dashboard" className="text-sm font-semibold text-white hover:text-limeglow-400">
+            <a href="/login" className="text-sm font-semibold text-white hover:text-limeglow-400">
               Log in <span aria-hidden="true">&rarr;</span>
             </a>
           </div>
