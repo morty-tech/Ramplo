@@ -227,7 +227,7 @@ export default function Onboarding() {
         </div>
 
         <div className="sm:mx-auto sm:w-full sm:max-w-3xl">
-          <div className={`bg-white rounded-lg p-8 shadow-xl transition-all duration-300 ease-in-out ${
+          <div className={`bg-white rounded-lg p-8 shadow-xl transition-all duration-500 ease-in-out ${
             isAnimating 
               ? animationDirection === 'next' 
                 ? 'transform translate-x-full opacity-0' 
@@ -975,7 +975,7 @@ export default function Onboarding() {
                         setStep(step - 1);
                         setIsAnimating(false);
                         setAnimationDirection(null);
-                      }, 150);
+                      }, 250);
                     }}
                   >
                     Previous
@@ -991,7 +991,7 @@ export default function Onboarding() {
                         setStep(step + 1);
                         setIsAnimating(false);
                         setAnimationDirection(null);
-                      }, 150);
+                      }, 250);
                     }}
                     disabled={!canProceed()}
                     className="ml-auto"
