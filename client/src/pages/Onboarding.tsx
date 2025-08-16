@@ -408,7 +408,30 @@ export default function Onboarding() {
                       ))}
                     </div>
                     
-                    <div className="flex flex-wrap gap-2 mt-4">
+                    {formData.focus.includes("other") && (
+                      <div className="mt-4">
+                        <label htmlFor="otherFocus" className="block text-sm/6 font-medium text-gray-900">
+                          Please specify your other loan focus
+                        </label>
+                        <div className="mt-2">
+                          <input
+                            id="otherFocus"
+                            name="otherFocus"
+                            type="text"
+                            value={formData.otherFocus}
+                            onChange={(e) => setFormData(prev => ({ ...prev, otherFocus: e.target.value }))}
+                            placeholder="e.g., Bridge loans, Construction loans, Jumbo loans"
+                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
+                          />
+                        </div>
+                      </div>
+                    )}
+                    
+                    <p className="text-xs text-gray-500">
+                      {formData.focus.length}/3 loan types selected
+                    </p>
+                    
+                    <div className="flex flex-wrap gap-2 mt-2">
                       {formData.focus.map((focusType) => {
                         const option = [
                           { value: "purchase", label: "Purchase Loans" },
@@ -434,29 +457,6 @@ export default function Onboarding() {
                         );
                       })}
                     </div>
-                    
-                    {formData.focus.includes("other") && (
-                      <div className="mt-4">
-                        <label htmlFor="otherFocus" className="block text-sm/6 font-medium text-gray-900">
-                          Please specify your other loan focus
-                        </label>
-                        <div className="mt-2">
-                          <input
-                            id="otherFocus"
-                            name="otherFocus"
-                            type="text"
-                            value={formData.otherFocus}
-                            onChange={(e) => setFormData(prev => ({ ...prev, otherFocus: e.target.value }))}
-                            placeholder="e.g., Bridge loans, Construction loans, Jumbo loans"
-                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
-                          />
-                        </div>
-                      </div>
-                    )}
-                    
-                    <p className="text-xs text-gray-500">
-                      {formData.focus.length}/3 loan types selected
-                    </p>
                   </div>
                 </div>
               )}
@@ -505,27 +505,6 @@ export default function Onboarding() {
                       ))}
                     </div>
                     
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      {formData.borrowerTypes.map((type) => {
-                        const option = borrowerTypeOptions.find(opt => opt.value === type);
-                        return (
-                          <div
-                            key={type}
-                            className="inline-flex items-center gap-1 px-3 py-1 bg-forest-200 text-forest-800 rounded-full text-sm"
-                          >
-                            {option?.label}
-                            <button
-                              type="button"
-                              onClick={() => handleArrayChange("borrowerTypes", type, false)}
-                              className="p-0.5 hover:bg-forest-400/20 rounded-full"
-                            >
-                              <X className="w-3 h-3" />
-                            </button>
-                          </div>
-                        );
-                      })}
-                    </div>
-                    
                     {formData.borrowerTypes.includes("other") && (
                       <div className="mt-4">
                         <label htmlFor="otherBorrowerType" className="block text-sm/6 font-medium text-gray-900">
@@ -548,6 +527,27 @@ export default function Onboarding() {
                     <p className="text-xs text-gray-500">
                       {formData.borrowerTypes.length}/4 types selected
                     </p>
+                    
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {formData.borrowerTypes.map((type) => {
+                        const option = borrowerTypeOptions.find(opt => opt.value === type);
+                        return (
+                          <div
+                            key={type}
+                            className="inline-flex items-center gap-1 px-3 py-1 bg-forest-200 text-forest-800 rounded-full text-sm"
+                          >
+                            {option?.label}
+                            <button
+                              type="button"
+                              onClick={() => handleArrayChange("borrowerTypes", type, false)}
+                              className="p-0.5 hover:bg-forest-400/20 rounded-full"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               )}
@@ -778,7 +778,7 @@ export default function Onboarding() {
                         </div>
                         
                         {formData.networkSources.length > 0 && (
-                          <div className="flex flex-wrap gap-2 mt-4">
+                          <div className="flex flex-wrap gap-2 mt-2">
                             {formData.networkSources.map((source) => {
                               const option = networkSourceOptions.find(opt => opt.value === source);
                               return (
@@ -948,7 +948,11 @@ export default function Onboarding() {
                         ))}
                       </div>
                       
-                      <div className="flex flex-wrap gap-2 mt-4">
+                      <p className="text-xs text-gray-500">
+                        {formData.preferredChannels.length}/3 channels selected
+                      </p>
+                      
+                      <div className="flex flex-wrap gap-2 mt-2">
                         {formData.preferredChannels.map((channel) => {
                           const option = communicationChannelOptions.find(opt => opt.value === channel);
                           return (
@@ -968,10 +972,6 @@ export default function Onboarding() {
                           );
                         })}
                       </div>
-                      
-                      <p className="text-xs text-gray-500">
-                        {formData.preferredChannels.length}/3 channels selected
-                      </p>
                     </div>
                   </div>
                 </div>
