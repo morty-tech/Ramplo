@@ -325,7 +325,7 @@ export default function Dashboard() {
                       <div className="flex items-start gap-x-4">
                         <div className={`flex-shrink-0 w-10 h-10 rounded-md flex items-center justify-center text-xl font-black relative top-5 shadow-lg transition-all duration-300 ${
                           isCompleted 
-                            ? 'bg-forest-600 text-white shadow-gray-200' 
+                            ? 'bg-forest-500 text-white shadow-gray-200' 
                             : 'bg-limeglow-400 text-forest-800 shadow-lg shadow-lime-200 hover:shadow-xl hover:scale-105'
                         }`}>
                           {isCompleted ? <Check className="w-5 h-5" /> : index + 1}
