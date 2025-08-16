@@ -84,14 +84,14 @@ export default function ClientConnectionTracker() {
 
   return (
     <div>
-      <div className="mb-5">
-        <h3 className="text-base font-semibold text-gray-900 mb-1 flex items-center gap-2">
+      <div className="flex items-center justify-between mb-5">
+        <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2">
           <Phone className="w-5 h-5" />
           Client Connections
         </h3>
-        <p className="text-sm text-gray-600">
-          Today's total: {todayTotal} connections
-        </p>
+        <span className="text-sm text-gray-600">
+          Today: {todayTotal}
+        </span>
       </div>
       
       <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
