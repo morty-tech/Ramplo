@@ -327,7 +327,7 @@ export default function Dashboard() {
                 return (
                   <li key={task.id} className="transition-all duration-200">
                     <div className="flex items-start justify-between gap-x-6">
-                      <div className="min-w-0 flex-grow cursor-pointer py-5" onClick={() => handleTaskClick(task)}>
+                      <div className={`min-w-0 flex-grow cursor-pointer ${isExpanded ? 'pt-5 pb-2' : 'py-5'}`} onClick={() => handleTaskClick(task)}>
                         <div className="flex items-start gap-x-3">
                           <p className={`text-base font-semibold transition-all duration-300 ${
                             isCompleting 
@@ -394,7 +394,7 @@ export default function Dashboard() {
                     </div>
                     
                     {isExpanded && (
-                      <div className="pb-5 mt-2">
+                      <div className="pb-5">
                         <div className="space-y-2">
                           <div>
                             <p className="text-sm text-gray-600">{task.description}</p>
