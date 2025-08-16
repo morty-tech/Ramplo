@@ -199,10 +199,19 @@ export default function Onboarding() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <div className="max-w-3xl mx-auto">
-        <Card>
-          <CardContent className="p-8">
+    <div className="min-h-screen bg-gradient-to-br from-forest-800 to-tealwave-800">
+      <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-3xl">
+          <div className="flex items-center justify-center mb-10">
+            <div className="h-10 w-10 bg-white rounded-lg flex items-center justify-center mr-3">
+              <span className="text-forest-800 font-bold text-xl">R</span>
+            </div>
+            <span className="text-white font-bold text-2xl">RampLO</span>
+          </div>
+        </div>
+
+        <div className="sm:mx-auto sm:w-full sm:max-w-3xl">
+          <div className="bg-white rounded-lg p-8 shadow-xl">
             <div className="mb-8">
               <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome to RampLO!</h1>
               <p className="text-gray-600">Help us personalize your 90-day ramp plan with a few quick questions.</p>
@@ -932,8 +941,8 @@ export default function Onboarding() {
                 )}
               </div>
             </form>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </div>
   );
