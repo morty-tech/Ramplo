@@ -309,13 +309,13 @@ export default function Landing() {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-limeglow-600">
-        <div className="px-6 py-24 sm:py-32 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">
+      <div className="bg-white">
+        <div className="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
+          <div className="relative isolate overflow-hidden bg-limeglow-600 px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
+            <h2 className="text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">
               Ready to Ramp?
             </h2>
-            <p className="mx-auto mt-6 max-w-xl text-lg/8 text-pretty text-tealwave-200">
+            <p className="mx-auto mt-6 max-w-xl text-lg/8 text-pretty text-gray-700">
               Join loan officers who are already using RampLO to build successful careers and secure their first deals.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
@@ -331,15 +331,28 @@ export default function Landing() {
                 <Button 
                   type="submit" 
                   disabled={isLoading}
-                  className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-tealwave-600 hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white hover:bg-gray-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
                 >
                   {isLoading ? "Sending..." : "Get Started"}
                 </Button>
               </form>
             </div>
-            <p className="mt-6 text-sm text-tealwave-200">
+            <p className="mt-6 text-sm text-gray-600">
               Free for Morty users • $49/month for others • No commitment required
             </p>
+            <svg
+              viewBox="0 0 1024 1024"
+              aria-hidden="true"
+              className="absolute top-1/2 left-1/2 -z-10 size-256 -translate-x-1/2 mask-[radial-gradient(closest-side,white,transparent)]"
+            >
+              <circle r={512} cx={512} cy={512} fill="url(#lime-gradient)" fillOpacity="0.7" />
+              <defs>
+                <radialGradient id="lime-gradient">
+                  <stop stopColor="#84cc16" />
+                  <stop offset={1} stopColor="#22c55e" />
+                </radialGradient>
+              </defs>
+            </svg>
           </div>
         </div>
       </div>
