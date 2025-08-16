@@ -369,26 +369,28 @@ export default function Dashboard() {
                           </div>
                         )}
                       </div>
-                      <div className={`flex flex-none items-center gap-x-4 ${isExpanded ? 'pt-5 pb-2' : 'py-5'}`}>
-                        {!isCompleted && (
-                          <Button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              if (!isCompleting) {
-                                handleTaskComplete(task.id);
-                              }
-                            }}
-                            disabled={isCompleting}
-                            className={`rounded-md px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 ${
-                              isCompleting
-                                ? 'bg-green-500 text-white'
-                                : 'bg-white text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
-                            }`}
-                          >
-                            {isCompleting ? 'Completing...' : 'Completed'}
-                          </Button>
-                        )}
-                      </div>
+                      {!isExpanded && (
+                        <div className="flex flex-none items-center gap-x-4 py-5">
+                          {!isCompleted && (
+                            <Button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                if (!isCompleting) {
+                                  handleTaskComplete(task.id);
+                                }
+                              }}
+                              disabled={isCompleting}
+                              className={`rounded-md px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 ${
+                                isCompleting
+                                  ? 'bg-green-500 text-white'
+                                  : 'bg-white text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
+                              }`}
+                            >
+                              {isCompleting ? 'Completing...' : 'Completed'}
+                            </Button>
+                          )}
+                        </div>
+                      )}
                     </div>
                     
                     {isExpanded && (
@@ -398,12 +400,32 @@ export default function Dashboard() {
                             <p className="text-sm text-gray-600">{task.description}</p>
                           </div>
                           
-                          <div>
-                            <h4 className="text-sm font-medium text-gray-900 mb-1">Estimated Time</h4>
-                            <p className="text-sm text-gray-600 flex items-center">
-                              <Clock className="w-3 h-3 mr-1" />
-                              {task.estimatedMinutes} minutes
-                            </p>
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <h4 className="text-sm font-medium text-gray-900 mb-1">Estimated Time</h4>
+                              <p className="text-sm text-gray-600 flex items-center">
+                                <Clock className="w-3 h-3 mr-1" />
+                                {task.estimatedMinutes} minutes
+                              </p>
+                            </div>
+                            {!isCompleted && (
+                              <Button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  if (!isCompleting) {
+                                    handleTaskComplete(task.id);
+                                  }
+                                }}
+                                disabled={isCompleting}
+                                className={`rounded-md px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 ${
+                                  isCompleting
+                                    ? 'bg-green-500 text-white'
+                                    : 'bg-white text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
+                                }`}
+                              >
+                                {isCompleting ? 'Completing...' : 'Completed'}
+                              </Button>
+                            )}
                           </div>
                           
                           {task.detailedDescription && (
