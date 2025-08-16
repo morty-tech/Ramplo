@@ -852,21 +852,23 @@ export default function Onboarding() {
                             { value: "tiktok", label: "TikTok" },
                             { value: "twitter", label: "Twitter/X" },
                           ].map((channel) => (
-                            <Label
+                            <div
                               key={channel.value}
-                              className={`flex items-center px-6 py-3 border-2 rounded-lg cursor-pointer transition-colors ${
+                              className={`px-6 py-3 border-2 rounded-lg cursor-pointer transition-colors ${
                                 formData.socialChannelsUsed.includes(channel.value)
                                   ? "border-forest-600 bg-forest-50"
                                   : "border-gray-200 hover:border-forest-400"
                               }`}
+                              onClick={() => {
+                                if (formData.socialChannelsUsed.includes(channel.value)) {
+                                  handleArrayChange("socialChannelsUsed", channel.value, false);
+                                } else {
+                                  handleArrayChange("socialChannelsUsed", channel.value, true);
+                                }
+                              }}
                             >
-                              <Checkbox
-                                checked={formData.socialChannelsUsed.includes(channel.value)}
-                                onCheckedChange={(checked) => handleArrayChange("socialChannelsUsed", channel.value, checked as boolean)}
-                                className="mr-3 data-[state=checked]:bg-forest-600 data-[state=checked]:border-forest-600"
-                              />
                               <span className="text-sm font-normal">{channel.label}</span>
-                            </Label>
+                            </div>
                           ))}
                         </div>
                       </div>
