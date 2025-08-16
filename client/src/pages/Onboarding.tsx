@@ -210,20 +210,23 @@ export default function Onboarding() {
           </div>
         </div>
 
+        <div className="sm:mx-auto sm:w-full sm:max-w-3xl mb-8">
+          <div className="text-center mb-6">
+            <h1 className="text-3xl font-bold text-white mb-2">Welcome to RampLO!</h1>
+            <p className="text-gray-300">Help us personalize your 90-day ramp plan with a few quick questions.</p>
+          </div>
+          
+          <div className="mb-8">
+            <div className="flex justify-between text-sm text-gray-300 mb-2">
+              <span>Progress</span>
+              <span>{Math.round(progress)}%</span>
+            </div>
+            <Progress value={progress} className="h-2" />
+          </div>
+        </div>
+
         <div className="sm:mx-auto sm:w-full sm:max-w-3xl">
           <div className="bg-white rounded-lg p-8 shadow-xl">
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome to RampLO!</h1>
-              <p className="text-gray-600">Help us personalize your 90-day ramp plan with a few quick questions.</p>
-              
-              <div className="mt-6">
-                <div className="flex justify-between text-sm text-gray-600 mb-2">
-                  <span>Progress</span>
-                  <span>{Math.round(progress)}%</span>
-                </div>
-                <Progress value={progress} className="h-2" />
-              </div>
-            </div>
 
             <form onSubmit={handleSubmit} onKeyDown={(e) => {
               // Prevent Enter key from submitting form unless on final step
