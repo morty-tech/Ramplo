@@ -2,6 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  /* Design system typography */
+  .font-display {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-optical-sizing: auto;
+  }
+}
+
+@layer utilities {
+  /* Custom border radius */
+  .rounded-4xl {
+    border-radius: 2rem;
+  }
+  
+  /* Text balance utility */
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* Shimmer animation for banner */
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+}
+
 :root {
   --background: hsl(0, 0%, 100%);
   --foreground: hsl(222, 47%, 11%);
