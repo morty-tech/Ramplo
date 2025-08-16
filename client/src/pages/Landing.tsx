@@ -73,7 +73,7 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <div className="bg-forest-800">
+      <div className="bg-tealwave-800">
         <div className="relative isolate px-6 pt-14 lg:px-8">
           <div
             aria-hidden="true"
