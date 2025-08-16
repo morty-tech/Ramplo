@@ -152,7 +152,7 @@ export default function Landing() {
       </div>
 
       {/* Features Section */}
-      <div className="relative isolate overflow-hidden bg-white py-24 sm:py-32">
+      <div className="relative isolate overflow-hidden bg-white pt-24 pb-12 sm:pt-32 sm:pb-16">
         <svg
           aria-hidden="true"
           className="absolute inset-0 -z-10 size-full mask-[radial-gradient(100%_100%_at_top_right,white,transparent)] stroke-slate-200/30"
@@ -247,7 +247,7 @@ export default function Landing() {
       </div>
 
       {/* How It Works */}
-      <div className="bg-white py-24">
+      <div className="bg-white pt-12 pb-24 sm:pt-16">
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="relative isolate overflow-hidden bg-forest-800 px-6 py-20 sm:rounded-3xl sm:px-10 sm:py-24 lg:py-24 xl:px-24">
             <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-center lg:gap-y-0">
