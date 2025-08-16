@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "wouter";
 import Sidebar from "./Sidebar";
 import PaywallOverlay from "./PaywallOverlay";
 import { useAuth } from "@/hooks/useAuth";
@@ -11,13 +12,18 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
   const { isMortyUser } = useAuth();
+  const [location] = useLocation();
+  
+  const isOnboarding = location === "/onboarding";
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Sidebar isExpanded={sidebarExpanded} onToggle={() => setSidebarExpanded(!sidebarExpanded)} />
+      {!isOnboarding && (
+        <Sidebar isExpanded={sidebarExpanded} onToggle={() => setSidebarExpanded(!sidebarExpanded)} />
+      )}
       
       {/* Main content */}
-      <div className={`transition-all duration-300 ${sidebarExpanded ? 'ml-64' : 'ml-16'}`}>
+      <div className={`transition-all duration-300 ${!isOnboarding ? (sidebarExpanded ? 'ml-64' : 'ml-16') : ''}`}>
         {children}
       </div>
 
