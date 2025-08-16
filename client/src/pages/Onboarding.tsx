@@ -224,7 +224,7 @@ export default function Onboarding() {
           </div>
         </div>
 
-        <div className="sm:mx-auto sm:w-full sm:max-w-3xl mb-6">
+        <div className="sm:mx-auto sm:w-full sm:max-w-2xl mb-6">
           <div className="text-center mb-4">
             <p className="text-xl font-semibold text-white">{getHeaderText()}</p>
           </div>
