@@ -26,7 +26,8 @@ import {
   Clock,
   Info,
   Eye,
-  Target
+  Target,
+  Check
 } from "lucide-react";
 
 function classNames(...classes: (string | boolean | undefined)[]) {
@@ -371,7 +372,11 @@ export default function Dashboard() {
                       </div>
                       {!isExpanded && (
                         <div className="flex flex-none items-center gap-x-4 py-5">
-                          {!isCompleted && (
+                          {isCompleted ? (
+                            <div className="flex items-center justify-center w-8 h-8 bg-forest-100 rounded-full">
+                              <Check className="w-5 h-5 text-forest-600" />
+                            </div>
+                          ) : (
                             <Button
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -394,7 +399,15 @@ export default function Dashboard() {
                     </div>
                     
                     {isExpanded && (
-                      <div className="pb-5">
+                      <>
+                        {isCompleted && (
+                          <div className="flex justify-end pt-5">
+                            <div className="flex items-center justify-center w-8 h-8 bg-forest-100 rounded-full">
+                              <Check className="w-5 h-5 text-forest-600" />
+                            </div>
+                          </div>
+                        )}
+                        <div className="pb-5">
                         <div className="space-y-2">
                           <div>
                             <p className="text-sm text-gray-600">{task.description}</p>
@@ -435,6 +448,7 @@ export default function Dashboard() {
                           )}
                         </div>
                       </div>
+                      </>
                     )}
                   </li>
                 );
