@@ -136,25 +136,26 @@ export default function Roadmap() {
   }
 
   return (
-    <div className="p-6">
+    <div className="p-6 mx-4 md:mx-8">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Your 90-Day Roadmap</h1>
         <p className="text-gray-600">A personalized plan to get your first 1-3 deals in 90 days.</p>
       </div>
 
-      {/* Overall Progress - Outside Card */}
+      {/* Overall Progress */}
       <div className="mb-8">
-        <div className="flex items-center gap-4 mb-3">
-          <h2 className="text-xl font-semibold text-gray-900">Overall Progress</h2>
-          <div className="flex items-center gap-3">
-            <div className="w-48">
-              <Progress value={overallProgress} className="h-3 bg-gray-200 [&>div]:bg-forest-600" />
-            </div>
-            <span className="text-sm font-medium text-gray-700 min-w-[3rem]">
-              {Math.round(overallProgress)}%
-            </span>
+        <h3 className="text-base font-semibold text-gray-900 mb-5 flex items-center gap-2">
+          <Target className="w-5 h-5" />
+          Overall Progress
+        </h3>
+        <div className="flex items-center gap-4 mb-5">
+          <div className="w-48">
+            <Progress value={overallProgress} className="h-3 bg-gray-200 [&>div]:bg-forest-600" />
           </div>
+          <span className="text-sm font-medium text-gray-700 min-w-[3rem]">
+            {Math.round(overallProgress)}%
+          </span>
         </div>
       </div>
 
