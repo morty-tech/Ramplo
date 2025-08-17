@@ -990,7 +990,8 @@ export default function Outreach() {
                                       }
                                     }}
                                     size="sm"
-                                    className="text-xs h-7 px-3 bg-forest-800 hover:bg-forest-700 text-white"
+                                    variant="outline"
+                                    className="text-xs h-7 px-3 border-forest-800 text-forest-800 hover:bg-forest-50"
                                   >
                                     Save
                                   </Button>
