@@ -801,30 +801,30 @@ export default function Outreach() {
               <Listbox as="div" value={selectedTemplate} onChange={(template) => setSelectedTemplateId(template?.id || '')}>
                 <label className="block text-sm font-medium text-gray-900 mb-2">Select a template to customize and use</label>
                 <div className="relative">
-                  <ListboxButton className="grid w-full cursor-default grid-cols-1 rounded-md bg-forest-800 py-1.5 pr-2 pl-3 text-left text-white outline-1 -outline-offset-1 outline-forest-600 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-forest-400 sm:text-sm/6">
+                  <ListboxButton className="grid w-full cursor-default grid-cols-1 rounded-md bg-forest-200 py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-forest-600 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-forest-400 sm:text-sm/6">
                     <span className="col-start-1 row-start-1 truncate pr-6">
                       {selectedTemplate ? selectedTemplate.name : "Choose template"}
                     </span>
                     <ChevronsUpDown
                       aria-hidden="true"
-                      className="col-start-1 row-start-1 size-5 self-center justify-self-end text-white sm:size-4"
+                      className="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-900 sm:size-4"
                     />
                   </ListboxButton>
 
                   <ListboxOptions
                     transition
-                    className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-forest-800 py-1 text-base shadow-lg outline-1 outline-black/5 data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm"
+                    className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-forest-200 py-1 text-base shadow-lg outline-1 outline-black/5 data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm"
                   >
                     {templates.map((template) => (
                       <ListboxOption
                         key={template.id}
                         value={template}
-                        className="group relative cursor-default py-2 pr-4 pl-8 text-white select-none data-focus:bg-forest-600 data-focus:text-white data-focus:outline-hidden"
+                        className="group relative cursor-default py-2 pr-4 pl-8 text-gray-900 select-none data-focus:bg-forest-600 data-focus:text-white data-focus:outline-hidden"
                       >
                         <span className="block truncate font-normal group-data-selected:font-semibold">{template.name}</span>
 
                         {selectedTemplate?.id === template.id && (
-                          <span className="absolute inset-y-0 left-0 flex items-center pl-1.5 text-white">
+                          <span className="absolute inset-y-0 left-0 flex items-center pl-1.5 text-gray-900">
                             <Check aria-hidden="true" className="size-5" />
                           </span>
                         )}
@@ -847,7 +847,7 @@ export default function Outreach() {
                 )}
                 <button
                   onClick={() => setIsAICustomizationOpen(true)}
-                  className="flex items-center gap-2 px-3 py-1.5 text-sm bg-orange-50 text-orange-600 hover:bg-orange-100 hover:text-orange-700 rounded-md border border-orange-200 transition-colors"
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm bg-forest-800 text-white hover:bg-forest-700 rounded-md border border-forest-600 transition-colors"
                 >
                   <Wand2 className="w-4 h-4" />
                   Customize with AI
@@ -885,7 +885,7 @@ export default function Outreach() {
                                 setEditedSubject(e.target.value);
                                 saveSubjectDebounced();
                               }}
-                              className={`block w-full px-3 pt-2.5 text-lg font-medium text-gray-900 placeholder:text-gray-400 focus:outline-none border-0 border-b border-gray-200 rounded-t-lg rounded-b-none transition-all duration-3000 ${
+                              className={`block w-full px-3 pt-2.5 text-xl font-medium text-gray-900 placeholder:text-gray-400 focus:outline-none border-0 border-b-2 border-gray-200 rounded-t-lg rounded-b-none transition-all duration-3000 ${
                                 animatingFields.subject 
                                   ? 'bg-green-50 border-green-300 shadow-sm' 
                                   : ''
@@ -1679,7 +1679,7 @@ export default function Outreach() {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              <Wand2 className="w-5 h-5 text-orange-600" />
+              <Wand2 className="w-5 h-5 text-forest-800" />
               AI Customization
             </DialogTitle>
           </DialogHeader>
@@ -1739,7 +1739,7 @@ export default function Outreach() {
               <Button 
                 onClick={handleCustomize}
                 disabled={customizeTemplateMutation.isPending || !customizationForm.keyPoints.trim()}
-                className="bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400"
+                className="bg-forest-800 hover:bg-forest-700 text-white disabled:bg-gray-400"
               >
                 {customizeTemplateMutation.isPending ? (
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
