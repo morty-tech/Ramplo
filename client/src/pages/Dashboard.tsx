@@ -233,8 +233,8 @@ export default function Dashboard() {
             {/* Pulsing background ring */}
             <div className="absolute inset-0 w-12 h-12 border-2 border-forest-100 rounded-full animate-pulse mx-auto"></div>
           </div>
-          <p className="text-gray-600 font-medium">Loading your dashboard...</p>
-          <p className="text-sm text-gray-400 mt-1">Preparing your personalized data</p>
+          <p className="text-gray-600 font-medium">Retrieving your dashboard...</p>
+          <p className="text-sm text-gray-400 mt-1">Gathering your personalized data</p>
         </div>
       </div>
     );
