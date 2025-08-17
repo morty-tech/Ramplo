@@ -149,14 +149,6 @@ export default function Roadmap() {
           <Target className="w-5 h-5" />
           Overall Progress
         </h3>
-        <div className="flex items-center gap-4 mb-5">
-          <div className="w-48">
-            <Progress value={overallProgress} className="h-3 bg-gray-200 [&>div]:bg-forest-600" />
-          </div>
-          <span className="text-sm font-medium text-gray-700 min-w-[3rem]">
-            {Math.round(overallProgress)}%
-          </span>
-        </div>
       </div>
 
       {/* Stats Overview */}
