@@ -629,6 +629,14 @@ export default function Outreach() {
     setTimeout(() => {}, 0)
   );
 
+  const saveEditedContentDebounced = useRef(
+    setTimeout(() => {}, 0)
+  );
+
+  const saveEditedScriptDebounced = useRef(
+    setTimeout(() => {}, 0)
+  );
+
   const saveSubjectDebounced = () => {
     clearTimeout(saveEditedSubjectDebounced.current);
     saveEditedSubjectDebounced.current = setTimeout(() => {
@@ -648,6 +656,30 @@ export default function Outreach() {
         updateTemplateMutation.mutate({
           id: selectedTemplate.id,
           updates: { content: editedBody }
+        });
+      }
+    }, 500);
+  };
+
+  const saveContentDebounced = () => {
+    clearTimeout(saveEditedContentDebounced.current);
+    saveEditedContentDebounced.current = setTimeout(() => {
+      if (selectedTemplate && editedContent.trim()) {
+        updateTemplateMutation.mutate({
+          id: selectedTemplate.id,
+          updates: { content: editedContent }
+        });
+      }
+    }, 500);
+  };
+
+  const saveScriptDebounced = () => {
+    clearTimeout(saveEditedScriptDebounced.current);
+    saveEditedScriptDebounced.current = setTimeout(() => {
+      if (selectedTemplate && editedScript.trim()) {
+        updateTemplateMutation.mutate({
+          id: selectedTemplate.id,
+          updates: { content: editedScript }
         });
       }
     }, 500);
@@ -969,12 +1001,45 @@ export default function Outreach() {
                     {activeTemplateType === "social-media" && (
                       <>
                         <div className="space-y-6">
-                          {/* Post Content - Now above image */}
-                          <div>
-                            <div className="flex items-center justify-between mb-2">
-                              <div className="flex items-center gap-3">
-                                <div className="flex items-center gap-2">
-                                  <div className="text-sm font-medium text-gray-900">Post Content:</div>
+                          {/* Social Media Content Card - Cohesive Design */}
+                          <div className="rounded-lg bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-forest-600">
+                            {/* Post Content Textarea */}
+                            <label htmlFor="social-content" className="sr-only">
+                              Post Content
+                            </label>
+                            <Textarea
+                              id="social-content"
+                              name="content"
+                              rows={8}
+                              placeholder="Write your social media post..."
+                              value={editedContent}
+                              onChange={(e) => {
+                                setEditedContent(e.target.value);
+                                saveContentDebounced();
+                              }}
+                              className={`block w-full resize-none px-3 py-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none border-0 rounded-lg transition-all duration-3000 ${
+                                animatingFields.content 
+                                  ? 'bg-green-50 border-green-300 shadow-sm' 
+                                  : ''
+                              }`}
+                            />
+
+                            {/* Actions Bar */}
+                            <div className="border-t border-gray-200 px-3 py-2">
+                              <div className="flex items-center justify-between space-x-3">
+                                <div className="flex items-center space-x-3">
+                                  <div className="text-xs text-gray-500">
+                                    {(() => {
+                                      const cleanContent = cleanContentForDisplay(editedContent || selectedTemplate.content);
+                                      const charLimit = getCharacterLimit(selectedTemplate.platform);
+                                      const isOverLimit = cleanContent.length > charLimit;
+                                      return (
+                                        <span className={isOverLimit ? 'text-red-600 font-medium' : 'text-gray-500'}>
+                                          {cleanContent.length}/{charLimit} chars {selectedTemplate.platform && `(${selectedTemplate.platform})`}
+                                        </span>
+                                      );
+                                    })()}
+                                  </div>
                                   {aiCustomizedFields.content && (
                                     <div className="flex items-center gap-1 text-xs text-green-600">
                                       <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -984,100 +1049,19 @@ export default function Outreach() {
                                     </div>
                                   )}
                                 </div>
-                                {!isEditingContent && (
+                                <div className="flex items-center space-x-2">
                                   <Button
-                                    onClick={() => copyToClipboard(cleanContentForDisplay(selectedTemplate.content))}
+                                    onClick={() => copyToClipboard(editedContent || selectedTemplate.content)}
                                     size="sm"
                                     variant="outline"
-                                    className="text-xs h-6 px-2"
+                                    className="text-xs h-7 px-2"
                                   >
                                     <Copy className="w-3 h-3 mr-1" />
-                                    Copy Content
+                                    Copy Post
                                   </Button>
-                                )}
-                              </div>
-                              <div className="flex items-center gap-3">
-                                {isEditingContent && (
-                                  <button
-                                    onClick={resetContentEditing}
-                                    className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
-                                  >
-                                    <RotateCcw className="w-3 h-3" />
-                                    Reset
-                                  </button>
-                                )}
-                                <div className="text-xs text-gray-500">
-                                  {(() => {
-                                    const cleanContent = cleanContentForDisplay(selectedTemplate.content);
-                                    const charLimit = getCharacterLimit(selectedTemplate.platform);
-                                    const isOverLimit = cleanContent.length > charLimit;
-                                    return (
-                                      <span className={isOverLimit ? 'text-red-600 font-medium' : 'text-gray-500'}>
-                                        {cleanContent.length}/{charLimit} characters
-                                        {selectedTemplate.platform && ` (${selectedTemplate.platform})`}
-                                      </span>
-                                    );
-                                  })()} 
                                 </div>
                               </div>
                             </div>
-                            {isEditingContent ? (
-                              <div className="space-y-2">
-                                <Textarea
-                                  value={editedContent}
-                                  onChange={(e) => setEditedContent(e.target.value)}
-                                  className={`text-sm min-h-[120px] resize-none transition-all duration-3000 ${
-                                    animatingFields.content 
-                                      ? 'bg-green-50 border-green-300 shadow-sm' 
-                                      : ''
-                                  }`}
-                                  placeholder="Edit your post content..."
-                                />
-                                <div className="flex justify-end">
-                                  <Button
-                                    onClick={saveEditedContent}
-                                    size="sm"
-                                    disabled={updateTemplateMutation.isPending}
-                                    className="bg-green-600 hover:bg-green-700"
-                                  >
-                                    {updateTemplateMutation.isPending ? (
-                                      <Loader2 className="w-3 h-3 mr-1 animate-spin" />
-                                    ) : (
-                                      <Save className="w-3 h-3 mr-1" />
-                                    )}
-                                    Save
-                                  </Button>
-                                </div>
-                              </div>
-                            ) : (
-                              <div className="space-y-2">
-                                <div 
-                                  className={`text-sm text-gray-900 p-4 rounded border min-h-[120px] cursor-pointer transition-all duration-3000 ${
-                                    animatingFields.content 
-                                      ? 'bg-green-50 border-green-300 shadow-sm' 
-                                      : 'bg-white hover:bg-gray-50'
-                                  }`}
-                                  onClick={startEditingContent}
-                                >
-                                  {cleanContentForDisplay(selectedTemplate.content)}
-                                  <div className="text-xs text-gray-400 mt-2 opacity-0 hover:opacity-100 transition-opacity">
-                                    Click to edit
-                                  </div>
-                                </div>
-                              </div>
-                            )}
-                            {(() => {
-                              const cleanContent = cleanContentForDisplay(selectedTemplate.content);
-                              const charLimit = getCharacterLimit(selectedTemplate.platform);
-                              if (cleanContent.length > charLimit) {
-                                return (
-                                  <div className="mt-2 text-xs text-red-600 bg-red-50 p-2 rounded">
-                                    ⚠️ This post exceeds the {selectedTemplate.platform || 'recommended'} character limit by {cleanContent.length - charLimit} characters.
-                                  </div>
-                                );
-                              }
-                              return null;
-                            })()} 
                           </div>
                           
                           {/* Post Image - Now below content */}
@@ -1234,91 +1218,59 @@ export default function Outreach() {
                     {activeTemplateType === "phone-script" && (
                       <>
                         <div>
-                          <div className="flex items-center justify-between mb-2">
-                            <div className="flex items-center gap-3">
-                              <div className="flex items-center gap-2">
-                                <div className="text-sm font-medium text-gray-900">Call Script:</div>
-                                {aiCustomizedFields.script && (
-                                  <div className="flex items-center gap-1 text-xs text-green-600">
-                                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                    </svg>
-                                    AI Customized
+                          {/* Phone Script Card - Cohesive Design */}
+                          <div className="rounded-lg bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-forest-600">
+                            {/* Script Content Textarea */}
+                            <label htmlFor="script-content" className="sr-only">
+                              Phone Script Content
+                            </label>
+                            <Textarea
+                              id="script-content"
+                              name="content"
+                              rows={18}
+                              placeholder="Write your phone script..."
+                              value={editedScript}
+                              onChange={(e) => {
+                                setEditedScript(e.target.value);
+                                saveScriptDebounced();
+                              }}
+                              className={`block w-full resize-none px-3 py-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none border-0 rounded-lg font-mono transition-all duration-3000 ${
+                                animatingFields.script 
+                                  ? 'bg-green-50 border-green-300 shadow-sm' 
+                                  : ''
+                              }`}
+                            />
+
+                            {/* Actions Bar */}
+                            <div className="border-t border-gray-200 px-3 py-2">
+                              <div className="flex items-center justify-between space-x-3">
+                                <div className="flex items-center space-x-3">
+                                  <div className="text-xs text-gray-500">
+                                    {(editedScript || selectedTemplate.content).split(/\s+/).filter(w => w.length > 0).length} words | ~{Math.ceil((editedScript || selectedTemplate.content).split(/\s+/).filter(w => w.length > 0).length / 150)} min read
                                   </div>
-                                )}
-                              </div>
-                              {!isEditingScript && (
-                                <Button
-                                  onClick={() => copyToClipboard(selectedTemplate.content)}
-                                  size="sm"
-                                  variant="outline"
-                                  className="text-xs h-6 px-2"
-                                >
-                                  <Copy className="w-3 h-3 mr-1" />
-                                  Copy Script
-                                </Button>
-                              )}
-                            </div>
-                            <div className="flex items-center gap-3">
-                              {isEditingScript && (
-                                <button
-                                  onClick={resetScriptEditing}
-                                  className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
-                                >
-                                  <RotateCcw className="w-3 h-3" />
-                                  Reset
-                                </button>
-                              )}
-                              <div className="text-xs text-gray-500">
-                                {selectedTemplate.content.split(/\s+/).length} words • ~{Math.ceil(selectedTemplate.content.split(/\s+/).length / 150)} min read
-                              </div>
-                            </div>
-                          </div>
-                          {isEditingScript ? (
-                            <div className="space-y-2">
-                              <Textarea
-                                value={editedScript}
-                                onChange={(e) => setEditedScript(e.target.value)}
-                                className={`text-sm min-h-[300px] resize-none font-mono transition-all duration-3000 ${
-                                  animatingFields.script 
-                                    ? 'bg-green-50 border-green-300 shadow-sm' 
-                                    : ''
-                                }`}
-                                placeholder="Enter your phone script..."
-                              />
-                              <div className="flex justify-end">
-                                <Button
-                                  onClick={saveEditedScript}
-                                  size="sm"
-                                  disabled={updateTemplateMutation.isPending}
-                                  className="bg-green-600 hover:bg-green-700"
-                                >
-                                  {updateTemplateMutation.isPending ? (
-                                    <Loader2 className="w-3 h-3 mr-1 animate-spin" />
-                                  ) : (
-                                    <Save className="w-3 h-3 mr-1" />
+                                  {aiCustomizedFields.script && (
+                                    <div className="flex items-center gap-1 text-xs text-green-600">
+                                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                      </svg>
+                                      AI Customized
+                                    </div>
                                   )}
-                                  Save
-                                </Button>
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="space-y-2">
-                              <div 
-                                className={`text-sm text-gray-900 whitespace-pre-wrap p-4 rounded border min-h-[300px] cursor-pointer transition-all duration-3000 font-mono ${
-                                  animatingFields.script 
-                                    ? 'bg-green-50 border-green-300 shadow-sm' 
-                                    : 'bg-white hover:bg-gray-50'
-                                }`}
-                                onClick={startEditingScript}
-                              >
-                                {selectedTemplate.content}
-                                <div className="text-xs text-gray-400 mt-2 opacity-0 hover:opacity-100 transition-opacity">
-                                  Click to edit
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  <Button
+                                    onClick={() => copyToClipboard(editedScript || selectedTemplate.content)}
+                                    size="sm"
+                                    variant="outline"
+                                    className="text-xs h-7 px-2"
+                                  >
+                                    <Copy className="w-3 h-3 mr-1" />
+                                    Copy Script
+                                  </Button>
                                 </div>
                               </div>
                             </div>
-                          )}
+                          </div>
                         </div>
                       </>
                     )}
