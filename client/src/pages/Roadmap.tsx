@@ -113,7 +113,7 @@ export default function Roadmap() {
     if (week.week > maxClickableWeek) return;
     
     // For now, we'll just expand the day view - this could be enhanced later
-    console.log("Day clicked:", day, "Week:", week.week);
+    // Log day click for future enhancement
   };
 
   // Helper function to determine if a week should show daily objectives

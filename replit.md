@@ -68,6 +68,7 @@ Preferred communication style: Simple, everyday language.
 - **Improved visual hierarchy**: Updated upcoming weeks (2-3) to use clean slate styling instead of orange, removed "Objectives Ready" badges for cleaner appearance
 - **Enhanced interactivity**: Made days from upcoming weeks (within 2-week preview window) clickable and visually distinct with slate styling to show they contain viewable objectives
 - **Streamlined badge system**: Removed badges and border lines for upcoming weeks with objectives, maintaining badges only for completed, current, and "Coming Soon" weeks
+- **Fixed data processing inconsistency**: Updated roadmap weeks processing to handle both new 'days' structure and legacy 'dailyTasks' format, ensuring all weeks display daily objectives correctly
 - **Fixed JavaScript errors**: Resolved missing Button import in Roadmap component that was causing console errors
 
 ### Foundation Roadmap Integration & UX Fixes (Previous Session)  
