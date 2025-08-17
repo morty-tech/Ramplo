@@ -1581,11 +1581,10 @@ export default function Outreach() {
 
           {/* Template Analysis */}
           {selectedTemplate && activeTemplateType === "email" && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Email Analysis</CardTitle>
-              </CardHeader>
-              <CardContent>
+            <div>
+              <h3 className="text-base font-semibold text-gray-900 mb-5">Email Analysis</h3>
+              <Card>
+                <CardContent className="pt-6">
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Word Count</span>
@@ -1635,17 +1634,17 @@ export default function Outreach() {
                     </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
           )}
 
           {/* Social Media Insights */}
           {selectedTemplate && activeTemplateType === "social-media" && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Social Media Insights</CardTitle>
-              </CardHeader>
-              <CardContent>
+            <div>
+              <h3 className="text-base font-semibold text-gray-900 mb-5">Social Media Insights</h3>
+              <Card>
+                <CardContent className="pt-6">
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Character Count</span>
@@ -1681,17 +1680,17 @@ export default function Outreach() {
                     </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
           )}
 
           {/* Phone Script Guide */}
           {selectedTemplate && activeTemplateType === "phone-script" && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Script Guide</CardTitle>
-              </CardHeader>
-              <CardContent>
+            <div>
+              <h3 className="text-base font-semibold text-gray-900 mb-5">Script Guide</h3>
+              <Card>
+                <CardContent className="pt-6">
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Script Type</span>
@@ -1723,8 +1722,9 @@ export default function Outreach() {
                     </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
           )}
 
         </div>
