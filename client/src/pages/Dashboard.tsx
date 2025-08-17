@@ -221,7 +221,7 @@ export default function Dashboard() {
 
   return (
     <div className="p-6 mx-4 md:mx-8 relative isolate min-h-screen">
-      {/* Top forest green gradient burst - lighter and more visible */}
+      {/* Top forest green gradient burst - very subtle */}
       <div
         aria-hidden="true"
         className="absolute inset-x-0 -top-20 -z-10 transform-gpu overflow-hidden blur-3xl"
@@ -231,35 +231,21 @@ export default function Dashboard() {
             clipPath:
               'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
           }}
-          className="relative left-[calc(50%-10rem)] aspect-[1155/678] w-[48rem] -translate-x-1/2 rotate-[15deg] bg-gradient-to-tr from-[#22c55e] to-[#16a34a] opacity-4 sm:left-[calc(50%-15rem)] sm:w-[60rem]"
-        />
-      </div>
-      
-      {/* Top right forest green gradient accent - enhanced for sidebar */}
-      <div
-        aria-hidden="true"
-        className="absolute right-0 top-0 -z-10 transform-gpu overflow-hidden blur-3xl"
-      >
-        <div
-          style={{
-            clipPath:
-              'polygon(40% 0%, 100% 0%, 100% 60%, 60% 100%, 0% 80%, 0% 20%)',
-          }}
-          className="relative aspect-square w-[32rem] bg-gradient-to-bl from-[#22c55e] to-[#15803d] opacity-6 sm:w-[40rem]"
+          className="relative left-[calc(50%-15rem)] aspect-[1155/678] w-[48rem] -translate-x-1/2 rotate-[15deg] bg-gradient-to-tr from-[#166534] to-[#15803d] opacity-5 sm:left-[calc(50%-25rem)] sm:w-[60rem]"
         />
       </div>
       
       {/* Side forest green gradient accent - positioned for action areas */}
       <div
         aria-hidden="true"
-        className="absolute right-0 top-[30%] -z-10 transform-gpu overflow-hidden blur-2xl"
+        className="absolute right-0 top-[20%] -z-10 transform-gpu overflow-hidden blur-3xl"
       >
         <div
           style={{
             clipPath:
-              'polygon(30% 0%, 100% 0%, 100% 70%, 70% 100%, 0% 100%)',
+              'polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)',
           }}
-          className="relative aspect-square w-[28rem] bg-gradient-to-br from-[#16a34a] to-[#15803d] opacity-4 sm:w-[35rem]"
+          className="relative aspect-square w-[24rem] bg-gradient-to-br from-[#14532d] to-[#166534] opacity-4 sm:w-[30rem]"
         />
       </div>
       
@@ -273,7 +259,7 @@ export default function Dashboard() {
             clipPath:
               'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
           }}
-          className="relative left-[calc(50%+5rem)] aspect-[1155/678] w-[40rem] -translate-x-1/2 bg-gradient-to-tl from-[#15803d] to-[#16a34a] opacity-2 sm:left-[calc(50%+15rem)] sm:w-[50rem]"
+          className="relative left-[calc(50%+5rem)] aspect-[1155/678] w-[40rem] -translate-x-1/2 bg-gradient-to-tl from-[#15803d] to-[#16a34a] opacity-3 sm:left-[calc(50%+15rem)] sm:w-[50rem]"
         />
       </div>
       {/* Header */}
