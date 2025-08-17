@@ -12,7 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 
 import { Slider } from "@/components/ui/slider";
 import { Copy, Wand2, Edit, Plus, Download, BarChart3, X, Save, Loader2, Mail, MessageSquare, Phone, Image, Upload, Palette, Type, RotateCcw, ChevronDown, ChevronsUpDown, Check } from "lucide-react";
-import { Label, Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react';
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react';
 import { useToast } from "@/hooks/use-toast";
 import { ObjectUploader } from "@/components/ObjectUploader";
 import { ImageEditor } from "@/components/ImageEditor";
@@ -1199,10 +1199,10 @@ export default function Outreach() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
                                   <div className="space-y-3">
                                     <div>
-                                      <Label className="text-xs font-medium flex items-center gap-1">
+                                      <label className="text-xs font-medium flex items-center gap-1">
                                         <Type className="w-3 h-3" />
                                         Text Overlay
-                                      </Label>
+                                      </label>
                                       <Input
                                         value={inlineImageSettings.text}
                                         onChange={(e) => setInlineImageSettings(prev => ({...prev, text: e.target.value}))}
@@ -1212,7 +1212,7 @@ export default function Outreach() {
                                     </div>
                                     
                                     <div>
-                                      <Label className="text-xs font-medium">Text Color</Label>
+                                      <label className="text-xs font-medium">Text Color</label>
                                       <div className="flex gap-2">
                                         <input
                                           type="color"
@@ -1231,10 +1231,10 @@ export default function Outreach() {
                                   
                                   <div className="space-y-3">
                                     <div>
-                                      <Label className="text-xs font-medium flex items-center gap-1">
+                                      <label className="text-xs font-medium flex items-center gap-1">
                                         <Palette className="w-3 h-3" />
                                         Background
-                                      </Label>
+                                      </label>
                                       <div className="flex gap-2">
                                         <input
                                           type="color"
@@ -1251,9 +1251,9 @@ export default function Outreach() {
                                     </div>
                                     
                                     <div>
-                                      <Label className="text-xs font-medium">
+                                      <label className="text-xs font-medium">
                                         Font Size: {inlineImageSettings.fontSize}px
-                                      </Label>
+                                      </label>
                                       <Slider
                                         value={[inlineImageSettings.fontSize]}
                                         onValueChange={([value]) => setInlineImageSettings(prev => ({...prev, fontSize: value}))}
@@ -1437,7 +1437,7 @@ export default function Outreach() {
                         {editingTemplate && (
                           <div className="space-y-4">
                             <div>
-                              <Label htmlFor="template-name">Template Name</Label>
+                              <label htmlFor="template-name">Template Name</label>
                               <Input
                                 id="template-name"
                                 value={editingTemplate.name}
@@ -1447,7 +1447,7 @@ export default function Outreach() {
                             
                             {activeTemplateType === "email" && (
                               <div>
-                                <Label htmlFor="template-subject">Subject Line</Label>
+                                <label htmlFor="template-subject">Subject Line</label>
                                 <Input
                                   id="template-subject"
                                   value={editingTemplate.subject || ''}
@@ -1460,7 +1460,7 @@ export default function Outreach() {
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-4">
                                   <div>
-                                    <Label htmlFor="template-content">Post Content</Label>
+                                    <label htmlFor="template-content">Post Content</label>
                                     <Textarea
                                       id="template-content"
                                       value={editingTemplate.content}
@@ -1472,7 +1472,7 @@ export default function Outreach() {
                                 </div>
                                 <div className="space-y-4">
                                   <div>
-                                    <Label>Select Image</Label>
+                                    <label>Select Image</label>
                                     <Select value={selectedImageId} onValueChange={setSelectedImageId}>
                                       <SelectTrigger>
                                         <SelectValue placeholder="Choose an image" />
@@ -1529,7 +1529,7 @@ export default function Outreach() {
 
                             {activeTemplateType === "phone-script" && (
                               <div>
-                                <Label htmlFor="template-content">Script Content</Label>
+                                <label htmlFor="template-content">Script Content</label>
                                 <Textarea
                                   id="template-content"
                                   value={editingTemplate.content}
@@ -1542,7 +1542,7 @@ export default function Outreach() {
 
                             {activeTemplateType === "email" && (
                               <div>
-                                <Label htmlFor="template-content">Email Content</Label>
+                                <label htmlFor="template-content">Email Content</label>
                                 <Textarea
                                   id="template-content"
                                   value={editingTemplate.content}
@@ -1766,7 +1766,7 @@ export default function Outreach() {
             {/* Only show recipient type for email and phone scripts, not social media */}
             {activeTemplateType !== "social-media" && (
               <div>
-                <Label htmlFor="recipient-type">Recipient Type</Label>
+                <label htmlFor="recipient-type">Recipient Type</label>
                 <Select 
                   value={customizationForm.recipientType}
                   onValueChange={(value) => setCustomizationForm(prev => ({ ...prev, recipientType: value }))}
@@ -1785,7 +1785,7 @@ export default function Outreach() {
             )}
             
             <div>
-              <Label htmlFor="tone">Tone</Label>
+              <label htmlFor="tone">Tone</label>
               <Select
                 value={customizationForm.tone}
                 onValueChange={(value) => setCustomizationForm(prev => ({ ...prev, tone: value }))}
@@ -1803,7 +1803,7 @@ export default function Outreach() {
             </div>
             
             <div>
-              <Label htmlFor="key-points">Key Points to Include</Label>
+              <label htmlFor="key-points">Key Points to Include</label>
               <Textarea
                 id="key-points"
                 value={customizationForm.keyPoints}
