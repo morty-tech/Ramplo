@@ -28,7 +28,7 @@ export default function Roadmap() {
   const daysRemaining = 90 - ((currentWeek - 1) * 7 + (progress?.currentDay || 1));
 
   // Query for all tasks to enable detailed view
-  const { data: allTasks = [] } = useQuery<Task[]>({
+  const { data: allTasks = [], isLoading: tasksLoading } = useQuery<Task[]>({
     queryKey: ["/api/tasks"],
     queryFn: async () => {
       const response = await apiRequest("GET", "/api/tasks");
@@ -115,6 +115,26 @@ export default function Roadmap() {
     return week === currentWeek && day === currentDay;
   };
 
+  // Check if any critical data is still loading
+  const isLoading = tasksLoading || roadmapLoading || !progress;
+
+  // Loading screen matching dashboard style
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="relative">
+            {/* Animated spinner */}
+            <div className="w-12 h-12 border-4 border-forest-200 border-t-forest-600 rounded-full animate-spin mx-auto mb-4"></div>
+            {/* Pulsing background ring */}
+            <div className="absolute inset-0 w-12 h-12 border-2 border-forest-100 rounded-full animate-pulse mx-auto"></div>
+          </div>
+          <p className="text-gray-600 font-medium">Loading your Roadmap</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="p-6">
       {/* Header */}
@@ -132,20 +152,41 @@ export default function Roadmap() {
           </div>
         </CardHeader>
         <CardContent className="pt-3">
-          <Progress value={overallProgress} className="h-3 mb-4 bg-gray-200 [&>div]:bg-blue-500" />
+          <Progress value={overallProgress} className="h-3 mb-4 bg-gray-200 [&>div]:bg-forest-600" />
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-gray-900">{completedTasks}</div>
-              <div className="text-sm text-gray-600">Tasks Completed</div>
+            <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
+              <dt>
+                <div className="absolute rounded-md bg-forest-100 p-3">
+                  <Check aria-hidden="true" className="size-6 text-forest-600" />
+                </div>
+                <p className="ml-16 truncate text-sm font-medium text-gray-500">Tasks Completed</p>
+              </dt>
+              <dd className="ml-16 flex items-baseline">
+                <p className="text-2xl font-semibold text-gray-900">{completedTasks}</p>
+              </dd>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-gray-900">{totalTasks}</div>
-              <div className="text-sm text-gray-600">Total Tasks</div>
+            <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
+              <dt>
+                <div className="absolute rounded-md bg-blue-500/15 p-3">
+                  <Target aria-hidden="true" className="size-6 text-blue-600" />
+                </div>
+                <p className="ml-16 truncate text-sm font-medium text-gray-500">Total Tasks</p>
+              </dt>
+              <dd className="ml-16 flex items-baseline">
+                <p className="text-2xl font-semibold text-gray-900">{totalTasks}</p>
+              </dd>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-gray-900">{daysRemaining}</div>
-              <div className="text-sm text-gray-600">Days Remaining</div>
+            <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
+              <dt>
+                <div className="absolute rounded-md bg-orange-500/15 p-3">
+                  <Calendar aria-hidden="true" className="size-6 text-orange-600" />
+                </div>
+                <p className="ml-16 truncate text-sm font-medium text-gray-500">Days Remaining</p>
+              </dt>
+              <dd className="ml-16 flex items-baseline">
+                <p className="text-2xl font-semibold text-gray-900">{daysRemaining}</p>
+              </dd>
             </div>
           </div>
         </CardContent>
@@ -176,7 +217,7 @@ export default function Roadmap() {
                 </CardTitle>
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
                   week.status === 'completed' 
-                    ? 'bg-green-600' 
+                    ? 'bg-forest-600' 
                     : week.status === 'current'
                     ? 'bg-blue-600'
                     : 'bg-gray-300'
@@ -211,7 +252,7 @@ export default function Roadmap() {
                             : isCurrentDay 
                             ? 'border-blue-500 bg-blue-50 shadow-sm' 
                             : isDayCompleted
-                            ? 'border-green-300 bg-green-50' 
+                            ? 'border-forest-300 bg-forest-50' 
                             : isDayAccessible
                             ? 'border-gray-200 hover:border-primary hover:bg-gray-50'
                             : 'border-gray-200 bg-gray-100 cursor-not-allowed opacity-60'
@@ -226,7 +267,7 @@ export default function Roadmap() {
                                 : isCurrentDay
                                 ? 'bg-blue-600 text-white'
                                 : isDayCompleted
-                                ? 'bg-green-600 text-white'
+                                ? 'bg-forest-600 text-white'
                                 : isDayAccessible
                                 ? 'bg-gray-200 text-gray-700'
                                 : 'bg-gray-300 text-gray-500'
@@ -261,7 +302,7 @@ export default function Roadmap() {
                               </div>
                               <div className={`text-xs mt-1 ${
                                 isTodayHighlight ? 'text-blue-700 font-medium' :
-                                isCurrentDay ? 'text-blue-700' : isDayCompleted ? 'text-green-700' : 'text-gray-600'
+                                isCurrentDay ? 'text-blue-700' : isDayCompleted ? 'text-forest-700' : 'text-gray-600'
                               }`}>
                                 <Target className="w-3 h-3 inline mr-1" />
                                 {day.objective}
