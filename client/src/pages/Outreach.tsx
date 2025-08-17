@@ -917,7 +917,8 @@ export default function Outreach() {
                                 setEditedSubject(e.target.value);
                                 saveSubjectDebounced();
                               }}
-                              className={`block w-full px-3 pt-2.5 text-xl font-medium text-gray-900 placeholder:text-gray-400 focus:outline-none border-0 border-b-2 border-gray-200 rounded-t-lg rounded-b-none transition-all duration-3000 ${
+                              style={{ fontSize: '1.25rem' }}
+                              className={`block w-full px-3 pt-2.5 font-medium text-gray-900 placeholder:text-gray-400 focus:outline-none border-0 border-b-2 border-gray-200 rounded-t-lg rounded-b-none transition-all duration-3000 ${
                                 animatingFields.subject 
                                   ? 'bg-green-50 border-green-300 shadow-sm' 
                                   : ''
@@ -961,33 +962,37 @@ export default function Outreach() {
                                     </div>
                                   )}
                                 </div>
-                                <div className="flex items-center space-x-2">
-                                  <Button
-                                    onClick={() => copyToClipboard(editedSubject + '\n\n' + editedBody)}
-                                    size="sm"
-                                    variant="outline"
-                                    className="text-xs h-7 px-2"
-                                  >
-                                    <Copy className="w-3 h-3 mr-1" />
-                                    Copy All
-                                  </Button>
-                                  <Button
+                                <div className="flex items-center space-x-3">
+                                  <button
                                     onClick={() => copyToClipboard(editedSubject)}
-                                    size="sm"
-                                    variant="outline"
-                                    className="text-xs h-7 px-2"
+                                    className="text-xs text-forest-800 hover:text-forest-600 flex items-center gap-1"
                                   >
-                                    <Copy className="w-3 h-3 mr-1" />
+                                    <Copy className="w-3 h-3" />
                                     Copy Subject
-                                  </Button>
-                                  <Button
+                                  </button>
+                                  <button
                                     onClick={() => copyToClipboard(editedBody)}
-                                    size="sm"
-                                    variant="outline"
-                                    className="text-xs h-7 px-2"
+                                    className="text-xs text-forest-800 hover:text-forest-600 flex items-center gap-1"
                                   >
-                                    <Copy className="w-3 h-3 mr-1" />
+                                    <Copy className="w-3 h-3" />
                                     Copy Body
+                                  </button>
+                                  <Button
+                                    onClick={() => {
+                                      if (selectedTemplate && (editedSubject.trim() || editedBody.trim())) {
+                                        updateTemplateMutation.mutate({
+                                          id: selectedTemplate.id,
+                                          updates: { 
+                                            subject: editedSubject,
+                                            content: editedBody 
+                                          }
+                                        });
+                                      }
+                                    }}
+                                    size="sm"
+                                    className="text-xs h-7 px-3 bg-forest-800 hover:bg-forest-700 text-white"
+                                  >
+                                    Save
                                   </Button>
                                 </div>
                               </div>
