@@ -1006,83 +1006,85 @@ export default function Outreach() {
                     {activeTemplateType === "social-media" && (
                       <>
                         <div className="space-y-6">
-                          {/* Social Media Content Card - Cohesive Design */}
-                          <div className="rounded-lg bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-forest-600">
-                            {/* Post Content Textarea */}
-                            <label htmlFor="social-content" className="sr-only">
-                              Post Content
-                            </label>
-                            <Textarea
-                              id="social-content"
-                              name="content"
-                              rows={8}
-                              placeholder="Write your social media post..."
-                              value={editedContent}
-                              onChange={(e) => {
-                                setEditedContent(e.target.value);
-                                saveContentDebounced();
-                              }}
-                              className={`block w-full resize-none px-3 py-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none border-0 rounded-lg transition-all duration-3000 ${
-                                animatingFields.content 
-                                  ? 'bg-green-50 border-green-300 shadow-sm' 
-                                  : ''
-                              }`}
-                            />
+                          {/* Social Media Side-by-Side Layout */}
+                          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            {/* Social Media Content Card - Left Side */}
+                            <div className="rounded-lg bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-forest-600">
+                              {/* Post Content Textarea */}
+                              <label htmlFor="social-content" className="sr-only">
+                                Post Content
+                              </label>
+                              <Textarea
+                                id="social-content"
+                                name="content"
+                                rows={12}
+                                placeholder="Write your social media post..."
+                                value={editedContent}
+                                onChange={(e) => {
+                                  setEditedContent(e.target.value);
+                                  saveContentDebounced();
+                                }}
+                                className={`block w-full resize-none px-3 py-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none border-0 rounded-lg transition-all duration-3000 ${
+                                  animatingFields.content 
+                                    ? 'bg-green-50 border-green-300 shadow-sm' 
+                                    : ''
+                                }`}
+                              />
 
-                            {/* Actions Bar */}
-                            <div className="border-t border-gray-200 px-3 py-2">
-                              <div className="flex items-center justify-between space-x-3">
-                                <div className="flex items-center space-x-3">
-                                  <div className="text-xs text-gray-500">
-                                    {(() => {
-                                      const cleanContent = cleanContentForDisplay(editedContent || selectedTemplate.content);
-                                      const charLimit = getCharacterLimit(selectedTemplate.platform);
-                                      const isOverLimit = cleanContent.length > charLimit;
-                                      return (
-                                        <span className={isOverLimit ? 'text-red-600 font-medium' : 'text-gray-500'}>
-                                          {cleanContent.length}/{charLimit} chars {selectedTemplate.platform && `(${selectedTemplate.platform})`}
-                                        </span>
-                                      );
-                                    })()}
-                                  </div>
-                                  {aiCustomizedFields.content && (
-                                    <div className="flex items-center gap-1 text-xs text-green-600">
-                                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                      </svg>
-                                      AI Customized
+                              {/* Actions Bar */}
+                              <div className="border-t border-gray-200 px-3 py-2">
+                                <div className="flex items-center justify-between space-x-3">
+                                  <div className="flex items-center space-x-3">
+                                    <div className="text-xs text-gray-500">
+                                      {(() => {
+                                        const cleanContent = cleanContentForDisplay(editedContent || selectedTemplate.content);
+                                        const charLimit = getCharacterLimit(selectedTemplate.platform);
+                                        const isOverLimit = cleanContent.length > charLimit;
+                                        return (
+                                          <span className={isOverLimit ? 'text-red-600 font-medium' : 'text-gray-500'}>
+                                            {cleanContent.length}/{charLimit} chars {selectedTemplate.platform && `(${selectedTemplate.platform})`}
+                                          </span>
+                                        );
+                                      })()}
                                     </div>
-                                  )}
-                                </div>
-                                <div className="flex items-center space-x-3">
-                                  <button
-                                    onClick={() => copyToClipboard(editedContent || selectedTemplate.content)}
-                                    className="text-xs text-forest-800 hover:text-forest-600 flex items-center gap-1"
-                                  >
-                                    <Copy className="w-3 h-3" />
-                                    Copy Post
-                                  </button>
-                                  <Button
-                                    onClick={() => {
-                                      if (selectedTemplate && editedContent.trim()) {
-                                        updateTemplateMutation.mutate({
-                                          id: selectedTemplate.id,
-                                          updates: { content: editedContent }
-                                        });
-                                      }
-                                    }}
-                                    size="sm"
-                                    className="text-xs h-7 px-3 bg-lime-400 hover:bg-lime-500 text-black border-0"
-                                  >
-                                    Save
-                                  </Button>
+                                    {aiCustomizedFields.content && (
+                                      <div className="flex items-center gap-1 text-xs text-green-600">
+                                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                        </svg>
+                                        AI Customized
+                                      </div>
+                                    )}
+                                  </div>
+                                  <div className="flex items-center space-x-3">
+                                    <button
+                                      onClick={() => copyToClipboard(editedContent || selectedTemplate.content)}
+                                      className="text-xs text-forest-800 hover:text-forest-600 flex items-center gap-1"
+                                    >
+                                      <Copy className="w-3 h-3" />
+                                      Copy Post
+                                    </button>
+                                    <Button
+                                      onClick={() => {
+                                        if (selectedTemplate && editedContent.trim()) {
+                                          updateTemplateMutation.mutate({
+                                            id: selectedTemplate.id,
+                                            updates: { content: editedContent }
+                                          });
+                                        }
+                                      }}
+                                      size="sm"
+                                      className="text-xs h-7 px-3 bg-lime-400 hover:bg-lime-500 text-black border-0"
+                                    >
+                                      Save
+                                    </Button>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                          
-                          {/* Post Image - Now below content */}
-                          <div>
+                            
+                            {/* Post Image - Right Side */}
+                            <div>
                             <div className="flex items-center justify-between mb-2">
                               <div className="flex items-center gap-3">
                                 <div className="text-sm font-medium text-gray-900">Post Image:</div>
@@ -1226,6 +1228,7 @@ export default function Outreach() {
                                 )}
                               </div>
                             )}
+                            </div>
                           </div>
                         </div>
                       </>
