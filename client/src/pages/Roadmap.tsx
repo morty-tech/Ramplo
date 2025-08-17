@@ -159,45 +159,41 @@ export default function Roadmap() {
       </div>
 
       {/* Stats Overview */}
-      <Card className="mb-8">
-        <CardContent className="pt-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
-              <dt>
-                <div className="absolute rounded-md bg-forest-100 p-3">
-                  <Check aria-hidden="true" className="size-6 text-forest-600" />
-                </div>
-                <p className="ml-16 truncate text-sm font-medium text-gray-500">Tasks Completed</p>
-              </dt>
-              <dd className="ml-16 flex items-baseline">
-                <p className="text-2xl font-semibold text-gray-900">{completedTasks}</p>
-              </dd>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
+          <dt>
+            <div className="absolute rounded-md bg-forest-100 p-3">
+              <Check aria-hidden="true" className="size-6 text-forest-600" />
             </div>
-            <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
-              <dt>
-                <div className="absolute rounded-md bg-blue-500/15 p-3">
-                  <Target aria-hidden="true" className="size-6 text-blue-600" />
-                </div>
-                <p className="ml-16 truncate text-sm font-medium text-gray-500">Total Tasks</p>
-              </dt>
-              <dd className="ml-16 flex items-baseline">
-                <p className="text-2xl font-semibold text-gray-900">{totalTasks}</p>
-              </dd>
+            <p className="ml-16 truncate text-sm font-medium text-gray-500">Tasks Completed</p>
+          </dt>
+          <dd className="ml-16 flex items-baseline">
+            <p className="text-2xl font-semibold text-gray-900">{completedTasks}</p>
+          </dd>
+        </div>
+        <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
+          <dt>
+            <div className="absolute rounded-md bg-blue-500/15 p-3">
+              <Target aria-hidden="true" className="size-6 text-blue-600" />
             </div>
-            <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
-              <dt>
-                <div className="absolute rounded-md bg-orange-500/15 p-3">
-                  <Calendar aria-hidden="true" className="size-6 text-orange-600" />
-                </div>
-                <p className="ml-16 truncate text-sm font-medium text-gray-500">Days Remaining</p>
-              </dt>
-              <dd className="ml-16 flex items-baseline">
-                <p className="text-2xl font-semibold text-gray-900">{daysRemaining}</p>
-              </dd>
+            <p className="ml-16 truncate text-sm font-medium text-gray-500">Total Tasks</p>
+          </dt>
+          <dd className="ml-16 flex items-baseline">
+            <p className="text-2xl font-semibold text-gray-900">{totalTasks}</p>
+          </dd>
+        </div>
+        <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
+          <dt>
+            <div className="absolute rounded-md bg-orange-500/15 p-3">
+              <Calendar aria-hidden="true" className="size-6 text-orange-600" />
             </div>
-          </div>
-        </CardContent>
-      </Card>
+            <p className="ml-16 truncate text-sm font-medium text-gray-500">Days Remaining</p>
+          </dt>
+          <dd className="ml-16 flex items-baseline">
+            <p className="text-2xl font-semibold text-gray-900">{daysRemaining}</p>
+          </dd>
+        </div>
+      </div>
 
       {/* Weekly Breakdown */}
       {roadmapLoading ? (
