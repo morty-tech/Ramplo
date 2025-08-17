@@ -149,10 +149,8 @@ export default function Roadmap() {
           <Target className="w-5 h-5" />
           Overall Progress
         </h3>
-      </div>
-
-      {/* Stats Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
           <dt>
             <div className="absolute rounded-md bg-forest-100 p-3">
@@ -185,6 +183,7 @@ export default function Roadmap() {
           <dd className="ml-16 flex items-baseline">
             <p className="text-2xl font-semibold text-gray-900">{daysRemaining}</p>
           </dd>
+        </div>
         </div>
       </div>
 
