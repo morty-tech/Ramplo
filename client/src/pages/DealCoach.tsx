@@ -109,11 +109,9 @@ export default function DealCoach() {
         
         {/* Coach Input Form */}
         <div className="lg:col-span-2">
+          <div className="text-sm font-medium text-gray-900 mb-2">Describe Your Situation</div>
           <Card>
-            <CardHeader>
-              <CardTitle className="text-xl">Describe Your Situation</CardTitle>
-            </CardHeader>
-            <CardContent>
+            <CardContent className="pt-6">
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Loan Stage */}
                 <div>
@@ -210,19 +208,10 @@ export default function DealCoach() {
 
           {/* AI Response */}
           {latestSession && showResponse && (
-            <Card className="mt-6">
-              <CardHeader>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4">
-                    <Bot className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <CardTitle>AI Deal Coach Response</CardTitle>
-                    <p className="text-sm text-gray-600">Personalized guidance for your situation</p>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
+            <>
+              <div className="text-sm font-medium text-gray-900 mb-2 mt-6">AI Deal Coach Response</div>
+              <Card>
+                <CardContent className="pt-6">
                 <div className="prose prose-sm max-w-none">
                   <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
                     <p className="text-blue-800 font-medium">Some next steps:</p>
@@ -231,6 +220,7 @@ export default function DealCoach() {
                 </div>
               </CardContent>
             </Card>
+            </>
           )}
         </div>
 
@@ -238,11 +228,9 @@ export default function DealCoach() {
         <div className="space-y-6">
           
           {/* Common Scenarios */}
+          <div className="text-sm font-medium text-gray-900 mb-2">Common Scenarios</div>
           <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Common Scenarios</CardTitle>
-            </CardHeader>
-            <CardContent>
+            <CardContent className="pt-6">
               <div className="space-y-3">
                 {commonScenarios.map((scenario) => (
                   <Button
@@ -262,11 +250,9 @@ export default function DealCoach() {
           </Card>
 
           {/* Recent Questions */}
+          <div className="text-sm font-medium text-gray-900 mb-2">Recent Questions</div>
           <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Recent Questions</CardTitle>
-            </CardHeader>
-            <CardContent>
+            <CardContent className="pt-6">
               <div className="space-y-4">
                 {sessions.slice(0, 3).map((session: any, index) => (
                   <div key={session.id} className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">

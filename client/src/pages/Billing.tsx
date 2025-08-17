@@ -148,8 +148,10 @@ export default function Billing() {
 
       {/* Morty User Section */}
       {isMortyUser && (
-        <Card className="mb-6">
-          <CardContent className="p-8">
+        <>
+          <div className="text-sm font-medium text-gray-900 mb-2">Powered by Morty</div>
+          <Card className="mb-6">
+            <CardContent className="p-8">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4">
@@ -187,6 +189,7 @@ export default function Billing() {
             </div>
           </CardContent>
         </Card>
+        </>
       )}
 
       {/* Non-Morty User Section */}
@@ -194,14 +197,10 @@ export default function Billing() {
         <>
           {/* Current Plan */}
           {user?.stripeSubscriptionId ? (
-            <Card className="mb-6">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-xl">Current Plan</CardTitle>
-                  <Badge className="bg-green-600">Active</Badge>
-                </div>
-              </CardHeader>
-              <CardContent>
+            <>
+              <div className="text-sm font-medium text-gray-900 mb-2">Current Plan</div>
+              <Card className="mb-6">
+                <CardContent className="pt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
                     <div className="text-3xl font-bold text-gray-900 mb-2">
@@ -257,13 +256,13 @@ export default function Billing() {
                 </div>
               </CardContent>
             </Card>
+            </>
           ) : (
             /* Subscription Signup */
-            <Card className="mb-6">
-              <CardHeader>
-                <CardTitle className="text-xl">Upgrade to Professional</CardTitle>
-              </CardHeader>
-              <CardContent>
+            <>
+              <div className="text-sm font-medium text-gray-900 mb-2">Upgrade to Professional</div>
+              <Card className="mb-6">
+                <CardContent className="pt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
                     <div className="bg-gray-50 rounded-lg p-4 mb-6">
@@ -303,15 +302,15 @@ export default function Billing() {
                 </div>
               </CardContent>
             </Card>
+            </>
           )}
 
           {/* Payment Method */}
           {user?.stripeSubscriptionId && (
-            <Card className="mb-6">
-              <CardHeader>
-                <CardTitle className="text-lg">Payment Method</CardTitle>
-              </CardHeader>
-              <CardContent>
+            <>
+              <div className="text-sm font-medium text-gray-900 mb-2">Payment Method</div>
+              <Card className="mb-6">
+                <CardContent className="pt-6">
                 <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
                   <div className="flex items-center">
                     <div className="w-10 h-6 bg-blue-600 rounded mr-4 flex items-center justify-center">
@@ -328,15 +327,15 @@ export default function Billing() {
                 </div>
               </CardContent>
             </Card>
+            </>
           )}
 
           {/* Billing History */}
           {user?.stripeSubscriptionId && (
-            <Card className="mb-6">
-              <CardHeader>
-                <CardTitle className="text-lg">Billing History</CardTitle>
-              </CardHeader>
-              <CardContent>
+            <>
+              <div className="text-sm font-medium text-gray-900 mb-2">Billing History</div>
+              <Card className="mb-6">
+                <CardContent className="pt-6">
                 <div className="space-y-4">
                   {mockBillingHistory.map((invoice, index) => (
                     <div key={index} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
@@ -356,6 +355,7 @@ export default function Billing() {
                 </div>
               </CardContent>
             </Card>
+            </>
           )}
 
           {/* Cancel Subscription */}
@@ -385,14 +385,9 @@ export default function Billing() {
       )}
 
       {/* Support Section */}
+      <div className="text-sm font-medium text-gray-900 mb-2">Need Help?</div>
       <Card className="mb-6">
-        <CardHeader>
-          <CardTitle className="text-lg flex items-center">
-            <Mail className="w-5 h-5 mr-2" />
-            Need Help?
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <div className="bg-gray-50 rounded-lg p-4">
             <p className="text-sm text-gray-700 mb-3">
               For billing questions, subscription changes, or account support, please contact our team:
