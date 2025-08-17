@@ -1254,7 +1254,7 @@ export default function Outreach() {
                                 setEditedScript(e.target.value);
                                 saveScriptDebounced();
                               }}
-                              className={`block w-full resize-none px-3 py-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none border-0 rounded-lg font-mono transition-all duration-3000 ${
+                              className={`block w-full resize-none px-3 py-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none border-0 rounded-lg transition-all duration-3000 ${
                                 animatingFields.script 
                                   ? 'bg-green-50 border-green-300 shadow-sm' 
                                   : ''
