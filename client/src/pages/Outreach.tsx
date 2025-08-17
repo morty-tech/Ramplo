@@ -763,7 +763,7 @@ export default function Outreach() {
       {/* Template Selection */}
       {templates.length > 0 && (
         <div className="mb-8">
-          <Listbox value={selectedTemplate} onChange={(template) => setSelectedTemplateId(template?.id || '')}>
+          <Listbox as="div" value={selectedTemplate} onChange={(template) => setSelectedTemplateId(template?.id || '')}>
             <Label className="block text-sm font-medium text-gray-900 mb-2">Select a template to customize and use</Label>
             <div className="relative">
               <ListboxButton className="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary sm:text-sm/6">
