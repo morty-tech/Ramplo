@@ -1054,15 +1054,27 @@ export default function Outreach() {
                                     </div>
                                   )}
                                 </div>
-                                <div className="flex items-center space-x-2">
-                                  <Button
+                                <div className="flex items-center space-x-3">
+                                  <button
                                     onClick={() => copyToClipboard(editedContent || selectedTemplate.content)}
-                                    size="sm"
-                                    variant="outline"
-                                    className="text-xs h-7 px-2"
+                                    className="text-xs text-forest-800 hover:text-forest-600 flex items-center gap-1"
                                   >
-                                    <Copy className="w-3 h-3 mr-1" />
+                                    <Copy className="w-3 h-3" />
                                     Copy Post
+                                  </button>
+                                  <Button
+                                    onClick={() => {
+                                      if (selectedTemplate && editedContent.trim()) {
+                                        updateTemplateMutation.mutate({
+                                          id: selectedTemplate.id,
+                                          updates: { content: editedContent }
+                                        });
+                                      }
+                                    }}
+                                    size="sm"
+                                    className="text-xs h-7 px-3 bg-lime-400 hover:bg-lime-500 text-black border-0"
+                                  >
+                                    Save
                                   </Button>
                                 </div>
                               </div>
@@ -1262,15 +1274,27 @@ export default function Outreach() {
                                     </div>
                                   )}
                                 </div>
-                                <div className="flex items-center space-x-2">
-                                  <Button
+                                <div className="flex items-center space-x-3">
+                                  <button
                                     onClick={() => copyToClipboard(editedScript || selectedTemplate.content)}
-                                    size="sm"
-                                    variant="outline"
-                                    className="text-xs h-7 px-2"
+                                    className="text-xs text-forest-800 hover:text-forest-600 flex items-center gap-1"
                                   >
-                                    <Copy className="w-3 h-3 mr-1" />
+                                    <Copy className="w-3 h-3" />
                                     Copy Script
+                                  </button>
+                                  <Button
+                                    onClick={() => {
+                                      if (selectedTemplate && editedScript.trim()) {
+                                        updateTemplateMutation.mutate({
+                                          id: selectedTemplate.id,
+                                          updates: { content: editedScript }
+                                        });
+                                      }
+                                    }}
+                                    size="sm"
+                                    className="text-xs h-7 px-3 bg-lime-400 hover:bg-lime-500 text-black border-0"
+                                  >
+                                    Save
                                   </Button>
                                 </div>
                               </div>
