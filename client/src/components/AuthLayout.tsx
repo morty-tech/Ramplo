@@ -5,7 +5,7 @@ interface AuthLayoutProps {
 
 export default function AuthLayout({ children, showFooter = true }: AuthLayoutProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-forest-800 to-tealwave-800 relative isolate">
+    <div className="h-screen bg-gradient-to-br from-forest-800 to-tealwave-800 relative isolate overflow-hidden">
       {/* Top lime glow gradient burst */}
       <div
         aria-hidden="true"
@@ -23,7 +23,7 @@ export default function AuthLayout({ children, showFooter = true }: AuthLayoutPr
       {/* Bottom lime glow gradient burst */}
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
+        className="absolute inset-x-0 bottom-0 -z-10 transform-gpu overflow-hidden blur-3xl"
       >
         <div
           style={{
@@ -34,7 +34,7 @@ export default function AuthLayout({ children, showFooter = true }: AuthLayoutPr
         />
       </div>
       
-      <div className="flex min-h-full flex-col justify-between px-6 py-12 lg:px-8 relative z-10">
+      <div className="flex h-full flex-col justify-between px-6 py-12 lg:px-8 relative z-10">
         <div className="flex-1 flex flex-col justify-center">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <div className="flex items-center justify-center">
