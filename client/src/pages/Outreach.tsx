@@ -704,7 +704,7 @@ export default function Outreach() {
   const selectedImage = templateImages.find(img => img.id === selectedImageId);
 
   return (
-    <div className="p-6">
+    <div className="p-6 mx-4 md:mx-8">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Outreach Templates</h1>
