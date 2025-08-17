@@ -382,7 +382,7 @@ export default function Roadmap() {
                   </div>
                 )}
               </div>
-              {/* Only show badge section for weeks that need a badge */}
+              {/* Only show badge section for weeks that need a badge - exclude upcoming weeks with objectives */}
               {(week.status === 'completed' || week.status === 'current' || (week.status === 'upcoming' && !shouldShowDailyObjectives(week.week))) && (
                 <div className="mt-4 pt-4 border-t border-gray-200">
                   <Badge variant={
