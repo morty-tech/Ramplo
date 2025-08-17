@@ -902,7 +902,7 @@ export default function Outreach() {
                       <>
                         <div className="space-y-6">
                           {/* Email Template Card - Cohesive Design */}
-                          <div className="rounded-lg bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-forest-600">
+                          <div className="rounded-lg bg-white border-2 border-gray-300 focus-within:border-forest-600 transition-colors">
                             {/* Subject Line Input */}
                             <label htmlFor="email-subject" className="sr-only">
                               Subject Line
@@ -918,9 +918,9 @@ export default function Outreach() {
                                 saveSubjectDebounced();
                               }}
                               style={{ fontSize: '1.25rem' }}
-                              className={`block w-full px-3 pt-2.5 font-medium text-gray-900 placeholder:text-gray-400 focus:outline-none border-0 border-b-2 border-gray-200 rounded-t-lg rounded-b-none transition-all duration-3000 ${
+                              className={`block w-full px-3 pt-2.5 font-medium text-gray-900 placeholder:text-gray-400 focus:outline-none border-0 border-b border-gray-200 rounded-t-lg rounded-b-none transition-all duration-300 ${
                                 animatingFields.subject 
-                                  ? 'bg-green-50 border-green-300 shadow-sm' 
+                                  ? 'bg-green-50' 
                                   : ''
                               }`}
                             />
@@ -939,9 +939,9 @@ export default function Outreach() {
                                 setEditedBody(e.target.value);
                                 saveBodyDebounced();
                               }}
-                              className={`block w-full resize-none px-3 py-1.5 text-base md:text-base text-gray-900 placeholder:text-gray-400 focus:outline-none border-0 rounded-t-none rounded-b-lg transition-all duration-3000 ${
+                              className={`block w-full resize-none px-3 py-1.5 text-base md:text-base text-gray-900 placeholder:text-gray-400 focus:outline-none border-0 rounded-t-none rounded-b-lg transition-all duration-300 ${
                                 animatingFields.body 
-                                  ? 'bg-green-50 border-green-300 shadow-sm' 
+                                  ? 'bg-green-50' 
                                   : ''
                               }`}
                             />
