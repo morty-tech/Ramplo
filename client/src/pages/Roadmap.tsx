@@ -382,21 +382,22 @@ export default function Roadmap() {
                   </div>
                 )}
               </div>
-              <div className="mt-4 pt-4 border-t border-gray-200">
-                <Badge variant={
-                  week.status === 'completed' ? 'default' :
-                  week.status === 'current' ? 'default' : 
-                  shouldShowDailyObjectives(week.week) ? 'default' : 'secondary'
-                } className={
-                  week.status === 'completed' ? 'bg-green-600' :
-                  week.status === 'current' ? 'bg-blue-600' : 
-                  shouldShowDailyObjectives(week.week) ? 'bg-slate-600' : ''
-                }>
-                  {week.status === 'completed' && '✓ Week Completed'}
-                  {week.status === 'current' && '📍 Current Week'}
-                  {week.status === 'upcoming' && !shouldShowDailyObjectives(week.week) && 'Coming Soon'}
-                </Badge>
-              </div>
+              {/* Only show badge section for weeks that need a badge */}
+              {(week.status === 'completed' || week.status === 'current' || (week.status === 'upcoming' && !shouldShowDailyObjectives(week.week))) && (
+                <div className="mt-4 pt-4 border-t border-gray-200">
+                  <Badge variant={
+                    week.status === 'completed' ? 'default' :
+                    week.status === 'current' ? 'default' : 'secondary'
+                  } className={
+                    week.status === 'completed' ? 'bg-green-600' :
+                    week.status === 'current' ? 'bg-blue-600' : ''
+                  }>
+                    {week.status === 'completed' && '✓ Week Completed'}
+                    {week.status === 'current' && '📍 Current Week'}
+                    {week.status === 'upcoming' && !shouldShowDailyObjectives(week.week) && 'Coming Soon'}
+                  </Badge>
+                </div>
+              )}
             </CardContent>
           </Card>
         ))}
