@@ -91,9 +91,7 @@ export default function Roadmap() {
   // Helper function to determine if a week should show daily objectives
   const shouldShowDailyObjectives = (weekNumber: number) => {
     // Show objectives for current week + next 2 weeks
-    const result = weekNumber >= currentWeek && weekNumber <= currentWeek + 2;
-    console.log(`shouldShowDailyObjectives: week ${weekNumber}, currentWeek ${currentWeek}, result: ${result}`);
-    return result;
+    return weekNumber >= currentWeek && weekNumber <= currentWeek + 2;
   };
 
   // Calculate current day for highlighting
@@ -290,7 +288,7 @@ export default function Roadmap() {
                             ? 'border-forest-300 bg-forest-50' 
                             : isDayAccessible
                             ? week.status === "upcoming" && shouldShowDailyObjectives(week.week)
-                              ? 'border-orange-200 bg-orange-50 hover:border-orange-300 hover:bg-orange-100'
+                              ? 'border-slate-200 bg-slate-50 hover:border-slate-300 hover:bg-slate-100'
                               : 'border-gray-200 hover:border-primary hover:bg-gray-50'
                             : 'border-gray-200 bg-gray-100 cursor-not-allowed opacity-60'
                         }`}
@@ -307,7 +305,7 @@ export default function Roadmap() {
                                 ? 'bg-forest-600 text-white'
                                 : isDayAccessible
                                 ? week.status === "upcoming" && shouldShowDailyObjectives(week.week)
-                                  ? 'bg-orange-200 text-orange-700'
+                                  ? 'bg-slate-200 text-slate-700'
                                   : 'bg-gray-200 text-gray-700'
                                 : 'bg-gray-300 text-gray-500'
                             }`}>
@@ -343,7 +341,7 @@ export default function Roadmap() {
                                 isTodayHighlight ? 'text-blue-700 font-medium' :
                                 isCurrentDay ? 'text-blue-700' : 
                                 isDayCompleted ? 'text-forest-700' : 
-                                week.status === "upcoming" && shouldShowDailyObjectives(week.week) ? 'text-orange-700' : 
+                                week.status === "upcoming" && shouldShowDailyObjectives(week.week) ? 'text-slate-700' : 
                                 'text-gray-600'
                               }`}>
                                 <Target className="w-3 h-3 inline mr-1" />
@@ -392,11 +390,10 @@ export default function Roadmap() {
                 } className={
                   week.status === 'completed' ? 'bg-green-600' :
                   week.status === 'current' ? 'bg-blue-600' : 
-                  shouldShowDailyObjectives(week.week) ? 'bg-orange-600' : ''
+                  shouldShowDailyObjectives(week.week) ? 'bg-slate-600' : ''
                 }>
                   {week.status === 'completed' && '✓ Week Completed'}
                   {week.status === 'current' && '📍 Current Week'}
-                  {week.status === 'upcoming' && shouldShowDailyObjectives(week.week) && '📋 Objectives Ready'}
                   {week.status === 'upcoming' && !shouldShowDailyObjectives(week.week) && 'Coming Soon'}
                 </Badge>
               </div>
