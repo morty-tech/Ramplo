@@ -762,35 +762,37 @@ export default function Outreach() {
 
       {/* Template Selection */}
       {templates.length > 0 && (
-        <div className="mb-8">
+        <div className="mb-8 w-1/2">
           <Listbox as="div" value={selectedTemplate} onChange={(template) => setSelectedTemplateId(template?.id || '')}>
-            <Label className="block text-sm font-medium text-gray-900 mb-2">Select a template to customize and use</Label>
+            <label className="block text-sm font-medium text-gray-900 mb-2">Select a template to customize and use</label>
             <div className="relative">
-              <ListboxButton className="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary sm:text-sm/6">
+              <ListboxButton className="grid w-full cursor-default grid-cols-1 rounded-md bg-forest-800 py-1.5 pr-2 pl-3 text-left text-white outline-1 -outline-offset-1 outline-forest-600 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-forest-400 sm:text-sm/6">
                 <span className="col-start-1 row-start-1 truncate pr-6">
                   {selectedTemplate ? selectedTemplate.name : "Choose template"}
                 </span>
                 <ChevronsUpDown
                   aria-hidden="true"
-                  className="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+                  className="col-start-1 row-start-1 size-5 self-center justify-self-end text-white sm:size-4"
                 />
               </ListboxButton>
 
               <ListboxOptions
                 transition
-                className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg outline-1 outline-black/5 data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm"
+                className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-forest-800 py-1 text-base shadow-lg outline-1 outline-black/5 data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm"
               >
                 {templates.map((template) => (
                   <ListboxOption
                     key={template.id}
                     value={template}
-                    className="group relative cursor-default py-2 pr-4 pl-8 text-gray-900 select-none data-focus:bg-primary data-focus:text-white data-focus:outline-hidden"
+                    className="group relative cursor-default py-2 pr-4 pl-8 text-white select-none data-focus:bg-forest-600 data-focus:text-white data-focus:outline-hidden"
                   >
                     <span className="block truncate font-normal group-data-selected:font-semibold">{template.name}</span>
 
-                    <span className="absolute inset-y-0 left-0 flex items-center pl-1.5 text-primary group-not-data-selected:hidden group-data-focus:text-white">
-                      <Check aria-hidden="true" className="size-5" />
-                    </span>
+                    {selectedTemplate?.id === template.id && (
+                      <span className="absolute inset-y-0 left-0 flex items-center pl-1.5 text-white">
+                        <Check aria-hidden="true" className="size-5" />
+                      </span>
+                    )}
                   </ListboxOption>
                 ))}
               </ListboxOptions>
