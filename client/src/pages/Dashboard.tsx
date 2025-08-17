@@ -77,7 +77,7 @@ export default function Dashboard() {
   const [expandedTaskId, setExpandedTaskId] = useState<string | null>(null);
   const [completingTaskId, setCompletingTaskId] = useState<string | null>(null);
 
-  const { data: todayTasks = [] } = useQuery<Task[]>({
+  const { data: todayTasks = [], isLoading: tasksLoading } = useQuery<Task[]>({
     queryKey: ["/api/tasks", `week=${progress?.currentWeek || 1}&day=${progress?.currentDay || 1}`],
     queryFn: async () => {
       const week = progress?.currentWeek || 1;
@@ -88,7 +88,7 @@ export default function Dashboard() {
     enabled: !!progress,
   });
 
-  const { data: todayConnections } = useQuery({
+  const { data: todayConnections, isLoading: connectionsLoading } = useQuery({
     queryKey: ["/api/connections/today"],
     queryFn: async () => {
       const response = await apiRequest("GET", "/api/connections/today");
@@ -147,7 +147,7 @@ export default function Dashboard() {
   const performanceLevel = getPerformanceLevel(performanceScore);
 
   // Query for the foundation roadmap to get real week themes and daily objectives
-  const { data: roadmapData } = useQuery({
+  const { data: roadmapData, isLoading: roadmapLoading } = useQuery({
     queryKey: ["/api/roadmap/select"],
     queryFn: async () => {
       const response = await apiRequest("POST", "/api/roadmap/select", {});
@@ -218,6 +218,27 @@ export default function Dashboard() {
       changeType: progress?.loansClosed && progress.loansClosed > 0 ? 'increase' : 'neutral' as const
     },
   ];
+
+  // Check if any critical data is still loading
+  const isLoading = tasksLoading || connectionsLoading || roadmapLoading || !progress;
+
+  // Loading screen
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="relative">
+            {/* Animated spinner */}
+            <div className="w-12 h-12 border-4 border-forest-200 border-t-forest-600 rounded-full animate-spin mx-auto mb-4"></div>
+            {/* Pulsing background ring */}
+            <div className="absolute inset-0 w-12 h-12 border-2 border-forest-100 rounded-full animate-pulse mx-auto"></div>
+          </div>
+          <p className="text-gray-600 font-medium">Loading your dashboard...</p>
+          <p className="text-sm text-gray-400 mt-1">Preparing your personalized data</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 mx-4 md:mx-8">
