@@ -69,8 +69,9 @@ export default function Roadmap() {
       return roadmapData.selectedRoadmap.weeklyTasks.map((weekData: any) => {
         let days = weekData.days || [];
         
-        // Handle old dailyTasks format - convert to new days structure
-        if (!weekData.days && weekData.dailyTasks) {
+        // Handle old dailyTasks format - convert to new days structure only for weeks that should show objectives
+        const shouldConvert = weekData.week >= currentWeek && weekData.week <= currentWeek + 2;
+        if (!weekData.days && weekData.dailyTasks && shouldConvert) {
           // Group dailyTasks by day number
           const groupedByDay: { [key: number]: any[] } = {};
           weekData.dailyTasks.forEach((task: any) => {
