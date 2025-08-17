@@ -1089,21 +1089,7 @@ export default function Outreach() {
                             {/* Post Image - Right Side */}
                             <div>
                             <div className="flex items-center justify-between mb-2">
-                              <div className="flex items-center gap-3">
-                                <div className="text-sm font-medium text-gray-900">Post Image:</div>
-                                {selectedTemplate?.imageUrl && (
-                                  <Button
-                                    onClick={downloadCustomizedImage}
-                                    size="sm"
-                                    disabled={!customImageUrl}
-                                    variant="outline"
-                                    className="text-xs h-6 px-2"
-                                  >
-                                    <Download className="w-3 h-3 mr-1" />
-                                    Download
-                                  </Button>
-                                )}
-                              </div>
+                              <div className="text-sm font-medium text-gray-900">Post Image:</div>
                               <div className="flex items-center gap-3">
                                 <button
                                   onClick={() => setIsImageLibraryOpen(true)}
@@ -1217,18 +1203,50 @@ export default function Outreach() {
                                   </div>
                                 </div>
                                 
-                              </div>
-                            ) : (
-                              <div className="bg-white p-4 rounded border h-48 flex items-center justify-center text-gray-400 relative">
-                                <div className="text-center">
-                                  <Image className="w-8 h-8 mx-auto mb-2" />
-                                  <p className="text-sm">No image selected</p>
-                                </div>
-                                {updateTemplateMutation.isPending && (
-                                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded">
-                                    <Loader2 className="w-8 h-8 text-white animate-spin" />
+                                {/* Download Footer - Similar to Post UI */}
+                                {selectedTemplate?.imageUrl && (
+                                  <div className="border-t border-gray-200 px-3 py-2">
+                                    <div className="flex items-center justify-center">
+                                      <Button
+                                        onClick={downloadCustomizedImage}
+                                        size="sm"
+                                        disabled={!customImageUrl}
+                                        className="text-xs h-7 px-3 bg-lime-400 hover:bg-lime-500 text-black border-0"
+                                      >
+                                        <Download className="w-3 h-3 mr-1" />
+                                        Download Image
+                                      </Button>
+                                    </div>
                                   </div>
                                 )}
+                              </div>
+                            ) : (
+                              <div className="bg-white rounded border space-y-4">
+                                <div className="p-4 h-48 flex items-center justify-center text-gray-400 relative">
+                                  <div className="text-center">
+                                    <Image className="w-8 h-8 mx-auto mb-2" />
+                                    <p className="text-sm">No image selected</p>
+                                  </div>
+                                  {updateTemplateMutation.isPending && (
+                                    <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded">
+                                      <Loader2 className="w-8 h-8 text-white animate-spin" />
+                                    </div>
+                                  )}
+                                </div>
+                                
+                                {/* Download Footer for No Image State */}
+                                <div className="border-t border-gray-200 px-3 py-2">
+                                  <div className="flex items-center justify-center">
+                                    <Button
+                                      disabled
+                                      size="sm"
+                                      className="text-xs h-7 px-3 bg-gray-200 text-gray-400 border-0 cursor-not-allowed"
+                                    >
+                                      <Download className="w-3 h-3 mr-1" />
+                                      Download Image
+                                    </Button>
+                                  </div>
+                                </div>
                               </div>
                             )}
                             </div>
