@@ -1204,21 +1204,19 @@ export default function Outreach() {
                                 </div>
                                 
                                 {/* Download Footer - Similar to Post UI */}
-                                {selectedTemplate?.imageUrl && (
-                                  <div className="border-t border-gray-200 px-3 py-2">
-                                    <div className="flex items-center justify-center">
-                                      <Button
-                                        onClick={downloadCustomizedImage}
-                                        size="sm"
-                                        disabled={!customImageUrl}
-                                        className="text-xs h-7 px-3 bg-lime-400 hover:bg-lime-500 text-black border-0"
-                                      >
-                                        <Download className="w-3 h-3 mr-1" />
-                                        Download Image
-                                      </Button>
-                                    </div>
+                                <div className="border-t border-gray-200 px-3 py-2">
+                                  <div className="flex items-center justify-center">
+                                    <Button
+                                      onClick={downloadCustomizedImage}
+                                      size="sm"
+                                      disabled={!customImageUrl}
+                                      className="text-xs h-7 px-3 bg-lime-400 hover:bg-lime-500 text-black border-0"
+                                    >
+                                      <Download className="w-3 h-3 mr-1" />
+                                      Download Image
+                                    </Button>
                                   </div>
-                                )}
+                                </div>
                               </div>
                             ) : (
                               <div className="bg-white rounded border space-y-4">
