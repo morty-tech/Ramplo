@@ -762,42 +762,66 @@ export default function Outreach() {
 
       {/* Template Selection */}
       {templates.length > 0 && (
-        <div className="mb-8 w-1/2">
-          <Listbox as="div" value={selectedTemplate} onChange={(template) => setSelectedTemplateId(template?.id || '')}>
-            <label className="block text-sm font-medium text-gray-900 mb-2">Select a template to customize and use</label>
-            <div className="relative">
-              <ListboxButton className="grid w-full cursor-default grid-cols-1 rounded-md bg-forest-800 py-1.5 pr-2 pl-3 text-left text-white outline-1 -outline-offset-1 outline-forest-600 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-forest-400 sm:text-sm/6">
-                <span className="col-start-1 row-start-1 truncate pr-6">
-                  {selectedTemplate ? selectedTemplate.name : "Choose template"}
-                </span>
-                <ChevronsUpDown
-                  aria-hidden="true"
-                  className="col-start-1 row-start-1 size-5 self-center justify-self-end text-white sm:size-4"
-                />
-              </ListboxButton>
+        <div className="mb-8">
+          <div className="flex items-end gap-4">
+            <div className="w-1/2">
+              <Listbox as="div" value={selectedTemplate} onChange={(template) => setSelectedTemplateId(template?.id || '')}>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Select a template to customize and use</label>
+                <div className="relative">
+                  <ListboxButton className="grid w-full cursor-default grid-cols-1 rounded-md bg-forest-800 py-1.5 pr-2 pl-3 text-left text-white outline-1 -outline-offset-1 outline-forest-600 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-forest-400 sm:text-sm/6">
+                    <span className="col-start-1 row-start-1 truncate pr-6">
+                      {selectedTemplate ? selectedTemplate.name : "Choose template"}
+                    </span>
+                    <ChevronsUpDown
+                      aria-hidden="true"
+                      className="col-start-1 row-start-1 size-5 self-center justify-self-end text-white sm:size-4"
+                    />
+                  </ListboxButton>
 
-              <ListboxOptions
-                transition
-                className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-forest-800 py-1 text-base shadow-lg outline-1 outline-black/5 data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm"
-              >
-                {templates.map((template) => (
-                  <ListboxOption
-                    key={template.id}
-                    value={template}
-                    className="group relative cursor-default py-2 pr-4 pl-8 text-white select-none data-focus:bg-forest-600 data-focus:text-white data-focus:outline-hidden"
+                  <ListboxOptions
+                    transition
+                    className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-forest-800 py-1 text-base shadow-lg outline-1 outline-black/5 data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm"
                   >
-                    <span className="block truncate font-normal group-data-selected:font-semibold">{template.name}</span>
+                    {templates.map((template) => (
+                      <ListboxOption
+                        key={template.id}
+                        value={template}
+                        className="group relative cursor-default py-2 pr-4 pl-8 text-white select-none data-focus:bg-forest-600 data-focus:text-white data-focus:outline-hidden"
+                      >
+                        <span className="block truncate font-normal group-data-selected:font-semibold">{template.name}</span>
 
-                    {selectedTemplate?.id === template.id && (
-                      <span className="absolute inset-y-0 left-0 flex items-center pl-1.5 text-white">
-                        <Check aria-hidden="true" className="size-5" />
-                      </span>
-                    )}
-                  </ListboxOption>
-                ))}
-              </ListboxOptions>
+                        {selectedTemplate?.id === template.id && (
+                          <span className="absolute inset-y-0 left-0 flex items-center pl-1.5 text-white">
+                            <Check aria-hidden="true" className="size-5" />
+                          </span>
+                        )}
+                      </ListboxOption>
+                    ))}
+                  </ListboxOptions>
+                </div>
+              </Listbox>
             </div>
-          </Listbox>
+            
+            {selectedTemplate && (
+              <div className="flex flex-col items-start">
+                {isAICustomizationSuccess && (
+                  <div className="text-xs text-green-600 flex items-center gap-1 mb-1">
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Template Customized with AI
+                  </div>
+                )}
+                <button
+                  onClick={() => setIsAICustomizationOpen(true)}
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm bg-orange-50 text-orange-600 hover:bg-orange-100 hover:text-orange-700 rounded-md border border-orange-200 transition-colors"
+                >
+                  <Wand2 className="w-4 h-4" />
+                  Customize with AI
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       )}
 
@@ -809,31 +833,6 @@ export default function Outreach() {
             <CardContent className="pt-6">
               {selectedTemplate && (
                 <>
-                  <div className="mb-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1 mr-4">
-                        {/* AI Customization Success Message */}
-                        <div className="h-4 mb-3">
-                          {isAICustomizationSuccess && (
-                            <div className="text-xs text-green-600 flex items-center gap-1 animate-in slide-in-from-left-2 duration-300">
-                              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                              </svg>
-                              Template Customized with AI
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => setIsAICustomizationOpen(true)}
-                        className="text-xs flex items-center gap-1 text-orange-600 hover:text-orange-700"
-                      >
-                        <Wand2 className="w-3 h-3" />
-                        Customize with AI
-                      </button>
-                    </div>
-                  </div>
-
                   <div className="bg-gray-50 rounded-lg p-6 mb-6">
                     {/* Email Template View */}
                     {activeTemplateType === "email" && (
