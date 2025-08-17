@@ -829,11 +829,9 @@ export default function Outreach() {
         
         {/* Template Library */}
         <div className="lg:col-span-2">
-          <Card>
-            <CardContent className="pt-6">
-              {selectedTemplate && (
-                <>
-                  <div className="bg-gray-50 rounded-lg p-6 mb-6">
+          {selectedTemplate && (
+            <>
+              <div className="bg-gray-50 rounded-lg p-6 mb-6">
                     {/* Email Template View */}
                     {activeTemplateType === "email" && (
                       <>
@@ -1569,10 +1567,8 @@ export default function Outreach() {
                       </DialogContent>
                     </Dialog>
                   </div>
-                </>
-              )}
-            </CardContent>
-          </Card>
+            </>
+          )}
         </div>
 
         {/* Sidebar */}
