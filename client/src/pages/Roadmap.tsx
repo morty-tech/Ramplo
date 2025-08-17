@@ -143,18 +143,27 @@ export default function Roadmap() {
         <p className="text-gray-600">A personalized plan to get your first 1-3 deals in 90 days.</p>
       </div>
 
-      {/* Progress Overview */}
-      <Card className="mb-8">
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-xl">Overall Progress</CardTitle>
-            <span className="text-sm text-gray-600">Week {currentWeek} of {TOTAL_WEEKS}</span>
+      {/* Overall Progress - Outside Card */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-xl font-semibold text-gray-900">Overall Progress</h2>
+          <span className="text-sm text-gray-600">Week {currentWeek} of {TOTAL_WEEKS}</span>
+        </div>
+        
+        <div className="flex items-center gap-4">
+          <div className="flex-1 max-w-md">
+            <Progress value={overallProgress} className="h-3 bg-gray-200 [&>div]:bg-forest-600" />
           </div>
-        </CardHeader>
-        <CardContent className="pt-3">
-          <Progress value={overallProgress} className="h-3 mb-4 bg-gray-200 [&>div]:bg-forest-600" />
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+          <span className="text-sm font-medium text-gray-700 min-w-[3rem]">
+            {Math.round(overallProgress)}%
+          </span>
+        </div>
+      </div>
+
+      {/* Stats Overview */}
+      <Card className="mb-8">
+        <CardContent className="pt-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
               <dt>
                 <div className="absolute rounded-md bg-forest-100 p-3">
