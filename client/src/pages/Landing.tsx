@@ -437,7 +437,7 @@ export default function Landing() {
       <footer className="bg-white">
         <div className="mx-auto max-w-7xl px-6 py-8 md:flex md:items-center md:justify-center lg:px-8">
           <p className="text-center text-sm/6 text-gray-600">
-            &copy; 2025 RampLO. All rights reserved.
+            RampLO powered by Morty
           </p>
         </div>
       </footer>
