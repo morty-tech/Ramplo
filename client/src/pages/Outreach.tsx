@@ -9,9 +9,9 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 import { Slider } from "@/components/ui/slider";
-import { Copy, Wand2, Edit, Plus, Download, BarChart3, X, Save, Loader2, Mail, MessageSquare, Phone, Image, Upload, Palette, Type, RotateCcw } from "lucide-react";
+import { Copy, Wand2, Edit, Plus, Download, BarChart3, X, Save, Loader2, Mail, MessageSquare, Phone, Image, Upload, Palette, Type, RotateCcw, ChevronDown } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ObjectUploader } from "@/components/ObjectUploader";
 import { ImageEditor } from "@/components/ImageEditor";
@@ -681,6 +681,17 @@ export default function Outreach() {
     "phone-script": "Phone Scripts",
   };
 
+  // Helper function for classNames
+  const classNames = (...classes: string[]) => {
+    return classes.filter(Boolean).join(' ');
+  };
+
+  const tabs = [
+    { name: 'Email Templates', value: 'email', icon: Mail, current: activeTemplateType === 'email' },
+    { name: 'Social Media Templates', value: 'social-media', icon: MessageSquare, current: activeTemplateType === 'social-media' },
+    { name: 'Phone Scripts', value: 'phone-script', icon: Phone, current: activeTemplateType === 'phone-script' },
+  ];
+
   if (isLoading) {
     return (
       <div className="p-6 flex items-center justify-center">
@@ -700,19 +711,53 @@ export default function Outreach() {
       </div>
 
       {/* Template Type Tabs */}
-      <Tabs value={activeTemplateType} onValueChange={(value) => setActiveTemplateType(value as TemplateType)} className="mb-6">
-        <TabsList className="grid w-full grid-cols-3">
-          {Object.entries(templateTypeLabels).map(([type, label]) => {
-            const Icon = templateTypeIcons[type as TemplateType];
-            return (
-              <TabsTrigger key={type} value={type} className="flex items-center space-x-2">
-                <Icon className="w-4 h-4" />
-                <span>{label}</span>
-              </TabsTrigger>
-            );
-          })}
-        </TabsList>
-      </Tabs>
+      <div className="mb-6">
+        <div className="grid grid-cols-1 sm:hidden">
+          {/* Mobile select dropdown */}
+          <select
+            value={activeTemplateType}
+            onChange={(e) => setActiveTemplateType(e.target.value as TemplateType)}
+            aria-label="Select a template type"
+            className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-primary"
+          >
+            {tabs.map((tab) => (
+              <option key={tab.value} value={tab.value}>{tab.name}</option>
+            ))}
+          </select>
+          <ChevronDown
+            aria-hidden="true"
+            className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end fill-gray-500"
+          />
+        </div>
+        <div className="hidden sm:block">
+          <div className="border-b border-gray-200">
+            <nav aria-label="Template type tabs" className="-mb-px flex space-x-8">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.value}
+                  onClick={() => setActiveTemplateType(tab.value as TemplateType)}
+                  aria-current={tab.current ? 'page' : undefined}
+                  className={classNames(
+                    tab.current
+                      ? 'border-primary text-primary'
+                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
+                    'group inline-flex items-center border-b-2 px-1 py-4 text-sm font-medium',
+                  )}
+                >
+                  <tab.icon
+                    aria-hidden="true"
+                    className={classNames(
+                      tab.current ? 'text-primary' : 'text-gray-400 group-hover:text-gray-500',
+                      'mr-2 -ml-0.5 size-5',
+                    )}
+                  />
+                  <span>{tab.name}</span>
+                </button>
+              ))}
+            </nav>
+          </div>
+        </div>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
