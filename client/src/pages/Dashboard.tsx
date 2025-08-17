@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid'
 import { CalendarIcon, UsersIcon, HomeIcon, FireIcon } from '@heroicons/react/24/outline'
 import { apiRequest } from "@/lib/queryClient";
 import { useAuth } from "@/hooks/useAuth";
-import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -14,7 +13,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Task } from "@shared/schema";
 import ClientConnectionTracker from "@/components/ClientConnectionTracker";
 import LoanActionTracker from "@/components/LoanActionTracker";
-import TaskDetailModal from "@/components/TaskDetailModal";
+import { TaskList } from "@/components/TaskList";
+import { useTaskManagement } from "@/hooks/useTaskManagement";
 import { 
   Flame, 
   FileText, 
@@ -72,10 +72,7 @@ function useCountUp(end: number, duration: number = 1000, delay: number = 0) {
 
 export default function Dashboard() {
   const { user, profile, progress } = useAuth();
-  const { toast } = useToast();
-  const queryClient = useQueryClient();
-  const [expandedTaskId, setExpandedTaskId] = useState<string | null>(null);
-  const [completingTaskId, setCompletingTaskId] = useState<string | null>(null);
+  const { expandedTaskId, completingTaskId, handleTaskComplete, handleTaskClick } = useTaskManagement();
 
   const { data: todayTasks = [], isLoading: tasksLoading } = useQuery<Task[]>({
     queryKey: ["/api/tasks", `week=${progress?.currentWeek || 1}&day=${progress?.currentDay || 1}`],
@@ -96,29 +93,7 @@ export default function Dashboard() {
     },
   });
 
-  const completeTaskMutation = useMutation({
-    mutationFn: (taskId: string) => apiRequest("PATCH", `/api/tasks/${taskId}/complete`),
-    onSuccess: () => {
-      // Add a delay to show the completion animation
-      setTimeout(() => {
-        setCompletingTaskId(null);
-        queryClient.invalidateQueries({ queryKey: ["/api/tasks"] });
-        toast({
-          title: "Task completed!",
-          description: "Great job staying on track!",
-        });
-      }, 300); // 300ms delay for faster animation
-    },
-  });
 
-  const handleTaskComplete = (taskId: string) => {
-    setCompletingTaskId(taskId);
-    completeTaskMutation.mutate(taskId);
-  };
-
-  const handleTaskClick = (task: Task) => {
-    setExpandedTaskId(expandedTaskId === task.id ? null : task.id);
-  };
 
   const completedTasks = todayTasks.filter((task: Task) => task.completed);
   const progressPercentage = todayTasks.length > 0 ? (completedTasks.length / todayTasks.length) * 100 : 0;
@@ -332,145 +307,21 @@ export default function Dashboard() {
               </div>
             )}
             
-            <ul role="list" className="divide-y divide-gray-100 px-4 sm:px-6">
-              {todayTasks.map((task: Task, index: number) => {
-                const isCompleting = completingTaskId === task.id;
-                const isCompleted = task.completed;
-                
-                const isExpanded = expandedTaskId === task.id;
-                
-                return (
-                  <li key={task.id} className="transition-all duration-200 group">
-                    <div className="flex items-start justify-between gap-x-2 md:gap-x-6">
-                      <div className="flex items-start gap-x-2 md:gap-x-4 flex-1 min-w-0">
-                        <div className={`flex-shrink-0 w-10 h-10 rounded-md flex items-center justify-center text-xl font-black relative top-5 shadow-lg transition-all duration-300 cursor-pointer ${
-                          isCompleted 
-                            ? 'bg-forest-100 text-forest-600 shadow-gray-200' 
-                            : 'bg-limeglow-400 text-forest-800 shadow-lg shadow-lime-200 group-hover:shadow-xl group-hover:scale-105'
-                        }`} onClick={() => handleTaskClick(task)}>
-                          {isCompleted ? <Check className="w-5 h-5" /> : index + 1}
-                        </div>
-                        <div className={`min-w-0 flex-grow cursor-pointer ${isExpanded ? 'pt-5 pb-2' : 'py-5'}`} onClick={() => handleTaskClick(task)}>
-                          <div className="flex items-start gap-x-3">
-                            <p className={`text-lg font-semibold transition-all duration-300 ${
-                              isCompleting 
-                                ? 'text-green-700' 
-                                : isCompleted 
-                                ? 'text-gray-500 line-through' 
-                                : 'text-gray-900'
-                            }`}>
-                              {task.title}
-                              {isCompleting && (
-                                <span className="ml-2 text-green-600 animate-bounce">✓</span>
-                              )}
-                            </p>
-                            <p className={`mt-0.5 rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset ${
-                              ['outreach', 'client calls', 'follow-up'].includes(task.category?.toLowerCase() || '') 
-                                ? 'bg-forest-50 text-forest-700 ring-forest-600/20'
-                                : ['research', 'market analysis', 'lead generation'].includes(task.category?.toLowerCase() || '')
-                                ? 'bg-teal-50 text-teal-700 ring-teal-600/20'
-                                : ['social media', 'content creation', 'marketing', 'branding'].includes(task.category?.toLowerCase() || '')
-                                ? 'bg-lime-50 text-lime-700 ring-lime-600/20'
-                                : ['admin', 'planning', 'setup', 'organization'].includes(task.category?.toLowerCase() || '')
-                                ? 'bg-slate-50 text-slate-700 ring-slate-600/20'
-                                : 'bg-gray-50 text-gray-600 ring-gray-500/10'
-                            }`}>
-                              {task.category}
-                            </p>
-                          </div>
-                          {!isExpanded && (
-                            <div className="mt-1 space-y-1">
-                              <div className="flex items-center gap-x-2 text-xs/5 text-gray-500">
-                                <p className="whitespace-nowrap">
-                                  Est. {task.estimatedMinutes} min
-                                </p>
-                                <svg viewBox="0 0 2 2" className="size-0.5 fill-current">
-                                  <circle r={1} cx={1} cy={1} />
-                                </svg>
-                                <p className="truncate">{task.description}</p>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="flex flex-none items-center py-5 min-w-0">
-                        {!isCompleted && !isExpanded && (
-                          <Button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              if (!isCompleting) {
-                                handleTaskComplete(task.id);
-                              }
-                            }}
-                            disabled={isCompleting}
-                            className={`rounded-md px-2 md:px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 border whitespace-nowrap ${
-                              isCompleting
-                                ? 'bg-green-500 text-white border-green-500'
-                                : 'bg-white text-forest-600 border-forest-600 hover:bg-forest-200'
-                            }`}
-                          >
-                            {isCompleting ? 'Completing...' : 'Mark Completed'}
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                    
-                    {isExpanded && (
-                      <>
-                        <div className="pb-5 ml-14">
-                        <div className="space-y-2">
-                          <div>
-                            <p className="text-sm text-gray-600">{task.description}</p>
-                          </div>
-                          
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <p className="text-xs font-semibold text-forest-600 uppercase tracking-wide flex items-center">
-                                <Clock className="w-3 h-3 mr-1" />
-                                {task.estimatedMinutes} minutes
-                              </p>
-                            </div>
-                            {!isCompleted && (
-                              <Button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  if (!isCompleting) {
-                                    handleTaskComplete(task.id);
-                                  }
-                                }}
-                                disabled={isCompleting}
-                                className={`rounded-md px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 border ${
-                                  isCompleting
-                                    ? 'bg-green-500 text-white border-green-500'
-                                    : 'bg-white text-forest-600 border-forest-600 hover:bg-forest-200'
-                                }`}
-                              >
-                                {isCompleting ? 'Completing...' : 'Mark Completed'}
-                              </Button>
-                            )}
-                          </div>
-                          
-                          {task.detailedDescription && (
-                            <div>
-                              <h4 className="text-sm font-medium text-gray-900 mb-2">Additional Details</h4>
-                              <p className="text-sm text-gray-600">{task.detailedDescription}</p>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      </>
-                    )}
-                  </li>
-                );
-              })}
-              
-              {todayTasks.length === 0 && (
-                <li className="text-center py-8 text-gray-500">
-                  <Calendar className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-                  <p>No tasks scheduled for today</p>
-                </li>
-              )}
-            </ul>
+            {todayTasks.length === 0 ? (
+              <div className="text-center py-8 text-gray-500 px-4 sm:px-6">
+                <Calendar className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+                <p>No tasks scheduled for today</p>
+              </div>
+            ) : (
+              <TaskList
+                tasks={todayTasks}
+                expandedTaskId={expandedTaskId}
+                completingTaskId={completingTaskId}
+                onTaskClick={handleTaskClick}
+                onTaskComplete={handleTaskComplete}
+                variant="dashboard"
+              />
+            )}
           </div>
         </div>
 

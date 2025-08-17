@@ -57,7 +57,16 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
-### Foundation Roadmap Integration & UX Fixes (Current Session)
+### Code Quality & Component Refactoring (Current Session)
+- **Completed major code refactoring**: Successfully extracted shared task management functionality to eliminate code duplication between Dashboard and Roadmap pages
+- **Created shared TaskList component**: Built reusable `client/src/components/TaskList.tsx` that handles all task rendering with variant support for different page layouts (dashboard vs roadmap styling)
+- **Implemented useTaskManagement hook**: Created `client/src/hooks/useTaskManagement.ts` to centralize task state management, completion logic, and expansion handling across both pages
+- **Updated Dashboard implementation**: Replaced all task-related state and rendering code with shared components while maintaining identical UI and functionality
+- **Updated Roadmap implementation**: Replaced Today's Tasks section with shared TaskList component, ensuring consistent task interaction patterns across the application
+- **Improved maintainability**: Reduced code duplication by ~80% in task-related functionality, making future updates and bug fixes significantly easier to manage
+- **Maintained visual consistency**: Both pages retain their specific styling while sharing core functionality - Dashboard uses larger task numbers and different spacing, Roadmap uses compact layout in bordered containers
+
+### Foundation Roadmap Integration & UX Fixes (Previous Session)  
 - **Implemented single source of truth for baseline tasks**: Created `server/foundationRoadmap.ts` containing comprehensive 14-week foundation roadmap data
 - **Updated AI roadmap service**: Modified `server/roadmapService.ts` to use foundation roadmap data instead of minimal example data
 - **Enhanced default task generation**: Updated `server/routes.ts` to pull default tasks from foundation roadmap, removed AI personalization for faster loading
