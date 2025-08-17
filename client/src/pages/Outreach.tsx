@@ -5,13 +5,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 import { Slider } from "@/components/ui/slider";
-import { Copy, Wand2, Edit, Plus, Download, BarChart3, X, Save, Loader2, Mail, MessageSquare, Phone, Image, Upload, Palette, Type, RotateCcw, ChevronDown } from "lucide-react";
+import { Copy, Wand2, Edit, Plus, Download, BarChart3, X, Save, Loader2, Mail, MessageSquare, Phone, Image, Upload, Palette, Type, RotateCcw, ChevronDown, ChevronsUpDown, Check } from "lucide-react";
+import { Label, Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react';
 import { useToast } from "@/hooks/use-toast";
 import { ObjectUploader } from "@/components/ObjectUploader";
 import { ImageEditor } from "@/components/ImageEditor";
@@ -759,6 +760,45 @@ export default function Outreach() {
         </div>
       </div>
 
+      {/* Template Selection */}
+      {templates.length > 0 && (
+        <div className="mb-8">
+          <Listbox value={selectedTemplate} onChange={(template) => setSelectedTemplateId(template?.id || '')}>
+            <Label className="block text-sm font-medium text-gray-900 mb-2">Select a template to customize and use</Label>
+            <div className="relative">
+              <ListboxButton className="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary sm:text-sm/6">
+                <span className="col-start-1 row-start-1 truncate pr-6">
+                  {selectedTemplate ? selectedTemplate.name : "Choose template"}
+                </span>
+                <ChevronsUpDown
+                  aria-hidden="true"
+                  className="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+                />
+              </ListboxButton>
+
+              <ListboxOptions
+                transition
+                className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg outline-1 outline-black/5 data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm"
+              >
+                {templates.map((template) => (
+                  <ListboxOption
+                    key={template.id}
+                    value={template}
+                    className="group relative cursor-default py-2 pr-4 pl-8 text-gray-900 select-none data-focus:bg-primary data-focus:text-white data-focus:outline-hidden"
+                  >
+                    <span className="block truncate font-normal group-data-selected:font-semibold">{template.name}</span>
+
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-1.5 text-primary group-not-data-selected:hidden group-data-focus:text-white">
+                      <Check aria-hidden="true" className="size-5" />
+                    </span>
+                  </ListboxOption>
+                ))}
+              </ListboxOptions>
+            </div>
+          </Listbox>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Template Library */}
@@ -770,22 +810,8 @@ export default function Outreach() {
                   <div className="mb-2">
                     <div className="flex items-center justify-between">
                       <div className="flex-1 mr-4">
-                        <p className="text-sm text-gray-600 mb-2">Select a template to customize and use</p>
-                        <Select value={selectedTemplateId} onValueChange={setSelectedTemplateId}>
-                          <SelectTrigger className="w-full max-w-md h-12 text-lg font-semibold bg-transparent border-0 border-b-2 border-gray-300 hover:border-gray-400 focus:border-blue-500 rounded-none px-0">
-                            <SelectValue placeholder="Choose template" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {templates.map((template) => (
-                              <SelectItem key={template.id} value={template.id} className="text-base py-3">
-                                <span className="font-medium">{template.name}</span>
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        
                         {/* AI Customization Success Message */}
-                        <div className="h-4 mt-3">
+                        <div className="h-4 mb-3">
                           {isAICustomizationSuccess && (
                             <div className="text-xs text-green-600 flex items-center gap-1 animate-in slide-in-from-left-2 duration-300">
                               <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -795,7 +821,6 @@ export default function Outreach() {
                             </div>
                           )}
                         </div>
-                        
                       </div>
                       <button
                         onClick={() => setIsAICustomizationOpen(true)}
