@@ -1728,28 +1728,6 @@ export default function Outreach() {
             </Card>
           )}
 
-          {/* Quick Actions */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Quick Actions</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <Button variant="outline" className="w-full justify-start">
-                  <Plus className="w-4 h-4 mr-3" />
-                  Create New Template
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
-                  <Download className="w-4 h-4 mr-3" />
-                  Export All Templates
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
-                  <BarChart3 className="w-4 h-4 mr-3" />
-                  View Analytics
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </div>
       
