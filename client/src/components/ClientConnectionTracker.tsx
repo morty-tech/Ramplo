@@ -94,8 +94,8 @@ export default function ClientConnectionTracker() {
             <div key={type.key}>
               <div className="flex items-center justify-between py-3">
                 <div className="flex items-center gap-3">
-                  <div className="absolute rounded-md bg-tealwave-400 p-2">
-                    <type.icon aria-hidden="true" className="size-5 text-white" />
+                  <div className="absolute p-2">
+                    <type.icon aria-hidden="true" className="size-5 text-tealwave-600" />
                   </div>
                   <div className="ml-14">
                     <p className="text-sm font-medium text-gray-500">{type.label}</p>
