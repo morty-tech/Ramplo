@@ -918,7 +918,7 @@ export default function Outreach() {
                                 saveSubjectDebounced();
                               }}
                               style={{ fontSize: '1.25rem' }}
-                              className={`block w-full px-3 pt-2.5 font-medium text-gray-900 placeholder:text-gray-400 focus:outline-none border-0 border-b border-gray-200 rounded-t-lg rounded-b-none transition-all duration-300 ${
+                              className={`block w-full px-3 pt-2.5 font-medium text-gray-900 placeholder:text-gray-400 outline-none border-0 border-b border-gray-200 rounded-t-lg rounded-b-none transition-all duration-300 ${
                                 animatingFields.subject 
                                   ? 'bg-green-50' 
                                   : ''
@@ -939,7 +939,7 @@ export default function Outreach() {
                                 setEditedBody(e.target.value);
                                 saveBodyDebounced();
                               }}
-                              className={`block w-full resize-none px-3 py-1.5 text-base md:text-base text-gray-900 placeholder:text-gray-400 focus:outline-none border-0 rounded-t-none rounded-b-lg transition-all duration-300 ${
+                              className={`block w-full resize-none px-3 py-1.5 text-base md:text-base text-gray-900 placeholder:text-gray-400 outline-none border-0 rounded-t-none rounded-b-lg transition-all duration-300 ${
                                 animatingFields.body 
                                   ? 'bg-green-50' 
                                   : ''
@@ -1009,7 +1009,9 @@ export default function Outreach() {
                           {/* Social Media Side-by-Side Layout */}
                           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             {/* Social Media Content Card - Left Side */}
-                            <div className="rounded-lg bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-forest-600">
+                            <div>
+                              <div className="text-sm font-medium text-gray-900 mb-2">Post:</div>
+                              <div className="rounded-lg bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-forest-600">
                               {/* Post Content Textarea */}
                               <label htmlFor="social-content" className="sr-only">
                                 Post Content
@@ -1017,7 +1019,7 @@ export default function Outreach() {
                               <Textarea
                                 id="social-content"
                                 name="content"
-                                rows={12}
+                                rows={8}
                                 placeholder="Write your social media post..."
                                 value={editedContent}
                                 onChange={(e) => {
@@ -1080,6 +1082,7 @@ export default function Outreach() {
                                     </Button>
                                   </div>
                                 </div>
+                              </div>
                               </div>
                             </div>
                             
