@@ -939,7 +939,7 @@ export default function Outreach() {
                                 setEditedBody(e.target.value);
                                 saveBodyDebounced();
                               }}
-                              className={`block w-full resize-none px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none border-0 rounded-t-none rounded-b-lg transition-all duration-3000 ${
+                              className={`block w-full resize-none px-3 py-1.5 text-base md:text-base text-gray-900 placeholder:text-gray-400 focus:outline-none border-0 rounded-t-none rounded-b-lg transition-all duration-3000 ${
                                 animatingFields.body 
                                   ? 'bg-green-50 border-green-300 shadow-sm' 
                                   : ''
