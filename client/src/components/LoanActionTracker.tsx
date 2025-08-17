@@ -94,8 +94,8 @@ export default function LoanActionTracker() {
             <div key={type.key}>
               <div className="flex items-center justify-between py-3">
                 <div className="flex items-center gap-3">
-                  <div className="absolute rounded-md bg-tealwave-600/10 p-2">
-                    <type.icon aria-hidden="true" className="size-5 text-tealwave-600" />
+                  <div className="absolute rounded-md bg-orange-500/15 p-2">
+                    <type.icon aria-hidden="true" className="size-5 text-orange-600" />
                   </div>
                   <div className="ml-14">
                     <p className="text-sm font-medium text-gray-500">{type.label}</p>
