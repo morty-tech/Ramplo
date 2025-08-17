@@ -90,7 +90,8 @@ export default function Roadmap() {
 
   // Helper function to determine if a week should show daily objectives
   const shouldShowDailyObjectives = (weekNumber: number) => {
-    return weekNumber <= currentWeek + 2; // Current week + 2 weeks ahead
+    // Show objectives for current week + next 2 weeks
+    return weekNumber >= currentWeek && weekNumber <= currentWeek + 2;
   };
 
   // Calculate current day for highlighting
