@@ -65,8 +65,9 @@ Preferred communication style: Simple, everyday language.
 - **Updated Roadmap implementation**: Replaced Today's Tasks section with shared TaskList component, ensuring consistent task interaction patterns across the application
 - **Improved maintainability**: Reduced code duplication by ~80% in task-related functionality, making future updates and bug fixes significantly easier to manage
 - **Enhanced roadmap preview functionality**: Extended daily objectives preview from current week only to current week + 2 weeks ahead, allowing users to see their upcoming tasks and plan ahead
-- **Improved visual hierarchy**: Removed "Coming Soon" labels for weeks showing daily objectives, replaced with "📋 Objectives Ready" badges in orange to indicate availability
-- **Enhanced interactivity**: Made days from upcoming weeks (within 2-week preview window) clickable and visually distinct with orange styling to show they contain viewable objectives
+- **Improved visual hierarchy**: Updated upcoming weeks (2-3) to use clean slate styling instead of orange, removed "Objectives Ready" badges for cleaner appearance
+- **Enhanced interactivity**: Made days from upcoming weeks (within 2-week preview window) clickable and visually distinct with slate styling to show they contain viewable objectives
+- **Streamlined badge system**: Removed badges and border lines for upcoming weeks with objectives, maintaining badges only for completed, current, and "Coming Soon" weeks
 - **Fixed JavaScript errors**: Resolved missing Button import in Roadmap component that was causing console errors
 
 ### Foundation Roadmap Integration & UX Fixes (Previous Session)  
