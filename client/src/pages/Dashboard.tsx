@@ -261,8 +261,8 @@ export default function Dashboard() {
               className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5"
             >
               <dt>
-                <div className="absolute rounded-md bg-forest-500 p-3">
-                  <item.icon aria-hidden="true" className="size-6 text-white" />
+                <div className="absolute rounded-md bg-forest-500/10 p-3">
+                  <item.icon aria-hidden="true" className="size-6 text-forest-500" />
                 </div>
                 <p className="ml-16 truncate text-sm font-medium text-gray-500">{item.name}</p>
               </dt>
@@ -474,8 +474,8 @@ export default function Dashboard() {
               <div className="space-y-0">
                 <div className="flex items-center justify-between py-3 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/outreach'}>
                   <div className="flex items-center gap-3">
-                    <div className="absolute rounded-md bg-slate-500 p-2">
-                      <Send aria-hidden="true" className="size-5 text-white" />
+                    <div className="absolute rounded-md bg-slate-500/10 p-2">
+                      <Send aria-hidden="true" className="size-5 text-slate-500" />
                     </div>
                     <div className="ml-14">
                       <p className="text-sm font-medium text-gray-500">Templates</p>
@@ -488,8 +488,8 @@ export default function Dashboard() {
                 
                 <div className="flex items-center justify-between py-3 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/deal-coach'}>
                   <div className="flex items-center gap-3">
-                    <div className="absolute rounded-md bg-slate-500 p-2">
-                      <UserCheck aria-hidden="true" className="size-5 text-white" />
+                    <div className="absolute rounded-md bg-slate-500/10 p-2">
+                      <UserCheck aria-hidden="true" className="size-5 text-slate-500" />
                     </div>
                     <div className="ml-14">
                       <p className="text-sm font-medium text-gray-500">AI Assistant</p>
@@ -502,8 +502,8 @@ export default function Dashboard() {
                 
                 <div className="flex items-center justify-between py-3 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/roadmap'}>
                   <div className="flex items-center gap-3">
-                    <div className="absolute rounded-md bg-slate-500 p-2">
-                      <Map aria-hidden="true" className="size-5 text-white" />
+                    <div className="absolute rounded-md bg-slate-500/10 p-2">
+                      <Map aria-hidden="true" className="size-5 text-slate-500" />
                     </div>
                     <div className="ml-14">
                       <p className="text-sm font-medium text-gray-500">Progress</p>
