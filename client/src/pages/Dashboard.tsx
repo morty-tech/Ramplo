@@ -281,7 +281,7 @@ export default function Dashboard() {
               className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5"
             >
               <dt>
-                <div className="absolute rounded-md bg-forest-200/50 p-3">
+                <div className="absolute rounded-md bg-forest-100 p-3">
                   <item.icon aria-hidden="true" className="size-6 text-forest-600" />
                 </div>
                 <p className="ml-16 truncate text-sm font-medium text-gray-500">{item.name}</p>
@@ -345,7 +345,7 @@ export default function Dashboard() {
                       <div className="flex items-start gap-x-2 md:gap-x-4 flex-1 min-w-0">
                         <div className={`flex-shrink-0 w-10 h-10 rounded-md flex items-center justify-center text-xl font-black relative top-5 shadow-lg transition-all duration-300 cursor-pointer ${
                           isCompleted 
-                            ? 'bg-forest-200/50 text-forest-600 shadow-gray-200' 
+                            ? 'bg-forest-100 text-forest-600 shadow-gray-200' 
                             : 'bg-limeglow-400 text-forest-800 shadow-lg shadow-lime-200 group-hover:shadow-xl group-hover:scale-105'
                         }`} onClick={() => handleTaskClick(task)}>
                           {isCompleted ? <Check className="w-5 h-5" /> : index + 1}
