@@ -128,8 +128,8 @@ export function TaskList({
                   )}
                 </div>
               </div>
-              <div className={`flex flex-none items-center ${getPaddingStyles()} min-w-0`}>
-                {!isCompleted && !isExpanded && (
+              <div className={`flex flex-none items-center ${getPaddingStyles()} min-w-0 pb-0`}>
+                {!isCompleted && (
                   <Button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -164,22 +164,7 @@ export function TaskList({
                   )}
                   <div className="flex items-center gap-4 text-sm text-gray-500">
                     <span>Estimated time: {task.estimatedMinutes} minutes</span>
-                  </div>
-                  {!isCompleted && (
-                    <div className="mt-3">
-                      <Button
-                        onClick={() => onTaskComplete(task.id)}
-                        disabled={isCompleting}
-                        className={`rounded-md px-3 py-2 text-sm font-medium shadow-sm transition-all duration-200 ${
-                          isCompleting
-                            ? 'bg-green-500 text-white'
-                            : 'bg-forest-600 text-white hover:bg-forest-700'
-                        }`}
-                      >
-                        {isCompleting ? 'Completing...' : 'Mark as Complete'}
-                      </Button>
-                    </div>
-                  )}
+                  </div>                 
                 </div>
               </div>
             )}

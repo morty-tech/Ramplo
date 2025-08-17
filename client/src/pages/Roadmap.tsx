@@ -238,7 +238,6 @@ export default function Roadmap() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-gray-600 mb-6">{week.description}</p>
                   
                   {/* Today's Tasks Section */}
                   <div className="mb-6">
@@ -295,7 +294,6 @@ export default function Roadmap() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-gray-600 mb-4">{week.description}</p>
               <div className="space-y-3">
                 {week.days?.length > 0 ? (
                   week.days.map((day: any, index: number) => {
