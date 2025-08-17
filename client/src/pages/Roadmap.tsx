@@ -66,13 +66,41 @@ export default function Roadmap() {
   // Generate weeks with days from foundation roadmap data - only show real data
   const weeks = React.useMemo(() => {
     if (roadmapData?.selectedRoadmap?.weeklyTasks?.length > 0) {
-      return roadmapData.selectedRoadmap.weeklyTasks.map((weekData: any) => ({
-        week: weekData.week,
-        title: weekData.theme,
-        description: `Week ${weekData.week} focuses on ${weekData.theme.toLowerCase()}.`,
-        days: weekData.days || [], // Use new days structure if available
-        status: currentWeek > weekData.week ? "completed" : currentWeek === weekData.week ? "current" : "upcoming"
-      }));
+      return roadmapData.selectedRoadmap.weeklyTasks.map((weekData: any) => {
+        let days = weekData.days || [];
+        
+        // Handle old dailyTasks format - convert to new days structure
+        if (!weekData.days && weekData.dailyTasks) {
+          // Group dailyTasks by day number
+          const groupedByDay: { [key: number]: any[] } = {};
+          weekData.dailyTasks.forEach((task: any) => {
+            if (!groupedByDay[task.day]) {
+              groupedByDay[task.day] = [];
+            }
+            groupedByDay[task.day].push(task);
+          });
+          
+          // Convert to new days format
+          days = Object.keys(groupedByDay).map(dayStr => {
+            const dayNum = parseInt(dayStr);
+            const dayTasks = groupedByDay[dayNum];
+            return {
+              day: dayNum,
+              objective: `Day ${dayNum} objectives for ${weekData.theme}`,
+              extraTimeActivity: "Additional research and networking",
+              tasks: dayTasks
+            };
+          }).sort((a, b) => a.day - b.day);
+        }
+        
+        return {
+          week: weekData.week,
+          title: weekData.theme,
+          description: `Week ${weekData.week} focuses on ${weekData.theme.toLowerCase()}.`,
+          days,
+          status: currentWeek > weekData.week ? "completed" : currentWeek === weekData.week ? "current" : "upcoming"
+        };
+      });
     }
     
     // No fallback - only show real roadmap data
