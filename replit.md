@@ -57,14 +57,17 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
-### Code Quality & Component Refactoring (Current Session)
+### Code Quality & Roadmap UX Improvements (Current Session)
 - **Completed major code refactoring**: Successfully extracted shared task management functionality to eliminate code duplication between Dashboard and Roadmap pages
 - **Created shared TaskList component**: Built reusable `client/src/components/TaskList.tsx` that handles all task rendering with variant support for different page layouts (dashboard vs roadmap styling)
 - **Implemented useTaskManagement hook**: Created `client/src/hooks/useTaskManagement.ts` to centralize task state management, completion logic, and expansion handling across both pages
 - **Updated Dashboard implementation**: Replaced all task-related state and rendering code with shared components while maintaining identical UI and functionality
 - **Updated Roadmap implementation**: Replaced Today's Tasks section with shared TaskList component, ensuring consistent task interaction patterns across the application
 - **Improved maintainability**: Reduced code duplication by ~80% in task-related functionality, making future updates and bug fixes significantly easier to manage
-- **Maintained visual consistency**: Both pages retain their specific styling while sharing core functionality - Dashboard uses larger task numbers and different spacing, Roadmap uses compact layout in bordered containers
+- **Enhanced roadmap preview functionality**: Extended daily objectives preview from current week only to current week + 2 weeks ahead, allowing users to see their upcoming tasks and plan ahead
+- **Improved visual hierarchy**: Removed "Coming Soon" labels for weeks showing daily objectives, replaced with "📋 Objectives Ready" badges in orange to indicate availability
+- **Enhanced interactivity**: Made days from upcoming weeks (within 2-week preview window) clickable and visually distinct with orange styling to show they contain viewable objectives
+- **Fixed JavaScript errors**: Resolved missing Button import in Roadmap component that was causing console errors
 
 ### Foundation Roadmap Integration & UX Fixes (Previous Session)  
 - **Implemented single source of truth for baseline tasks**: Created `server/foundationRoadmap.ts` containing comprehensive 14-week foundation roadmap data

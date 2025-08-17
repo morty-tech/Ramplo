@@ -80,11 +80,17 @@ export default function Roadmap() {
   }, [roadmapData, currentWeek]);
 
   const handleDayClick = (week: any, day: any) => {
-    // Only allow clicking on current week or past weeks
-    if (week.status === "upcoming") return;
+    // Allow clicking on current week, past weeks, and up to 2 weeks ahead
+    const maxClickableWeek = currentWeek + 2;
+    if (week.week > maxClickableWeek) return;
     
     // For now, we'll just expand the day view - this could be enhanced later
     console.log("Day clicked:", day, "Week:", week.week);
+  };
+
+  // Helper function to determine if a week should show daily objectives
+  const shouldShowDailyObjectives = (weekNumber: number) => {
+    return weekNumber <= currentWeek + 2; // Current week + 2 weeks ahead
   };
 
   // Calculate current day for highlighting
@@ -263,7 +269,7 @@ export default function Roadmap() {
               <div className="space-y-3">
                 {week.days?.length > 0 ? (
                   week.days.map((day: any, index: number) => {
-                    const isDayAccessible = week.status !== "upcoming";
+                    const isDayAccessible = week.status !== "upcoming" || shouldShowDailyObjectives(week.week);
                     const isCurrentDay = week.status === "current" && day.day === currentDay;
                     const isDayCompleted = week.status === "completed" || (week.status === "current" && day.day < currentDay);
                     const isTodayHighlight = isToday(week.week, day.day);
@@ -280,7 +286,9 @@ export default function Roadmap() {
                             : isDayCompleted
                             ? 'border-forest-300 bg-forest-50' 
                             : isDayAccessible
-                            ? 'border-gray-200 hover:border-primary hover:bg-gray-50'
+                            ? week.status === "upcoming" && shouldShowDailyObjectives(week.week)
+                              ? 'border-orange-200 bg-orange-50 hover:border-orange-300 hover:bg-orange-100'
+                              : 'border-gray-200 hover:border-primary hover:bg-gray-50'
                             : 'border-gray-200 bg-gray-100 cursor-not-allowed opacity-60'
                         }`}
                         onClick={() => isDayAccessible && handleDayClick(week, day)}
@@ -295,7 +303,9 @@ export default function Roadmap() {
                                 : isDayCompleted
                                 ? 'bg-forest-600 text-white'
                                 : isDayAccessible
-                                ? 'bg-gray-200 text-gray-700'
+                                ? week.status === "upcoming" && shouldShowDailyObjectives(week.week)
+                                  ? 'bg-orange-200 text-orange-700'
+                                  : 'bg-gray-200 text-gray-700'
                                 : 'bg-gray-300 text-gray-500'
                             }`}>
                               {isDayCompleted ? (
@@ -328,7 +338,10 @@ export default function Roadmap() {
                               </div>
                               <div className={`text-xs mt-1 ${
                                 isTodayHighlight ? 'text-blue-700 font-medium' :
-                                isCurrentDay ? 'text-blue-700' : isDayCompleted ? 'text-forest-700' : 'text-gray-600'
+                                isCurrentDay ? 'text-blue-700' : 
+                                isDayCompleted ? 'text-forest-700' : 
+                                week.status === "upcoming" && shouldShowDailyObjectives(week.week) ? 'text-orange-700' : 
+                                'text-gray-600'
                               }`}>
                                 <Target className="w-3 h-3 inline mr-1" />
                                 {day.objective}
@@ -358,6 +371,10 @@ export default function Roadmap() {
                       </div>
                     );
                   })
+                ) : shouldShowDailyObjectives(week.week) ? (
+                  <div className="text-sm text-gray-500 italic">
+                    Daily objectives will be available when this week begins.
+                  </div>
                 ) : (
                   <div className="text-sm text-gray-500 italic">
                     Week details will be available soon.
@@ -367,14 +384,17 @@ export default function Roadmap() {
               <div className="mt-4 pt-4 border-t border-gray-200">
                 <Badge variant={
                   week.status === 'completed' ? 'default' :
-                  week.status === 'current' ? 'default' : 'secondary'
+                  week.status === 'current' ? 'default' : 
+                  shouldShowDailyObjectives(week.week) ? 'default' : 'secondary'
                 } className={
                   week.status === 'completed' ? 'bg-green-600' :
-                  week.status === 'current' ? 'bg-blue-600' : ''
+                  week.status === 'current' ? 'bg-blue-600' : 
+                  shouldShowDailyObjectives(week.week) ? 'bg-orange-600' : ''
                 }>
                   {week.status === 'completed' && '✓ Week Completed'}
                   {week.status === 'current' && '📍 Current Week'}
-                  {week.status === 'upcoming' && 'Coming Soon'}
+                  {week.status === 'upcoming' && shouldShowDailyObjectives(week.week) && '📋 Objectives Ready'}
+                  {week.status === 'upcoming' && !shouldShowDailyObjectives(week.week) && 'Coming Soon'}
                 </Badge>
               </div>
             </CardContent>
