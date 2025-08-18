@@ -473,6 +473,68 @@ export async function registerRoutes(app: Express): Promise<Server> {
         res.status(500).json({ message: "Failed to send test email" });
       }
     });
+
+    // Clear Stripe test data (development only)
+    app.post("/api/clear-stripe-data", requireAuth, async (req, res) => {
+      if (!stripe) {
+        return res.status(400).json({ message: "Stripe not configured" });
+      }
+
+      try {
+        const userId = (req as any).session.user.id;
+        const user = await storage.getUser(userId);
+        
+        if (!user) {
+          return res.status(404).json({ message: "User not found" });
+        }
+
+        let cleared = [];
+
+        // Cancel any active subscriptions
+        if (user.stripeSubscriptionId) {
+          try {
+            await stripe.subscriptions.cancel(user.stripeSubscriptionId);
+            cleared.push("subscription");
+          } catch (error) {
+            console.log("Error canceling subscription:", error);
+          }
+        }
+
+        // Remove payment methods if customer exists
+        if (user.stripeCustomerId) {
+          try {
+            const paymentMethods = await stripe.paymentMethods.list({
+              customer: user.stripeCustomerId,
+              type: 'card',
+            });
+            
+            for (const pm of paymentMethods.data) {
+              await stripe.paymentMethods.detach(pm.id);
+            }
+            if (paymentMethods.data.length > 0) {
+              cleared.push(`${paymentMethods.data.length} payment methods`);
+            }
+          } catch (error) {
+            console.log("Error clearing payment methods:", error);
+          }
+        }
+
+        // Clear user's Stripe IDs
+        await storage.updateUser(userId, { 
+          stripeCustomerId: null, 
+          stripeSubscriptionId: null 
+        });
+        cleared.push("user stripe data");
+
+        res.json({ 
+          message: "Stripe test data cleared", 
+          cleared: cleared 
+        });
+      } catch (error) {
+        console.error("Error clearing Stripe data:", error);
+        res.status(500).json({ message: "Failed to clear Stripe data" });
+      }
+    });
   }
 
   // Stripe billing
@@ -532,6 +594,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
           customerId = customer.id;
           await storage.updateUser(userId, { stripeCustomerId: customerId });
+          console.log("Created new Stripe customer:", customerId);
+        } else {
+          // Debug: Check existing customer payment methods
+          const paymentMethods = await stripe.paymentMethods.list({
+            customer: customerId,
+            type: 'card',
+          });
+          console.log("Existing payment methods for customer:", paymentMethods.data.length);
         }
 
         // Create subscription with 3-month auto-cancellation
