@@ -19,6 +19,7 @@ import {
   User
 } from "lucide-react";
 import rampLoWhiteLogo from "@assets/ramplo-log-white_1755552246908.png";
+import dashboardScreenshot from "@assets/dashboard-screenshot.png";
 
 export default function Landing() {
   const [email, setEmail] = useState("");
@@ -276,13 +277,13 @@ export default function Landing() {
                   Simple steps to launch your mortgage career and secure your first deals in 90 days.
                 </p>
               </div>
-              <div className="relative -z-20 max-w-xl min-w-full min-h-[32rem] rounded-xl lg:row-span-4 lg:w-[64rem] lg:max-w-none flex items-center justify-center bg-gradient-to-br from-eclipse-600 to-electric-600 py-24 px-16 shadow-xl ring-1 ring-white/10">
-                <div className="text-center">
-                  <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Target className="w-12 h-12 text-aura-600" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-2">90-Day Success Plan</h3>
-                  <p className="text-electric-200">Your personalized roadmap to closing deals</p>
+              <div className="relative -z-20 max-w-xl min-w-full min-h-[32rem] rounded-xl lg:row-span-4 lg:w-[64rem] lg:max-w-none flex items-center justify-center bg-gradient-to-br from-eclipse-600 to-electric-600 p-4 shadow-xl ring-1 ring-white/10">
+                <div className="w-full h-full rounded-lg overflow-hidden shadow-2xl">
+                  <img 
+                    src={dashboardScreenshot} 
+                    alt="RampLO Dashboard showing personalized daily tasks, progress tracking, and loan officer tools with updated design" 
+                    className="w-full h-full object-contain object-top bg-white rounded-lg"
+                  />
                 </div>
               </div>
               <div className="max-w-xl lg:row-start-3 lg:mt-10 lg:max-w-md lg:border-t lg:border-white/10 lg:pt-10">
