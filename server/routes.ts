@@ -641,7 +641,71 @@ export async function registerRoutes(app: Express): Promise<Server> {
         res.status(500).json({ message: "Failed to create subscription" });
       }
     });
+
+    // Cancel subscription endpoint
+    app.post("/api/cancel-subscription", requireAuth, async (req, res) => {
+      try {
+        const userId = (req as any).session.user.id;
+        const user = await storage.getUser(userId);
+        
+        if (!user || !user.stripeSubscriptionId) {
+          return res.status(404).json({ message: "No active subscription found" });
+        }
+
+        // Cancel the subscription in Stripe
+        await stripe.subscriptions.cancel(user.stripeSubscriptionId);
+        
+        // Update user record
+        await storage.updateUser(userId, { 
+          stripeSubscriptionId: null 
+        });
+
+        console.log(`Subscription ${user.stripeSubscriptionId} canceled for user ${userId}`);
+        res.json({ message: "Subscription canceled successfully" });
+      } catch (error) {
+        console.error("Error canceling subscription:", error);
+        res.status(500).json({ message: "Failed to cancel subscription" });
+      }
+    });
   }
+
+  // Account deletion endpoint
+  app.post("/api/delete-account", requireAuth, async (req, res) => {
+    try {
+      const userId = (req as any).session.user.id;
+      const user = await storage.getUser(userId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Cancel subscription if exists
+      if (stripe && user.stripeSubscriptionId) {
+        try {
+          await stripe.subscriptions.cancel(user.stripeSubscriptionId);
+          console.log(`Subscription canceled for user ${userId} during account deletion`);
+        } catch (stripeError) {
+          console.error("Error canceling subscription during deletion:", stripeError);
+        }
+      }
+
+      // Delete user account and all related data
+      await storage.deleteUser(userId);
+      
+      // Clear session
+      req.session.destroy((err) => {
+        if (err) {
+          console.error("Error destroying session:", err);
+        }
+      });
+
+      console.log(`Account deleted for user ${userId}`);
+      res.json({ message: "Account deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      res.status(500).json({ message: "Failed to delete account" });
+    }
+  });
 
   // Stripe webhook for subscription events
   if (stripe) {

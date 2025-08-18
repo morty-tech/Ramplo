@@ -17,7 +17,9 @@ import {
   CreditCard,
   Download,
   AlertCircle,
-  Mail
+  Mail,
+  Trash2,
+  X
 } from "lucide-react";
 
 const stripePromise = import.meta.env.VITE_STRIPE_PUBLIC_KEY 
@@ -78,6 +80,8 @@ export default function Billing() {
   const { user, isMortyUser } = useAuth();
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
+  const [cancelModalOpen, setCancelModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const { toast } = useToast();
 
   const createSubscriptionMutation = useMutation({
@@ -119,12 +123,45 @@ export default function Billing() {
     createSubscriptionMutation.mutate();
   };
 
-  const handleCancelSubscription = () => {
-    toast({
-      title: "Cancel Subscription",
-      description: "Cancellation feature coming soon.",
-    });
-  };
+  const cancelSubscriptionMutation = useMutation({
+    mutationFn: () => apiRequest("POST", "/api/cancel-subscription"),
+    onSuccess: () => {
+      toast({
+        title: "Subscription Canceled",
+        description: "Your subscription has been canceled successfully.",
+      });
+      setCancelModalOpen(false);
+      window.location.reload(); // Refresh to update UI
+    },
+    onError: (error) => {
+      console.error("Cancel subscription error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to cancel subscription",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const deleteAccountMutation = useMutation({
+    mutationFn: () => apiRequest("POST", "/api/delete-account"),
+    onSuccess: () => {
+      toast({
+        title: "Account Deleted",
+        description: "Your account has been deleted successfully.",
+      });
+      setDeleteModalOpen(false);
+      window.location.href = "/"; // Redirect to login
+    },
+    onError: (error) => {
+      console.error("Delete account error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete account",
+        variant: "destructive",
+      });
+    },
+  });
 
   const mockBillingHistory = [
     {
@@ -261,6 +298,14 @@ export default function Billing() {
                       </Button>
                       <Button variant="outline" className="w-full">
                         Download Invoice
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        className="w-full text-orange-600 border-orange-200 hover:bg-orange-50"
+                        onClick={() => setCancelModalOpen(true)}
+                      >
+                        <X className="w-4 h-4 mr-2" />
+                        Cancel Subscription
                       </Button>
                     </div>
                   </div>
@@ -403,7 +448,7 @@ export default function Billing() {
                       Canceling will end your access to all Ramplo features at the end of your current billing period.
                     </p>
                     <Button 
-                      onClick={handleCancelSubscription}
+                      onClick={() => setCancelModalOpen(true)}
                       variant="destructive"
                       size="sm"
                     >
@@ -416,6 +461,29 @@ export default function Billing() {
           )}
         </>
       )}
+
+      {/* Delete Account Section */}
+      <Card className="border-red-300 bg-red-50 mb-6">
+        <CardContent className="p-6">
+          <div className="flex items-start">
+            <Trash2 className="w-5 h-5 text-red-600 mr-3 mt-0.5" />
+            <div className="flex-1">
+              <h3 className="text-lg font-bold text-red-800 mb-2">Delete Account</h3>
+              <p className="text-red-700 text-sm mb-4">
+                Permanently delete your account and all associated data. This action cannot be undone.
+              </p>
+              <Button 
+                onClick={() => setDeleteModalOpen(true)}
+                variant="destructive"
+                size="sm"
+              >
+                <Trash2 className="w-4 h-4 mr-2" />
+                Delete Account
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Support Section */}
       <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2 mb-5">
@@ -469,6 +537,92 @@ export default function Billing() {
               </p>
             </div>
           )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Cancel Subscription Confirmation Modal */}
+      <Dialog open={cancelModalOpen} onOpenChange={setCancelModalOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Cancel Subscription</DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-4">
+            <p className="text-sm text-gray-600">
+              Are you sure you want to cancel your subscription? You'll lose access to all premium features at the end of your current billing period.
+            </p>
+            
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+              <p className="text-sm text-yellow-800">
+                <strong>Note:</strong> Your subscription will remain active until the end of your current billing period.
+              </p>
+            </div>
+            
+            <div className="flex space-x-3">
+              <Button 
+                variant="outline" 
+                onClick={() => setCancelModalOpen(false)}
+                className="flex-1"
+              >
+                Keep Subscription
+              </Button>
+              <Button 
+                variant="destructive" 
+                onClick={() => cancelSubscriptionMutation.mutate()}
+                disabled={cancelSubscriptionMutation.isPending}
+                className="flex-1"
+              >
+                {cancelSubscriptionMutation.isPending ? "Canceling..." : "Cancel Subscription"}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Account Confirmation Modal */}
+      <Dialog open={deleteModalOpen} onOpenChange={setDeleteModalOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Delete Account</DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-4">
+            <p className="text-sm text-gray-600">
+              This will permanently delete your account and all associated data, including:
+            </p>
+            
+            <ul className="text-sm text-gray-600 space-y-1 list-disc list-inside bg-red-50 p-3 rounded-lg">
+              <li>Your personalized roadmap and tasks</li>
+              <li>Progress tracking and analytics</li>
+              <li>Deal coaching session history</li>
+              <li>Marketing templates and customizations</li>
+              <li>Billing and subscription history</li>
+            </ul>
+            
+            <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+              <p className="text-sm text-red-800">
+                <strong>Warning:</strong> This action cannot be undone. All your data will be permanently lost.
+              </p>
+            </div>
+            
+            <div className="flex space-x-3">
+              <Button 
+                variant="outline" 
+                onClick={() => setDeleteModalOpen(false)}
+                className="flex-1"
+              >
+                Keep Account
+              </Button>
+              <Button 
+                variant="destructive" 
+                onClick={() => deleteAccountMutation.mutate()}
+                disabled={deleteAccountMutation.isPending}
+                className="flex-1"
+              >
+                {deleteAccountMutation.isPending ? "Deleting..." : "Delete Account"}
+              </Button>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

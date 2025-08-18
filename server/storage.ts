@@ -39,6 +39,7 @@ export interface IStorage {
   getUserByStripeSubscriptionId(subscriptionId: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   updateUser(id: string, updates: Partial<User>): Promise<User>;
+  deleteUser(id: string): Promise<void>;
 
   // Magic link operations
   createMagicLink(email: string, token: string, expiresAt: Date): Promise<void>;
@@ -116,6 +117,11 @@ export class DatabaseStorage implements IStorage {
       .where(eq(users.id, id))
       .returning();
     return user;
+  }
+
+  async deleteUser(id: string): Promise<void> {
+    // Delete user and all related data (cascading deletes handled by foreign key constraints)
+    await db.delete(users).where(eq(users.id, id));
   }
 
   async createMagicLink(email: string, token: string, expiresAt: Date): Promise<void> {
