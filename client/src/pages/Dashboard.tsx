@@ -243,7 +243,7 @@ export default function Dashboard() {
       {/* Stats Cards */}
       <div className="mb-8">
         <h3 className="text-base font-semibold text-gray-900 mb-5 flex items-center gap-2">
-          <Target className="w-5 h-5" />
+          <Target className="w-5 h-5 text-aura-600" />
           Your Performance
         </h3>
         
@@ -254,7 +254,7 @@ export default function Dashboard() {
               className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5"
             >
               <dt>
-                <div className="absolute rounded-md bg-aura-100 p-3">
+                <div className="absolute p-3">
                   <item.icon aria-hidden="true" className="size-6 text-aura-600" />
                 </div>
                 <p className="ml-16 truncate text-sm font-medium text-gray-500">{item.name}</p>
@@ -264,12 +264,12 @@ export default function Dashboard() {
                 {item.changeType !== 'neutral' && (
                   <p
                     className={classNames(
-                      item.changeType === 'increase' ? 'text-green-600' : 'text-red-600',
+                      item.changeType === 'increase' ? 'text-electric-600' : 'text-red-600',
                       'ml-2 flex items-baseline text-sm font-semibold',
                     )}
                   >
                     {item.changeType === 'increase' ? (
-                      <ArrowUpIcon aria-hidden="true" className="size-5 shrink-0 self-center text-green-500" />
+                      <ArrowUpIcon aria-hidden="true" className="size-5 shrink-0 self-center text-electric-600" />
                     ) : (
                       <ArrowDownIcon aria-hidden="true" className="size-5 shrink-0 self-center text-red-500" />
                     )}
@@ -290,7 +290,7 @@ export default function Dashboard() {
         <div className="lg:col-span-2">
           <div className="flex items-center justify-between mb-5">
             <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2">
-              <Calendar className="w-5 h-5" />
+              <Calendar className="w-5 h-5 text-aura-600" />
               {profile?.firstName || user?.firstName || 'Your'}'s Tasks for {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
             </h3>
           </div>
@@ -335,7 +335,7 @@ export default function Dashboard() {
           {/* Quick Actions */}
           <div>
             <h3 className="text-base font-semibold text-gray-900 mb-5 flex items-center gap-2">
-              <Send className="w-5 h-5" />
+              <Send className="w-5 h-5 text-aura-600" />
               Quick Actions
             </h3>
             
@@ -343,8 +343,8 @@ export default function Dashboard() {
               <div className="space-y-0">
                 <div className="flex items-center justify-between py-3 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/outreach'}>
                   <div className="flex items-center gap-3">
-                    <div className="absolute rounded-md bg-purple-500/15 p-2">
-                      <Send aria-hidden="true" className="size-5 text-purple-600" />
+                    <div className="absolute p-2">
+                      <Send aria-hidden="true" className="size-5 text-aura-600" />
                     </div>
                     <div className="ml-14">
                       <p className="text-sm font-medium text-gray-500">Templates</p>
@@ -357,8 +357,8 @@ export default function Dashboard() {
                 
                 <div className="flex items-center justify-between py-3 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/deal-coach'}>
                   <div className="flex items-center gap-3">
-                    <div className="absolute rounded-md bg-purple-500/15 p-2">
-                      <UserCheck aria-hidden="true" className="size-5 text-purple-600" />
+                    <div className="absolute p-2">
+                      <UserCheck aria-hidden="true" className="size-5 text-eclipse-600" />
                     </div>
                     <div className="ml-14">
                       <p className="text-sm font-medium text-gray-500">AI Assistant</p>
@@ -371,8 +371,8 @@ export default function Dashboard() {
                 
                 <div className="flex items-center justify-between py-3 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/roadmap'}>
                   <div className="flex items-center gap-3">
-                    <div className="absolute rounded-md bg-purple-500/15 p-2">
-                      <Map aria-hidden="true" className="size-5 text-purple-600" />
+                    <div className="absolute p-2">
+                      <Map aria-hidden="true" className="size-5 text-electric-600" />
                     </div>
                     <div className="ml-14">
                       <p className="text-sm font-medium text-gray-500">Progress</p>
