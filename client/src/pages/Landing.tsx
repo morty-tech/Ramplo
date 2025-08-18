@@ -59,7 +59,11 @@ export default function Landing() {
       <header className="absolute inset-x-0 top-0 z-50">
         <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1">
-            <span className="text-2xl font-bold text-white">RampLO</span>
+            <img 
+              src="/src/assets/ramplo-log-white_1755552246908.png" 
+              alt="RampLO" 
+              className="h-8 w-auto"
+            />
           </div>
           <div className="flex lg:flex-1 lg:justify-end">
             <a href="/login" className="text-sm font-semibold text-white hover:text-electric-400">

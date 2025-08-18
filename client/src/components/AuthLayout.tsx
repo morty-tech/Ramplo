@@ -38,10 +38,11 @@ export default function AuthLayout({ children, showFooter = true }: AuthLayoutPr
         <div className="flex-1 flex flex-col justify-center">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <div className="flex items-center justify-center">
-              <div className="h-10 w-10 bg-white rounded-lg flex items-center justify-center mr-3">
-                <span className="text-aura-600 font-bold text-xl">R</span>
-              </div>
-              <span className="text-white font-bold text-2xl">RampLO</span>
+              <img 
+                src="/src/assets/ramplo-log-white_1755552246908.png" 
+                alt="RampLO" 
+                className="h-8 w-auto"
+              />
             </div>
           </div>
           

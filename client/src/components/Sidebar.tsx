@@ -62,7 +62,13 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
       <div className="flex items-center justify-center h-16 px-4 flex-shrink-0">
         {isExpanded ? (
           <>
-            {showText && <h1 className="text-white text-xl font-bold transition-opacity duration-200 opacity-100">RampLO</h1>}
+            {showText && (
+              <img 
+                src="/src/assets/ramplo-log-white_1755552246908.png" 
+                alt="RampLO" 
+                className="h-6 w-auto transition-opacity duration-200 opacity-100"
+              />
+            )}
             <button
               onClick={onToggle}
               className="ml-auto text-white hover:bg-white hover:bg-opacity-10 p-1 rounded transition-colors"
@@ -77,9 +83,11 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
             className="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded-lg transition-colors"
             aria-label="Expand menu"
           >
-            <div className="w-6 h-6 bg-white rounded-sm flex items-center justify-center">
-              <span className="text-aura-600 text-xs font-bold">R</span>
-            </div>
+            <img 
+              src="/src/assets/ramplo-favicon_1755552246909.png" 
+              alt="RampLO" 
+              className="w-6 h-6 rounded-sm"
+            />
           </button>
         )}
       </div>
