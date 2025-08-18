@@ -49,13 +49,23 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <PaymentElement />
+      <PaymentElement 
+        options={{
+          layout: "tabs",
+          fields: {
+            billingDetails: {
+              name: "auto",
+              email: "auto"
+            }
+          }
+        }}
+      />
       <Button 
         type="submit" 
         disabled={!stripe || isLoading}
         className="w-full bg-forest-600 hover:bg-forest-700"
       >
-        {isLoading ? "Processing..." : "Subscribe Now"}
+        {isLoading ? "Processing..." : "Subscribe for $49/month"}
       </Button>
     </form>
   );
@@ -85,7 +95,7 @@ export default function PaywallOverlay() {
         console.log("Paywall: Setting client secret and showing payment");
         setClientSecret(data.clientSecret);
         setShowPayment(true);
-      } else {
+      } else if (data.subscriptionId && !data.clientSecret) {
         console.log("Paywall: No client secret in response - subscription already active");
         toast({
           title: "Subscription Active",
@@ -93,6 +103,13 @@ export default function PaywallOverlay() {
         });
         // Refresh user data to update UI
         window.location.reload();
+      } else {
+        console.log("Paywall: Unexpected response format:", data);
+        toast({
+          title: "Error",
+          description: "Unexpected response from subscription service",
+          variant: "destructive",
+        });
       }
     } catch (error) {
       console.error("Paywall subscription error:", error);

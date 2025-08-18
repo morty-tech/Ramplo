@@ -618,6 +618,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
             price: process.env.STRIPE_PRICE_ID || 'price_1234567890', // Set in environment
           }],
           payment_behavior: 'default_incomplete',
+          payment_settings: {
+            payment_method_types: ['card'],
+            save_default_payment_method: 'on_subscription'
+          },
           expand: ['latest_invoice.payment_intent'],
           cancel_at: Math.floor((Date.now() + (3 * 30 * 24 * 60 * 60 * 1000)) / 1000), // Cancel after 3 months
           metadata: {
