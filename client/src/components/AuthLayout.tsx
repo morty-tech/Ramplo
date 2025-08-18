@@ -1,3 +1,5 @@
+import rampLoWhiteLogo from "@assets/ramplo-log-white_1755552246908.png";
+
 interface AuthLayoutProps {
   children: React.ReactNode;
   showFooter?: boolean;
@@ -39,7 +41,7 @@ export default function AuthLayout({ children, showFooter = true }: AuthLayoutPr
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <div className="flex items-center justify-center">
               <img 
-                src="/assets/ramplo-log-white_1755552246908.png" 
+                src={rampLoWhiteLogo} 
                 alt="RampLO" 
                 className="h-8 w-auto"
               />

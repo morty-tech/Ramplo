@@ -18,6 +18,7 @@ import {
   Send,
   User
 } from "lucide-react";
+import rampLoWhiteLogo from "@assets/ramplo-log-white_1755552246908.png";
 
 export default function Landing() {
   const [email, setEmail] = useState("");
@@ -60,7 +61,7 @@ export default function Landing() {
         <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1">
             <img 
-              src="/assets/ramplo-log-white_1755552246908.png" 
+              src={rampLoWhiteLogo} 
               alt="RampLO" 
               className="h-8 w-auto"
             />

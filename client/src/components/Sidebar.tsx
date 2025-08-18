@@ -12,6 +12,8 @@ import {
   LogOut,
   ChevronRight
 } from "lucide-react";
+import rampLoWhiteLogo from "@assets/ramplo-log-white_1755552246908.png";
+import rampLoFavicon from "@assets/ramplo-favicon_1755552246909.png";
 
 interface SidebarProps {
   isExpanded: boolean;
@@ -64,7 +66,7 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
           <>
             {showText && (
               <img 
-                src="/assets/ramplo-log-white_1755552246908.png" 
+                src={rampLoWhiteLogo} 
                 alt="RampLO" 
                 className="h-6 w-auto transition-opacity duration-200 opacity-100"
               />
@@ -84,7 +86,7 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
             aria-label="Expand menu"
           >
             <img 
-              src="/assets/ramplo-favicon_1755552246909.png" 
+              src={rampLoFavicon} 
               alt="RampLO" 
               className="w-6 h-6 rounded-sm"
             />
