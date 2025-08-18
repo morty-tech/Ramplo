@@ -62,7 +62,6 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
 }
 
 export default function PaywallOverlay() {
-  const [isOpen, setIsOpen] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const [showPayment, setShowPayment] = useState(false);
   const { toast } = useToast();
@@ -99,68 +98,93 @@ export default function PaywallOverlay() {
   }
 
   return (
-    <>
-      {/* Trigger - this could be shown based on usage limits */}
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-md">
-          <div className="text-center">
-            <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Crown className="h-8 w-8 text-orange-600" />
-            </div>
-            
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">
-              Unlock Your Full Potential
-            </h3>
-            <p className="text-gray-600 mb-6">
-              Get unlimited access to your personalized ramp plan and all features.
-            </p>
-
-            <div className="bg-gray-50 rounded-lg p-4 mb-6">
-              <div className="text-3xl font-bold text-gray-900">$49</div>
-              <div className="text-sm text-gray-600">per month</div>
-            </div>
-
-            <div className="space-y-3 mb-6 text-left">
-              {[
-                "Personalized 90-day roadmap",
-                "Daily task tracking & streaks", 
-                "AI-powered deal coaching",
-                "Marketing template library"
-              ].map((feature) => (
-                <div key={feature} className="flex items-center text-sm">
-                  <Check className="h-4 w-4 text-green-600 mr-3 flex-shrink-0" />
-                  {feature}
-                </div>
-              ))}
-            </div>
-
-            {showPayment && clientSecret ? (
-              <Elements 
-                stripe={stripePromise} 
-                options={{ clientSecret }}
-              >
-                <CheckoutForm onSuccess={() => setIsOpen(false)} />
-              </Elements>
-            ) : (
-              <div className="space-y-3">
-                <Button 
-                  onClick={handleSubscribe}
-                  className="w-full bg-orange-600 hover:bg-orange-700"
-                >
-                  Subscribe Now
-                </Button>
-                <Button 
-                  variant="ghost"
-                  onClick={() => setIsOpen(false)}
-                  className="w-full text-gray-600"
-                >
-                  Maybe Later
-                </Button>
+    <div className="fixed inset-0 z-50 bg-white">
+      {/* Full screen paywall overlay */}
+      <div className="min-h-screen bg-gradient-to-br from-forest-800 to-tealwave-800 relative isolate">
+        {/* Gradient decorations */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+        >
+          <div
+            style={{
+              clipPath:
+                'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+            }}
+            className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#84cc16] to-[#22c55e] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+          />
+        </div>
+        
+        <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 relative z-10">
+          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+            <div className="flex items-center justify-center mb-10">
+              <div className="h-10 w-10 bg-white rounded-lg flex items-center justify-center mr-3">
+                <span className="text-forest-800 font-bold text-xl">R</span>
               </div>
-            )}
+              <span className="text-white font-bold text-2xl">RampLO</span>
+            </div>
           </div>
-        </DialogContent>
-      </Dialog>
-    </>
+
+          <div className="sm:mx-auto sm:w-full sm:max-w-md">
+            <div className="bg-white rounded-lg p-8 shadow-xl text-center">
+              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Crown className="h-8 w-8 text-orange-600" />
+              </div>
+              
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                Unlock Your Full Potential
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Complete your subscription to access your personalized ramp plan and all features.
+              </p>
+
+              <div className="bg-gray-50 rounded-lg p-4 mb-6">
+                <div className="text-3xl font-bold text-gray-900">$49</div>
+                <div className="text-sm text-gray-600">per month</div>
+              </div>
+
+              <div className="space-y-3 mb-6 text-left">
+                {[
+                  "Personalized 90-day roadmap",
+                  "Daily task tracking & streaks", 
+                  "AI-powered deal coaching",
+                  "Marketing template library"
+                ].map((feature) => (
+                  <div key={feature} className="flex items-center text-sm">
+                    <Check className="h-4 w-4 text-green-600 mr-3 flex-shrink-0" />
+                    {feature}
+                  </div>
+                ))}
+              </div>
+
+              {showPayment && clientSecret ? (
+                <Elements 
+                  stripe={stripePromise} 
+                  options={{ clientSecret }}
+                >
+                  <CheckoutForm onSuccess={() => window.location.reload()} />
+                </Elements>
+              ) : (
+                <div className="space-y-3">
+                  <Button 
+                    onClick={handleSubscribe}
+                    className="w-full bg-orange-600 hover:bg-orange-700"
+                  >
+                    Subscribe Now
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    onClick={() => window.location.href = '/billing'}
+                    className="w-full"
+                  >
+                    Manage Billing
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

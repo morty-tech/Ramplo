@@ -11,10 +11,18 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
-  const { isMortyUser, profile } = useAuth();
+  const { isMortyUser, hasActiveSubscription, profile } = useAuth();
   const [location] = useLocation();
   
   const isOnboarding = location === "/onboarding" || (location === "/" && !profile?.onboardingCompleted);
+  
+  // Pages that non-Morty users can access
+  const allowedPagesForNonMorty = ["/onboarding", "/billing"];
+  const isAllowedPage = allowedPagesForNonMorty.some(page => location.startsWith(page)) || 
+                       (location === "/" && !profile?.onboardingCompleted);
+  
+  // Show paywall for non-Morty users who don't have active subscription and are on restricted pages
+  const shouldShowPaywall = !isMortyUser && !hasActiveSubscription && !isAllowedPage && profile?.onboardingCompleted;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -27,8 +35,8 @@ export default function Layout({ children }: LayoutProps) {
         {children}
       </div>
 
-      {/* Paywall for non-Morty users */}
-      {!isMortyUser && <PaywallOverlay />}
+      {/* Paywall for non-Morty users without subscription on restricted pages */}
+      {shouldShowPaywall && <PaywallOverlay />}
     </div>
   );
 }

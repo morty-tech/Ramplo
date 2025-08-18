@@ -20,5 +20,6 @@ export function useAuth() {
     isLoading,
     isAuthenticated: !!data?.user,
     isMortyUser: data?.user?.isMortyUser || false,
+    hasActiveSubscription: data?.user?.hasActiveSubscription || false,
   };
 }

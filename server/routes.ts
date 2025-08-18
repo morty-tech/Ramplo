@@ -173,8 +173,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const profile = await storage.getUserProfile(user.id);
       const progress = await storage.getUserProgress(user.id);
 
+      // Check subscription status for non-Morty users
+      let hasActiveSubscription = false;
+      if (!user.isMortyUser && user.stripeSubscriptionId && stripe) {
+        try {
+          const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
+          hasActiveSubscription = subscription.status === 'active';
+        } catch (error) {
+          console.error("Error checking subscription status:", error);
+          hasActiveSubscription = false;
+        }
+      }
+
       res.json({
-        user,
+        user: {
+          ...user,
+          hasActiveSubscription
+        },
         profile,
         progress,
       });
