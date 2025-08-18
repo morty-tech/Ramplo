@@ -471,13 +471,9 @@ export default function Roadmap() {
                               )}
                             </div>
                           </div>
-                          {isDayAccessible && (
+                          {isDayAccessible && isTodayHighlight && (
                             <div className="text-xs text-gray-500 group-hover:text-primary transition-colors text-right">
-                              {isTodayHighlight ? (
-                                <div className="text-blue-600 font-medium">Active</div>
-                              ) : (
-                                "Click to view"
-                              )}
+                              <div className="text-blue-600 font-medium">Active</div>
                             </div>
                           )}
                         </div>
