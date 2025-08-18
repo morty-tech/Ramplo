@@ -19,7 +19,7 @@ import {
   User
 } from "lucide-react";
 import rampLoWhiteLogo from "@assets/ramplo-log-white_1755552246908.png";
-import dashboardScreenshot from "@assets/dashboard-screenshot.png";
+import dashboardScreenshot from "@assets/dashboard-screenshot-cropped.png";
 
 export default function Landing() {
   const [email, setEmail] = useState("");
