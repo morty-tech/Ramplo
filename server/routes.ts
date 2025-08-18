@@ -492,14 +492,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         if (user.stripeSubscriptionId) {
           const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
-          const invoice = await stripe.invoices.retrieve(subscription.latest_invoice as string, {
-            expand: ['payment_intent']
-          });
+          console.log("Existing subscription status:", subscription.status);
           
-          return res.json({
-            subscriptionId: subscription.id,
-            clientSecret: (invoice.payment_intent as any)?.client_secret,
-          });
+          if (subscription.status === 'active') {
+            return res.json({
+              subscriptionId: subscription.id,
+              clientSecret: null, // Already active, no payment needed
+            });
+          }
+          
+          if (subscription.status === 'incomplete') {
+            const invoice = await stripe.invoices.retrieve(subscription.latest_invoice as string, {
+              expand: ['payment_intent']
+            });
+            
+            const paymentIntent = invoice.payment_intent as any;
+            console.log("Payment intent status:", paymentIntent?.status);
+            console.log("Client secret exists:", !!paymentIntent?.client_secret);
+            
+            if (paymentIntent?.client_secret) {
+              return res.json({
+                subscriptionId: subscription.id,
+                clientSecret: paymentIntent.client_secret,
+              });
+            }
+          }
+          
+          // If we get here, something is wrong with the subscription - create a new one
+          console.log("Subscription in unexpected state, creating new one");
+          await storage.updateUser(userId, { stripeSubscriptionId: null });
         }
 
         // Create customer if needed
