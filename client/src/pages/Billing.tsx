@@ -396,14 +396,12 @@ export default function Billing() {
       )}
 
       {/* Support Section */}
+      <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2 mb-5">
+        <Mail className="w-5 h-5" />
+        Need Help
+      </h3>
       <Card className="mb-6">
-        <CardHeader>
-          <CardTitle className="text-base font-semibold text-gray-900 flex items-center gap-2">
-            <Mail className="w-5 h-5" />
-            Need Help
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <p className="text-sm text-gray-700 mb-3">
             For billing questions, subscription changes, or account support, please contact our team:
           </p>
