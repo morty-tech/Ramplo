@@ -4,37 +4,37 @@
 
 :root {
   --background: hsl(0, 0%, 100%);
-  --foreground: hsl(216, 10%, 22%); /* slate-800 */
+  --foreground: #2A2A2A; /* carbon-600 */
   --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(216, 10%, 22%); /* slate-800 */
+  --card-foreground: #2A2A2A; /* carbon-600 */
   --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(216, 10%, 22%); /* slate-800 */
-  --primary: hsl(155, 63%, 15%); /* forest-800 */
+  --popover-foreground: #2A2A2A; /* carbon-600 */
+  --primary: #8E2DE2; /* aura-600 */
   --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(169, 51%, 40%); /* tealwave-600 */
+  --secondary: #4A00E0; /* neon-600 */
   --secondary-foreground: hsl(0, 0%, 100%);
-  --muted: hsl(216, 12%, 90%); /* slate-200 */
-  --muted-foreground: hsl(216, 8%, 52%); /* slate-600 */
-  --accent: hsl(75, 72%, 58%); /* limeglow-600 */
-  --accent-foreground: hsl(216, 10%, 22%); /* slate-800 */
+  --muted: #B3B3B3; /* carbon-200 */
+  --muted-foreground: #7A7A7A; /* carbon-400 */
+  --accent: #00F5D4; /* electric-600 */
+  --accent-foreground: #2A2A2A; /* carbon-600 */
   --destructive: hsl(0, 63%, 31%);
   --destructive-foreground: hsl(0, 0%, 100%);
-  --border: hsl(216, 12%, 90%); /* slate-200 */
-  --input: hsl(216, 12%, 90%); /* slate-200 */
-  --ring: hsl(155, 63%, 15%); /* forest-800 */
-  --chart-1: hsl(155, 63%, 15%); /* forest-800 */
-  --chart-2: hsl(169, 51%, 40%); /* tealwave-600 */
-  --chart-3: hsl(75, 72%, 58%); /* limeglow-600 */
-  --chart-4: hsl(155, 20%, 44%); /* forest-400 */
-  --chart-5: hsl(169, 43%, 63%); /* tealwave-400 */
+  --border: #B3B3B3; /* carbon-200 */
+  --input: #B3B3B3; /* carbon-200 */
+  --ring: #8E2DE2; /* aura-600 */
+  --chart-1: #8E2DE2; /* aura-600 */
+  --chart-2: #4A00E0; /* neon-600 */
+  --chart-3: #00F5D4; /* electric-600 */
+  --chart-4: #6AE5F7; /* frost-600 */
+  --chart-5: #B266FF; /* aura-400 */
   --sidebar-background: hsl(0, 0%, 100%);
-  --sidebar-foreground: hsl(216, 10%, 22%); /* slate-800 */
-  --sidebar-primary: hsl(155, 63%, 15%); /* forest-800 */
+  --sidebar-foreground: #2A2A2A; /* carbon-600 */
+  --sidebar-primary: #8E2DE2; /* aura-600 */
   --sidebar-primary-foreground: hsl(0, 0%, 100%);
-  --sidebar-accent: hsl(216, 12%, 90%); /* slate-200 */
-  --sidebar-accent-foreground: hsl(155, 46%, 26%); /* forest-600 */
-  --sidebar-border: hsl(216, 12%, 90%); /* slate-200 */
-  --sidebar-ring: hsl(155, 63%, 15%); /* forest-800 */
+  --sidebar-accent: #B3B3B3; /* carbon-200 */
+  --sidebar-accent-foreground: #2A2A2A; /* carbon-600 */
+  --sidebar-border: #B3B3B3; /* carbon-200 */
+  --sidebar-ring: #8E2DE2; /* aura-600 */
   --font-sans: 'DM Sans', sans-serif;
   --font-headline: 'Plus Jakarta Sans', sans-serif;
   --font-serif: Georgia, serif;
@@ -43,38 +43,38 @@
 }
 
 .dark {
-  --background: hsl(155, 63%, 15%); /* forest-800 */
-  --foreground: hsl(216, 12%, 90%); /* slate-200 */
-  --card: hsl(155, 63%, 15%); /* forest-800 */
-  --card-foreground: hsl(216, 12%, 90%); /* slate-200 */
-  --popover: hsl(155, 63%, 15%); /* forest-800 */
-  --popover-foreground: hsl(216, 12%, 90%); /* slate-200 */
-  --primary: hsl(155, 20%, 44%); /* forest-400 */
+  --background: #101010; /* carbon-800 */
+  --foreground: #E5E5E5; /* carbon-100 */
+  --card: #101010; /* carbon-800 */
+  --card-foreground: #E5E5E5; /* carbon-100 */
+  --popover: #101010; /* carbon-800 */
+  --popover-foreground: #E5E5E5; /* carbon-100 */
+  --primary: #B266FF; /* aura-400 */
   --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(169, 43%, 63%); /* tealwave-400 */
-  --secondary-foreground: hsl(155, 63%, 15%); /* forest-800 */
-  --muted: hsl(216, 10%, 22%); /* slate-800 */
-  --muted-foreground: hsl(216, 8%, 52%); /* slate-600 */
-  --accent: hsl(75, 100%, 73%); /* limeglow-400 */
-  --accent-foreground: hsl(155, 63%, 15%); /* forest-800 */
+  --secondary: #5768EB; /* neon-400 */
+  --secondary-foreground: #101010; /* carbon-800 */
+  --muted: #2A2A2A; /* carbon-600 */
+  --muted-foreground: #7A7A7A; /* carbon-400 */
+  --accent: #66FFDD; /* electric-400 */
+  --accent-foreground: #101010; /* carbon-800 */
   --destructive: hsl(0, 63%, 31%);
   --destructive-foreground: hsl(0, 0%, 100%);
-  --border: hsl(216, 10%, 22%); /* slate-800 */
-  --input: hsl(216, 10%, 22%); /* slate-800 */
-  --ring: hsl(155, 20%, 44%); /* forest-400 */
-  --chart-1: hsl(155, 20%, 44%); /* forest-400 */
-  --chart-2: hsl(169, 43%, 63%); /* tealwave-400 */
-  --chart-3: hsl(75, 100%, 73%); /* limeglow-400 */
-  --chart-4: hsl(155, 46%, 26%); /* forest-600 */
-  --chart-5: hsl(169, 51%, 40%); /* tealwave-600 */
-  --sidebar-background: hsl(155, 63%, 15%); /* forest-800 */
-  --sidebar-foreground: hsl(216, 12%, 90%); /* slate-200 */
-  --sidebar-primary: hsl(155, 20%, 44%); /* forest-400 */
+  --border: #2A2A2A; /* carbon-600 */
+  --input: #2A2A2A; /* carbon-600 */
+  --ring: #B266FF; /* aura-400 */
+  --chart-1: #B266FF; /* aura-400 */
+  --chart-2: #5768EB; /* neon-400 */
+  --chart-3: #66FFDD; /* electric-400 */
+  --chart-4: #9BEFFF; /* frost-400 */
+  --chart-5: #8E2DE2; /* aura-600 */
+  --sidebar-background: #101010; /* carbon-800 */
+  --sidebar-foreground: #E5E5E5; /* carbon-100 */
+  --sidebar-primary: #B266FF; /* aura-400 */
   --sidebar-primary-foreground: hsl(0, 0%, 100%);
-  --sidebar-accent: hsl(216, 10%, 22%); /* slate-800 */
-  --sidebar-accent-foreground: hsl(155, 20%, 44%); /* forest-400 */
-  --sidebar-border: hsl(216, 10%, 22%); /* slate-800 */
-  --sidebar-ring: hsl(155, 20%, 44%); /* forest-400 */
+  --sidebar-accent: #2A2A2A; /* carbon-600 */
+  --sidebar-accent-foreground: #B266FF; /* aura-400 */
+  --sidebar-border: #2A2A2A; /* carbon-600 */
+  --sidebar-ring: #B266FF; /* aura-400 */
 }
 
 @layer base {
