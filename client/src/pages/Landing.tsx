@@ -60,7 +60,7 @@ export default function Landing() {
         <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1">
             <img 
-              src="/src/assets/ramplo-log-white_1755552246908.png" 
+              src="/assets/ramplo-log-white_1755552246908.png" 
               alt="RampLO" 
               className="h-8 w-auto"
             />

@@ -64,7 +64,7 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
           <>
             {showText && (
               <img 
-                src="/src/assets/ramplo-log-white_1755552246908.png" 
+                src="/assets/ramplo-log-white_1755552246908.png" 
                 alt="RampLO" 
                 className="h-6 w-auto transition-opacity duration-200 opacity-100"
               />
@@ -84,7 +84,7 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
             aria-label="Expand menu"
           >
             <img 
-              src="/src/assets/ramplo-favicon_1755552246909.png" 
+              src="/assets/ramplo-favicon_1755552246909.png" 
               alt="RampLO" 
               className="w-6 h-6 rounded-sm"
             />

@@ -39,7 +39,7 @@ export default function AuthLayout({ children, showFooter = true }: AuthLayoutPr
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <div className="flex items-center justify-center">
               <img 
-                src="/src/assets/ramplo-log-white_1755552246908.png" 
+                src="/assets/ramplo-log-white_1755552246908.png" 
                 alt="RampLO" 
                 className="h-8 w-auto"
               />
