@@ -195,7 +195,7 @@ export default function Billing() {
       {/* Morty User Section */}
       {isMortyUser && (
         <>
-          <Card className="mb-6">
+          <Card className="mb-6 shadow-md border-none">
             <CardContent className="p-8">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
@@ -247,7 +247,7 @@ export default function Billing() {
                 <Check className="w-5 h-5" />
                 Current Plan
               </h3>
-              <Card className="mb-6">
+              <Card className="mb-6 shadow-md border-none">
                 <CardContent className="pt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
@@ -320,7 +320,7 @@ export default function Billing() {
                 <CreditCard className="w-5 h-5" />
                 Upgrade to Professional
               </h3>
-              <Card className="mb-6">
+              <Card className="mb-6 shadow-md border-none">
                 <CardContent className="pt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
@@ -384,7 +384,7 @@ export default function Billing() {
                 <CreditCard className="w-5 h-5" />
                 Payment Method
               </h3>
-              <Card className="mb-6">
+              <Card className="mb-6 shadow-md border-none">
                 <CardContent className="pt-6">
                 <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
                   <div className="flex items-center">
@@ -412,7 +412,7 @@ export default function Billing() {
                 <Download className="w-5 h-5" />
                 Billing History
               </h3>
-              <Card className="mb-6">
+              <Card className="mb-6 shadow-md border-none">
                 <CardContent className="pt-6">
                 <div className="space-y-4">
                   {mockBillingHistory.map((invoice, index) => (
@@ -443,7 +443,7 @@ export default function Billing() {
                 <AlertCircle className="w-5 h-5" />
                 Cancel Subscription
               </h3>
-              <Card className="border-red-200 bg-red-50 mb-6">
+              <Card className="bg-red-50 mb-6 shadow-md border-none">
                 <CardContent className="p-6">
                   <div className="flex items-start">
                     <AlertCircle className="w-5 h-5 text-red-600 mr-3 mt-0.5" />
@@ -472,7 +472,7 @@ export default function Billing() {
         <Trash2 className="w-5 h-5" />
         Delete Account
       </h3>
-      <Card className="border-red-300 bg-red-50 mb-6">
+      <Card className="bg-red-50 mb-6 shadow-md border-none">
         <CardContent className="p-6">
           <div className="flex items-start">
             <Trash2 className="w-5 h-5 text-red-600 mr-3 mt-0.5" />
@@ -498,7 +498,7 @@ export default function Billing() {
         <Mail className="w-5 h-5" />
         Need Help
       </h3>
-      <Card className="mb-6">
+      <Card className="mb-6 shadow-md border-none">
         <CardContent className="pt-6">
           <p className="text-sm text-gray-700 mb-3">
             For billing questions, subscription changes, or account support, please contact our team:
