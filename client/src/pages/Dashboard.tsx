@@ -331,36 +331,30 @@ export default function Dashboard() {
             
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <Button
-                className="h-auto p-4 flex flex-col items-center gap-2 bg-aura-50 border-aura-200 text-aura-700 hover:bg-aura-100 hover:border-aura-300"
+                variant="outline"
+                className="h-auto p-4 flex flex-col items-center gap-3 bg-white hover:bg-gray-50"
                 onClick={() => window.location.href = '/outreach'}
               >
                 <Send className="w-6 h-6 text-aura-600" />
-                <div className="text-center">
-                  <p className="text-sm font-medium text-aura-900">Browse Templates</p>
-                  <p className="text-xs text-aura-600">Email & outreach</p>
-                </div>
+                <p className="text-sm font-medium text-gray-900">Browse Templates</p>
               </Button>
               
               <Button
-                className="h-auto p-4 flex flex-col items-center gap-2 bg-eclipse-50 border-eclipse-200 text-eclipse-700 hover:bg-eclipse-100 hover:border-eclipse-300"
+                variant="outline"
+                className="h-auto p-4 flex flex-col items-center gap-3 bg-white hover:bg-gray-50"
                 onClick={() => window.location.href = '/deal-coach'}
               >
                 <UserCheck className="w-6 h-6 text-eclipse-600" />
-                <div className="text-center">
-                  <p className="text-sm font-medium text-eclipse-900">AI Assistant</p>
-                  <p className="text-xs text-eclipse-600">Ask Deal Coach</p>
-                </div>
+                <p className="text-sm font-medium text-gray-900">Ask Deal Coach</p>
               </Button>
               
               <Button
-                className="h-auto p-4 flex flex-col items-center gap-2 bg-electric-50 border-electric-200 text-electric-700 hover:bg-electric-100 hover:border-electric-300"
+                variant="outline"
+                className="h-auto p-4 flex flex-col items-center gap-3 bg-white hover:bg-gray-50"
                 onClick={() => window.location.href = '/roadmap'}
               >
                 <Map className="w-6 h-6 text-electric-600" />
-                <div className="text-center">
-                  <p className="text-sm font-medium text-electric-900">Progress</p>
-                  <p className="text-xs text-electric-600">View Roadmap</p>
-                </div>
+                <p className="text-sm font-medium text-gray-900">View Roadmap</p>
               </Button>
             </div>
           </div>
