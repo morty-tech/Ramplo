@@ -95,7 +95,7 @@ export default function ClientConnectionTracker() {
               <div className="flex items-center justify-between py-3">
                 <div className="flex items-center gap-4">
                   <p className="text-2xl font-semibold text-gray-900 w-8">{todayConnections?.[type.key] || 0}</p>
-                  <p className="text-sm font-medium text-gray-500">{type.label}</p>
+                  <p className="text-base font-medium text-gray-500">{type.label}</p>
                 </div>
                 
                 <div className="flex items-center bg-aura-100 rounded-md p-1">
