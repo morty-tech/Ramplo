@@ -1530,7 +1530,7 @@ export default function Outreach() {
           {selectedTemplate && activeTemplateType === "email" && (
             <div>
               <h3 className="text-base font-semibold text-gray-900 mb-5">Email Analysis</h3>
-              <Card className="shadow-md border-none">
+              <Card className="shadow-md border-none bg-frost-50">
                 <CardContent className="pt-6">
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
@@ -1590,7 +1590,7 @@ export default function Outreach() {
           {selectedTemplate && activeTemplateType === "social-media" && (
             <div>
               <h3 className="text-base font-semibold text-gray-900 mb-5">Social Media Insights</h3>
-              <Card className="shadow-md border-none">
+              <Card className="shadow-md border-none bg-frost-50">
                 <CardContent className="pt-6">
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
@@ -1636,7 +1636,7 @@ export default function Outreach() {
           {selectedTemplate && activeTemplateType === "phone-script" && (
             <div>
               <h3 className="text-base font-semibold text-gray-900 mb-5">Script Guide</h3>
-              <Card className="shadow-md border-none">
+              <Card className="shadow-md border-none bg-frost-50">
                 <CardContent className="pt-6">
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
