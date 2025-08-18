@@ -331,8 +331,7 @@ export default function Dashboard() {
             
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <Button
-                variant="outline"
-                className="h-auto p-4 flex flex-col items-center gap-3 bg-white hover:bg-gray-50"
+                className="h-auto p-4 flex flex-col items-center gap-3 bg-white hover:bg-gray-50 border-0 shadow-sm"
                 onClick={() => window.location.href = '/outreach'}
               >
                 <Send className="w-6 h-6 text-aura-600" />
@@ -340,8 +339,7 @@ export default function Dashboard() {
               </Button>
               
               <Button
-                variant="outline"
-                className="h-auto p-4 flex flex-col items-center gap-3 bg-white hover:bg-gray-50"
+                className="h-auto p-4 flex flex-col items-center gap-3 bg-white hover:bg-gray-50 border-0 shadow-sm"
                 onClick={() => window.location.href = '/deal-coach'}
               >
                 <UserCheck className="w-6 h-6 text-eclipse-600" />
@@ -349,8 +347,7 @@ export default function Dashboard() {
               </Button>
               
               <Button
-                variant="outline"
-                className="h-auto p-4 flex flex-col items-center gap-3 bg-white hover:bg-gray-50"
+                className="h-auto p-4 flex flex-col items-center gap-3 bg-white hover:bg-gray-50 border-0 shadow-sm"
                 onClick={() => window.location.href = '/roadmap'}
               >
                 <Map className="w-6 h-6 text-electric-600" />
