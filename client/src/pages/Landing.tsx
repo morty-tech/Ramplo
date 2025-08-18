@@ -71,9 +71,18 @@ export default function Landing() {
 
       {/* Hero Section */}
       <div 
-        className="min-h-screen flex items-center justify-center"
+        className="min-h-screen flex items-center justify-center relative overflow-hidden"
         style={{ background: 'linear-gradient(90deg, #8E2DE2 0%, #4A00E0 50%, #00F5D4 100%)' }}
       >
+        {/* Animated gradient overlay */}
+        <div 
+          className="absolute inset-0 opacity-30"
+          style={{
+            background: 'linear-gradient(45deg, #8E2DE2, #4A00E0, #00F5D4, #8E2DE2)',
+            backgroundSize: '400% 400%',
+            animation: 'gradientShift 8s ease-in-out infinite'
+          }}
+        />
         <div className="relative isolate px-6 pt-14 lg:px-8">
           <div
             aria-hidden="true"
