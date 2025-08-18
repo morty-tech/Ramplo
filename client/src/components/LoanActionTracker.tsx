@@ -98,7 +98,7 @@ export default function LoanActionTracker() {
                   <p className="text-base font-medium text-gray-700">{type.label}</p>
                 </div>
                 
-                <div className="flex items-center bg-aura-100 rounded-md p-1">
+                <div className="flex items-center bg-frost-100 rounded-md p-1">
                   <button
                     onClick={() => adjustCount(type.key, false)}
                     disabled={updateLoanActionsMutation.isPending || !todayLoanActions?.[type.key]}
