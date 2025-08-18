@@ -82,7 +82,7 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={isLoading || !email}
-                className="flex w-full justify-center rounded-md bg-electric-400 px-3 py-1.5 text-sm/6 font-semibold text-aura-600 hover:bg-electric-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-electric-400 disabled:bg-electric-600 disabled:text-aura-600 disabled:cursor-not-allowed shadow-lg"
+                className="flex w-full justify-center rounded-md bg-frost-600 px-3 py-1.5 text-sm/6 font-semibold text-carbon-600 hover:bg-electric-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-frost-600 disabled:bg-frost-400 disabled:text-carbon-500 disabled:cursor-not-allowed shadow-lg"
               >
                 {isLoading ? (
                   <div className="flex items-center justify-center">
