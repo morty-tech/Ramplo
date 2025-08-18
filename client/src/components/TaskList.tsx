@@ -87,7 +87,7 @@ export function TaskList({
                 <div className={`flex-shrink-0 ${styles.size} rounded-md flex items-center justify-center ${styles.textSize} font-black relative ${styles.topOffset} ${styles.shadow} transition-all duration-300 cursor-pointer ${
                   isCompleted 
                     ? 'bg-aura-100 text-aura-600 shadow-gray-200' 
-                    : 'bg-electric-400 text-aura-600 shadow-lg shadow-electric-200 group-hover:shadow-xl group-hover:scale-105'
+                    : 'bg-frost-600 text-carbon-600 shadow-lg shadow-frost-200 group-hover:shadow-xl group-hover:scale-105'
                 }`} onClick={() => onTaskClick(task)}>
                   {isCompleted ? (
                     <Check className={variant === 'dashboard' ? "w-5 h-5" : "w-4 h-4"} />
