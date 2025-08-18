@@ -191,7 +191,7 @@ export default function Roadmap() {
         </h3>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
+        <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-md sm:px-6 sm:pt-5">
           <dt>
             <div className="absolute rounded-md bg-aura-100 p-3">
               <Check aria-hidden="true" className="size-6 text-aura-600" />
@@ -202,7 +202,7 @@ export default function Roadmap() {
             <p className="text-2xl font-semibold text-gray-900">{completedTasks}</p>
           </dd>
         </div>
-        <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
+        <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-md sm:px-6 sm:pt-5">
           <dt>
             <div className="absolute rounded-md bg-blue-500/15 p-3">
               <Target aria-hidden="true" className="size-6 text-blue-600" />
@@ -213,7 +213,7 @@ export default function Roadmap() {
             <p className="text-2xl font-semibold text-gray-900">{totalTasks}</p>
           </dd>
         </div>
-        <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
+        <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-md sm:px-6 sm:pt-5">
           <dt>
             <div className="absolute rounded-md bg-orange-500/15 p-3">
               <Calendar aria-hidden="true" className="size-6 text-orange-600" />
@@ -241,7 +241,7 @@ export default function Roadmap() {
           {/* Current Week - Full Width at Top */}
           {weeks.filter((week: any) => week.status === 'current').map((week: any) => (
             <div key={`current-${week.week}`} className="mb-8">
-              <Card className="border-2 border-primary">
+              <Card className="border-2 border-primary shadow-md">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-xl">
@@ -352,8 +352,8 @@ export default function Roadmap() {
             {weeks.filter((week: any) => week.status !== 'current').map((week: any) => (
           <Card 
             key={week.week} 
-            className={`${
-              week.status === 'current' ? 'border-2 border-primary' : ''
+            className={`shadow-md ${
+              week.status === 'current' ? 'border-2 border-primary' : 'border-none'
             }`}
           >
             <CardHeader>
