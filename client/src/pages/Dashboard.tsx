@@ -255,7 +255,7 @@ export default function Dashboard() {
             >
               <dt>
                 <div className="absolute p-3">
-                  <item.icon aria-hidden="true" className="size-6 text-aura-600" />
+                  <item.icon aria-hidden="true" className="size-8 text-aura-600" />
                 </div>
                 <p className="ml-16 truncate text-sm font-medium text-gray-500">{item.name}</p>
               </dt>
