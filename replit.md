@@ -57,6 +57,21 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
+### Stripe 3-Month Auto-Cancellation & UI Updates (Current Session)
+- **Implemented comprehensive 3-month subscription system**: Configured Stripe subscriptions to automatically cancel after 3 months (90 days) using `cancel_at` parameter
+- **Updated subscription UI**: Changed pricing display from "every 3 months" to "per month for 3 months" to reflect monthly billing with limited duration
+- **Converted payment buttons to forest-green**: All subscription-related buttons now use forest-600/forest-700 colors instead of orange for consistent branding
+- **Added Stripe webhook handler**: Created `/api/stripe/webhook` endpoint to handle subscription cancellation events and automatically remove user access
+- **Enhanced storage interface**: Added `getUserByStripeSubscriptionId` method to support webhook-based user management
+- **Subscription metadata tracking**: Added plan duration and creation context metadata to Stripe subscriptions for better tracking
+
+### Date-Based Progression System Implementation (Current Session)
+- **Built comprehensive business day calculation**: Created functions to calculate elapsed business days between dates (weekdays only)
+- **Implemented automatic week/day progression**: System now automatically advances users through 90-day plan based on actual business days elapsed since start date
+- **Updated task fetching logic**: Backend automatically determines current week/day position without requiring manual parameters from frontend
+- **Enhanced user progress tracking**: Start dates are set during onboarding and automatically updated when users access the system
+- **Streamlined frontend queries**: Dashboard and Roadmap pages now fetch current tasks automatically without specifying week/day parameters
+
 ### Code Quality & Roadmap UX Improvements (Current Session)
 - **Completed major code refactoring**: Successfully extracted shared task management functionality to eliminate code duplication between Dashboard and Roadmap pages
 - **Created shared TaskList component**: Built reusable `client/src/components/TaskList.tsx` that handles all task rendering with variant support for different page layouts (dashboard vs roadmap styling)

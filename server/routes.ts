@@ -513,7 +513,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           await storage.updateUser(userId, { stripeCustomerId: customerId });
         }
 
-        // Create subscription
+        // Create subscription with 3-month auto-cancellation
         const subscription = await stripe.subscriptions.create({
           customer: customerId,
           items: [{
@@ -521,6 +521,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }],
           payment_behavior: 'default_incomplete',
           expand: ['latest_invoice.payment_intent'],
+          cancel_at: Math.floor((Date.now() + (3 * 30 * 24 * 60 * 60 * 1000)) / 1000), // Cancel after 3 months
+          metadata: {
+            plan_duration: '3_months',
+            created_for: 'ramplo_professional'
+          }
         });
 
         await storage.updateUser(userId, { stripeSubscriptionId: subscription.id });
@@ -532,6 +537,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } catch (error) {
         console.error("Error creating subscription:", error);
         res.status(500).json({ message: "Failed to create subscription" });
+      }
+    });
+  }
+
+  // Stripe webhook for subscription events
+  if (stripe) {
+    app.post("/api/stripe/webhook", async (req, res) => {
+      try {
+        const event = req.body;
+
+        // Handle subscription cancellation
+        if (event.type === 'customer.subscription.deleted') {
+          const subscription = event.data.object;
+          
+          // Find user by subscription ID and remove access
+          const user = await storage.getUserByStripeSubscriptionId(subscription.id);
+          if (user) {
+            await storage.updateUser(user.id, { 
+              stripeSubscriptionId: null 
+            });
+            console.log(`Subscription ${subscription.id} canceled for user ${user.id}`);
+          }
+        }
+
+        res.json({ received: true });
+      } catch (error) {
+        console.error("Error handling webhook:", error);
+        res.status(500).json({ message: "Webhook error" });
       }
     });
   }
