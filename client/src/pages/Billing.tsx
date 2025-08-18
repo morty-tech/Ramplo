@@ -149,10 +149,6 @@ export default function Billing() {
       {/* Morty User Section */}
       {isMortyUser && (
         <>
-          <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2 mb-5">
-            <Shield className="w-5 h-5" />
-            Powered by Morty
-          </h3>
           <Card className="mb-6">
             <CardContent className="p-8">
             <div className="flex items-center justify-between">
@@ -400,22 +396,25 @@ export default function Billing() {
       )}
 
       {/* Support Section */}
-      <div className="text-sm font-medium text-gray-900 mb-2">Need Help?</div>
       <Card className="mb-6">
-        <CardContent className="pt-6">
-          <div className="bg-gray-50 rounded-lg p-4">
-            <p className="text-sm text-gray-700 mb-3">
-              For billing questions, subscription changes, or account support, please contact our team:
-            </p>
-            <div className="flex items-center">
-              <Mail className="w-4 h-4 text-blue-600 mr-2" />
-              <a 
-                href="mailto:memberships@morty.com" 
-                className="text-blue-600 hover:text-blue-800 font-medium transition-colors"
-              >
-                memberships@morty.com
-              </a>
-            </div>
+        <CardHeader>
+          <CardTitle className="text-base font-semibold text-gray-900 flex items-center gap-2">
+            <Mail className="w-5 h-5" />
+            Need Help
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-gray-700 mb-3">
+            For billing questions, subscription changes, or account support, please contact our team:
+          </p>
+          <div className="flex items-center">
+            <Mail className="w-4 h-4 text-blue-600 mr-2" />
+            <a 
+              href="mailto:memberships@morty.com" 
+              className="text-blue-600 hover:text-blue-800 font-medium transition-colors"
+            >
+              memberships@morty.com
+            </a>
           </div>
         </CardContent>
       </Card>
