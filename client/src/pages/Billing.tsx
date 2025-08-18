@@ -272,7 +272,7 @@ export default function Billing() {
                   <div>
                     <div className="bg-gray-50 rounded-lg p-4 mb-6">
                       <div className="text-3xl font-bold text-gray-900">$49</div>
-                      <div className="text-sm text-gray-600">every 3 months</div>
+                      <div className="text-sm text-gray-600">per month for 3 months</div>
                     </div>
                     
                     <ul className="space-y-3">
