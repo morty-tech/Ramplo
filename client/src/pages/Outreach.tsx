@@ -902,7 +902,7 @@ export default function Outreach() {
                       <>
                         <div className="space-y-6">
                           {/* Email Template Card - Cohesive Design */}
-                          <div className="rounded-lg bg-white border-2 border-gray-300 focus-within:border-aura-600 transition-colors">
+                          <div className="rounded-lg bg-white shadow-md focus-within:border-2 focus-within:border-aura-600 transition-colors">
                             {/* Subject Line Input */}
                             <label htmlFor="email-subject" className="sr-only">
                               Subject Line
@@ -1011,7 +1011,7 @@ export default function Outreach() {
                             {/* Social Media Content Card - Left Side */}
                             <div>
                               <div className="text-sm font-medium text-gray-900 mb-2">Post:</div>
-                              <div className="rounded-lg bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-aura-600">
+                              <div className="rounded-lg bg-white shadow-md focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-aura-600">
                               {/* Post Content Textarea */}
                               <label htmlFor="social-content" className="sr-only">
                                 Post Content
@@ -1108,7 +1108,7 @@ export default function Outreach() {
                               </div>
                             </div>
                             {selectedTemplate.imageUrl ? (
-                              <div className="bg-white p-4 rounded border space-y-4">
+                              <div className="bg-white p-4 rounded shadow-md space-y-4">
                                 {/* Canvas for customized image */}
                                 <div className="flex justify-center relative">
                                   <canvas 
@@ -1258,7 +1258,7 @@ export default function Outreach() {
                       <>
                         <div>
                           {/* Phone Script Card - Cohesive Design */}
-                          <div className="rounded-lg bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-aura-600">
+                          <div className="rounded-lg bg-white shadow-md focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-aura-600">
                             {/* Script Content Textarea */}
                             <label htmlFor="script-content" className="sr-only">
                               Phone Script Content
@@ -1530,7 +1530,7 @@ export default function Outreach() {
           {selectedTemplate && activeTemplateType === "email" && (
             <div>
               <h3 className="text-base font-semibold text-gray-900 mb-5">Email Analysis</h3>
-              <Card>
+              <Card className="shadow-md border-none">
                 <CardContent className="pt-6">
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
@@ -1590,7 +1590,7 @@ export default function Outreach() {
           {selectedTemplate && activeTemplateType === "social-media" && (
             <div>
               <h3 className="text-base font-semibold text-gray-900 mb-5">Social Media Insights</h3>
-              <Card>
+              <Card className="shadow-md border-none">
                 <CardContent className="pt-6">
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
@@ -1636,7 +1636,7 @@ export default function Outreach() {
           {selectedTemplate && activeTemplateType === "phone-script" && (
             <div>
               <h3 className="text-base font-semibold text-gray-900 mb-5">Script Guide</h3>
-              <Card>
+              <Card className="shadow-md border-none">
                 <CardContent className="pt-6">
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
