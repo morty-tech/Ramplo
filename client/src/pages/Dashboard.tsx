@@ -326,11 +326,14 @@ export default function Dashboard() {
         {/* Sidebar Widgets */}
         <div className="space-y-6">
           
-          {/* Client Connection Tracker */}
-          <ClientConnectionTracker />
-          
-          {/* Loan Action Tracker */}
-          <LoanActionTracker />
+          {/* Client Connection and Loan Action Trackers - Side by Side on Medium+ */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:grid-cols-1 lg:gap-6">
+            {/* Client Connection Tracker */}
+            <ClientConnectionTracker />
+            
+            {/* Loan Action Tracker */}
+            <LoanActionTracker />
+          </div>
 
           {/* Quick Actions */}
           <div>
