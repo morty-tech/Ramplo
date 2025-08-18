@@ -101,7 +101,7 @@ export default function Landing() {
             <div className="text-center">
               <h1 className="text-5xl font-semibold tracking-tight text-balance text-white sm:text-7xl">
                 Get Your First 3 Deals in
-                <span className="text-electric-400"> 90 Days</span>
+                <span className="text-frost-400"> 90 Days</span>
               </h1>
               <p className="mt-8 text-lg font-medium text-pretty text-slate-200 sm:text-xl/8">
                 RampLO is an AI-powered 90-day training program designed to help mortgage loan officers 
@@ -122,7 +122,7 @@ export default function Landing() {
                   <Button 
                     type="submit" 
                     disabled={isLoading}
-                    className="bg-electric-600 text-aura-600 hover:bg-electric-400 px-8 font-semibold"
+                    className="bg-frost-600 text-carbon-600 hover:bg-electric-400 px-8 font-semibold"
                   >
                     {isLoading ? "Sending..." : "Get Started"}
                     <ArrowRight className="w-4 h-4 ml-2" />
