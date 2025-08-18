@@ -438,37 +438,45 @@ export default function Billing() {
 
           {/* Cancel Subscription */}
           {user?.stripeSubscriptionId && (
-            <Card className="border-red-200 bg-red-50">
-              <CardContent className="p-6">
-                <div className="flex items-start">
-                  <AlertCircle className="w-5 h-5 text-red-600 mr-3 mt-0.5" />
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold text-red-800 mb-2">Cancel Subscription</h3>
-                    <p className="text-red-700 text-sm mb-4">
-                      Canceling will end your access to all Ramplo features at the end of your current billing period.
-                    </p>
-                    <Button 
-                      onClick={() => setCancelModalOpen(true)}
-                      variant="destructive"
-                      size="sm"
-                    >
-                      Cancel Subscription
-                    </Button>
+            <>
+              <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2 mb-5">
+                <AlertCircle className="w-5 h-5" />
+                Cancel Subscription
+              </h3>
+              <Card className="border-red-200 bg-red-50 mb-6">
+                <CardContent className="p-6">
+                  <div className="flex items-start">
+                    <AlertCircle className="w-5 h-5 text-red-600 mr-3 mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-red-700 text-sm mb-4">
+                        Canceling will end your access to all Ramplo features at the end of your current billing period.
+                      </p>
+                      <Button 
+                        onClick={() => setCancelModalOpen(true)}
+                        variant="destructive"
+                        size="sm"
+                      >
+                        Cancel Subscription
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </>
           )}
         </>
       )}
 
       {/* Delete Account Section */}
+      <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2 mb-5">
+        <Trash2 className="w-5 h-5" />
+        Delete Account
+      </h3>
       <Card className="border-red-300 bg-red-50 mb-6">
         <CardContent className="p-6">
           <div className="flex items-start">
             <Trash2 className="w-5 h-5 text-red-600 mr-3 mt-0.5" />
             <div className="flex-1">
-              <h3 className="text-lg font-bold text-red-800 mb-2">Delete Account</h3>
               <p className="text-red-700 text-sm mb-4">
                 Permanently delete your account and all associated data. This action cannot be undone.
               </p>
