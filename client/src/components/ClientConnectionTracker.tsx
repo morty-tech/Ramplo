@@ -98,7 +98,7 @@ export default function ClientConnectionTracker() {
                   <p className="text-sm font-medium text-gray-500">{type.label}</p>
                 </div>
                 
-                <div className="flex items-center bg-aura-200 rounded-md p-1">
+                <div className="flex items-center bg-aura-100 rounded-md p-1">
                   <button
                     onClick={() => adjustCount(type.key, false)}
                     disabled={updateConnectionsMutation.isPending || !todayConnections?.[type.key]}
