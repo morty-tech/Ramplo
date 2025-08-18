@@ -124,7 +124,11 @@ export class DatabaseStorage implements IStorage {
     await db.delete(tasks).where(eq(tasks.userId, id));
     await db.delete(userProfiles).where(eq(userProfiles.userId, id));
     await db.delete(userProgress).where(eq(userProgress.userId, id));
-    await db.delete(magicLinks).where(eq(magicLinks.userId, id));
+    // Magic links don't have userId foreign key, delete by email
+    const user = await db.select({ email: users.email }).from(users).where(eq(users.id, id));
+    if (user[0]?.email) {
+      await db.delete(magicLinks).where(eq(magicLinks.email, user[0].email));
+    }
     
     // Finally delete the user
     await db.delete(users).where(eq(users.id, id));
@@ -156,7 +160,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createUserProfile(profileData: InsertUserProfile): Promise<UserProfile> {
-    const [profile] = await db.insert(userProfiles).values(profileData).returning();
+    const [profile] = await db.insert(userProfiles).values([profileData]).returning();
     return profile;
   }
 
@@ -189,7 +193,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createTask(taskData: InsertTask): Promise<Task> {
-    const [task] = await db.insert(tasks).values(taskData).returning();
+    const [task] = await db.insert(tasks).values([taskData]).returning();
     return task;
   }
 
