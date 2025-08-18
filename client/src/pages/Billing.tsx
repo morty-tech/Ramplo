@@ -66,7 +66,7 @@ function SubscriptionForm({ clientSecret, onSuccess }: { clientSecret: string; o
       <Button 
         type="submit" 
         disabled={!stripe || isLoading}
-        className="w-full bg-orange-600 hover:bg-orange-700"
+        className="w-full bg-forest-600 hover:bg-forest-700 text-white"
       >
         {isLoading ? "Processing..." : "Subscribe Now"}
       </Button>
@@ -272,7 +272,7 @@ export default function Billing() {
                   <div>
                     <div className="bg-gray-50 rounded-lg p-4 mb-6">
                       <div className="text-3xl font-bold text-gray-900">$49</div>
-                      <div className="text-sm text-gray-600">per month</div>
+                      <div className="text-sm text-gray-600">every 3 months</div>
                     </div>
                     
                     <ul className="space-y-3">
@@ -299,7 +299,7 @@ export default function Billing() {
                     <Button 
                       onClick={handleSubscribe}
                       disabled={createSubscriptionMutation.isPending}
-                      className="w-full bg-orange-600 hover:bg-orange-700 py-3"
+                      className="w-full bg-forest-600 hover:bg-forest-700 text-white py-3"
                     >
                       {createSubscriptionMutation.isPending ? "Loading..." : "Subscribe Now"}
                     </Button>
