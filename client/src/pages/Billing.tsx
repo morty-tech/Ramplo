@@ -84,12 +84,21 @@ export default function Billing() {
     mutationFn: () => apiRequest("POST", "/api/create-subscription"),
     onSuccess: async (response) => {
       const data = await response.json();
+      console.log("Subscription response:", data);
       if (data.clientSecret) {
+        console.log("Setting client secret and showing modal");
         setClientSecret(data.clientSecret);
         setShowPaymentModal(true);
+      } else {
+        console.log("No client secret in response");
+        toast({
+          title: "Error",
+          description: "No payment required - subscription may already be active",
+        });
       }
     },
-    onError: () => {
+    onError: (error) => {
+      console.error("Subscription error:", error);
       toast({
         title: "Error",
         description: "Failed to start subscription process",
@@ -424,16 +433,28 @@ export default function Billing() {
             <DialogTitle>Complete Your Subscription</DialogTitle>
           </DialogHeader>
           
-          {stripePromise && clientSecret && (
+          {stripePromise && clientSecret ? (
             <Elements 
               stripe={stripePromise} 
               options={{ clientSecret }}
             >
               <SubscriptionForm 
                 clientSecret={clientSecret}
-                onSuccess={() => setShowPaymentModal(false)}
+                onSuccess={() => {
+                  setShowPaymentModal(false);
+                  window.location.reload();
+                }}
               />
             </Elements>
+          ) : (
+            <div className="p-4">
+              <p>Loading payment form...</p>
+              <p className="text-xs text-gray-500">
+                Stripe: {stripePromise ? "✓" : "✗"} | 
+                Client Secret: {clientSecret ? "✓" : "✗"} |
+                Modal Open: {showPaymentModal ? "✓" : "✗"}
+              </p>
+            </div>
           )}
         </DialogContent>
       </Dialog>
