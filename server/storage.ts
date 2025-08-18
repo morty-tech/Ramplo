@@ -120,14 +120,17 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteUser(id: string): Promise<void> {
+    // Get user's email first for magic link cleanup
+    const [user] = await db.select({ email: users.email }).from(users).where(eq(users.id, id));
+    
     // Delete all related data first to avoid foreign key constraint violations
     await db.delete(tasks).where(eq(tasks.userId, id));
     await db.delete(userProfiles).where(eq(userProfiles.userId, id));
     await db.delete(userProgress).where(eq(userProgress.userId, id));
-    // Magic links don't have userId foreign key, delete by email
-    const user = await db.select({ email: users.email }).from(users).where(eq(users.id, id));
-    if (user[0]?.email) {
-      await db.delete(magicLinks).where(eq(magicLinks.email, user[0].email));
+    
+    // Delete magic links by email if user exists
+    if (user?.email) {
+      await db.delete(magicLinks).where(eq(magicLinks.email, user.email));
     }
     
     // Finally delete the user
