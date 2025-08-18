@@ -486,7 +486,7 @@ export default function Roadmap() {
                   </div>
                 ) : (
                   <div className="text-sm text-gray-500 italic">
-                    Week details will be available soon.
+                    Week details unlock as you progress.
                   </div>
                 )}
               </div>
