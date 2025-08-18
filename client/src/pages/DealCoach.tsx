@@ -113,7 +113,7 @@ export default function DealCoach() {
             <Bot className="w-5 h-5" />
             Describe Your Situation
           </h3>
-          <Card>
+          <Card className="shadow-md border-none">
             <CardContent className="pt-6">
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Loan Stage */}
@@ -216,7 +216,7 @@ export default function DealCoach() {
                 <Lightbulb className="w-5 h-5" />
                 AI Deal Coach Response
               </h3>
-              <Card>
+              <Card className="shadow-md border-none">
                 <CardContent className="pt-6">
                 <div className="prose prose-sm max-w-none">
                   <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
@@ -238,7 +238,7 @@ export default function DealCoach() {
             <ExternalLink className="w-5 h-5" />
             Common Scenarios
           </h3>
-          <Card>
+          <Card className="shadow-md border-none">
             <CardContent className="pt-6">
               <div className="space-y-3">
                 {commonScenarios.map((scenario) => (
@@ -263,7 +263,7 @@ export default function DealCoach() {
             <Clock className="w-5 h-5" />
             Recent Questions
           </h3>
-          <Card>
+          <Card className="shadow-md border-none">
             <CardContent className="pt-6">
               <div className="space-y-4">
                 {sessions.slice(0, 3).map((session: any, index) => (
