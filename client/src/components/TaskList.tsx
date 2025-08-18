@@ -105,9 +105,6 @@ export function TaskList({
                         : 'text-gray-900'
                     }`}>
                       {task.title}
-                      {isCompleting && (
-                        <span className="ml-2 text-green-600 animate-bounce">✓</span>
-                      )}
                     </p>
                     <p className={`mt-0.5 rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset ${getCategoryStyle(task.category || '')}`}>
                       {task.category}
