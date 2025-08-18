@@ -257,7 +257,7 @@ export default function Onboarding() {
             </div>
           </div>
 
-          <div className="sm:mx-auto sm:w-full sm:max-w-3xl">
+          <div className="sm:mx-auto sm:w-full sm:max-w-3xl mb-12">
           <div className="bg-white rounded-lg p-8 shadow-xl">
 
             <form onSubmit={handleSubmit} onKeyDown={(e) => {
