@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid'
-import { CalendarIcon, UsersIcon, HomeIcon, FireIcon } from '@heroicons/react/24/outline'
+import { CalendarIcon, UsersIcon, TrophyIcon, FireIcon } from '@heroicons/react/24/outline'
 import { apiRequest } from "@/lib/queryClient";
 import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -186,7 +186,7 @@ export default function Dashboard() {
       id: 4, 
       name: "Closed Loans", 
       stat: (progress?.loansClosed || 0).toString(), 
-      icon: HomeIcon, 
+      icon: TrophyIcon, 
       change: progress?.loansClosed && progress.loansClosed > 0 ? `${progress.loansClosed} total` : '0', 
       changeType: progress?.loansClosed && progress.loansClosed > 0 ? 'increase' : 'neutral' as const
     },
