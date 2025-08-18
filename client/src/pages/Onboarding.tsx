@@ -210,46 +210,46 @@ export default function Onboarding() {
           />
         </div>
         
-        <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 relative z-10">
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <div className="flex items-center justify-center">
-              <div className="h-10 w-10 bg-white rounded-lg flex items-center justify-center mr-3">
-                <span className="text-forest-800 font-bold text-xl">R</span>
+        <div className="flex min-h-full flex-col justify-between px-6 py-12 lg:px-8 relative z-10">
+          <div className="flex-grow flex flex-col justify-center">
+            <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+              <div className="flex items-center justify-center">
+                <div className="h-10 w-10 bg-white rounded-lg flex items-center justify-center mr-3">
+                  <span className="text-forest-800 font-bold text-xl">R</span>
+                </div>
+                <span className="text-white font-bold text-2xl">RampLO</span>
               </div>
-              <span className="text-white font-bold text-2xl">RampLO</span>
             </div>
-          </div>
 
-          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
-            <div className="bg-white rounded-lg p-8 shadow-xl text-center">
-              <div className="w-16 h-16 border-4 border-forest-600 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Hang tight — we're building your ramp to success!</h2>
-              <div className="space-y-4">
-                {loadingMessages.map((message, index) => (
-                  <div key={index} className={`flex items-center justify-center space-x-2 text-sm ${
-                    index < loadingStep ? 'text-green-600' : 
-                    index === loadingStep ? 'text-forest-600' : 'text-gray-400'
-                  }`}>
-                    {index < loadingStep && (
-                      <div className="w-4 h-4 bg-green-600 rounded-full flex items-center justify-center">
-                        <div className="w-2 h-2 bg-white rounded-full"></div>
-                      </div>
-                    )}
-                    {index === loadingStep && (
-                      <div className="w-4 h-4 border-2 border-forest-600 border-t-transparent rounded-full animate-spin"></div>
-                    )}
-                    {index > loadingStep && (
-                      <div className="w-4 h-4 border-2 border-gray-300 rounded-full"></div>
-                    )}
-                    <span className="font-medium">{message}</span>
-                  </div>
-                ))}
+            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
+              <div className="bg-white rounded-lg p-8 shadow-xl text-center">
+                <div className="w-16 h-16 border-4 border-forest-600 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Hang tight — we're building your ramp to success!</h2>
+                <div className="space-y-4">
+                  {loadingMessages.map((message, index) => (
+                    <div key={index} className={`flex items-center justify-center space-x-2 text-sm ${
+                      index < loadingStep ? 'text-green-600' : 
+                      index === loadingStep ? 'text-forest-600' : 'text-gray-400'
+                    }`}>
+                      {index < loadingStep && (
+                        <div className="w-4 h-4 bg-green-600 rounded-full flex items-center justify-center">
+                          <div className="w-2 h-2 bg-white rounded-full"></div>
+                        </div>
+                      )}
+                      {index === loadingStep && (
+                        <div className="w-4 h-4 border-2 border-forest-600 border-t-transparent rounded-full animate-spin"></div>
+                      )}
+                      {index > loadingStep && (
+                        <div className="w-4 h-4 border-2 border-gray-300 rounded-full"></div>
+                      )}
+                      <span className="font-medium">{message}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        
-        <div className="mt-16">
+          
           <TransparentFooter />
         </div>
       </div>
@@ -286,31 +286,32 @@ export default function Onboarding() {
         />
       </div>
       
-      <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 relative z-10">
-        <div className="sm:mx-auto sm:w-full sm:max-w-3xl">
-          <div className="flex items-center justify-center mb-10">
-            <div className="h-10 w-10 bg-white rounded-lg flex items-center justify-center mr-3">
-              <span className="text-forest-800 font-bold text-xl">R</span>
+      <div className="flex min-h-full flex-col justify-between px-6 py-12 lg:px-8 relative z-10">
+        <div className="flex-grow flex flex-col justify-center">
+          <div className="sm:mx-auto sm:w-full sm:max-w-3xl">
+            <div className="flex items-center justify-center mb-10">
+              <div className="h-10 w-10 bg-white rounded-lg flex items-center justify-center mr-3">
+                <span className="text-forest-800 font-bold text-xl">R</span>
+              </div>
+              <span className="text-white font-bold text-2xl">RampLO</span>
             </div>
-            <span className="text-white font-bold text-2xl">RampLO</span>
           </div>
-        </div>
 
-        <div className="sm:mx-auto sm:w-full sm:max-w-2xl mb-6">
-          <div className="text-center mb-4">
-            <p className="text-xl font-semibold text-white">{getHeaderText()}</p>
-          </div>
-          
-          <div className="mb-4">
-            <div className="flex justify-between text-sm text-gray-300 mb-2">
-              <span>Progress</span>
-              <span>{Math.round(progress)}%</span>
+          <div className="sm:mx-auto sm:w-full sm:max-w-2xl mb-6">
+            <div className="text-center mb-4">
+              <p className="text-xl font-semibold text-white">{getHeaderText()}</p>
             </div>
-            <Progress value={progress} className="h-2 bg-white/20 [&>div]:bg-limeglow-400" />
+            
+            <div className="mb-4">
+              <div className="flex justify-between text-sm text-gray-300 mb-2">
+                <span>Progress</span>
+                <span>{Math.round(progress)}%</span>
+              </div>
+              <Progress value={progress} className="h-2 bg-white/20 [&>div]:bg-limeglow-400" />
+            </div>
           </div>
-        </div>
 
-        <div className="sm:mx-auto sm:w-full sm:max-w-3xl">
+          <div className="sm:mx-auto sm:w-full sm:max-w-3xl">
           <div className="bg-white rounded-lg p-8 shadow-xl">
 
             <form onSubmit={handleSubmit} onKeyDown={(e) => {
@@ -1157,9 +1158,8 @@ export default function Onboarding() {
             </form>
           </div>
         </div>
-      </div>
-      
-      <div className="mt-16">
+        </div>
+        
         <TransparentFooter />
       </div>
     </div>
