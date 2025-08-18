@@ -70,7 +70,10 @@ export default function Landing() {
       </header>
 
       {/* Hero Section */}
-      <div className="bg-aura-600 min-h-screen flex items-center justify-center">
+      <div 
+        className="min-h-screen flex items-center justify-center"
+        style={{ background: 'linear-gradient(90deg, #8E2DE2 0%, #4A00E0 50%, #00F5D4 100%)' }}
+      >
         <div className="relative isolate px-6 pt-14 lg:px-8">
           <div
             aria-hidden="true"
