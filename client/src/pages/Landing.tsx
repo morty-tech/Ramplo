@@ -403,7 +403,7 @@ export default function Landing() {
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-slate-300"
+                  className="bg-white/10 border-white/20 text-white placeholder:text-slate-300 w-80"
                   required
                 />
                 <Button 
