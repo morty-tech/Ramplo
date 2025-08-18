@@ -253,7 +253,7 @@ export default function Onboarding() {
                 <span>Progress</span>
                 <span>{Math.round(progress)}%</span>
               </div>
-              <Progress value={progress} className="h-2 bg-white/20 [&>div]:bg-limeglow-400" />
+              <Progress value={progress} className="h-2 bg-white/20 [&>div]:bg-neon-400" />
             </div>
           </div>
 

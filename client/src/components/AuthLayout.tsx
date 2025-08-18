@@ -6,7 +6,7 @@ interface AuthLayoutProps {
 export default function AuthLayout({ children, showFooter = true }: AuthLayoutProps) {
   return (
     <div className="h-screen bg-gradient-to-br from-aura-600 to-neon-800 relative isolate overflow-hidden">
-      {/* Top lime glow gradient burst */}
+      {/* Top neon glow gradient burst */}
       <div
         aria-hidden="true"
         className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -20,7 +20,7 @@ export default function AuthLayout({ children, showFooter = true }: AuthLayoutPr
         />
       </div>
       
-      {/* Bottom lime glow gradient burst */}
+      {/* Bottom neon glow gradient burst */}
       <div
         aria-hidden="true"
         className="absolute inset-x-0 bottom-0 -z-10 transform-gpu overflow-hidden blur-3xl"
