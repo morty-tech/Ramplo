@@ -80,7 +80,7 @@ export default function LoanActionTracker() {
     <div>
       <div className="flex items-center justify-between mb-5">
         <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2">
-          <FileCheck className="w-5 h-5" />
+          <FileCheck className="w-5 h-5 text-aura-600" />
           Loan Actions
         </h3>
         <span className="text-sm text-gray-600">
@@ -94,10 +94,7 @@ export default function LoanActionTracker() {
             <div key={type.key}>
               <div className="flex items-center justify-between py-3">
                 <div className="flex items-center gap-3">
-                  <div className="absolute rounded-md bg-orange-500/15 p-2">
-                    <type.icon aria-hidden="true" className="size-5 text-orange-600" />
-                  </div>
-                  <div className="ml-14">
+                  <div className="ml-2">
                     <p className="text-sm font-medium text-gray-500">{type.label}</p>
                     <p className="text-2xl font-semibold text-gray-900">{todayLoanActions?.[type.key] || 0}</p>
                   </div>
