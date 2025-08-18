@@ -99,7 +99,7 @@ export function TaskList({
                   <div className="flex items-start gap-x-3">
                     <p className={`${getTitleStyles()} font-semibold transition-all duration-300 ${
                       isCompleting 
-                        ? 'text-green-700' 
+                        ? 'text-electric-600' 
                         : isCompleted 
                         ? 'text-gray-500 line-through' 
                         : 'text-gray-900'
@@ -137,7 +137,7 @@ export function TaskList({
                     disabled={isCompleting}
                     className={`rounded-md px-2 md:px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 border whitespace-nowrap ${
                       isCompleting
-                        ? 'bg-green-500 text-white border-green-500'
+                        ? 'bg-electric-600 text-white border-electric-600'
                         : 'bg-white text-aura-600 border-aura-600 hover:bg-aura-200'
                     }`}
                   >
