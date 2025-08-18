@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid'
-import { CheckCircleIcon, UsersIcon, TrophyIcon, FireIcon, CalendarIcon } from '@heroicons/react/24/outline'
+import { BoltIcon, UsersIcon, TrophyIcon, FireIcon, CalendarIcon } from '@heroicons/react/24/outline'
 import { apiRequest } from "@/lib/queryClient";
 import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -162,7 +162,7 @@ export default function Dashboard() {
       id: 1, 
       name: "Today's Tasks", 
       stat: `${animatedCompleted}/${animatedTotal}`, 
-      icon: CheckCircleIcon, 
+      icon: BoltIcon, 
       change: todayTasksCompleted > 0 ? `+${todayTasksCompleted}` : '0', 
       changeType: todayTasksCompleted > 0 ? 'increase' : 'neutral' as const
     },
