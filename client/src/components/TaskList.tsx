@@ -30,7 +30,7 @@ export function TaskList({
       return 'bg-teal-50 text-teal-700 ring-teal-600/20';
     }
     if (['social media', 'content creation', 'marketing', 'branding'].includes(categoryLower)) {
-      return 'bg-neon-50 text-neon-700 ring-neon-600/20';
+      return 'bg-lime-50 text-lime-700 ring-lime-600/20';
     }
     if (['admin', 'planning', 'setup', 'organization'].includes(categoryLower)) {
       return 'bg-slate-50 text-slate-700 ring-slate-600/20';

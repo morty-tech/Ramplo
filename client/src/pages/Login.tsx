@@ -99,7 +99,7 @@ export default function Login() {
 
         <p className="mt-6 text-center text-sm/6 text-gray-300">
           New to RampLO?{' '}
-          <a href="/" className="font-semibold text-neon-400 hover:text-neon-300 ml-2">
+          <a href="/" className="font-semibold text-limeglow-400 hover:text-limeglow-300 ml-2">
             Learn more
           </a>
         </p>

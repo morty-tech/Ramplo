@@ -62,7 +62,7 @@ export default function Landing() {
             <span className="text-2xl font-bold text-white">RampLO</span>
           </div>
           <div className="flex lg:flex-1 lg:justify-end">
-            <a href="/login" className="text-sm font-semibold text-white hover:text-neon-400">
+            <a href="/login" className="text-sm font-semibold text-white hover:text-limeglow-400">
               Log in <span aria-hidden="true">&rarr;</span>
             </a>
           </div>
@@ -82,7 +82,7 @@ export default function Landing() {
                 clipPath:
                   'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
               }}
-              className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-aura-400 to-neon-400 opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem] animate-pulse"
+              className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-aura-400 to-limeglow-400 opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem] animate-pulse"
             />
           </div>
           
@@ -90,7 +90,7 @@ export default function Landing() {
             <div className="text-center">
               <h1 className="text-5xl font-semibold tracking-tight text-balance text-white sm:text-7xl">
                 Get Your First 3 Deals in
-                <span className="text-neon-400"> 90 Days</span>
+                <span className="text-limeglow-400"> 90 Days</span>
               </h1>
               <p className="mt-8 text-lg font-medium text-pretty text-slate-200 sm:text-xl/8">
                 RampLO is an AI-powered 90-day training program designed to help mortgage loan officers 
@@ -226,7 +226,7 @@ export default function Landing() {
 
               <div className="flex flex-col">
                 <dt className="text-base/7 font-semibold text-gray-900">
-                  <div className="mb-6 flex size-10 items-center justify-center rounded-lg bg-neon-600">
+                  <div className="mb-6 flex size-10 items-center justify-center rounded-lg bg-limeglow-600">
                     <Bot aria-hidden="true" className="size-6 text-aura-600" />
                   </div>
                   AI Deal Coach
@@ -261,13 +261,13 @@ export default function Landing() {
                   Simple steps to launch your mortgage career and secure your first deals in 90 days.
                 </p>
               </div>
-              <div className="relative -z-20 max-w-xl min-w-full min-h-[32rem] rounded-xl lg:row-span-4 lg:w-[64rem] lg:max-w-none flex items-center justify-center bg-gradient-to-br from-tealwave-600 to-neon-600 py-24 px-16 shadow-xl ring-1 ring-white/10">
+              <div className="relative -z-20 max-w-xl min-w-full min-h-[32rem] rounded-xl lg:row-span-4 lg:w-[64rem] lg:max-w-none flex items-center justify-center bg-gradient-to-br from-tealwave-600 to-limeglow-600 py-24 px-16 shadow-xl ring-1 ring-white/10">
                 <div className="text-center">
                   <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
                     <Target className="w-12 h-12 text-aura-600" />
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-2">90-Day Success Plan</h3>
-                  <p className="text-neon-200">Your personalized roadmap to closing deals</p>
+                  <p className="text-limeglow-200">Your personalized roadmap to closing deals</p>
                 </div>
               </div>
               <div className="max-w-xl lg:row-start-3 lg:mt-10 lg:max-w-md lg:border-t lg:border-white/10 lg:pt-10">
@@ -276,7 +276,7 @@ export default function Landing() {
                     <dt className="ml-9 inline-block font-semibold text-white">
                       <User
                         aria-hidden="true"
-                        className="absolute top-1 left-1 size-5 text-neon-400"
+                        className="absolute top-1 left-1 size-5 text-limeglow-400"
                       />
                       Complete Your Profile
                     </dt>{' '}
@@ -286,7 +286,7 @@ export default function Landing() {
                     <dt className="ml-9 inline-block font-semibold text-white">
                       <Calendar
                         aria-hidden="true"
-                        className="absolute top-1 left-1 size-5 text-neon-400"
+                        className="absolute top-1 left-1 size-5 text-limeglow-400"
                       />
                       Follow Daily Tasks
                     </dt>{' '}
@@ -296,7 +296,7 @@ export default function Landing() {
                     <dt className="ml-9 inline-block font-semibold text-white">
                       <TrendingUp
                         aria-hidden="true"
-                        className="absolute top-1 left-1 size-5 text-neon-400"
+                        className="absolute top-1 left-1 size-5 text-limeglow-400"
                       />
                       Close Your First Deals
                     </dt>{' '}
@@ -314,7 +314,7 @@ export default function Landing() {
                   clipPath:
                     'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
                 }}
-                className="aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-tealwave-400 to-neon-600 opacity-25"
+                className="aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-tealwave-400 to-limeglow-600 opacity-25"
               />
             </div>
           </div>
@@ -379,7 +379,7 @@ export default function Landing() {
         viewport={{ once: true, margin: "-100px" }}
       >
         <div className="mx-auto max-w-7xl py-8 sm:px-6 lg:px-8">
-          <div className="relative isolate overflow-hidden bg-neon-600 px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
+          <div className="relative isolate overflow-hidden bg-limeglow-600 px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
             <h2 className="text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">
               Ready to Ramp?
             </h2>
@@ -415,19 +415,19 @@ export default function Landing() {
               <div className="absolute w-px h-32 bg-gradient-to-t from-transparent via-green-400 to-transparent opacity-30 animate-[slide_8s_linear_infinite] -top-16 left-1/4 transform rotate-12"></div>
               
               {/* Diagonal line 2 */}
-              <div className="absolute w-px h-24 bg-gradient-to-t from-transparent via-neon-400 to-transparent opacity-25 animate-[slide_6s_linear_infinite_2s] -top-12 left-1/2 transform rotate-15"></div>
+              <div className="absolute w-px h-24 bg-gradient-to-t from-transparent via-lime-400 to-transparent opacity-25 animate-[slide_6s_linear_infinite_2s] -top-12 left-1/2 transform rotate-15"></div>
               
               {/* Diagonal line 3 */}
               <div className="absolute w-px h-40 bg-gradient-to-t from-transparent via-green-500 to-transparent opacity-20 animate-[slide_10s_linear_infinite_1s] -top-20 right-1/3 transform rotate-8"></div>
               
               {/* Diagonal line 4 */}
-              <div className="absolute w-px h-28 bg-gradient-to-t from-transparent via-neon-500 to-transparent opacity-35 animate-[slide_7s_linear_infinite_3s] -top-14 left-1/6 transform rotate-20"></div>
+              <div className="absolute w-px h-28 bg-gradient-to-t from-transparent via-lime-500 to-transparent opacity-35 animate-[slide_7s_linear_infinite_3s] -top-14 left-1/6 transform rotate-20"></div>
               
               {/* Diagonal line 5 */}
               <div className="absolute w-px h-36 bg-gradient-to-t from-transparent via-green-300 to-transparent opacity-15 animate-[slide_9s_linear_infinite_4s] -top-18 right-1/4 transform rotate-10"></div>
               
               {/* Diagonal line 6 */}
-              <div className="absolute w-px h-20 bg-gradient-to-t from-transparent via-neon-600 to-transparent opacity-40 animate-[slide_5s_linear_infinite_1.5s] -top-10 left-3/4 transform rotate-18"></div>
+              <div className="absolute w-px h-20 bg-gradient-to-t from-transparent via-lime-600 to-transparent opacity-40 animate-[slide_5s_linear_infinite_1.5s] -top-10 left-3/4 transform rotate-18"></div>
             </div>
           </div>
         </div>
