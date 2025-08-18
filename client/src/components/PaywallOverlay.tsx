@@ -128,7 +128,7 @@ export default function PaywallOverlay() {
   return (
     <div className="fixed inset-0 z-50 bg-white">
       {/* Full screen paywall overlay */}
-      <div className="min-h-screen bg-gradient-to-br from-aura-600 to-neon-800 relative isolate">
+      <div className="min-h-screen bg-gradient-to-br from-aura-600 to-eclipse-800 relative isolate">
         {/* Gradient decorations */}
         <div
           aria-hidden="true"

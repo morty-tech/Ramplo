@@ -18,7 +18,7 @@ export default {
           600: "#8E2DE2",
           800: "#5E00A0",
         },
-        neon: {
+        eclipse: {
           200: "#A0B2FF",
           400: "#5768EB",
           600: "#4A00E0",

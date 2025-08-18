@@ -11,7 +11,7 @@
   --popover-foreground: #2A2A2A; /* carbon-600 */
   --primary: #8E2DE2; /* aura-600 */
   --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: #4A00E0; /* neon-600 */
+  --secondary: #4A00E0; /* eclipse-600 */
   --secondary-foreground: hsl(0, 0%, 100%);
   --muted: #B3B3B3; /* carbon-200 */
   --muted-foreground: #7A7A7A; /* carbon-400 */
@@ -23,7 +23,7 @@
   --input: #B3B3B3; /* carbon-200 */
   --ring: #8E2DE2; /* aura-600 */
   --chart-1: #8E2DE2; /* aura-600 */
-  --chart-2: #4A00E0; /* neon-600 */
+  --chart-2: #4A00E0; /* eclipse-600 */
   --chart-3: #00F5D4; /* electric-600 */
   --chart-4: #6AE5F7; /* frost-600 */
   --chart-5: #B266FF; /* aura-400 */
@@ -51,7 +51,7 @@
   --popover-foreground: #E5E5E5; /* carbon-100 */
   --primary: #B266FF; /* aura-400 */
   --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: #5768EB; /* neon-400 */
+  --secondary: #5768EB; /* eclipse-400 */
   --secondary-foreground: #101010; /* carbon-800 */
   --muted: #2A2A2A; /* carbon-600 */
   --muted-foreground: #7A7A7A; /* carbon-400 */
@@ -63,7 +63,7 @@
   --input: #2A2A2A; /* carbon-600 */
   --ring: #B266FF; /* aura-400 */
   --chart-1: #B266FF; /* aura-400 */
-  --chart-2: #5768EB; /* neon-400 */
+  --chart-2: #5768EB; /* eclipse-400 */
   --chart-3: #66FFDD; /* electric-400 */
   --chart-4: #9BEFFF; /* frost-400 */
   --chart-5: #8E2DE2; /* aura-600 */

@@ -58,12 +58,13 @@ Preferred communication style: Simple, everyday language.
 ## Recent Changes
 
 ### Brand Redesign with New Color Palette (Current Session)
-- **Implemented comprehensive brand color redesign**: Replaced old forest/limeglow color scheme with new vibrant palette featuring Aura (purple), Neon (blue), Electric (cyan), Frost (icy cyan), and Carbon (black)
+- **Implemented comprehensive brand color redesign**: Replaced old forest/limeglow color scheme with new vibrant palette featuring Aura (purple), Eclipse (blue), Electric (cyan), Frost (icy cyan), and Carbon (black)
 - **Updated Tailwind configuration**: Added all new color variants with proper hex values in tailwind.config.ts
 - **Updated CSS variables**: Modified both light and dark mode CSS variables to use new primary color (aura-600: #8E2DE2) and supporting colors
-- **Enhanced color system**: New palette provides better visual hierarchy with Aura as primary, Neon as secondary, Electric as accent, Frost for highlights, and Carbon for neutrals
+- **Enhanced color system**: New palette provides better visual hierarchy with Aura as primary, Eclipse as secondary, Electric as accent, Frost for highlights, and Carbon for neutrals
 - **Completed global color migration**: Successfully replaced all forest-800, forest-600, forest-400, forest-200, forest-100, and forest-50 references with corresponding aura color variants across the entire codebase
 - **Updated brand consistency**: All components, pages, and UI elements now use the new color palette including buttons, backgrounds, borders, text colors, and interactive states
+- **Renamed color scheme**: Updated "neon" color name to "eclipse" throughout the entire codebase per user request, maintaining consistent branding
 - **Maintained accessibility**: Dark mode variants use appropriate lighter shades for proper contrast and readability
 
 ### Critical Onboarding Bug Fix & Account Management Features (Previous Session)
