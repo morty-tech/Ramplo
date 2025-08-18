@@ -109,7 +109,10 @@ export default function DealCoach() {
         
         {/* Coach Input Form */}
         <div className="lg:col-span-2">
-          <div className="text-sm font-medium text-gray-900 mb-2">Describe Your Situation</div>
+          <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2 mb-5">
+            <Bot className="w-5 h-5" />
+            Describe Your Situation
+          </h3>
           <Card>
             <CardContent className="pt-6">
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -209,7 +212,10 @@ export default function DealCoach() {
           {/* AI Response */}
           {latestSession && showResponse && (
             <>
-              <div className="text-sm font-medium text-gray-900 mb-2 mt-6">AI Deal Coach Response</div>
+              <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2 mb-5 mt-6">
+                <Lightbulb className="w-5 h-5" />
+                AI Deal Coach Response
+              </h3>
               <Card>
                 <CardContent className="pt-6">
                 <div className="prose prose-sm max-w-none">
@@ -228,7 +234,10 @@ export default function DealCoach() {
         <div className="space-y-6">
           
           {/* Common Scenarios */}
-          <div className="text-sm font-medium text-gray-900 mb-2">Common Scenarios</div>
+          <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2 mb-5">
+            <ExternalLink className="w-5 h-5" />
+            Common Scenarios
+          </h3>
           <Card>
             <CardContent className="pt-6">
               <div className="space-y-3">
@@ -250,7 +259,10 @@ export default function DealCoach() {
           </Card>
 
           {/* Recent Questions */}
-          <div className="text-sm font-medium text-gray-900 mb-2">Recent Questions</div>
+          <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2 mb-5">
+            <Clock className="w-5 h-5" />
+            Recent Questions
+          </h3>
           <Card>
             <CardContent className="pt-6">
               <div className="space-y-4">
