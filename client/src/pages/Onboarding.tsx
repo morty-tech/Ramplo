@@ -210,7 +210,7 @@ export default function Onboarding() {
           />
         </div>
         
-        <div className="flex min-h-full flex-col justify-between px-6 py-12 lg:px-8 relative z-10">
+        <div className="flex min-h-screen flex-col justify-between px-6 py-12 lg:px-8 relative z-10">
           <div className="flex-grow flex flex-col justify-center">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
               <div className="flex items-center justify-center">
@@ -286,7 +286,7 @@ export default function Onboarding() {
         />
       </div>
       
-      <div className="flex min-h-full flex-col justify-between px-6 py-12 lg:px-8 relative z-10">
+      <div className="flex min-h-screen flex-col justify-between px-6 py-12 lg:px-8 relative z-10">
         <div className="flex-grow flex flex-col justify-center">
           <div className="sm:mx-auto sm:w-full sm:max-w-3xl">
             <div className="flex items-center justify-center mb-10">
