@@ -990,7 +990,7 @@ export default function Outreach() {
                                       }
                                     }}
                                     size="sm"
-                                    className="text-xs h-7 px-3 bg-lime-400 hover:bg-lime-500 text-black border-0"
+                                    className="text-xs h-7 px-3 bg-aura-600 hover:bg-aura-700 text-white border-0"
                                   >
                                     Save
                                   </Button>
@@ -1076,7 +1076,7 @@ export default function Outreach() {
                                         }
                                       }}
                                       size="sm"
-                                      className="text-xs h-7 px-3 bg-lime-400 hover:bg-lime-500 text-black border-0"
+                                      className="text-xs h-7 px-3 bg-aura-600 hover:bg-aura-700 text-white border-0"
                                     >
                                       Save
                                     </Button>
@@ -1210,7 +1210,7 @@ export default function Outreach() {
                                       onClick={downloadCustomizedImage}
                                       size="sm"
                                       disabled={!customImageUrl}
-                                      className="text-xs h-7 px-3 bg-lime-400 hover:bg-lime-500 text-black border-0"
+                                      className="text-xs h-7 px-3 bg-aura-600 hover:bg-aura-700 text-white border-0"
                                     >
                                       <Download className="w-3 h-3 mr-1" />
                                       Download Image
@@ -1314,7 +1314,7 @@ export default function Outreach() {
                                       }
                                     }}
                                     size="sm"
-                                    className="text-xs h-7 px-3 bg-lime-400 hover:bg-lime-500 text-black border-0"
+                                    className="text-xs h-7 px-3 bg-aura-600 hover:bg-aura-700 text-white border-0"
                                   >
                                     Save
                                   </Button>
