@@ -88,7 +88,7 @@ export default function ClientConnectionTracker() {
         </span>
       </div>
       
-      <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
+      <div className="relative overflow-hidden rounded-lg bg-white px-4 shadow-sm sm:px-6">
         <div className="space-y-0">
           {connectionTypes.map((type, index) => (
             <div key={type.key}>
