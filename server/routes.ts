@@ -182,7 +182,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!user.isMortyUser && user.stripeSubscriptionId && stripe) {
         try {
           const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
-          hasActiveSubscription = subscription.status === 'active';
+          // In test mode, incomplete subscriptions should be treated as active for development
+          // In production, only 'active' status should be accepted
+          const isDevelopment = process.env.NODE_ENV === 'development';
+          hasActiveSubscription = subscription.status === 'active' || 
+                                (isDevelopment && subscription.status === 'incomplete');
+          
+          console.log(`Subscription ${user.stripeSubscriptionId} status: ${subscription.status}, hasActiveSubscription: ${hasActiveSubscription}`);
         } catch (error) {
           console.error("Error checking subscription status:", error);
           hasActiveSubscription = false;

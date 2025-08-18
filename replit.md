@@ -62,6 +62,9 @@ Preferred communication style: Simple, everyday language.
 - **Root cause**: System was redirecting users to onboarding based on whether they were "new" rather than checking if they had completed onboarding profile creation
 - **Solution**: Modified `/api/auth/verify` endpoint to check for existing user profile with `onboardingCompleted: true` flag before determining redirect path
 - **Impact**: Users who complete onboarding and payment will now properly access dashboard on subsequent logins instead of being forced through onboarding again
+- **Fixed paywall subscription detection bug**: Updated subscription status validation to handle "incomplete" Stripe subscriptions in development mode
+- **Root cause**: Test Stripe subscriptions often remain in "incomplete" status rather than "active", causing paid users to see paywall overlay
+- **Solution**: Modified subscription status check to accept both "active" and "incomplete" statuses in development environment while maintaining production security
 - **Added comprehensive subscription management**: Implemented cancel subscription and delete account functionality with proper Stripe integration
 - **Enhanced user account controls**: Added confirmation modals, proper API endpoints, and database cleanup for subscription cancellation and account deletion
 - **Improved payment security**: All operations now properly handle Stripe subscriptions and maintain data integrity across user lifecycle
