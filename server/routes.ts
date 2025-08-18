@@ -179,13 +179,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Check subscription status for non-Morty users
       let hasActiveSubscription = false;
-      console.log(`User ${user.id} - isMortyUser: ${user.isMortyUser}, stripeSubscriptionId: ${user.stripeSubscriptionId}, stripe: ${!!stripe}`);
+      console.log(`[AUTH DEBUG] User ${user.id} (${user.email}) - isMortyUser: ${user.isMortyUser}, stripeSubscriptionId: ${user.stripeSubscriptionId}, stripe: ${!!stripe}`);
       
       // For development, let's temporarily treat all non-Morty users with subscription IDs as having active subscriptions
       if (!user.isMortyUser && user.stripeSubscriptionId) {
         if (process.env.NODE_ENV === 'development') {
           hasActiveSubscription = true;
-          console.log(`Development mode: treating user ${user.id} with subscription ${user.stripeSubscriptionId} as active`);
+          console.log(`[AUTH DEBUG] Development mode: treating user ${user.id} with subscription ${user.stripeSubscriptionId} as active`);
         } else if (stripe) {
         try {
           const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
@@ -203,6 +203,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
+      console.log(`[AUTH DEBUG] Final hasActiveSubscription: ${hasActiveSubscription} for user ${user.email}`);
+      
       res.json({
         user: {
           ...user,
