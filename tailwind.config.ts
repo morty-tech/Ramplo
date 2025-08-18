@@ -14,6 +14,7 @@ export default {
         // New Brand Colors
         aura: {
           50: "#F5F0FF",
+          100: "#EBE0FF",
           200: "#D8B2FF",
           400: "#B266FF", 
           600: "#8E2DE2",
@@ -22,6 +23,7 @@ export default {
         },
         eclipse: {
           50: "#F0F4FF",
+          100: "#E0E8FF",
           200: "#A0B2FF",
           400: "#5768EB",
           600: "#4A00E0",
@@ -30,6 +32,7 @@ export default {
         },
         electric: {
           50: "#F0FFFE",
+          100: "#E0FFFC",
           200: "#B3FFF0",
           400: "#66FFDD",
           600: "#00F5D4",
@@ -38,6 +41,7 @@ export default {
         },
         frost: {
           50: "#F0FEFF",
+          100: "#E0FDFF",
           200: "#CFF7FF",
           400: "#9BEFFF",
           600: "#6AE5F7",

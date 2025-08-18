@@ -24,16 +24,16 @@ export function TaskList({
     const categoryLower = category?.toLowerCase() || '';
     
     if (['outreach', 'client calls', 'follow-up'].includes(categoryLower)) {
-      return 'bg-aura-50 text-aura-700 ring-aura-600/20';
+      return 'bg-aura-100 text-aura-700 ring-aura-600/20';
     }
     if (['research', 'market analysis', 'lead generation'].includes(categoryLower)) {
-      return 'bg-eclipse-50 text-eclipse-700 ring-eclipse-600/20';
+      return 'bg-eclipse-100 text-eclipse-700 ring-eclipse-600/20';
     }
     if (['social media', 'content creation', 'marketing', 'branding'].includes(categoryLower)) {
-      return 'bg-electric-50 text-electric-700 ring-electric-600/20';
+      return 'bg-electric-100 text-electric-700 ring-electric-600/20';
     }
     if (['admin', 'planning', 'setup', 'organization'].includes(categoryLower)) {
-      return 'bg-frost-50 text-frost-700 ring-frost-600/20';
+      return 'bg-frost-100 text-frost-700 ring-frost-600/20';
     }
     return 'bg-gray-50 text-gray-600 ring-gray-500/10';
   };
@@ -86,8 +86,8 @@ export function TaskList({
               <div className="flex items-start gap-x-2 md:gap-x-4 flex-1 min-w-0">
                 <div className={`flex-shrink-0 ${styles.size} rounded-md flex items-center justify-center ${styles.textSize} font-black relative ${styles.topOffset} ${styles.shadow} transition-all duration-300 cursor-pointer ${
                   isCompleted 
-                    ? 'bg-aura-100 text-aura-600 shadow-gray-200' 
-                    : 'bg-frost-600 text-carbon-600 shadow-lg shadow-frost-200 group-hover:shadow-xl group-hover:scale-105'
+                    ? 'bg-aura-600 text-white shadow-gray-200' 
+                    : 'bg-electric-600 text-white shadow-lg shadow-electric-200 group-hover:shadow-xl group-hover:scale-105'
                 }`} onClick={() => onTaskClick(task)}>
                   {isCompleted ? (
                     <Check className={variant === 'dashboard' ? "w-5 h-5" : "w-4 h-4"} />
