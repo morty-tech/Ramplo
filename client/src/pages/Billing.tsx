@@ -149,7 +149,10 @@ export default function Billing() {
       {/* Morty User Section */}
       {isMortyUser && (
         <>
-          <div className="text-sm font-medium text-gray-900 mb-2">Powered by Morty</div>
+          <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2 mb-5">
+            <Shield className="w-5 h-5" />
+            Powered by Morty
+          </h3>
           <Card className="mb-6">
             <CardContent className="p-8">
             <div className="flex items-center justify-between">
@@ -198,7 +201,10 @@ export default function Billing() {
           {/* Current Plan */}
           {user?.stripeSubscriptionId ? (
             <>
-              <div className="text-sm font-medium text-gray-900 mb-2">Current Plan</div>
+              <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2 mb-5">
+                <Check className="w-5 h-5" />
+                Current Plan
+              </h3>
               <Card className="mb-6">
                 <CardContent className="pt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -260,7 +266,10 @@ export default function Billing() {
           ) : (
             /* Subscription Signup */
             <>
-              <div className="text-sm font-medium text-gray-900 mb-2">Upgrade to Professional</div>
+              <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2 mb-5">
+                <CreditCard className="w-5 h-5" />
+                Upgrade to Professional
+              </h3>
               <Card className="mb-6">
                 <CardContent className="pt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -308,7 +317,10 @@ export default function Billing() {
           {/* Payment Method */}
           {user?.stripeSubscriptionId && (
             <>
-              <div className="text-sm font-medium text-gray-900 mb-2">Payment Method</div>
+              <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2 mb-5">
+                <CreditCard className="w-5 h-5" />
+                Payment Method
+              </h3>
               <Card className="mb-6">
                 <CardContent className="pt-6">
                 <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
@@ -333,7 +345,10 @@ export default function Billing() {
           {/* Billing History */}
           {user?.stripeSubscriptionId && (
             <>
-              <div className="text-sm font-medium text-gray-900 mb-2">Billing History</div>
+              <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2 mb-5">
+                <Download className="w-5 h-5" />
+                Billing History
+              </h3>
               <Card className="mb-6">
                 <CardContent className="pt-6">
                 <div className="space-y-4">
