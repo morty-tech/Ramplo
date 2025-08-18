@@ -327,9 +327,7 @@ export default function Roadmap() {
                                       </div>
                                     </div>
                                   </div>
-                                  <div className="text-xs text-gray-500 group-hover:text-primary transition-colors text-right">
-                                    Click to view
-                                  </div>
+
                                 </div>
                               </div>
                             );

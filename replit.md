@@ -2,9 +2,7 @@
 
 ## Overview
 
-RampLO is a 90-day AI-powered ramp plan designed to help mortgage loan officers secure their first 1-3 deals. The application provides personalized daily tasks, progress tracking, outreach templates, and deal coaching tools. Morty users get free access while non-Morty users pay $49/month.
-
-The platform features a comprehensive 9-step onboarding questionnaire that captures detailed industry-specific information: personal details (name, email, market, state licensing, NMLS), experience level (new/<1y/1-3y/3+), focus areas (purchase/refi/HELOC/investor/non-QM), borrower types (FTHB/move-up/cash-out/investor), time availability (30/60/90+ minutes), outreach comfort level (low/medium/high), network assets (realtor relationships, past clients, social channels), communication preferences (professional/friendly/direct tone), and 90-day goals. This rich data enables highly personalized AI task generation and coaching.
+RampLO is an AI-powered 90-day ramp plan designed to help mortgage loan officers secure their first 1-3 deals. It provides personalized daily tasks, progress tracking, outreach templates, and deal coaching tools. Access is free for Morty users and subscription-based for others. The platform uses a 9-step onboarding questionnaire to gather detailed industry-specific information, enabling highly personalized AI task generation and coaching.
 
 ## User Preferences
 
@@ -13,121 +11,47 @@ Preferred communication style: Simple, everyday language.
 ## System Architecture
 
 ### Frontend Architecture
-- **Framework**: React with TypeScript using Vite as the build tool
-- **UI Library**: Shadcn/ui components built on Radix UI primitives
-- **Styling**: Tailwind CSS with CSS variables for theming
-- **State Management**: TanStack React Query for server state management
-- **Routing**: Wouter for lightweight client-side routing
-- **Forms**: React Hook Form with Zod validation via @hookform/resolvers
+- **Framework**: React with TypeScript (Vite)
+- **UI Library**: Shadcn/ui (Radix UI primitives)
+- **Styling**: Tailwind CSS
+- **State Management**: TanStack React Query
+- **Routing**: Wouter
+- **Forms**: React Hook Form with Zod
 
 ### Backend Architecture
 - **Runtime**: Node.js with Express.js REST API
-- **Language**: TypeScript with ES modules
-- **Database ORM**: Drizzle ORM with PostgreSQL dialect
-- **Session Management**: Express sessions with PostgreSQL store (connect-pg-simple)
-- **Authentication**: Magic link authentication system with email-based login
-- **Development**: Hot module replacement via Vite in development mode
+- **Language**: TypeScript
+- **Database ORM**: Drizzle ORM with PostgreSQL
+- **Session Management**: Express sessions with PostgreSQL store
+- **Authentication**: Magic link authentication
 
 ### Data Storage
-- **Database**: PostgreSQL with Neon serverless driver (@neondatabase/serverless)
-- **Schema Management**: Drizzle Kit for migrations and schema definitions
-- **Tables**: Users, enhanced user profiles (with 15+ industry-specific fields), tasks, progress tracking, magic links, marketing templates, deal coach sessions, and session storage
-- **Enhanced Profile Fields**: Full name, email, market/city, states licensed, NMLS ID, experience level, focus areas, borrower types, time availability, outreach comfort, network assets, social channels, tone preference, communication channels, and goals
+- **Database**: PostgreSQL (Neon serverless driver)
+- **Schema Management**: Drizzle Kit
+- **Tables**: Users, enhanced user profiles (15+ industry-specific fields), tasks, progress tracking, magic links, marketing templates, deal coach sessions, and session storage.
 
 ### Authentication & Authorization
-- **Magic Link System**: Passwordless authentication using secure tokens
-- **User Types**: Morty users (identified by email domain) get free access, others require subscription
-- **Session Storage**: Server-side sessions stored in PostgreSQL
-- **Token Security**: 32-byte random tokens with 30-minute expiration
+- **Method**: Passwordless magic link system
+- **User Types**: Morty users (free access), others (subscription required)
+- **Session Storage**: Server-side, PostgreSQL
 
 ### Payment Integration
-- **Payment Processor**: Stripe for subscription management
-- **Pricing Model**: $49/month for non-Morty users
-- **Payment UI**: Stripe Elements with React Stripe.js integration
-- **Customer Management**: Stripe customer and subscription tracking
+- **Processor**: Stripe for subscription management
+- **Pricing**: $49/month for non-Morty users
+- **UI**: Stripe Elements with React Stripe.js
+- **Features**: Subscription tracking, 90-day auto-cancellation configured via `cancel_at` parameter.
+
+### Core Features
+- **Personalized Daily Tasks**: AI-generated based on user profile.
+- **Progress Tracking**: Automatic week/day progression based on business days elapsed since start date.
+- **Outreach Templates**: Editable email templates with real-time auto-save.
+- **Deal Coaching Tools**: AI-driven coaching sessions.
+- **Onboarding**: Comprehensive 9-step questionnaire for detailed user profiling.
+- **Branding**: Vibrant color palette (Aura, Eclipse, Electric, Frost, Carbon) for consistent UI.
 
 ## External Dependencies
 
-- **Database**: Neon PostgreSQL serverless database
-- **Email Service**: SendGrid for magic link email delivery (configured but using console logging in development)
-- **Payment Processing**: Stripe for subscription billing and payment processing
-- **UI Components**: Radix UI primitives for accessible component foundation
-- **Deployment**: Replit-specific configuration with development banner and cartographer integration
-- **Development Tools**: Vite with runtime error overlay and hot module replacement
-
-## Recent Changes
-
-### Brand Redesign with New Color Palette (Current Session)
-- **Implemented comprehensive brand color redesign**: Replaced old forest/limeglow color scheme with new vibrant palette featuring Aura (purple), Eclipse (blue), Electric (cyan), Frost (icy cyan), and Carbon (black)
-- **Updated Tailwind configuration**: Added all new color variants with proper hex values in tailwind.config.ts
-- **Updated CSS variables**: Modified both light and dark mode CSS variables to use new primary color (aura-600: #8E2DE2) and supporting colors
-- **Enhanced color system**: New palette provides better visual hierarchy with Aura as primary, Eclipse as secondary, Electric as tertiary, Frost as accent, and Carbon for neutrals
-- **Completed global color migration**: Successfully replaced all forest-800, forest-600, forest-400, forest-200, forest-100, and forest-50 references with corresponding aura color variants across the entire codebase
-- **Updated brand consistency**: All components, pages, and UI elements now use the new color palette including buttons, backgrounds, borders, text colors, and interactive states
-- **Renamed color scheme**: Updated "neon" color name to "eclipse" throughout the entire codebase per user request, maintaining consistent branding
-- **Established color hierarchy**: Replaced all tealwave references with eclipse (secondary) and limeglow references with electric (tertiary) to create proper brand color hierarchy
-- **Maintained accessibility**: Dark mode variants use appropriate lighter shades for proper contrast and readability
-
-### Critical Onboarding Bug Fix & Account Management Features (Previous Session)
-- **Fixed critical onboarding persistence bug**: Updated authentication redirect logic to check actual onboarding completion status instead of user creation date
-- **Root cause**: System was redirecting users to onboarding based on whether they were "new" rather than checking if they had completed onboarding profile creation
-- **Solution**: Modified `/api/auth/verify` endpoint to check for existing user profile with `onboardingCompleted: true` flag before determining redirect path
-- **Impact**: Users who complete onboarding and payment will now properly access dashboard on subsequent logins instead of being forced through onboarding again
-- **Fixed paywall subscription detection bug**: Updated subscription status validation to handle "incomplete" Stripe subscriptions in development mode
-- **Root cause**: Test Stripe subscriptions often remain in "incomplete" status rather than "active", causing paid users to see paywall overlay
-- **Solution**: Modified subscription status check to accept both "active" and "incomplete" statuses in development environment while maintaining production security
-- **Added comprehensive subscription management**: Implemented cancel subscription and delete account functionality with proper Stripe integration
-- **Enhanced user account controls**: Added confirmation modals, proper API endpoints, and database cleanup for subscription cancellation and account deletion
-- **Improved payment security**: All operations now properly handle Stripe subscriptions and maintain data integrity across user lifecycle
-
-### Stripe 3-Month Auto-Cancellation & UI Updates (Previous Session)
-- **Implemented comprehensive 3-month subscription system**: Configured Stripe subscriptions to automatically cancel after 3 months (90 days) using `cancel_at` parameter
-- **Updated subscription UI**: Changed pricing display from "every 3 months" to "per month for 3 months" to reflect monthly billing with limited duration
-- **Converted payment buttons to forest-green**: All subscription-related buttons now use forest-600/forest-700 colors instead of orange for consistent branding
-- **Added Stripe webhook handler**: Created `/api/stripe/webhook` endpoint to handle subscription cancellation events and automatically remove user access
-- **Enhanced storage interface**: Added `getUserByStripeSubscriptionId` method to support webhook-based user management
-- **Subscription metadata tracking**: Added plan duration and creation context metadata to Stripe subscriptions for better tracking
-
-### Date-Based Progression System Implementation (Current Session)
-- **Built comprehensive business day calculation**: Created functions to calculate elapsed business days between dates (weekdays only)
-- **Implemented automatic week/day progression**: System now automatically advances users through 90-day plan based on actual business days elapsed since start date
-- **Updated task fetching logic**: Backend automatically determines current week/day position without requiring manual parameters from frontend
-- **Enhanced user progress tracking**: Start dates are set during onboarding and automatically updated when users access the system
-- **Streamlined frontend queries**: Dashboard and Roadmap pages now fetch current tasks automatically without specifying week/day parameters
-
-### Code Quality & Roadmap UX Improvements (Current Session)
-- **Completed major code refactoring**: Successfully extracted shared task management functionality to eliminate code duplication between Dashboard and Roadmap pages
-- **Created shared TaskList component**: Built reusable `client/src/components/TaskList.tsx` that handles all task rendering with variant support for different page layouts (dashboard vs roadmap styling)
-- **Implemented useTaskManagement hook**: Created `client/src/hooks/useTaskManagement.ts` to centralize task state management, completion logic, and expansion handling across both pages
-- **Updated Dashboard implementation**: Replaced all task-related state and rendering code with shared components while maintaining identical UI and functionality
-- **Updated Roadmap implementation**: Replaced Today's Tasks section with shared TaskList component, ensuring consistent task interaction patterns across the application
-- **Improved maintainability**: Reduced code duplication by ~80% in task-related functionality, making future updates and bug fixes significantly easier to manage
-- **Enhanced roadmap preview functionality**: Extended daily objectives preview from current week only to current week + 2 weeks ahead, allowing users to see their upcoming tasks and plan ahead
-- **Improved visual hierarchy**: Updated upcoming weeks (2-3) to use clean slate styling instead of orange, removed "Objectives Ready" badges for cleaner appearance
-- **Enhanced interactivity**: Made days from upcoming weeks (within 2-week preview window) clickable and visually distinct with slate styling to show they contain viewable objectives
-- **Streamlined badge system**: Removed badges and border lines for upcoming weeks with objectives, maintaining badges only for completed, current, and "Coming Soon" weeks
-- **Fixed data processing inconsistency**: Updated roadmap weeks processing to handle both new 'days' structure and legacy 'dailyTasks' format, ensuring all weeks display daily objectives correctly
-- **Fixed JavaScript errors**: Resolved missing Button import in Roadmap component that was causing console errors
-
-### Authentication UX Consolidation & Layout Fixes (Current Session)
-- **Created shared AuthLayout component**: Consolidated duplicate gradient background code from Login page and EmailConfirmation component into reusable `client/src/components/AuthLayout.tsx`
-- **Eliminated code duplication**: Removed 150+ lines of duplicate background styling code across authentication screens
-- **Fixed white space layout issues**: Updated AuthLayout to use proper flexbox layout (`justify-between`) that eliminates white space gaps between content and footer
-- **Streamlined EmailConfirmation component**: Reduced component from 80+ lines to focused 35 lines using shared layout
-- **Enhanced maintainability**: Single source of truth for authentication page styling with consistent RampLO logo, gradients, and footer positioning
-
-### Email Template UX & Footer Updates (Previous Session)
-- **Implemented cohesive email template card format**: Updated email templates to use always-visible subject and body text areas with real-time auto-save functionality (500ms debounce)
-- **Enhanced template editing experience**: Removed click-to-edit workflow - both subject line and email body are now immediately editable without modal interactions
-- **Added unified actions bar**: Created comprehensive copy functionality with character/word count display and AI customization indicators
-- **Standardized page margins**: Updated AI Deal Coach and Billing pages to use consistent margin formatting (p-6 mx-4 md:mx-8) matching Outreach page
-- **Updated footer branding**: Changed all footer text from "© 2025 RampLO. All rights reserved." to "© 2025 RampLO powered by Morty" across TransparentFooter component and Landing page
-
-### Foundation Roadmap Integration & UX Fixes (Previous Session)  
-- **Implemented single source of truth for baseline tasks**: Created `server/foundationRoadmap.ts` containing comprehensive 14-week foundation roadmap data
-- **Updated AI roadmap service**: Modified `server/roadmapService.ts` to use foundation roadmap data instead of minimal example data
-- **Enhanced default task generation**: Updated `server/routes.ts` to pull default tasks from foundation roadmap, removed AI personalization for faster loading
-- **Unified data source**: Both AI roadmap generation and fallback defaults now use the same comprehensive foundation data covering 14 weeks of progressive task themes from foundation setup through momentum building
-- **UI Enhancements**: Improved user experience with slower loading screen transitions (4s vs 2.5s) and added ticker animations for daily task counts that count from 0 to actual numbers on dashboard load
-- **Removed all hardcoded data**: Completely eliminated hardcoded fallback data from Dashboard and Roadmap pages per user request - both now only display real foundation roadmap data or show empty states
-- **Fixed critical onboarding UX bug**: Resolved Enter key causing premature form submission during onboarding - form now only submits on final step when "Complete Setup" is explicitly clicked
+- **Database**: Neon PostgreSQL
+- **Email Service**: SendGrid (for magic link delivery)
+- **Payment Processing**: Stripe
+- **UI Components**: Radix UI
