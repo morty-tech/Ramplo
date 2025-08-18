@@ -337,8 +337,8 @@ export default function Dashboard() {
               >
                 <Send className="w-6 h-6 text-aura-600" />
                 <div className="text-center">
-                  <p className="text-sm font-medium text-gray-900">Templates</p>
-                  <p className="text-xs text-gray-500">Browse Templates</p>
+                  <p className="text-sm font-medium text-gray-900">Browse Templates</p>
+                  <p className="text-xs text-gray-500">Email & outreach</p>
                 </div>
               </Button>
               
@@ -396,7 +396,7 @@ export default function Dashboard() {
                       <Send aria-hidden="true" className="size-5 text-aura-600" />
                     </div>
                     <div className="ml-14">
-                      <p className="text-sm font-medium text-gray-500">Templates</p>
+                      <p className="text-sm font-medium text-gray-500">Email & outreach</p>
                       <p className="text-lg font-semibold text-gray-900">Browse Templates</p>
                     </div>
                   </div>
