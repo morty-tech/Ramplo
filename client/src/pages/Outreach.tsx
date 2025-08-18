@@ -833,7 +833,7 @@ export default function Outreach() {
               <Listbox as="div" value={selectedTemplate} onChange={(template) => setSelectedTemplateId(template?.id || '')}>
                 <label className="block text-sm font-medium text-gray-900 mb-2">Select a template to customize and use</label>
                 <div className="relative">
-                  <ListboxButton className="grid w-full cursor-default grid-cols-1 rounded-md bg-forest-200 py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-forest-600 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-forest-400 sm:text-sm/6">
+                  <ListboxButton className="grid w-full cursor-default grid-cols-1 rounded-md bg-aura-200 py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-aura-600 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-aura-400 sm:text-sm/6">
                     <span className="col-start-1 row-start-1 truncate pr-6">
                       {selectedTemplate ? selectedTemplate.name : "Choose template"}
                     </span>
@@ -845,13 +845,13 @@ export default function Outreach() {
 
                   <ListboxOptions
                     transition
-                    className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-forest-200 py-1 text-base shadow-lg outline-1 outline-black/5 data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm"
+                    className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-aura-200 py-1 text-base shadow-lg outline-1 outline-black/5 data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm"
                   >
                     {templates.map((template) => (
                       <ListboxOption
                         key={template.id}
                         value={template}
-                        className="group relative cursor-default py-2 pr-4 pl-8 text-gray-900 select-none data-focus:bg-forest-600 data-focus:text-white data-focus:outline-hidden"
+                        className="group relative cursor-default py-2 pr-4 pl-8 text-gray-900 select-none data-focus:bg-aura-600 data-focus:text-white data-focus:outline-hidden"
                       >
                         <span className="block truncate font-normal group-data-selected:font-semibold">{template.name}</span>
 
@@ -879,7 +879,7 @@ export default function Outreach() {
                 )}
                 <button
                   onClick={() => setIsAICustomizationOpen(true)}
-                  className="flex items-center gap-2 px-3 py-1.5 text-sm bg-forest-800 text-white hover:bg-forest-700 rounded-md border border-forest-600 transition-colors"
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm bg-aura-600 text-white hover:bg-aura-400 rounded-md border border-aura-400 transition-colors"
                 >
                   <Wand2 className="w-4 h-4" />
                   Customize with AI
@@ -902,7 +902,7 @@ export default function Outreach() {
                       <>
                         <div className="space-y-6">
                           {/* Email Template Card - Cohesive Design */}
-                          <div className="rounded-lg bg-white border-2 border-gray-300 focus-within:border-forest-600 transition-colors">
+                          <div className="rounded-lg bg-white border-2 border-gray-300 focus-within:border-aura-600 transition-colors">
                             {/* Subject Line Input */}
                             <label htmlFor="email-subject" className="sr-only">
                               Subject Line
@@ -965,14 +965,14 @@ export default function Outreach() {
                                 <div className="flex items-center space-x-3">
                                   <button
                                     onClick={() => copyToClipboard(editedSubject)}
-                                    className="text-xs text-forest-800 hover:text-forest-600 flex items-center gap-1"
+                                    className="text-xs text-aura-600 hover:text-aura-400 flex items-center gap-1"
                                   >
                                     <Copy className="w-3 h-3" />
                                     Copy Subject
                                   </button>
                                   <button
                                     onClick={() => copyToClipboard(editedBody)}
-                                    className="text-xs text-forest-800 hover:text-forest-600 flex items-center gap-1"
+                                    className="text-xs text-aura-600 hover:text-aura-400 flex items-center gap-1"
                                   >
                                     <Copy className="w-3 h-3" />
                                     Copy Body
@@ -1011,7 +1011,7 @@ export default function Outreach() {
                             {/* Social Media Content Card - Left Side */}
                             <div>
                               <div className="text-sm font-medium text-gray-900 mb-2">Post:</div>
-                              <div className="rounded-lg bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-forest-600">
+                              <div className="rounded-lg bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-aura-600">
                               {/* Post Content Textarea */}
                               <label htmlFor="social-content" className="sr-only">
                                 Post Content
@@ -1061,7 +1061,7 @@ export default function Outreach() {
                                   <div className="flex items-center space-x-3">
                                     <button
                                       onClick={() => copyToClipboard(editedContent || selectedTemplate.content)}
-                                      className="text-xs text-forest-800 hover:text-forest-600 flex items-center gap-1"
+                                      className="text-xs text-aura-600 hover:text-aura-400 flex items-center gap-1"
                                     >
                                       <Copy className="w-3 h-3" />
                                       Copy Post
@@ -1258,7 +1258,7 @@ export default function Outreach() {
                       <>
                         <div>
                           {/* Phone Script Card - Cohesive Design */}
-                          <div className="rounded-lg bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-forest-600">
+                          <div className="rounded-lg bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-aura-600">
                             {/* Script Content Textarea */}
                             <label htmlFor="script-content" className="sr-only">
                               Phone Script Content
@@ -1299,7 +1299,7 @@ export default function Outreach() {
                                 <div className="flex items-center space-x-3">
                                   <button
                                     onClick={() => copyToClipboard(editedScript || selectedTemplate.content)}
-                                    className="text-xs text-forest-800 hover:text-forest-600 flex items-center gap-1"
+                                    className="text-xs text-aura-600 hover:text-aura-400 flex items-center gap-1"
                                   >
                                     <Copy className="w-3 h-3" />
                                     Copy Script
@@ -1682,7 +1682,7 @@ export default function Outreach() {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              <Wand2 className="w-5 h-5 text-forest-800" />
+              <Wand2 className="w-5 h-5 text-aura-600" />
               AI Customization
             </DialogTitle>
           </DialogHeader>
@@ -1742,7 +1742,7 @@ export default function Outreach() {
               <Button 
                 onClick={handleCustomize}
                 disabled={customizeTemplateMutation.isPending || !customizationForm.keyPoints.trim()}
-                className="bg-forest-800 hover:bg-forest-700 text-white disabled:bg-gray-400"
+                className="bg-aura-600 hover:bg-aura-400 text-white disabled:bg-gray-400"
               >
                 {customizeTemplateMutation.isPending ? (
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />

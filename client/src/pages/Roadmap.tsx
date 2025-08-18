@@ -147,9 +147,9 @@ export default function Roadmap() {
         <div className="text-center">
           <div className="relative">
             {/* Animated spinner */}
-            <div className="w-12 h-12 border-4 border-forest-200 border-t-forest-600 rounded-full animate-spin mx-auto mb-4"></div>
+            <div className="w-12 h-12 border-4 border-aura-200 border-t-aura-600 rounded-full animate-spin mx-auto mb-4"></div>
             {/* Pulsing background ring */}
-            <div className="absolute inset-0 w-12 h-12 border-2 border-forest-100 rounded-full animate-pulse mx-auto"></div>
+            <div className="absolute inset-0 w-12 h-12 border-2 border-aura-100 rounded-full animate-pulse mx-auto"></div>
           </div>
           <p className="text-gray-600 font-medium">Loading your Roadmap</p>
         </div>
@@ -175,8 +175,8 @@ export default function Roadmap() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
           <dt>
-            <div className="absolute rounded-md bg-forest-100 p-3">
-              <Check aria-hidden="true" className="size-6 text-forest-600" />
+            <div className="absolute rounded-md bg-aura-100 p-3">
+              <Check aria-hidden="true" className="size-6 text-aura-600" />
             </div>
             <p className="ml-16 truncate text-sm font-medium text-gray-500">Tasks Completed</p>
           </dt>
@@ -275,7 +275,7 @@ export default function Roadmap() {
                 </CardTitle>
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
                   week.status === 'completed' 
-                    ? 'bg-forest-600' 
+                    ? 'bg-aura-600' 
                     : week.status === 'current'
                     ? 'bg-blue-600'
                     : 'bg-gray-300'
@@ -309,7 +309,7 @@ export default function Roadmap() {
                             : isCurrentDay 
                             ? 'border-blue-500 bg-blue-50 shadow-sm' 
                             : isDayCompleted
-                            ? 'border-forest-300 bg-forest-50' 
+                            ? 'border-aura-200 bg-aura-50' 
                             : isDayAccessible
                             ? week.status === "upcoming" && shouldShowDailyObjectives(week.week)
                               ? 'border-slate-200 bg-slate-50 hover:border-slate-300 hover:bg-slate-100'
@@ -326,7 +326,7 @@ export default function Roadmap() {
                                 : isCurrentDay
                                 ? 'bg-blue-600 text-white'
                                 : isDayCompleted
-                                ? 'bg-forest-600 text-white'
+                                ? 'bg-aura-600 text-white'
                                 : isDayAccessible
                                 ? week.status === "upcoming" && shouldShowDailyObjectives(week.week)
                                   ? 'bg-slate-200 text-slate-700'
@@ -364,7 +364,7 @@ export default function Roadmap() {
                               <div className={`text-xs mt-1 ${
                                 isTodayHighlight ? 'text-blue-700 font-medium' :
                                 isCurrentDay ? 'text-blue-700' : 
-                                isDayCompleted ? 'text-forest-700' : 
+                                isDayCompleted ? 'text-aura-400' : 
                                 week.status === "upcoming" && shouldShowDailyObjectives(week.week) ? 'text-slate-700' : 
                                 'text-gray-600'
                               }`}>

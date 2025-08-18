@@ -63,7 +63,7 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
       <Button 
         type="submit" 
         disabled={!stripe || isLoading}
-        className="w-full bg-forest-600 hover:bg-forest-700"
+        className="w-full bg-aura-600 hover:bg-aura-400"
       >
         {isLoading ? "Processing..." : "Subscribe for $49/month"}
       </Button>
@@ -128,7 +128,7 @@ export default function PaywallOverlay() {
   return (
     <div className="fixed inset-0 z-50 bg-white">
       {/* Full screen paywall overlay */}
-      <div className="min-h-screen bg-gradient-to-br from-forest-800 to-tealwave-800 relative isolate">
+      <div className="min-h-screen bg-gradient-to-br from-aura-600 to-neon-800 relative isolate">
         {/* Gradient decorations */}
         <div
           aria-hidden="true"
@@ -147,7 +147,7 @@ export default function PaywallOverlay() {
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <div className="flex items-center justify-center mb-10">
               <div className="h-10 w-10 bg-white rounded-lg flex items-center justify-center mr-3">
-                <span className="text-forest-800 font-bold text-xl">R</span>
+                <span className="text-aura-600 font-bold text-xl">R</span>
               </div>
               <span className="text-white font-bold text-2xl">RampLO</span>
             </div>
@@ -203,7 +203,7 @@ export default function PaywallOverlay() {
                 <div className="space-y-3">
                   <Button 
                     onClick={handleSubscribe}
-                    className="w-full bg-forest-600 hover:bg-forest-700"
+                    className="w-full bg-aura-600 hover:bg-aura-400"
                   >
                     Subscribe Now
                   </Button>

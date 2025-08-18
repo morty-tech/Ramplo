@@ -202,9 +202,9 @@ export default function Dashboard() {
         <div className="text-center">
           <div className="relative">
             {/* Animated spinner */}
-            <div className="w-12 h-12 border-4 border-forest-200 border-t-forest-600 rounded-full animate-spin mx-auto mb-4"></div>
+            <div className="w-12 h-12 border-4 border-aura-200 border-t-aura-600 rounded-full animate-spin mx-auto mb-4"></div>
             {/* Pulsing background ring */}
-            <div className="absolute inset-0 w-12 h-12 border-2 border-forest-100 rounded-full animate-pulse mx-auto"></div>
+            <div className="absolute inset-0 w-12 h-12 border-2 border-aura-100 rounded-full animate-pulse mx-auto"></div>
           </div>
           <p className="text-gray-600 font-medium">Loading your Dashboard</p>
         </div>
@@ -227,7 +227,7 @@ export default function Dashboard() {
         <div className="flex flex-col items-end mt-4 md:mt-0 text-right min-w-[160px]">
           <div className="flex items-center gap-2 mb-2">
             <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Week {currentWeek} of 14</p>
-            <span className="text-xs font-semibold text-white bg-forest-600 px-2 py-1 rounded-full">
+            <span className="text-xs font-semibold text-white bg-aura-600 px-2 py-1 rounded-full">
               {Math.round((currentWeek / 14) * 100)}%
             </span>
           </div>
@@ -254,8 +254,8 @@ export default function Dashboard() {
               className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5"
             >
               <dt>
-                <div className="absolute rounded-md bg-forest-100 p-3">
-                  <item.icon aria-hidden="true" className="size-6 text-forest-600" />
+                <div className="absolute rounded-md bg-aura-100 p-3">
+                  <item.icon aria-hidden="true" className="size-6 text-aura-600" />
                 </div>
                 <p className="ml-16 truncate text-sm font-medium text-gray-500">{item.name}</p>
               </dt>

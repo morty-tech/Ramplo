@@ -68,7 +68,7 @@ function SubscriptionForm({ clientSecret, onSuccess }: { clientSecret: string; o
       <Button 
         type="submit" 
         disabled={!stripe || isLoading}
-        className="w-full bg-forest-600 hover:bg-forest-700 text-white"
+        className="w-full bg-aura-600 hover:bg-aura-400 text-white"
       >
         {isLoading ? "Processing..." : "Subscribe Now"}
       </Button>
@@ -353,7 +353,7 @@ export default function Billing() {
                     <Button 
                       onClick={handleSubscribe}
                       disabled={createSubscriptionMutation.isPending}
-                      className="w-full bg-forest-600 hover:bg-forest-700 text-white py-3"
+                      className="w-full bg-aura-600 hover:bg-aura-400 text-white py-3"
                     >
                       {createSubscriptionMutation.isPending ? "Loading..." : "Subscribe Now"}
                     </Button>

@@ -24,7 +24,7 @@ export function TaskList({
     const categoryLower = category?.toLowerCase() || '';
     
     if (['outreach', 'client calls', 'follow-up'].includes(categoryLower)) {
-      return 'bg-forest-50 text-forest-700 ring-forest-600/20';
+      return 'bg-aura-50 text-aura-400 ring-aura-600/20';
     }
     if (['research', 'market analysis', 'lead generation'].includes(categoryLower)) {
       return 'bg-teal-50 text-teal-700 ring-teal-600/20';
@@ -86,8 +86,8 @@ export function TaskList({
               <div className="flex items-start gap-x-2 md:gap-x-4 flex-1 min-w-0">
                 <div className={`flex-shrink-0 ${styles.size} rounded-md flex items-center justify-center ${styles.textSize} font-black relative ${styles.topOffset} ${styles.shadow} transition-all duration-300 cursor-pointer ${
                   isCompleted 
-                    ? 'bg-forest-100 text-forest-600 shadow-gray-200' 
-                    : 'bg-limeglow-400 text-forest-800 shadow-lg shadow-lime-200 group-hover:shadow-xl group-hover:scale-105'
+                    ? 'bg-aura-100 text-aura-600 shadow-gray-200' 
+                    : 'bg-electric-400 text-aura-600 shadow-lg shadow-electric-200 group-hover:shadow-xl group-hover:scale-105'
                 }`} onClick={() => onTaskClick(task)}>
                   {isCompleted ? (
                     <Check className={variant === 'dashboard' ? "w-5 h-5" : "w-4 h-4"} />
@@ -138,7 +138,7 @@ export function TaskList({
                     className={`rounded-md px-2 md:px-2.5 py-1.5 text-xs font-medium shadow-xs transition-all duration-200 border whitespace-nowrap ${
                       isCompleting
                         ? 'bg-green-500 text-white border-green-500'
-                        : 'bg-white text-forest-600 border-forest-600 hover:bg-forest-200'
+                        : 'bg-white text-aura-600 border-aura-600 hover:bg-aura-200'
                     }`}
                   >
                     {isCompleting ? 'Completing...' : 'Mark Completed'}

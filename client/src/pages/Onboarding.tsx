@@ -181,14 +181,14 @@ export default function Onboarding() {
   // Loading screen component
   if (showOnboardingComplete) {
     return (
-      <div className="min-h-screen bg-forest-800">
+      <div className="min-h-screen bg-aura-600">
         
         <div className="flex min-h-screen flex-col justify-between px-6 py-12 lg:px-8 relative z-10">
           <div className="flex-grow flex flex-col justify-center">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
               <div className="flex items-center justify-center">
                 <div className="h-10 w-10 bg-white rounded-lg flex items-center justify-center mr-3">
-                  <span className="text-forest-800 font-bold text-xl">R</span>
+                  <span className="text-aura-600 font-bold text-xl">R</span>
                 </div>
                 <span className="text-white font-bold text-2xl">RampLO</span>
               </div>
@@ -196,13 +196,13 @@ export default function Onboarding() {
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
               <div className="bg-white rounded-lg p-8 shadow-xl text-center">
-                <div className="w-16 h-16 border-4 border-forest-600 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+                <div className="w-16 h-16 border-4 border-aura-600 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Hang tight — we're building your ramp to success!</h2>
                 <div className="space-y-4">
                   {loadingMessages.map((message, index) => (
                     <div key={index} className={`flex items-center justify-center space-x-2 text-sm ${
                       index < loadingStep ? 'text-green-600' : 
-                      index === loadingStep ? 'text-forest-600' : 'text-gray-400'
+                      index === loadingStep ? 'text-aura-600' : 'text-gray-400'
                     }`}>
                       {index < loadingStep && (
                         <div className="w-4 h-4 bg-green-600 rounded-full flex items-center justify-center">
@@ -210,7 +210,7 @@ export default function Onboarding() {
                         </div>
                       )}
                       {index === loadingStep && (
-                        <div className="w-4 h-4 border-2 border-forest-600 border-t-transparent rounded-full animate-spin"></div>
+                        <div className="w-4 h-4 border-2 border-aura-600 border-t-transparent rounded-full animate-spin"></div>
                       )}
                       {index > loadingStep && (
                         <div className="w-4 h-4 border-2 border-gray-300 rounded-full"></div>
@@ -230,14 +230,14 @@ export default function Onboarding() {
   }
 
   return (
-    <div className="min-h-screen bg-forest-800">
+    <div className="min-h-screen bg-aura-600">
       
       <div className="flex min-h-screen flex-col justify-between px-6 py-12 lg:px-8 relative z-10">
         <div className="flex-grow flex flex-col justify-center">
           <div className="sm:mx-auto sm:w-full sm:max-w-3xl">
             <div className="flex items-center justify-center mb-10">
               <div className="h-10 w-10 bg-white rounded-lg flex items-center justify-center mr-3">
-                <span className="text-forest-800 font-bold text-xl">R</span>
+                <span className="text-aura-600 font-bold text-xl">R</span>
               </div>
               <span className="text-white font-bold text-2xl">RampLO</span>
             </div>
@@ -276,7 +276,7 @@ export default function Onboarding() {
               {step === 1 && (
                 <div className="space-y-6">
                   <div className="flex items-center mb-4">
-                    <User className="w-6 h-6 text-forest-800 mr-3" />
+                    <User className="w-6 h-6 text-aura-600 mr-3" />
                     <Label className="text-lg font-medium text-gray-900">
                       Let's start with your basic information
                     </Label>
@@ -295,7 +295,7 @@ export default function Onboarding() {
                           value={formData.firstName}
                           onChange={(e) => setFormData(prev => ({ ...prev, firstName: e.target.value }))}
                           placeholder="Riley"
-                          className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
+                          className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-aura-600 focus:ring-1 focus:ring-aura-600 sm:text-sm/6"
                         />
                       </div>
                     </div>
@@ -311,7 +311,7 @@ export default function Onboarding() {
                           value={formData.lastName}
                           onChange={(e) => setFormData(prev => ({ ...prev, lastName: e.target.value }))}
                           placeholder="Parker"
-                          className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
+                          className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-aura-600 focus:ring-1 focus:ring-aura-600 sm:text-sm/6"
                         />
                       </div>
                     </div>
@@ -335,7 +335,7 @@ export default function Onboarding() {
               {step === 2 && (
                 <div>
                   <div className="flex items-center mb-4">
-                    <TrendingUp className="w-6 h-6 text-forest-800 mr-3" />
+                    <TrendingUp className="w-6 h-6 text-aura-600 mr-3" />
                     <Label className="text-lg font-medium text-gray-900">
                       What's your experience level as a mortgage loan officer?
                     </Label>
@@ -353,8 +353,8 @@ export default function Onboarding() {
                           aria-label={`${option.first} ${option.second}`}
                           className={`group relative block rounded-lg border px-6 py-3 cursor-pointer transition-colors ${
                             formData.experienceLevel === option.value 
-                              ? 'border-forest-600 bg-forest-50 ring-2 ring-forest-600' 
-                              : 'border-slate-400 bg-white hover:border-forest-400'
+                              ? 'border-aura-600 bg-aura-50 ring-2 ring-aura-600' 
+                              : 'border-slate-400 bg-white hover:border-aura-400'
                           }`}
                         >
                           <input
@@ -398,8 +398,8 @@ export default function Onboarding() {
                           key={focus.value}
                           className={`px-6 py-3 border-2 rounded-lg cursor-pointer transition-colors ${
                             formData.focus.includes(focus.value)
-                              ? "border-forest-600 bg-forest-50"
-                              : "border-gray-200 hover:border-forest-400"
+                              ? "border-aura-600 bg-aura-50"
+                              : "border-gray-200 hover:border-aura-400"
                           } ${formData.focus.length >= 3 && !formData.focus.includes(focus.value) ? "opacity-50 cursor-not-allowed" : ""}`}
                           onClick={() => {
                             if (formData.focus.includes(focus.value)) {
@@ -420,7 +420,7 @@ export default function Onboarding() {
                                   e.stopPropagation();
                                   handleArrayChange("focus", focus.value, false);
                                 }}
-                                className="p-1 hover:bg-forest-400/20 rounded-full"
+                                className="p-1 hover:bg-aura-400/20 rounded-full"
                               >
                                 <X className="w-4 h-4" />
                               </button>
@@ -443,7 +443,7 @@ export default function Onboarding() {
                             value={formData.otherFocus}
                             onChange={(e) => setFormData(prev => ({ ...prev, otherFocus: e.target.value }))}
                             placeholder="e.g., Bridge loans, Construction loans, Jumbo loans"
-                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
+                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-aura-600 focus:ring-1 focus:ring-aura-600 sm:text-sm/6"
                           />
                         </div>
                       </div>
@@ -480,13 +480,13 @@ export default function Onboarding() {
                         return (
                           <div
                             key={focusType}
-                            className="inline-flex items-center gap-1 px-3 py-1 bg-forest-200 text-forest-800 rounded-full text-sm"
+                            className="inline-flex items-center gap-1 px-3 py-1 bg-aura-200 text-aura-600 rounded-full text-sm"
                           >
                             {displayLabel}
                             <button
                               type="button"
                               onClick={() => handleArrayChange("focus", focusType, false)}
-                              className="p-0.5 hover:bg-forest-400/20 rounded-full"
+                              className="p-0.5 hover:bg-aura-400/20 rounded-full"
                             >
                               <X className="w-3 h-3" />
                             </button>
@@ -512,8 +512,8 @@ export default function Onboarding() {
                           key={type.value}
                           className={`px-6 py-3 border-2 rounded-lg cursor-pointer transition-colors ${
                             formData.borrowerTypes.includes(type.value)
-                              ? "border-forest-600 bg-forest-50"
-                              : "border-gray-200 hover:border-forest-400"
+                              ? "border-aura-600 bg-aura-50"
+                              : "border-gray-200 hover:border-aura-400"
                           } ${formData.borrowerTypes.length >= 4 && !formData.borrowerTypes.includes(type.value) ? "opacity-50 cursor-not-allowed" : ""}`}
                           onClick={() => {
                             if (formData.borrowerTypes.includes(type.value)) {
@@ -532,7 +532,7 @@ export default function Onboarding() {
                                   e.stopPropagation();
                                   handleArrayChange("borrowerTypes", type.value, false);
                                 }}
-                                className="p-1 hover:bg-forest-400/20 rounded-full"
+                                className="p-1 hover:bg-aura-400/20 rounded-full"
                               >
                                 <X className="w-4 h-4" />
                               </button>
@@ -555,7 +555,7 @@ export default function Onboarding() {
                             value={formData.otherBorrowerType}
                             onChange={(e) => setFormData(prev => ({ ...prev, otherBorrowerType: e.target.value }))}
                             placeholder="e.g., Foreign nationals, Self-employed, Bank statement loans"
-                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
+                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-aura-600 focus:ring-1 focus:ring-aura-600 sm:text-sm/6"
                           />
                         </div>
                       </div>
@@ -585,13 +585,13 @@ export default function Onboarding() {
                         return (
                           <div
                             key={type}
-                            className="inline-flex items-center gap-1 px-3 py-1 bg-forest-200 text-forest-800 rounded-full text-sm"
+                            className="inline-flex items-center gap-1 px-3 py-1 bg-aura-200 text-aura-600 rounded-full text-sm"
                           >
                             {displayLabel}
                             <button
                               type="button"
                               onClick={() => handleArrayChange("borrowerTypes", type, false)}
-                              className="p-0.5 hover:bg-forest-400/20 rounded-full"
+                              className="p-0.5 hover:bg-aura-400/20 rounded-full"
                             >
                               <X className="w-3 h-3" />
                             </button>
@@ -608,7 +608,7 @@ export default function Onboarding() {
                 <div className="space-y-8">
                   <div>
                     <div className="flex items-center mb-4">
-                      <Clock className="w-6 h-6 text-forest-800 mr-3" />
+                      <Clock className="w-6 h-6 text-aura-600 mr-3" />
                       <Label className="text-lg font-medium text-gray-900">
                         How much time can you dedicate to prospecting per weekday?
                       </Label>
@@ -625,8 +625,8 @@ export default function Onboarding() {
                             aria-label={`${time.first} ${time.second}`}
                             className={`group relative block rounded-lg border px-6 py-3 cursor-pointer transition-colors ${
                               formData.timeAvailableWeekday === time.value 
-                                ? 'border-forest-600 bg-forest-50 ring-2 ring-forest-600' 
-                                : 'border-slate-400 bg-white hover:border-forest-400'
+                                ? 'border-aura-600 bg-aura-50 ring-2 ring-aura-600' 
+                                : 'border-slate-400 bg-white hover:border-aura-400'
                             }`}
                           >
                             <input
@@ -663,8 +663,8 @@ export default function Onboarding() {
                             aria-label={`${comfort.first} ${comfort.second}`}
                             className={`group relative block rounded-lg border px-6 py-3 cursor-pointer transition-colors ${
                               formData.outreachComfort === comfort.value 
-                                ? 'border-forest-600 bg-forest-50 ring-2 ring-forest-600' 
-                                : 'border-slate-400 bg-white hover:border-forest-400'
+                                ? 'border-aura-600 bg-aura-50 ring-2 ring-aura-600' 
+                                : 'border-slate-400 bg-white hover:border-aura-400'
                             }`}
                           >
                             <input
@@ -687,7 +687,7 @@ export default function Onboarding() {
 
                   <div className="space-y-6">
                     <div className="flex items-center mb-4">
-                      <Users className="w-6 h-6 text-forest-800 mr-3" />
+                      <Users className="w-6 h-6 text-aura-600 mr-3" />
                       <Label className="text-lg font-medium text-gray-900">
                         Tell us about your existing network assets
                       </Label>
@@ -738,8 +738,8 @@ export default function Onboarding() {
                                       aria-label={option.label}
                                       className={`group relative block rounded-lg border px-6 py-3 cursor-pointer transition-colors ${
                                         formData.clientListLocation === option.value 
-                                          ? 'border-forest-600 bg-forest-50 ring-2 ring-forest-600' 
-                                          : 'border-slate-400 bg-white hover:border-forest-400'
+                                          ? 'border-aura-600 bg-aura-50 ring-2 ring-aura-600' 
+                                          : 'border-slate-400 bg-white hover:border-aura-400'
                                       }`}
                                     >
                                       <input
@@ -768,7 +768,7 @@ export default function Onboarding() {
                                     value={formData.crmName}
                                     onChange={(e) => setFormData(prev => ({ ...prev, crmName: e.target.value }))}
                                     placeholder="e.g., Salesforce, HubSpot, Top Producer"
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
+                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-aura-600 focus:ring-1 focus:ring-aura-600 sm:text-sm/6"
                                   />
                                 </div>
                               </div>
@@ -785,7 +785,7 @@ export default function Onboarding() {
                                     value={formData.clientListOther}
                                     onChange={(e) => setFormData(prev => ({ ...prev, clientListOther: e.target.value }))}
                                     placeholder="e.g., In my head, business cards, notebook, Google Docs"
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
+                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-aura-600 focus:ring-1 focus:ring-aura-600 sm:text-sm/6"
                                   />
                                 </div>
                               </div>
@@ -804,8 +804,8 @@ export default function Onboarding() {
                               key={source.value}
                               className={`px-6 py-3 border-2 rounded-lg cursor-pointer transition-colors ${
                                 formData.networkSources.includes(source.value)
-                                  ? "border-forest-600 bg-forest-50"
-                                  : "border-gray-200 hover:border-forest-400"
+                                  ? "border-aura-600 bg-aura-50"
+                                  : "border-gray-200 hover:border-aura-400"
                               }`}
                               onClick={() => {
                                 if (formData.networkSources.includes(source.value)) {
@@ -824,7 +824,7 @@ export default function Onboarding() {
                                       e.stopPropagation();
                                       handleArrayChange("networkSources", source.value, false);
                                     }}
-                                    className="p-1 hover:bg-forest-400/20 rounded-full"
+                                    className="p-1 hover:bg-aura-400/20 rounded-full"
                                   >
                                     <X className="w-4 h-4" />
                                   </button>
@@ -841,13 +841,13 @@ export default function Onboarding() {
                               return (
                                 <div
                                   key={source}
-                                  className="inline-flex items-center gap-1 px-3 py-1 bg-forest-200 text-forest-800 rounded-full text-sm"
+                                  className="inline-flex items-center gap-1 px-3 py-1 bg-aura-200 text-aura-600 rounded-full text-sm"
                                 >
                                   {option?.label}
                                   <button
                                     type="button"
                                     onClick={() => handleArrayChange("networkSources", source, false)}
-                                    className="p-0.5 hover:bg-forest-400/20 rounded-full"
+                                    className="p-0.5 hover:bg-aura-400/20 rounded-full"
                                   >
                                     <X className="w-3 h-3" />
                                   </button>
@@ -875,8 +875,8 @@ export default function Onboarding() {
                               key={channel.value}
                               className={`px-6 py-2 border-2 rounded-lg cursor-pointer transition-colors ${
                                 formData.socialChannelsUsed.includes(channel.value)
-                                  ? "border-forest-600 bg-forest-50"
-                                  : "border-gray-200 hover:border-forest-400"
+                                  ? "border-aura-600 bg-aura-50"
+                                  : "border-gray-200 hover:border-aura-400"
                               }`}
                               onClick={() => {
                                 if (formData.socialChannelsUsed.includes(channel.value)) {
@@ -912,7 +912,7 @@ export default function Onboarding() {
                                       socialLinks: { ...prev.socialLinks, [channel]: e.target.value }
                                     }))}
                                     placeholder={`https://${channel}.com/yourprofile`}
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
+                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-aura-600 focus:ring-1 focus:ring-aura-600 sm:text-sm/6"
                                   />
                                 </div>
                               </div>
@@ -933,7 +933,7 @@ export default function Onboarding() {
                 <div className="space-y-8">
                   <div>
                     <div className="flex items-center mb-4">
-                      <MessageSquare className="w-6 h-6 text-forest-800 mr-3" />
+                      <MessageSquare className="w-6 h-6 text-aura-600 mr-3" />
                       <Label className="text-lg font-medium text-gray-900">
                         What's your preferred communication tone?
                       </Label>
@@ -950,8 +950,8 @@ export default function Onboarding() {
                             aria-label={`${tone.first} ${tone.second}`}
                             className={`group relative block rounded-lg border px-6 py-3 cursor-pointer transition-colors ${
                               formData.tonePreference === tone.value 
-                                ? 'border-forest-600 bg-forest-50 ring-2 ring-forest-600' 
-                                : 'border-slate-400 bg-white hover:border-forest-400'
+                                ? 'border-aura-600 bg-aura-50 ring-2 ring-aura-600' 
+                                : 'border-slate-400 bg-white hover:border-aura-400'
                             }`}
                           >
                             <input
@@ -984,8 +984,8 @@ export default function Onboarding() {
                             key={channel.value}
                             className={`px-6 py-3 border-2 rounded-lg cursor-pointer transition-colors ${
                               formData.preferredChannels.includes(channel.value)
-                                ? "border-forest-600 bg-forest-50"
-                                : "border-gray-200 hover:border-forest-400"
+                                ? "border-aura-600 bg-aura-50"
+                                : "border-gray-200 hover:border-aura-400"
                             } ${formData.preferredChannels.length >= 3 && !formData.preferredChannels.includes(channel.value) ? "opacity-50 cursor-not-allowed" : ""}`}
                             onClick={() => {
                               if (formData.preferredChannels.includes(channel.value)) {
@@ -1004,7 +1004,7 @@ export default function Onboarding() {
                                     e.stopPropagation();
                                     handleArrayChange("preferredChannels", channel.value, false);
                                   }}
-                                  className="p-1 hover:bg-forest-400/20 rounded-full"
+                                  className="p-1 hover:bg-aura-400/20 rounded-full"
                                 >
                                   <X className="w-4 h-4" />
                                 </button>
@@ -1024,13 +1024,13 @@ export default function Onboarding() {
                           return (
                             <div
                               key={channel}
-                              className="inline-flex items-center gap-1 px-3 py-1 bg-forest-200 text-forest-800 rounded-full text-sm"
+                              className="inline-flex items-center gap-1 px-3 py-1 bg-aura-200 text-aura-600 rounded-full text-sm"
                             >
                               {option?.label}
                               <button
                                 type="button"
                                 onClick={() => handleArrayChange("preferredChannels", channel, false)}
-                                className="p-0.5 hover:bg-forest-400/20 rounded-full"
+                                className="p-0.5 hover:bg-aura-400/20 rounded-full"
                               >
                                 <X className="w-3 h-3" />
                               </button>
@@ -1057,7 +1057,7 @@ export default function Onboarding() {
                       onChange={(e) => setFormData(prev => ({ ...prev, goals: e.target.value }))}
                       placeholder="e.g., Close my first 3 loans, build relationships with 20 realtors, establish a consistent social media presence..."
                       rows={4}
-                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
+                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-slate-400 placeholder:text-gray-400 focus:outline-none focus:border-aura-600 focus:ring-1 focus:ring-aura-600 sm:text-sm/6"
                     />
                   </div>
                   <p className="text-sm text-gray-600 mt-2">

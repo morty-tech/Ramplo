@@ -73,7 +73,7 @@ export default function Login() {
                   required
                   autoComplete="email"
                   placeholder="Enter your email address"
-                  className="block w-full rounded-md border border-gray-300 px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-500 focus:border-forest-600 focus:ring-1 focus:ring-forest-600 sm:text-sm/6"
+                  className="block w-full rounded-md border border-gray-300 px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-500 focus:border-aura-600 focus:ring-1 focus:ring-aura-600 sm:text-sm/6"
                 />
               </div>
             </div>
@@ -82,7 +82,7 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={isLoading || !email}
-                className="flex w-full justify-center rounded-md bg-limeglow-400 px-3 py-1.5 text-sm/6 font-semibold text-forest-800 hover:bg-limeglow-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-limeglow-400 disabled:bg-limeglow-600 disabled:text-forest-800 disabled:cursor-not-allowed shadow-lg"
+                className="flex w-full justify-center rounded-md bg-electric-400 px-3 py-1.5 text-sm/6 font-semibold text-aura-600 hover:bg-electric-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-electric-400 disabled:bg-electric-600 disabled:text-aura-600 disabled:cursor-not-allowed shadow-lg"
               >
                 {isLoading ? (
                   <div className="flex items-center justify-center">

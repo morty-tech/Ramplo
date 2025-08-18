@@ -70,7 +70,7 @@ export default function Landing() {
       </header>
 
       {/* Hero Section */}
-      <div className="bg-forest-800 min-h-screen flex items-center justify-center">
+      <div className="bg-aura-600 min-h-screen flex items-center justify-center">
         <div className="relative isolate px-6 pt-14 lg:px-8">
           <div
             aria-hidden="true"
@@ -82,7 +82,7 @@ export default function Landing() {
                 clipPath:
                   'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
               }}
-              className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-forest-400 to-limeglow-400 opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem] animate-pulse"
+              className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-aura-400 to-limeglow-400 opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem] animate-pulse"
             />
           </div>
           
@@ -111,7 +111,7 @@ export default function Landing() {
                   <Button 
                     type="submit" 
                     disabled={isLoading}
-                    className="bg-limeglow-600 text-forest-800 hover:bg-limeglow-500 px-8 font-semibold"
+                    className="bg-electric-600 text-aura-600 hover:bg-electric-400 px-8 font-semibold"
                   >
                     {isLoading ? "Sending..." : "Get Started"}
                     <ArrowRight className="w-4 h-4 ml-2" />
@@ -135,7 +135,7 @@ export default function Landing() {
                 clipPath:
                   'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
               }}
-              className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-tealwave-400 to-forest-600 opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem] animate-pulse"
+              className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-tealwave-400 to-aura-600 opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem] animate-pulse"
             />
           </div>
         </div>
@@ -182,7 +182,7 @@ export default function Landing() {
               clipPath:
                 'polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)',
             }}
-            className="aspect-[1108/632] w-[69.25rem] bg-gradient-to-r from-forest-400 to-tealwave-600 opacity-20"
+            className="aspect-[1108/632] w-[69.25rem] bg-gradient-to-r from-aura-400 to-tealwave-600 opacity-20"
           />
         </div>
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -198,7 +198,7 @@ export default function Landing() {
             <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
               <div className="flex flex-col">
                 <dt className="text-base/7 font-semibold text-gray-900">
-                  <div className="mb-6 flex size-10 items-center justify-center rounded-lg bg-forest-600">
+                  <div className="mb-6 flex size-10 items-center justify-center rounded-lg bg-aura-600">
                     <Calendar aria-hidden="true" className="size-6 text-white" />
                   </div>
                   AI Daily Action Plan
@@ -227,7 +227,7 @@ export default function Landing() {
               <div className="flex flex-col">
                 <dt className="text-base/7 font-semibold text-gray-900">
                   <div className="mb-6 flex size-10 items-center justify-center rounded-lg bg-limeglow-600">
-                    <Bot aria-hidden="true" className="size-6 text-forest-800" />
+                    <Bot aria-hidden="true" className="size-6 text-aura-600" />
                   </div>
                   AI Deal Coach
                 </dt>
@@ -251,7 +251,7 @@ export default function Landing() {
         viewport={{ once: true, margin: "-100px" }}
       >
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-          <div className="relative isolate overflow-hidden bg-forest-800 px-6 py-20 sm:rounded-3xl sm:px-10 sm:py-24 lg:py-24 xl:px-24">
+          <div className="relative isolate overflow-hidden bg-aura-600 px-6 py-20 sm:rounded-3xl sm:px-10 sm:py-24 lg:py-24 xl:px-24">
             <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-center lg:gap-y-0">
               <div className="lg:row-start-2 lg:max-w-md">
                 <h2 className="text-3xl font-semibold tracking-tight text-balance text-white sm:text-4xl">
@@ -264,7 +264,7 @@ export default function Landing() {
               <div className="relative -z-20 max-w-xl min-w-full min-h-[32rem] rounded-xl lg:row-span-4 lg:w-[64rem] lg:max-w-none flex items-center justify-center bg-gradient-to-br from-tealwave-600 to-limeglow-600 py-24 px-16 shadow-xl ring-1 ring-white/10">
                 <div className="text-center">
                   <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Target className="w-12 h-12 text-forest-800" />
+                    <Target className="w-12 h-12 text-aura-600" />
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-2">90-Day Success Plan</h3>
                   <p className="text-limeglow-200">Your personalized roadmap to closing deals</p>
@@ -339,20 +339,20 @@ export default function Landing() {
             </p>
           </div>
           <div className="mx-auto mt-16 flex max-w-2xl flex-col gap-8 lg:mx-0 lg:mt-20 lg:max-w-none lg:flex-row lg:items-end">
-            <div className="flex flex-col-reverse justify-between gap-x-16 gap-y-8 rounded-2xl bg-forest-50 p-8 sm:w-3/4 sm:max-w-md sm:flex-row-reverse sm:items-end lg:w-72 lg:max-w-none lg:flex-none lg:flex-col lg:items-start">
-              <p className="flex-none text-3xl font-bold tracking-tight text-forest-800">90 days</p>
+            <div className="flex flex-col-reverse justify-between gap-x-16 gap-y-8 rounded-2xl bg-aura-50 p-8 sm:w-3/4 sm:max-w-md sm:flex-row-reverse sm:items-end lg:w-72 lg:max-w-none lg:flex-none lg:flex-col lg:items-start">
+              <p className="flex-none text-3xl font-bold tracking-tight text-aura-600">90 days</p>
               <div className="sm:w-80 sm:shrink lg:w-auto lg:flex-none">
-                <p className="text-lg font-semibold tracking-tight text-forest-800">Days to real results</p>
-                <p className="mt-2 text-base/7 text-forest-600">Ramp faster with a proven framework that gets you from day one to closing deals in just three months.</p>
+                <p className="text-lg font-semibold tracking-tight text-aura-600">Days to real results</p>
+                <p className="mt-2 text-base/7 text-aura-600">Ramp faster with a proven framework that gets you from day one to closing deals in just three months.</p>
               </div>
             </div>
-            <div className="flex flex-col-reverse justify-between gap-x-16 gap-y-8 rounded-2xl bg-forest-800 p-8 sm:flex-row-reverse sm:items-end lg:w-full lg:max-w-sm lg:flex-auto lg:flex-col lg:items-start lg:gap-y-44">
+            <div className="flex flex-col-reverse justify-between gap-x-16 gap-y-8 rounded-2xl bg-aura-600 p-8 sm:flex-row-reverse sm:items-end lg:w-full lg:max-w-sm lg:flex-auto lg:flex-col lg:items-start lg:gap-y-44">
               <p className="flex-none text-3xl font-bold tracking-tight text-white">10x faster</p>
               <div className="sm:w-80 sm:shrink lg:w-auto lg:flex-none">
                 <p className="text-lg font-semibold tracking-tight text-white">
                   Faster ramp with AI
                 </p>
-                <p className="mt-2 text-base/7 text-forest-200">
+                <p className="mt-2 text-base/7 text-aura-200">
                   Skip the trial and error — our AI daily action plans keep you focused on what matters most.
                 </p>
               </div>

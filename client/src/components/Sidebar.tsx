@@ -54,7 +54,7 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
 
   return (
     <div className={cn(
-      "fixed inset-y-0 left-0 z-50 bg-forest-800 shadow-lg transition-all duration-300 flex flex-col",
+      "fixed inset-y-0 left-0 z-50 bg-aura-600 shadow-lg transition-all duration-300 flex flex-col",
       isExpanded ? "w-64" : "w-16"
     )}>
       
@@ -78,7 +78,7 @@ export default function Sidebar({ isExpanded, onToggle }: SidebarProps) {
             aria-label="Expand menu"
           >
             <div className="w-6 h-6 bg-white rounded-sm flex items-center justify-center">
-              <span className="text-forest-800 text-xs font-bold">R</span>
+              <span className="text-aura-600 text-xs font-bold">R</span>
             </div>
           </button>
         )}
