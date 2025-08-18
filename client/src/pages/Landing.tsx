@@ -356,13 +356,13 @@ export default function Landing() {
                 <p className="mt-2 text-base/7 text-carbon-400">Ramp faster with a proven framework that gets you from day one to closing deals in just three months.</p>
               </div>
             </div>
-            <div className="flex flex-col-reverse justify-between gap-x-16 gap-y-8 rounded-2xl bg-aura-600 p-8 sm:flex-row-reverse sm:items-end lg:w-full lg:max-w-sm lg:flex-auto lg:flex-col lg:items-start lg:gap-y-44">
-              <p className="flex-none text-3xl font-bold tracking-tight text-white">10x faster</p>
+            <div className="flex flex-col-reverse justify-between gap-x-16 gap-y-8 rounded-2xl bg-frost-600 p-8 sm:flex-row-reverse sm:items-end lg:w-full lg:max-w-sm lg:flex-auto lg:flex-col lg:items-start lg:gap-y-44">
+              <p className="flex-none text-3xl font-bold tracking-tight text-carbon-600">10x faster</p>
               <div className="sm:w-80 sm:shrink lg:w-auto lg:flex-none">
-                <p className="text-lg font-semibold tracking-tight text-white">
+                <p className="text-lg font-semibold tracking-tight text-carbon-600">
                   Faster ramp with AI
                 </p>
-                <p className="mt-2 text-base/7 text-aura-200">
+                <p className="mt-2 text-base/7 text-carbon-500">
                   Skip the trial and error — our AI daily action plans keep you focused on what matters most.
                 </p>
               </div>
