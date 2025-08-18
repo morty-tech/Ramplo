@@ -107,6 +107,8 @@ export default function ClientConnectionTracker() {
                     <Minus className="w-3 h-3 text-gray-600" />
                   </button>
                   
+                  <div className="w-px h-4 bg-gray-300 mx-1"></div>
+                  
                   <button
                     onClick={() => adjustCount(type.key, true)}
                     disabled={updateConnectionsMutation.isPending}
