@@ -186,12 +186,19 @@ export default function PaywallOverlay() {
               </div>
 
               {showPayment && clientSecret ? (
-                <Elements 
-                  stripe={stripePromise} 
-                  options={{ clientSecret }}
-                >
-                  <CheckoutForm onSuccess={() => window.location.reload()} />
-                </Elements>
+                <div className="space-y-4">
+                  <Elements 
+                    stripe={stripePromise} 
+                    options={{ clientSecret }}
+                  >
+                    <CheckoutForm onSuccess={() => window.location.reload()} />
+                  </Elements>
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm">
+                    <p className="font-medium text-blue-800 mb-1">Test Mode</p>
+                    <p className="text-blue-700">Use test card: 4242 4242 4242 4242</p>
+                    <p className="text-blue-700">Any future date, any CVC</p>
+                  </div>
+                </div>
               ) : (
                 <div className="space-y-3">
                   <Button 
