@@ -132,7 +132,7 @@ export default function Dashboard() {
   const currentWeek = progress?.currentWeek || 1;
   const currentDay = progress?.currentDay || 1;
 
-  // Get today's objective from the roadmap data
+  // Get today's objective and extra time activity from the roadmap data
   const getTodaysObjective = () => {
     if (roadmapData?.selectedRoadmap?.weeklyTasks && currentWeek && currentDay) {
       const weekData = roadmapData.selectedRoadmap.weeklyTasks.find((w: any) => w.week === currentWeek);
@@ -144,7 +144,20 @@ export default function Dashboard() {
     return null;
   };
 
+  const getTodaysExtraTimeActivity = () => {
+    if (roadmapData?.selectedRoadmap?.weeklyTasks && currentWeek && currentDay) {
+      const weekData = roadmapData.selectedRoadmap.weeklyTasks.find((w: any) => w.week === currentWeek);
+      if (weekData?.days) {
+        const dayData = weekData.days.find((d: any) => d.day === currentDay);
+        return dayData?.extraTimeActivity;
+      }
+    }
+    return null;
+  };
+
   const todaysObjective = getTodaysObjective();
+  const todaysExtraTimeActivity = getTodaysExtraTimeActivity();
+  const allTasksCompleted = todayTasksTotal > 0 && todayTasksCompleted === todayTasksTotal;
 
   // Week focus based on real roadmap data
   const getWeekFocus = (week: number) => {
@@ -296,10 +309,28 @@ export default function Dashboard() {
           </div>
           
           <div className="relative overflow-hidden rounded-lg bg-white px-0 pt-0 pb-4 shadow-sm sm:px-0">
-            {todaysObjective && (
+            {/* Success Message for Completed Tasks */}
+            {allTasksCompleted && todaysExtraTimeActivity && (
+              <div className="bg-gradient-to-r from-aura-50 to-electric-50 border-l-4 border-aura-600 px-4 py-4 sm:px-6 mb-4">
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <TrophyIcon className="h-6 w-6 text-aura-600" />
+                  </div>
+                  <div className="ml-3">
+                    <div className="text-aura-800 font-semibold text-base mb-1">
+                      🎉 Fantastic! You've completed all your tasks today!
+                    </div>
+                    <div className="text-aura-700 text-sm">
+                      <span className="font-medium">Extra time suggestion:</span> {todaysExtraTimeActivity}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {todaysObjective && !allTasksCompleted && (
               <div className="bg-white border-b border-gray-200 px-4 py-3 sm:px-6 mb-4">
                 <div className="text-left">
-                  
                   <div className="text-slate-800 text-base"><span className="font-semibold">Today you will</span> {todaysObjective?.charAt(0).toLowerCase() + todaysObjective?.slice(1)}</div>
                 </div>
               </div>

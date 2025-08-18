@@ -11,7 +11,7 @@ import TaskDetailModal from "@/components/TaskDetailModal";
 import DayModal from "@/components/DayModal";
 import { TaskList } from "@/components/TaskList";
 import { useTaskManagement } from "@/hooks/useTaskManagement";
-import { Check, Clock, Calendar, Eye, Lock, Target, Star, TrendingUp } from "lucide-react";
+import { Check, Clock, Calendar, Eye, Lock, Target, Star, TrendingUp, Trophy } from "lucide-react";
 
 const TOTAL_WEEKS = 14;
 
@@ -122,6 +122,24 @@ export default function Roadmap() {
 
   // Calculate current day for highlighting
   const currentDay = progress?.currentDay || 1;
+
+  // Calculate task completion status and get extra time activity
+  const todayTasksCompleted = todayTasks.filter((task: Task) => task.completed).length;
+  const todayTasksTotal = todayTasks.length;
+  const allTasksCompleted = todayTasksTotal > 0 && todayTasksCompleted === todayTasksTotal;
+
+  const getTodaysExtraTimeActivity = () => {
+    if (roadmapData?.selectedRoadmap?.weeklyTasks && currentWeek && currentDay) {
+      const weekData = roadmapData.selectedRoadmap.weeklyTasks.find((w: any) => w.week === currentWeek);
+      if (weekData?.days) {
+        const dayData = weekData.days.find((d: any) => d.day === currentDay);
+        return dayData?.extraTimeActivity;
+      }
+    }
+    return null;
+  };
+
+  const todaysExtraTimeActivity = getTodaysExtraTimeActivity();
   
   // Calculate completion percentages for days
   const getDayCompletionPercentage = (week: number, day: number) => {
@@ -244,6 +262,25 @@ export default function Roadmap() {
                     </h4>
                     
                     <div className="relative overflow-hidden rounded-lg bg-white border border-gray-200">
+                      {/* Success Message for Completed Tasks */}
+                      {allTasksCompleted && todaysExtraTimeActivity && (
+                        <div className="bg-gradient-to-r from-aura-50 to-electric-50 border-l-4 border-aura-600 px-4 py-4 mb-4">
+                          <div className="flex items-start">
+                            <div className="flex-shrink-0">
+                              <Trophy className="h-6 w-6 text-aura-600" />
+                            </div>
+                            <div className="ml-3">
+                              <div className="text-aura-800 font-semibold text-base mb-1">
+                                🎉 Fantastic! You've completed all your tasks today!
+                              </div>
+                              <div className="text-aura-700 text-sm">
+                                <span className="font-medium">Extra time suggestion:</span> {todaysExtraTimeActivity}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      
                       <TaskList
                         tasks={todayTasks}
                         expandedTaskId={expandedTaskId}
