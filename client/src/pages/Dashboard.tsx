@@ -286,8 +286,8 @@ export default function Dashboard() {
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* Today's Tasks */}
-        <div className="lg:col-span-2">
+        {/* Today's Tasks and Quick Actions */}
+        <div className="lg:col-span-2 space-y-6">
           <div className="flex items-center justify-between mb-5">
             <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2">
               <Calendar className="w-5 h-5 text-aura-600" />
@@ -321,6 +321,52 @@ export default function Dashboard() {
               />
             )}
           </div>
+          
+          {/* Quick Actions - Below tasks on large screens */}
+          <div className="lg:block hidden">
+            <h3 className="text-base font-semibold text-gray-900 mb-5 flex items-center gap-2">
+              <Send className="w-5 h-5 text-aura-600" />
+              Quick Actions
+            </h3>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <Button
+                variant="outline"
+                className="h-auto p-4 flex flex-col items-center gap-2 hover:bg-gray-50"
+                onClick={() => window.location.href = '/outreach'}
+              >
+                <Send className="w-6 h-6 text-aura-600" />
+                <div className="text-center">
+                  <p className="text-sm font-medium text-gray-900">Templates</p>
+                  <p className="text-xs text-gray-500">Browse Templates</p>
+                </div>
+              </Button>
+              
+              <Button
+                variant="outline"
+                className="h-auto p-4 flex flex-col items-center gap-2 hover:bg-gray-50"
+                onClick={() => window.location.href = '/deal-coach'}
+              >
+                <UserCheck className="w-6 h-6 text-eclipse-600" />
+                <div className="text-center">
+                  <p className="text-sm font-medium text-gray-900">AI Assistant</p>
+                  <p className="text-xs text-gray-500">Ask Deal Coach</p>
+                </div>
+              </Button>
+              
+              <Button
+                variant="outline"
+                className="h-auto p-4 flex flex-col items-center gap-2 hover:bg-gray-50"
+                onClick={() => window.location.href = '/roadmap'}
+              >
+                <Map className="w-6 h-6 text-electric-600" />
+                <div className="text-center">
+                  <p className="text-sm font-medium text-gray-900">Progress</p>
+                  <p className="text-xs text-gray-500">View Roadmap</p>
+                </div>
+              </Button>
+            </div>
+          </div>
         </div>
 
         {/* Sidebar Widgets */}
@@ -335,8 +381,8 @@ export default function Dashboard() {
             <LoanActionTracker />
           </div>
 
-          {/* Quick Actions */}
-          <div>
+          {/* Quick Actions - Sidebar version for smaller screens */}
+          <div className="lg:hidden">
             <h3 className="text-base font-semibold text-gray-900 mb-5 flex items-center gap-2">
               <Send className="w-5 h-5 text-aura-600" />
               Quick Actions
