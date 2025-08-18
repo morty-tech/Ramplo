@@ -57,7 +57,16 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
-### Stripe 3-Month Auto-Cancellation & UI Updates (Current Session)
+### Critical Onboarding Bug Fix & Account Management Features (Current Session)
+- **Fixed critical onboarding persistence bug**: Updated authentication redirect logic to check actual onboarding completion status instead of user creation date
+- **Root cause**: System was redirecting users to onboarding based on whether they were "new" rather than checking if they had completed onboarding profile creation
+- **Solution**: Modified `/api/auth/verify` endpoint to check for existing user profile with `onboardingCompleted: true` flag before determining redirect path
+- **Impact**: Users who complete onboarding and payment will now properly access dashboard on subsequent logins instead of being forced through onboarding again
+- **Added comprehensive subscription management**: Implemented cancel subscription and delete account functionality with proper Stripe integration
+- **Enhanced user account controls**: Added confirmation modals, proper API endpoints, and database cleanup for subscription cancellation and account deletion
+- **Improved payment security**: All operations now properly handle Stripe subscriptions and maintain data integrity across user lifecycle
+
+### Stripe 3-Month Auto-Cancellation & UI Updates (Previous Session)
 - **Implemented comprehensive 3-month subscription system**: Configured Stripe subscriptions to automatically cancel after 3 months (90 days) using `cancel_at` parameter
 - **Updated subscription UI**: Changed pricing display from "every 3 months" to "per month for 3 months" to reflect monthly billing with limited duration
 - **Converted payment buttons to forest-green**: All subscription-related buttons now use forest-600/forest-700 colors instead of orange for consistent branding

@@ -147,8 +147,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       req.session.user = user;
       
-      // Redirect based on user state
-      if (isNew) {
+      // Check if user has completed onboarding by looking for profile
+      const profile = await storage.getUserProfile(user.id);
+      const hasCompletedOnboarding = profile && profile.onboardingCompleted;
+      
+      // Redirect based on onboarding status
+      if (!hasCompletedOnboarding) {
         res.redirect('/onboarding');
       } else {
         res.redirect('/');
