@@ -63,7 +63,7 @@ export default function Landing() {
             <img 
               src={rampLoWhiteLogo} 
               alt="RampLO" 
-              className="h-8 w-auto"
+              className="w-auto max-w-48"
             />
           </div>
           <div className="flex lg:flex-1 lg:justify-end">
