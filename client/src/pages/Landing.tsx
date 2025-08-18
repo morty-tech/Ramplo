@@ -389,11 +389,11 @@ export default function Landing() {
         viewport={{ once: true, margin: "-100px" }}
       >
         <div className="mx-auto max-w-7xl py-8 sm:px-6 lg:px-8">
-          <div className="relative isolate overflow-hidden bg-electric-600 px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
-            <h2 className="text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">
+          <div className="relative isolate overflow-hidden bg-aura-600 px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
+            <h2 className="text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">
               Ready to Ramp?
             </h2>
-            <p className="mx-auto mt-6 max-w-xl text-lg/8 text-pretty text-gray-700">
+            <p className="mx-auto mt-6 max-w-xl text-lg/8 text-pretty text-slate-200">
               Join loan officers who are already using RampLO to build successful careers and secure their first deals.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
@@ -403,41 +403,42 @@ export default function Landing() {
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-white text-gray-900 placeholder:text-gray-500"
+                  className="bg-white/10 border-white/20 text-white placeholder:text-slate-300"
                   required
                 />
                 <Button 
                   type="submit" 
                   disabled={isLoading}
-                  className="rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white hover:bg-gray-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+                  className="bg-frost-600 text-carbon-600 hover:bg-electric-400 px-8 font-semibold"
                 >
                   {isLoading ? "Sending..." : "Get Started"}
+                  <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </form>
             </div>
-            <p className="mt-6 text-sm text-gray-600">
+            <p className="mt-6 text-sm text-slate-300">
               Free for Morty users • $49/month for others • No commitment required
             </p>
             
             {/* Animated diagonal lines */}
             <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
               {/* Diagonal line 1 */}
-              <div className="absolute w-px h-32 bg-gradient-to-t from-transparent via-green-400 to-transparent opacity-30 animate-[slide_8s_linear_infinite] -top-16 left-1/4 transform rotate-12"></div>
+              <div className="absolute w-px h-32 bg-gradient-to-t from-transparent via-electric-400 to-transparent opacity-30 animate-[slide_8s_linear_infinite] -top-16 left-1/4 transform rotate-12"></div>
               
               {/* Diagonal line 2 */}
-              <div className="absolute w-px h-24 bg-gradient-to-t from-transparent via-lime-400 to-transparent opacity-25 animate-[slide_6s_linear_infinite_2s] -top-12 left-1/2 transform rotate-15"></div>
+              <div className="absolute w-px h-24 bg-gradient-to-t from-transparent via-frost-400 to-transparent opacity-25 animate-[slide_6s_linear_infinite_2s] -top-12 left-1/2 transform rotate-15"></div>
               
               {/* Diagonal line 3 */}
-              <div className="absolute w-px h-40 bg-gradient-to-t from-transparent via-green-500 to-transparent opacity-20 animate-[slide_10s_linear_infinite_1s] -top-20 right-1/3 transform rotate-8"></div>
+              <div className="absolute w-px h-40 bg-gradient-to-t from-transparent via-eclipse-400 to-transparent opacity-20 animate-[slide_10s_linear_infinite_1s] -top-20 right-1/3 transform rotate-8"></div>
               
               {/* Diagonal line 4 */}
-              <div className="absolute w-px h-28 bg-gradient-to-t from-transparent via-lime-500 to-transparent opacity-35 animate-[slide_7s_linear_infinite_3s] -top-14 left-1/6 transform rotate-20"></div>
+              <div className="absolute w-px h-28 bg-gradient-to-t from-transparent via-electric-600 to-transparent opacity-35 animate-[slide_7s_linear_infinite_3s] -top-14 left-1/6 transform rotate-20"></div>
               
               {/* Diagonal line 5 */}
-              <div className="absolute w-px h-36 bg-gradient-to-t from-transparent via-green-300 to-transparent opacity-15 animate-[slide_9s_linear_infinite_4s] -top-18 right-1/4 transform rotate-10"></div>
+              <div className="absolute w-px h-36 bg-gradient-to-t from-transparent via-frost-600 to-transparent opacity-15 animate-[slide_9s_linear_infinite_4s] -top-18 right-1/4 transform rotate-10"></div>
               
               {/* Diagonal line 6 */}
-              <div className="absolute w-px h-20 bg-gradient-to-t from-transparent via-lime-600 to-transparent opacity-40 animate-[slide_5s_linear_infinite_1.5s] -top-10 left-3/4 transform rotate-18"></div>
+              <div className="absolute w-px h-20 bg-gradient-to-t from-transparent via-eclipse-600 to-transparent opacity-40 animate-[slide_5s_linear_infinite_1.5s] -top-10 left-3/4 transform rotate-18"></div>
             </div>
           </div>
         </div>
