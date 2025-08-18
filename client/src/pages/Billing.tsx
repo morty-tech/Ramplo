@@ -304,13 +304,26 @@ export default function Billing() {
                     </ul>
                   </div>
                   
-                  <div className="flex items-center">
+                  <div className="space-y-2">
                     <Button 
                       onClick={handleSubscribe}
                       disabled={createSubscriptionMutation.isPending}
                       className="w-full bg-forest-600 hover:bg-forest-700 text-white py-3"
                     >
                       {createSubscriptionMutation.isPending ? "Loading..." : "Subscribe Now"}
+                    </Button>
+                    
+                    {/* Debug button - remove after testing */}
+                    <Button 
+                      onClick={() => {
+                        console.log("Debug: Modal state", { showPaymentModal, clientSecret: !!clientSecret, stripePromise: !!stripePromise });
+                        setShowPaymentModal(true);
+                      }}
+                      variant="outline"
+                      size="sm"
+                      className="w-full"
+                    >
+                      Debug: Force Show Modal
                     </Button>
                   </div>
                 </div>
