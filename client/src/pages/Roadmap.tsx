@@ -254,6 +254,59 @@ export default function Roadmap() {
                       />
                     </div>
                   </div>
+
+                  {/* Remaining Days This Week */}
+                  {week.days?.length > 0 && (
+                    <div className="mb-6">
+                      <h4 className="text-base font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                        <Target className="w-4 h-4" />
+                        Remaining Days This Week
+                      </h4>
+                      
+                      <div className="space-y-3">
+                        {week.days
+                          .filter((day: any) => day.day > currentDay)
+                          .map((day: any) => {
+                            const completionPercentage = getDayCompletionPercentage(week.week, day.day);
+                            
+                            return (
+                              <div 
+                                key={day.day}
+                                className="p-3 rounded-lg border border-gray-200 bg-gray-50 hover:border-primary hover:bg-gray-100 transition-all cursor-pointer group"
+                                onClick={() => handleDayClick(week, day)}
+                              >
+                                <div className="flex items-center justify-between">
+                                  <div className="flex items-center space-x-3">
+                                    <div className="w-8 h-8 rounded-full bg-gray-200 text-gray-700 flex items-center justify-center text-sm font-semibold">
+                                      {day.day}
+                                    </div>
+                                    <div className="flex-grow">
+                                      <div className="font-medium text-sm text-gray-900">
+                                        Day {day.day}
+                                      </div>
+                                      <div className="text-xs text-gray-600 mt-1">
+                                        <Target className="w-3 h-3 inline mr-1" />
+                                        {day.objective}
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="text-xs text-gray-500 group-hover:text-primary transition-colors text-right">
+                                    Click to view
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })
+                        }
+                      </div>
+                      
+                      {week.days?.filter((day: any) => day.day > currentDay).length === 0 && (
+                        <div className="text-sm text-gray-500 italic p-3 bg-gray-50 rounded-lg border border-gray-200">
+                          No remaining days in this week. Great progress!
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </div>
