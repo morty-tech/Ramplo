@@ -879,7 +879,7 @@ export default function Outreach() {
                 )}
                 <button
                   onClick={() => setIsAICustomizationOpen(true)}
-                  className="flex items-center gap-2 px-3 py-1.5 text-sm bg-aura-600 text-white hover:bg-aura-400 rounded-md border border-aura-400 transition-colors"
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm bg-gradient-to-r from-aura-600 to-electric-600 text-white hover:from-aura-500 hover:to-electric-500 rounded-md border border-aura-400 transition-all duration-200 shadow-sm hover:shadow-md"
                 >
                   <Wand2 className="w-4 h-4" />
                   Customize with AI
