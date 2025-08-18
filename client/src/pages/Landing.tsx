@@ -339,7 +339,7 @@ export default function Landing() {
             </p>
           </div>
           <div className="mx-auto mt-16 flex max-w-2xl flex-col gap-8 lg:mx-0 lg:mt-20 lg:max-w-none lg:flex-row lg:items-end">
-            <div className="flex flex-col-reverse justify-between gap-x-16 gap-y-8 rounded-2xl bg-aura-50 p-8 sm:w-3/4 sm:max-w-md sm:flex-row-reverse sm:items-end lg:w-72 lg:max-w-none lg:flex-none lg:flex-col lg:items-start">
+            <div className="flex flex-col-reverse justify-between gap-x-16 gap-y-8 rounded-2xl bg-carbon-200 p-8 sm:w-3/4 sm:max-w-md sm:flex-row-reverse sm:items-end lg:w-72 lg:max-w-none lg:flex-none lg:flex-col lg:items-start">
               <p className="flex-none text-3xl font-bold tracking-tight text-aura-600">90 days</p>
               <div className="sm:w-80 sm:shrink lg:w-auto lg:flex-none">
                 <p className="text-lg font-semibold tracking-tight text-aura-600">Days to real results</p>

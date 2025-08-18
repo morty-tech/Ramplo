@@ -37,6 +37,7 @@ export default {
           800: "#2ACEDD",
         },
         carbon: {
+          50: "#F5F5F5",
           100: "#E5E5E5",
           200: "#B3B3B3",
           400: "#7A7A7A",
