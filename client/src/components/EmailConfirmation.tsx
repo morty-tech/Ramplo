@@ -10,7 +10,7 @@ export default function EmailConfirmation({ email, onSendAnother }: EmailConfirm
     <AuthLayout>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <div className="bg-white rounded-lg p-8 shadow-xl text-center">
-          <div className="w-16 h-16 bg-limeglow-400 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-16 h-16 bg-electric-400 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg className="w-8 h-8 text-aura-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
@@ -29,7 +29,7 @@ export default function EmailConfirmation({ email, onSendAnother }: EmailConfirm
 
         <p className="mt-6 text-center text-sm/6 text-gray-300">
           New to RampLO?{' '}
-          <a href="/" className="font-semibold text-limeglow-400 hover:text-limeglow-300 ml-2">
+          <a href="/" className="font-semibold text-electric-400 hover:text-electric-200 ml-2">
             Learn more
           </a>
         </p>
