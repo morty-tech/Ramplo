@@ -90,10 +90,10 @@ export default function Billing() {
         setClientSecret(data.clientSecret);
         setShowPaymentModal(true);
       } else {
-        console.log("No client secret in response");
+        console.log("No client secret in response - subscription already active");
         toast({
-          title: "Error",
-          description: "No payment required - subscription may already be active",
+          title: "Subscription Active",
+          description: "Your subscription is already active. No payment required.",
         });
       }
     },

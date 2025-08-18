@@ -86,11 +86,13 @@ export default function PaywallOverlay() {
         setClientSecret(data.clientSecret);
         setShowPayment(true);
       } else {
-        console.log("Paywall: No client secret in response");
+        console.log("Paywall: No client secret in response - subscription already active");
         toast({
-          title: "Error",
-          description: "No payment required - subscription may already be active",
+          title: "Subscription Active",
+          description: "Your subscription is already active. Access granted!",
         });
+        // Refresh user data to update UI
+        window.location.reload();
       }
     } catch (error) {
       console.error("Paywall subscription error:", error);
