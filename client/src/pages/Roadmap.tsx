@@ -41,16 +41,13 @@ export default function Roadmap() {
     },
   });
 
-  // Query for today's tasks specifically
+  // Query for today's tasks specifically (backend auto-calculates current week/day)
   const { data: todayTasks = [] } = useQuery<Task[]>({
-    queryKey: ["/api/tasks", `week=${currentWeek}&day=${progress?.currentDay || 1}`],
+    queryKey: ["/api/tasks", "today"],
     queryFn: async () => {
-      const week = currentWeek;
-      const day = progress?.currentDay || 1;
-      const response = await apiRequest("GET", `/api/tasks?week=${week}&day=${day}`);
+      const response = await apiRequest("GET", "/api/tasks");
       return response.json();
     },
-    enabled: !!progress,
   });
 
 

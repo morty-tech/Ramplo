@@ -229,19 +229,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Tasks
+  // Tasks - now automatically calculates current week/day based on user's start date
   app.get("/api/tasks", requireAuth, async (req, res) => {
     try {
       const userId = (req as any).session.user.id;
-      const { week, day } = req.query;
       
-      console.log("Fetching tasks for user:", userId, "week:", week, "day:", day);
+      // Allow manual week/day override via query params, otherwise auto-calculate
+      let week: number, day: number;
       
-      const tasks = await storage.getUserTasks(
-        userId,
-        week ? parseInt(week as string) : undefined,
-        day ? parseInt(day as string) : undefined
-      );
+      if (req.query.week && req.query.day) {
+        week = parseInt(req.query.week as string);
+        day = parseInt(req.query.day as string);
+        console.log("Fetching tasks for user:", userId, "manual week:", week, "day:", day);
+      } else {
+        const currentProgress = await getUserCurrentWeekAndDay(userId);
+        week = currentProgress.week;
+        day = currentProgress.day;
+        console.log("Fetching tasks for user:", userId, "calculated week:", week, "day:", day);
+      }
+      
+      const tasks = await storage.getUserTasks(userId, week, day);
       
       console.log("Found tasks:", tasks.length);
       res.json(tasks);
@@ -973,16 +980,80 @@ async function generateTasksFromRoadmap(userId: string, roadmap: any) {
   console.log(`Created ${tasksToCreate.length} personalized tasks from foundation roadmap`);
 }
 
-async function generateDefaultTasks(userId: string, profile: any) {
-  // Calculate smart start date based on current day of week
-  const now = new Date();
-  const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
+// Helper function to calculate business days between two dates
+function getBusinessDaysBetween(startDate: Date, endDate: Date): number {
+  let businessDays = 0;
+  const current = new Date(startDate);
   
-  // Convert to business day (1-5, Mon-Fri)
-  let currentBusinessDay;
-  if (dayOfWeek === 0) currentBusinessDay = 1; // Sunday -> Monday
-  else if (dayOfWeek === 6) currentBusinessDay = 1; // Saturday -> Monday  
-  else currentBusinessDay = dayOfWeek; // Mon-Fri: 1-5
+  while (current <= endDate) {
+    const dayOfWeek = current.getDay();
+    if (dayOfWeek >= 1 && dayOfWeek <= 5) { // Monday = 1, Friday = 5
+      businessDays++;
+    }
+    current.setDate(current.getDate() + 1);
+  }
+  
+  return businessDays;
+}
+
+// Helper function to calculate current week and day based on elapsed business days
+function calculateCurrentWeekAndDay(businessDaysElapsed: number): { week: number; day: number } {
+  if (businessDaysElapsed <= 0) {
+    return { week: 1, day: 1 };
+  }
+  
+  const week = Math.ceil(businessDaysElapsed / 5);
+  const day = ((businessDaysElapsed - 1) % 5) + 1;
+  
+  return { week: Math.min(week, 14), day: Math.min(day, 5) }; // Cap at week 14, day 5
+}
+
+// Helper function to get user's current week and day based on their start date
+async function getUserCurrentWeekAndDay(userId: string): Promise<{ week: number; day: number }> {
+  const progress = await storage.getUserProgress(userId);
+  
+  if (!progress || !progress.startDate) {
+    // No start date set, default to week 1 day 1
+    return { week: 1, day: 1 };
+  }
+  
+  const now = new Date();
+  const businessDaysElapsed = getBusinessDaysBetween(progress.startDate, now);
+  const { week, day } = calculateCurrentWeekAndDay(businessDaysElapsed);
+  
+  // Update user progress if it's changed
+  if (progress.currentWeek !== week || progress.currentDay !== day) {
+    await storage.updateUserProgress(userId, {
+      currentWeek: week,
+      currentDay: day,
+    });
+    console.log(`Auto-updated user ${userId} progress to week ${week}, day ${day}`);
+  }
+  
+  return { week, day };
+}
+
+async function generateDefaultTasks(userId: string, profile: any) {
+  // Get user's start date from progress table
+  const progress = await storage.getUserProgress(userId);
+  let startDate = progress?.startDate;
+  
+  // If no start date exists, set it to today (first time setup)
+  if (!startDate) {
+    startDate = new Date();
+    await storage.updateUserProgress(userId, {
+      startDate: startDate,
+      currentWeek: 1,
+      currentDay: 1
+    });
+  }
+  
+  // Calculate current week and day based on business days elapsed
+  const now = new Date();
+  const businessDaysElapsed = getBusinessDaysBetween(startDate, now);
+  const { week: currentWeek, day: currentDay } = calculateCurrentWeekAndDay(businessDaysElapsed);
+  
+  console.log(`User started on: ${startDate.toDateString()}, Business days elapsed: ${businessDaysElapsed}, Current week: ${currentWeek}, Current day: ${currentDay}`);
 
   // Use first 13 weeks from foundation roadmap as default tasks
   const foundationWeeks = FOUNDATION_ROADMAP.weeklyTasks.slice(0, 13);
@@ -1023,13 +1094,14 @@ async function generateDefaultTasks(userId: string, profile: any) {
   }
   console.log(`Successfully created ${tasksToCreate.length} default tasks from foundation roadmap`);
 
-  // Update user progress to match current business day
-  const progress = await storage.getUserProgress(userId);
-  if (progress && progress.currentDay !== currentBusinessDay) {
+  // Update user progress to match calculated current week and day
+  const userProgress = await storage.getUserProgress(userId);
+  if (userProgress && (userProgress.currentWeek !== currentWeek || userProgress.currentDay !== currentDay)) {
     await storage.updateUserProgress(userId, {
-      currentDay: currentBusinessDay,
+      currentWeek: currentWeek,
+      currentDay: currentDay,
     });
-    console.log(`Updated user progress to day ${currentBusinessDay}`);
+    console.log(`Updated user progress to week ${currentWeek}, day ${currentDay}`);
   }
 }
 

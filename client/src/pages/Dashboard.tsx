@@ -75,14 +75,12 @@ export default function Dashboard() {
   const { expandedTaskId, completingTaskId, handleTaskComplete, handleTaskClick } = useTaskManagement();
 
   const { data: todayTasks = [], isLoading: tasksLoading } = useQuery<Task[]>({
-    queryKey: ["/api/tasks", `week=${progress?.currentWeek || 1}&day=${progress?.currentDay || 1}`],
+    queryKey: ["/api/tasks"],
     queryFn: async () => {
-      const week = progress?.currentWeek || 1;
-      const day = progress?.currentDay || 1;
-      const response = await apiRequest("GET", `/api/tasks?week=${week}&day=${day}`);
+      // Backend now automatically calculates current week/day based on start date
+      const response = await apiRequest("GET", "/api/tasks");
       return response.json();
     },
-    enabled: !!progress,
   });
 
   const { data: todayConnections, isLoading: connectionsLoading } = useQuery({
