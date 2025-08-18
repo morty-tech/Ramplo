@@ -537,8 +537,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   }
 
-  // Stripe billing - DISABLED DUE TO PRODUCTION KEY MISCONFIGURATION
-  if (false && stripe) {
+  // Stripe billing - NOW SAFE WITH TEST KEYS
+  if (stripe) {
     app.post("/api/create-subscription", requireAuth, async (req, res) => {
       try {
         const userId = (req as any).session.user.id;
