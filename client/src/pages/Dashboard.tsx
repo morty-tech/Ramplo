@@ -264,7 +264,7 @@ export default function Dashboard() {
           {stats.map((item) => (
             <div
               key={item.id}
-              className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5"
+              className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-md sm:px-6 sm:pt-5"
             >
               <dt>
                 <div className="absolute p-3">
@@ -308,7 +308,7 @@ export default function Dashboard() {
             </h3>
           </div>
           
-          <div className="relative overflow-hidden rounded-lg bg-white px-0 pt-0 pb-4 shadow-sm sm:px-0">
+          <div className="relative overflow-hidden rounded-lg bg-white px-0 pt-0 pb-4 shadow-md sm:px-0">
             {/* Success Message for Completed Tasks */}
             {allTasksCompleted && todaysExtraTimeActivity && (
               <div className="bg-gradient-to-r from-aura-50 to-electric-50 border-l-4 border-aura-600 px-4 py-4 sm:px-6 mb-4">
@@ -362,7 +362,7 @@ export default function Dashboard() {
             
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <Button
-                className="h-auto p-4 flex flex-col items-center gap-3 bg-white hover:bg-gray-50 border-0 shadow-sm"
+                className="h-auto p-4 flex flex-col items-center gap-3 bg-white hover:bg-gray-50 border-0 shadow-md"
                 onClick={() => window.location.href = '/outreach'}
               >
                 <Send className="w-6 h-6 text-aura-600" />
@@ -370,7 +370,7 @@ export default function Dashboard() {
               </Button>
               
               <Button
-                className="h-auto p-4 flex flex-col items-center gap-3 bg-white hover:bg-gray-50 border-0 shadow-sm"
+                className="h-auto p-4 flex flex-col items-center gap-3 bg-white hover:bg-gray-50 border-0 shadow-md"
                 onClick={() => window.location.href = '/deal-coach'}
               >
                 <UserCheck className="w-6 h-6 text-eclipse-600" />
@@ -378,7 +378,7 @@ export default function Dashboard() {
               </Button>
               
               <Button
-                className="h-auto p-4 flex flex-col items-center gap-3 bg-white hover:bg-gray-50 border-0 shadow-sm"
+                className="h-auto p-4 flex flex-col items-center gap-3 bg-white hover:bg-gray-50 border-0 shadow-md"
                 onClick={() => window.location.href = '/roadmap'}
               >
                 <Map className="w-6 h-6 text-electric-600" />
@@ -407,7 +407,7 @@ export default function Dashboard() {
               Quick Actions
             </h3>
             
-            <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-sm sm:px-6 sm:pt-5">
+            <div className="relative overflow-hidden rounded-lg bg-white px-4 pt-4 pb-4 shadow-md sm:px-6 sm:pt-5">
               <div className="space-y-0">
                 <div className="flex items-center justify-between py-3 cursor-pointer hover:bg-gray-50 rounded-lg" onClick={() => window.location.href = '/outreach'}>
                   <div className="flex items-center gap-3">
