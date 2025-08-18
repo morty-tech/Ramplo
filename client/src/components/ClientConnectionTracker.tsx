@@ -93,33 +93,27 @@ export default function ClientConnectionTracker() {
           {connectionTypes.map((type, index) => (
             <div key={type.key}>
               <div className="flex items-center justify-between py-3">
-                <div className="flex items-center gap-3">
-                  <div className="ml-2">
-                    <p className="text-sm font-medium text-gray-500">{type.label}</p>
-                    <p className="text-2xl font-semibold text-gray-900">{todayConnections?.[type.key] || 0}</p>
-                  </div>
+                <div className="flex items-center gap-4">
+                  <p className="text-2xl font-semibold text-gray-900 w-8">{todayConnections?.[type.key] || 0}</p>
+                  <p className="text-sm font-medium text-gray-500">{type.label}</p>
                 </div>
                 
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
+                <div className="flex items-center bg-gray-50 rounded-md p-1">
+                  <button
                     onClick={() => adjustCount(type.key, false)}
                     disabled={updateConnectionsMutation.isPending || !todayConnections?.[type.key]}
-                    className="h-7 w-7 p-0"
+                    className="h-7 w-7 flex items-center justify-center rounded hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <Minus className="w-3 h-3" />
-                  </Button>
+                    <Minus className="w-3 h-3 text-gray-600" />
+                  </button>
                   
-                  <Button
-                    variant="outline"
-                    size="sm"
+                  <button
                     onClick={() => adjustCount(type.key, true)}
                     disabled={updateConnectionsMutation.isPending}
-                    className="h-7 w-7 p-0"
+                    className="h-7 w-7 flex items-center justify-center rounded hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <Plus className="w-3 h-3" />
-                  </Button>
+                    <Plus className="w-3 h-3 text-gray-600" />
+                  </button>
                 </div>
               </div>
               {index < connectionTypes.length - 1 && (
