@@ -552,6 +552,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
           return res.status(400).json({ message: "Morty users don't need subscriptions" });
         }
 
+        console.log("DEBUG: User Stripe data:", {
+          userId: user.id,
+          email: user.email,
+          stripeCustomerId: user.stripeCustomerId,
+          stripeSubscriptionId: user.stripeSubscriptionId
+        });
+
         if (user.stripeSubscriptionId) {
           const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
           console.log("Existing subscription status:", subscription.status);
