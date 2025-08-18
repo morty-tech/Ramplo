@@ -24,16 +24,16 @@ export function TaskList({
     const categoryLower = category?.toLowerCase() || '';
     
     if (['outreach', 'client calls', 'follow-up'].includes(categoryLower)) {
-      return 'bg-aura-50 text-aura-400 ring-aura-600/20';
+      return 'bg-aura-50 text-aura-700 ring-aura-600/20';
     }
     if (['research', 'market analysis', 'lead generation'].includes(categoryLower)) {
-      return 'bg-teal-50 text-teal-700 ring-teal-600/20';
+      return 'bg-eclipse-50 text-eclipse-700 ring-eclipse-600/20';
     }
     if (['social media', 'content creation', 'marketing', 'branding'].includes(categoryLower)) {
-      return 'bg-lime-50 text-lime-700 ring-lime-600/20';
+      return 'bg-electric-50 text-electric-700 ring-electric-600/20';
     }
     if (['admin', 'planning', 'setup', 'organization'].includes(categoryLower)) {
-      return 'bg-slate-50 text-slate-700 ring-slate-600/20';
+      return 'bg-frost-50 text-frost-700 ring-frost-600/20';
     }
     return 'bg-gray-50 text-gray-600 ring-gray-500/10';
   };
