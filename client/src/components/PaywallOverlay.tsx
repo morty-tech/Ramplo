@@ -53,7 +53,7 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
       <Button 
         type="submit" 
         disabled={!stripe || isLoading}
-        className="w-full bg-orange-600 hover:bg-orange-700"
+        className="w-full bg-forest-600 hover:bg-forest-700"
       >
         {isLoading ? "Processing..." : "Subscribe Now"}
       </Button>
@@ -79,12 +79,21 @@ export default function PaywallOverlay() {
     try {
       const response = await apiRequest("POST", "/api/create-subscription");
       const data = await response.json();
+      console.log("Paywall subscription response:", data);
       
       if (data.clientSecret) {
+        console.log("Paywall: Setting client secret and showing payment");
         setClientSecret(data.clientSecret);
         setShowPayment(true);
+      } else {
+        console.log("Paywall: No client secret in response");
+        toast({
+          title: "Error",
+          description: "No payment required - subscription may already be active",
+        });
       }
     } catch (error) {
+      console.error("Paywall subscription error:", error);
       toast({
         title: "Error",
         description: "Failed to start subscription process",
@@ -140,7 +149,7 @@ export default function PaywallOverlay() {
 
               <div className="bg-gray-50 rounded-lg p-4 mb-6">
                 <div className="text-3xl font-bold text-gray-900">$49</div>
-                <div className="text-sm text-gray-600">per month</div>
+                <div className="text-sm text-gray-600">per month for 3 months</div>
               </div>
 
               <div className="space-y-3 mb-6 text-left">
@@ -168,7 +177,7 @@ export default function PaywallOverlay() {
                 <div className="space-y-3">
                   <Button 
                     onClick={handleSubscribe}
-                    className="w-full bg-orange-600 hover:bg-orange-700"
+                    className="w-full bg-forest-600 hover:bg-forest-700"
                   >
                     Subscribe Now
                   </Button>
