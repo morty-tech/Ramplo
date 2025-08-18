@@ -181,7 +181,7 @@ export default function Onboarding() {
   // Loading screen component
   if (showOnboardingComplete) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-forest-800 to-tealwave-800 relative isolate">
+      <div className="h-screen bg-gradient-to-br from-forest-800 to-tealwave-800 relative isolate overflow-hidden">
         {/* Top lime glow gradient burst */}
         <div
           aria-hidden="true"
@@ -257,7 +257,7 @@ export default function Onboarding() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-forest-800 to-tealwave-800 relative isolate">
+    <div className="h-screen bg-gradient-to-br from-forest-800 to-tealwave-800 relative isolate overflow-hidden">
       {/* Top lime glow gradient burst */}
       <div
         aria-hidden="true"
