@@ -358,9 +358,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           id: template.id || '',
           name: template.name,
           templateType: template.templateType,
-          subject: template.subject,
-          content: template.content,
-          platform: template.platform
+          subject: template.subject || '',
+          content: template.content || '',
+          platform: template.platform || ''
         },
         userProfile,
         customization: { recipientType, tone, keyPoints }
@@ -440,8 +440,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Generate AI response using OpenAI
       const { generateDealCoachAdvice } = await import("./aiService");
       const aiResponse = await generateDealCoachAdvice({
-        dealDetails: sessionData.dealDetails,
-        challenge: sessionData.challenge,
+        dealDetails: sessionData.loanStage || '',
+        challenge: sessionData.challenges || '',
         userProfile
       });
       
@@ -592,7 +592,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
               expand: ['payment_intent']
             });
             
-            const paymentIntent = invoice.payment_intent as any;
+            const paymentIntent = (invoice as any).payment_intent;
             console.log("Payment intent status:", paymentIntent?.status);
             console.log("Client secret exists:", !!paymentIntent?.client_secret);
             
