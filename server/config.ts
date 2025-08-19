@@ -23,11 +23,9 @@ export const config = {
       : process.env.STRIPE_PRICE_ID,
   },
   
-  // Database configuration
+  // Database configuration (same database for both environments)
   database: {
-    url: isProduction && process.env.DATABASE_URL_PROD
-      ? process.env.DATABASE_URL_PROD
-      : process.env.DATABASE_URL,
+    url: process.env.DATABASE_URL,
   },
   
   // Other service configurations
