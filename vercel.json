@@ -22,5 +22,16 @@
       "src": "/((?!api).*)",
       "dest": "/dist/public/index.html"
     }
-  ]
+  ],
+  "functions": {
+    "api/index.js": {
+      "maxDuration": 30
+    }
+  },
+  "build": {
+    "env": {
+      "DATABASE_URL": "@database-url"
+    }
+  },
+  "installCommand": "npm install && node scripts/migrate.js"
 }
