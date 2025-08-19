@@ -82,14 +82,23 @@ export async function sendWelcomeEmail(email: string, userName: string): Promise
 export async function sendMagicLinkEmail(email: string, token: string): Promise<void> {
   // Use the correct domain for production vs development
   const isProduction = process.env.REPLIT_DEPLOYMENT === '1' || process.env.NODE_ENV === 'production';
-  const baseUrl = isProduction 
-    ? `https://${process.env.REPL_SLUG}.${process.env.REPLIT_CLUSTER}.replit.app`
-    : `https://${process.env.REPL_SLUG}-${process.env.REPL_OWNER}.${process.env.REPLIT_CLUSTER}.replit.dev`;
+  
+  let baseUrl;
+  if (isProduction) {
+    // For production deployment, use the REPLIT_DOMAINS environment variable or construct proper domain
+    baseUrl = process.env.REPLIT_DOMAINS?.split(',')[0] || 
+              `https://${process.env.REPL_SLUG || 'app'}-${process.env.REPL_OWNER || 'user'}.replit.app`;
+  } else {
+    // For development, use the workspace domain
+    baseUrl = `https://${process.env.REPL_SLUG || 'workspace'}-${process.env.REPL_OWNER || 'user'}.${process.env.REPLIT_CLUSTER || 'spock'}.replit.dev`;
+  }
   
   const magicLinkUrl = `${baseUrl}/api/auth/verify?token=${token}`;
 
-  // Always log the magic link URL for development
+  // Always log the magic link URL and environment details
   console.log(`🔗 MAGIC LINK for ${email}: ${magicLinkUrl}`);
+  console.log(`Environment: ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'}`);
+  console.log(`Base URL: ${baseUrl}`);
 
   await sendEmail({
     to: email,
