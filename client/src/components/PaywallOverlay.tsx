@@ -157,8 +157,8 @@ export default function PaywallOverlay() {
 
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
             <div className="bg-white rounded-lg p-8 shadow-xl text-center">
-              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Crown className="h-8 w-8 text-orange-600" />
+              <div className="w-16 h-16 bg-aura-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Crown className="h-8 w-8 text-white" />
               </div>
               
               <h3 className="text-2xl font-bold text-gray-900 mb-2">
