@@ -27,9 +27,28 @@ async function sendEmail(emailData: EmailData): Promise<void> {
     try {
       await sgMail.send(email);
       console.log(`Email sent to ${email.to}: ${email.subject}`);
-    } catch (error) {
-      console.error('SendGrid error:', error);
+    } catch (error: any) {
+      console.error('SendGrid error details:', {
+        message: error.message,
+        status: error.code,
+        response: error.response?.body || error.response,
+        fromEmail: email.from,
+        toEmail: email.to,
+        environment: process.env.NODE_ENV,
+        isProduction: process.env.REPLIT_DEPLOYMENT === '1',
+        apiKeyPrefix: process.env.SENDGRID_API_KEY?.substring(0, 10) + '...',
+        fromDomainSecret: process.env.SENDGRID_FROM_EMAIL
+      });
+      
+      // More detailed error logging
+      if (error.response?.body?.errors) {
+        console.error('SendGrid API errors:', error.response.body.errors);
+      }
+      
       console.log(`[EMAIL FALLBACK] To: ${email.to}, Subject: ${email.subject}`);
+      
+      // Re-throw the error so we can see it in production logs
+      throw error;
     }
   } else {
     console.log(`[EMAIL FALLBACK] To: ${email.to}, Subject: ${email.subject}`);
