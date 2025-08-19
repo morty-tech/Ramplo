@@ -13,6 +13,7 @@ import { Progress } from "@/components/ui/progress";
 import { TagInput } from "@/components/ui/tag-input";
 import TransparentFooter from "@/components/TransparentFooter";
 import { Loader2, User, Clock, Target, Users, MessageSquare, TrendingUp, X } from "lucide-react";
+import rampLoWhiteLogo from "@assets/ramplo-log-white_1755552246908.png";
 
 export default function Onboarding() {
   const [, setLocation] = useLocation();
@@ -214,10 +215,11 @@ export default function Onboarding() {
           <div className="flex-grow flex flex-col justify-center">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
               <div className="flex items-center justify-center">
-                <div className="h-10 w-10 bg-white rounded-lg flex items-center justify-center mr-3">
-                  <span className="text-aura-600 font-bold text-xl">R</span>
-                </div>
-                <span className="text-white font-bold text-2xl">RampLO</span>
+                <img 
+                  src={rampLoWhiteLogo} 
+                  alt="RampLO" 
+                  className="h-8 w-auto"
+                />
               </div>
             </div>
 
@@ -290,10 +292,11 @@ export default function Onboarding() {
         <div className="flex-grow flex flex-col justify-center">
           <div className="sm:mx-auto sm:w-full sm:max-w-3xl">
             <div className="flex items-center justify-center mb-10">
-              <div className="h-10 w-10 bg-white rounded-lg flex items-center justify-center mr-3">
-                <span className="text-aura-600 font-bold text-xl">R</span>
-              </div>
-              <span className="text-white font-bold text-2xl">RampLO</span>
+              <img 
+                src={rampLoWhiteLogo} 
+                alt="RampLO" 
+                className="h-8 w-auto"
+              />
             </div>
           </div>
 
