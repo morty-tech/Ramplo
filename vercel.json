@@ -6,12 +6,12 @@
       "use": "@vercel/static-build",
       "config": {
         "distDir": "dist",
-        "nodeVersion": "18.x"
+        "nodeVersion": "20.x"
       }
     },
     {
       "src": "api/index.js",
-      "use": "@vercel/node@2.15.9"
+      "use": "@vercel/node@3.0.0"
     }
   ],
   "routes": [
