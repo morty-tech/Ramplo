@@ -1,12 +1,10 @@
-// Vercel serverless function entry point
-import express from 'express';
-import { registerRoutes } from '../server/routes.js';
+const express = require('express');
+const { registerRoutes } = require('../dist/index.js');
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Initialize the app
 let initialized = false;
 
 async function initializeApp() {
@@ -16,7 +14,12 @@ async function initializeApp() {
   }
 }
 
-export default async function handler(req, res) {
-  await initializeApp();
-  app(req, res);
-}
+module.exports = async (req, res) => {
+  try {
+    await initializeApp();
+    app(req, res);
+  } catch (error) {
+    console.error('Error initializing app:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
