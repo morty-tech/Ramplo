@@ -1017,6 +1017,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const filePath = req.params.filePath;
     const objectStorageService = new ObjectStorageService();
     try {
+      // Check if object storage is available
+      const paths = objectStorageService.getPublicObjectSearchPaths();
+      if (paths.length === 0) {
+        return res.status(503).json({ error: "Object storage not available" });
+      }
+      
       const file = await objectStorageService.searchPublicObject(filePath);
       if (!file) {
         return res.status(404).json({ error: "File not found" });
