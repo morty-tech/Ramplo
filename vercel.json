@@ -1,5 +1,5 @@
 {
-  "buildCommand": "node build.js",
+  "buildCommand": "node build-webpack.js",
   "outputDirectory": "dist/public",
   "installCommand": "npm ci",
   "rewrites": [
