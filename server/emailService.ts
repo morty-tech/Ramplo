@@ -23,7 +23,10 @@ async function sendEmail(emailData: EmailData): Promise<void> {
     from: emailData.from || fromDomain
   };
 
-  if (process.env.SENDGRID_API_KEY) {
+  // Only send emails in production environment
+  const isProduction = process.env.REPLIT_DEPLOYMENT === '1' || process.env.NODE_ENV === 'production';
+  
+  if (isProduction && process.env.SENDGRID_API_KEY) {
     try {
       await sgMail.send(email);
       console.log(`Email sent to ${email.to}: ${email.subject}`);
@@ -51,7 +54,10 @@ async function sendEmail(emailData: EmailData): Promise<void> {
       throw error;
     }
   } else {
-    console.log(`[EMAIL FALLBACK] To: ${email.to}, Subject: ${email.subject}`);
+    console.log(`[EMAIL FALLBACK - ${isProduction ? 'PROD' : 'DEV'}] To: ${email.to}, Subject: ${email.subject}`);
+    if (!isProduction) {
+      console.log(`DEV MODE: Email sending disabled in development environment`);
+    }
   }
 }
 
