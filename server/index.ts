@@ -2,6 +2,11 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
+// Set NODE_ENV to production if not already set for deployment
+if (!process.env.NODE_ENV) {
+  process.env.NODE_ENV = 'production';
+}
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -37,19 +42,7 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  // Run database migrations on startup in production
-  if (process.env.NODE_ENV === "production") {
-    try {
-      const { execSync } = require('child_process');
-      console.log('🔄 Running database migration...');
-      execSync('npx drizzle-kit push', { stdio: 'inherit' });
-      console.log('✅ Database migration completed');
-    } catch (error) {
-      console.error('❌ Database migration failed:', error);
-      // Don't exit - let server start anyway
-    }
-  }
-
+  // Initialize server without blocking database operations
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
@@ -74,11 +67,37 @@ app.use((req, res, next) => {
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
   const port = parseInt(process.env.PORT || '5000', 10);
+  
+  // Start server with proper error handling
   server.listen({
     port,
     host: "0.0.0.0",
     reusePort: true,
-  }, () => {
+  }, (err?: Error) => {
+    if (err) {
+      console.error('❌ Failed to start server:', err);
+      process.exit(1);
+    }
     log(`serving on port ${port}`);
+    log(`environment: ${process.env.NODE_ENV}`);
+    
+    // Run database migrations after server starts in production
+    // Use background execution to prevent blocking server startup
+    if (process.env.NODE_ENV === "production") {
+      setTimeout(async () => {
+        try {
+          const { execSync } = require('child_process');
+          console.log('🔄 Running database migration in background...');
+          execSync('npx drizzle-kit push', { 
+            stdio: 'inherit',
+            timeout: 30000 // 30 second timeout
+          });
+          console.log('✅ Database migration completed');
+        } catch (error) {
+          console.error('❌ Database migration failed (server continues):', error);
+          // Server continues - migrations can be run manually if needed
+        }
+      }, 2000); // Wait 2 seconds to ensure server is fully started
+    }
   });
 })();

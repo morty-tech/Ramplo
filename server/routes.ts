@@ -112,6 +112,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     },
   }));
 
+  // Health check endpoint for deployment verification
+  app.get("/api/health", (_req, res) => {
+    res.status(200).json({ 
+      status: "healthy",
+      timestamp: new Date().toISOString(),
+      uptime: process.uptime(),
+      environment: process.env.NODE_ENV || "development"
+    });
+  });
+
   // Auth routes
   app.post("/api/auth/send-magic-link", async (req, res) => {
     try {
