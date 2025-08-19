@@ -191,7 +191,7 @@ export default function DealCoach() {
                 <Button
                   type="submit"
                   disabled={dealCoachMutation.isPending}
-                  className="w-full bg-primary hover:bg-blue-700 text-lg py-4"
+                  className="w-full bg-gradient-to-r from-aura-600 to-electric-600 text-white hover:from-aura-500 hover:to-electric-500 transition-all duration-200 shadow-sm hover:shadow-md text-lg py-4 border-0"
                 >
                   {dealCoachMutation.isPending ? (
                     <>
