@@ -1101,17 +1101,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Temporary database migration endpoint - remove after first use
-  app.post("/api/admin/migrate", async (req, res) => {
-    try {
-      const { execSync } = require('child_process');
-      execSync('npm run db:push', { stdio: 'inherit' });
-      res.json({ success: true, message: 'Database migration completed' });
-    } catch (error) {
-      console.error('Migration failed:', error);
-      res.status(500).json({ error: 'Migration failed', details: error.message });
-    }
-  });
+
 
   const httpServer = createServer(app);
   return httpServer;
