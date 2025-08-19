@@ -763,7 +763,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Progress updates
   app.patch("/api/progress", requireAuth, async (req, res) => {
     try {
-      const userId = req.session.user.id;
+      const userId = req.session.user!.id;
       const updates = req.body;
       
       const progress = await storage.updateUserProgress(userId, updates);
@@ -775,9 +775,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Daily connections tracking
-  app.get("/api/connections/today", requireAuth, async (req: AuthenticatedRequest, res) => {
+  app.get("/api/connections/today", requireAuth, async (req, res) => {
     try {
-      const userId = req.session.user.id;
+      const userId = req.session.user!.id;
       const connections = await storage.getTodayConnections(userId);
       res.json(connections || { phoneCalls: 0, textMessages: 0, emails: 0 });
     } catch (error) {
@@ -786,9 +786,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/connections", requireAuth, async (req: AuthenticatedRequest, res) => {
+  app.post("/api/connections", requireAuth, async (req, res) => {
     try {
-      const userId = req.session.user.id;
+      const userId = req.session.user!.id;
       const { phoneCalls, textMessages, emails } = req.body;
       
       const today = new Date();
@@ -820,9 +820,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Loan Actions Routes
-  app.get("/api/loan-actions/today", requireAuth, async (req: AuthenticatedRequest, res) => {
+  app.get("/api/loan-actions/today", requireAuth, async (req, res) => {
     try {
-      const userId = req.session.user.id;
+      const userId = req.session.user!.id;
       const loanActions = await storage.getTodayLoanActions(userId);
       res.json(loanActions || { preapprovals: 0, applications: 0, closings: 0 });
     } catch (error) {
@@ -831,9 +831,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/loan-actions", requireAuth, async (req: AuthenticatedRequest, res) => {
+  app.post("/api/loan-actions", requireAuth, async (req, res) => {
     try {
-      const userId = req.session.user.id;
+      const userId = req.session.user!.id;
       const { preapprovals, applications, closings } = req.body;
       
       console.log("Loan actions request:", { userId, preapprovals, applications, closings });
