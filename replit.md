@@ -28,6 +28,7 @@ Preferred communication style: Simple, everyday language.
 ### Data Storage
 - **Database**: PostgreSQL (Neon serverless driver)
 - **Schema Management**: Drizzle Kit
+- **Migration Script**: `migrate.js` provides convenient database management commands
 - **Tables**: Users, enhanced user profiles (15+ industry-specific fields), tasks, progress tracking, magic links, marketing templates, deal coach sessions, and session storage.
 
 ### Authentication & Authorization
@@ -48,6 +49,29 @@ Preferred communication style: Simple, everyday language.
 - **Deal Coaching Tools**: AI-driven coaching sessions.
 - **Onboarding**: Comprehensive 9-step questionnaire for detailed user profiling.
 - **Branding**: Vibrant color palette (Aura, Eclipse, Electric, Frost, Carbon) for consistent UI.
+
+## Development Tools
+
+### Database Migration
+The project includes a custom migration script for managing database schema changes:
+
+```bash
+# Push schema changes directly to database (recommended for development)
+node migrate.js push
+
+# Generate migration files from schema changes
+node migrate.js generate
+
+# Apply migration files to database
+node migrate.js migrate
+```
+
+Alternative using npm scripts:
+```bash
+npm run db:push  # Equivalent to migrate.js push
+```
+
+The migration script automatically detects schema changes from `shared/schema.ts` and applies them to the connected PostgreSQL database.
 
 ## External Dependencies
 
