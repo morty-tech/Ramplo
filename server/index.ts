@@ -37,6 +37,19 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Run database migrations on startup in production
+  if (process.env.NODE_ENV === "production") {
+    try {
+      const { execSync } = require('child_process');
+      console.log('🔄 Running database migration...');
+      execSync('npx drizzle-kit push', { stdio: 'inherit' });
+      console.log('✅ Database migration completed');
+    } catch (error) {
+      console.error('❌ Database migration failed:', error);
+      // Don't exit - let server start anyway
+    }
+  }
+
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {

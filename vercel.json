@@ -32,6 +32,5 @@
     "env": {
       "DATABASE_URL": "@database-url"
     }
-  },
-  "buildCommand": "npm run build && node scripts/migrate.js"
+  }
 }
