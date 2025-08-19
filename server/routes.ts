@@ -130,32 +130,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { token } = req.query;
       
+      console.log(`🔍 MAGIC LINK VERIFICATION - Token: ${token?.toString().substring(0, 20)}...`);
+      console.log(`Environment: ${process.env.NODE_ENV}, Production: ${process.env.REPLIT_DEPLOYMENT === '1'}`);
+      
       if (!token || typeof token !== 'string') {
+        console.log("❌ No token provided");
         return res.status(400).json({ message: "Token is required" });
       }
 
+      console.log(`🔍 Verifying token with storage...`);
       const result = await verifyMagicLink(token);
       
       if (!result) {
+        console.log("❌ Token verification failed - invalid or expired");
         return res.status(400).json({ message: "Invalid or expired token" });
       }
 
+      console.log(`✅ Token verified for email: ${result.email}, isNewUser: ${result.isNewUser}`);
       const { user, isNew } = await createOrGetUser(result.email);
       
+      console.log(`👤 User created/retrieved: ${user.id} (${user.email})`);
       req.session.user = user;
       
       // Check if user has completed onboarding by looking for profile
       const profile = await storage.getUserProfile(user.id);
       const hasCompletedOnboarding = profile && profile.onboardingCompleted;
       
+      console.log(`📝 Profile check - exists: ${!!profile}, completed: ${hasCompletedOnboarding}`);
+      
       // Redirect based on onboarding status
-      if (!hasCompletedOnboarding) {
-        res.redirect('/onboarding');
-      } else {
-        res.redirect('/');
-      }
+      const redirectUrl = !hasCompletedOnboarding ? '/onboarding' : '/';
+      console.log(`🔄 Redirecting to: ${redirectUrl}`);
+      res.redirect(redirectUrl);
     } catch (error) {
-      console.error("Error verifying magic link:", error);
+      console.error("❌ Error verifying magic link:", error);
       res.status(500).json({ message: "Failed to verify token" });
     }
   });
