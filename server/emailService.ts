@@ -85,9 +85,17 @@ export async function sendMagicLinkEmail(email: string, token: string): Promise<
   
   let baseUrl;
   if (isProduction) {
-    // For production deployment, use the REPLIT_DOMAINS environment variable or construct proper domain
-    baseUrl = process.env.REPLIT_DOMAINS?.split(',')[0] || 
-              `https://${process.env.REPL_SLUG || 'app'}-${process.env.REPL_OWNER || 'user'}.replit.app`;
+    // For production deployment, use the REPLIT_DOMAINS environment variable first
+    if (process.env.REPLIT_DOMAINS) {
+      baseUrl = process.env.REPLIT_DOMAINS.split(',')[0];
+      // Ensure it has https://
+      if (!baseUrl.startsWith('http')) {
+        baseUrl = `https://${baseUrl}`;
+      }
+    } else {
+      // Fallback to standard replit.app domain format
+      baseUrl = `https://${process.env.REPL_SLUG || 'app'}-${process.env.REPL_OWNER || 'user'}.replit.app`;
+    }
   } else {
     // For development, use the workspace domain
     baseUrl = `https://${process.env.REPL_SLUG || 'workspace'}-${process.env.REPL_OWNER || 'user'}.${process.env.REPLIT_CLUSTER || 'spock'}.replit.dev`;
@@ -99,6 +107,8 @@ export async function sendMagicLinkEmail(email: string, token: string): Promise<
   console.log(`🔗 MAGIC LINK for ${email}: ${magicLinkUrl}`);
   console.log(`Environment: ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'}`);
   console.log(`Base URL: ${baseUrl}`);
+  console.log(`Environment vars - REPLIT_DEPLOYMENT: ${process.env.REPLIT_DEPLOYMENT}, NODE_ENV: ${process.env.NODE_ENV}`);
+  console.log(`REPLIT_DOMAINS: ${process.env.REPLIT_DOMAINS || 'not set'}`);
 
   await sendEmail({
     to: email,
