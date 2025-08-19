@@ -15,9 +15,12 @@ interface EmailData {
 }
 
 async function sendEmail(emailData: EmailData): Promise<void> {
+  // Use a domain that works with SendGrid - either configured domain or default
+  const fromDomain = process.env.SENDGRID_FROM_EMAIL || 'hello@ramplo.app';
+  
   const email = {
     ...emailData,
-    from: emailData.from || 'noreply@morty.com'
+    from: emailData.from || fromDomain
   };
 
   if (process.env.SENDGRID_API_KEY) {
@@ -58,9 +61,13 @@ export async function sendWelcomeEmail(email: string, userName: string): Promise
 }
 
 export async function sendMagicLinkEmail(email: string, token: string): Promise<void> {
-  // Use the current Replit domain from environment or default to current hostname
-  const replitDomain = process.env.REPLIT_DEV_DOMAIN || 'localhost:5000';
-  const magicLinkUrl = `https://${replitDomain}/api/auth/verify?token=${token}`;
+  // Use the correct domain for production vs development
+  const isProduction = process.env.REPLIT_DEPLOYMENT === '1' || process.env.NODE_ENV === 'production';
+  const baseUrl = isProduction 
+    ? `https://${process.env.REPL_SLUG}.${process.env.REPLIT_CLUSTER}.replit.app`
+    : `https://${process.env.REPL_SLUG}-${process.env.REPL_OWNER}.${process.env.REPLIT_CLUSTER}.replit.dev`;
+  
+  const magicLinkUrl = `${baseUrl}/api/auth/verify?token=${token}`;
 
   // Always log the magic link URL for development
   console.log(`🔗 MAGIC LINK for ${email}: ${magicLinkUrl}`);
