@@ -28,6 +28,7 @@ A comprehensive 90-day ramp plan designed to help mortgage loan officers secure 
 - PostgreSQL database
 - Stripe account
 - SendGrid account (for magic links)
+- OpenAI API key (for AI features)
 
 ### Environment Variables
 
