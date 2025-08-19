@@ -1,13 +1,3 @@
-#!/bin/bash
-set -e
-
-echo "Starting build process..."
-
-# Install dependencies
-npm ci
-
-# Create minimal inline vite config and build
-cat > vite.minimal.mjs << 'EOF'
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
@@ -27,9 +17,3 @@ export default defineConfig({
     emptyOutDir: true,
   },
 });
-EOF
-
-npx vite build --config vite.minimal.mjs
-npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
-
-echo "Build completed successfully!"
