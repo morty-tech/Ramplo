@@ -1,5 +1,5 @@
 {
-  "buildCommand": "./build.sh",
+  "buildCommand": "node build.js",
   "outputDirectory": "dist/public",
   "installCommand": "npm ci",
   "rewrites": [
