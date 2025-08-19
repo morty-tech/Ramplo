@@ -7,9 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Crown, Check } from "lucide-react";
 import rampLoWhiteLogo from "@assets/ramplo-log-white_1755552246908.png";
+import { config } from "@/lib/config";
 
-const stripePromise = import.meta.env.VITE_STRIPE_PUBLIC_KEY 
-  ? loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
+const stripePromise = config.stripe.publicKey 
+  ? loadStripe(config.stripe.publicKey)
   : null;
 
 function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {

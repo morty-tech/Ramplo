@@ -4,6 +4,7 @@ import Stripe from "stripe";
 import session from "express-session";
 import connectPg from "connect-pg-simple";
 import MemoryStore from "memorystore";
+import { config } from "./config";
 import { storage } from "./storage";
 import { sendMagicLink, verifyMagicLink, createOrGetUser, requireAuth, isMortyEmail } from "./auth";
 import { insertUserProfileSchema, insertDealCoachSessionSchema } from "@shared/schema";
@@ -18,7 +19,7 @@ import { imageService } from "./imageService";
 import multer from "multer";
 import { ZipProcessingService } from "./zipProcessingService";
 
-const openai = process.env.OPENAI_API_KEY ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY }) : null;
+const openai = config.openai.apiKey ? new OpenAI({ apiKey: config.openai.apiKey }) : null;
 
 // Helper function to build user profile context for AI
 function buildUserContext(profile: any): string {
@@ -89,11 +90,7 @@ interface AuthenticatedRequest extends Request {
 
 const pgStore = connectPg(session);
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  console.warn('STRIPE_SECRET_KEY not found, Stripe functionality will be disabled');
-}
-
-const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY) : null;
+const stripe = config.stripe.secretKey ? new Stripe(config.stripe.secretKey) : null;
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Session configuration - using memory store temporarily to fix auth
@@ -635,7 +632,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const subscription = await stripe.subscriptions.create({
           customer: customerId,
           items: [{
-            price: process.env.STRIPE_PRICE_ID || 'price_1234567890', // Set in environment
+            price: config.stripe.priceId,
           }],
           payment_behavior: 'default_incomplete',
           payment_settings: {

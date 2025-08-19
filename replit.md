@@ -73,6 +73,21 @@ npm run db:push  # Equivalent to migrate.js push
 
 The migration script automatically detects schema changes from `shared/schema.ts` and applies them to the connected PostgreSQL database.
 
+### Environment Configuration
+The project uses environment-aware configuration that automatically switches between development and production settings:
+
+**Development Environment** (workspace):
+- Uses `STRIPE_SECRET_KEY`, `VITE_STRIPE_PUBLIC_KEY`, `STRIPE_PRICE_ID`
+- Detected by absence of `REPLIT_DEPLOYMENT=1`
+
+**Production Environment** (deployment):
+- Uses `STRIPE_SECRET_KEY_PROD`, `VITE_STRIPE_PUBLIC_KEY_PROD`, `STRIPE_PRICE_ID_PROD`
+- Detected by `REPLIT_DEPLOYMENT=1` or `.replit.app` hostname
+
+Configuration files:
+- `server/config.ts` - Backend environment configuration
+- `client/src/lib/config.ts` - Frontend environment configuration
+
 ## External Dependencies
 
 - **Database**: Neon PostgreSQL
