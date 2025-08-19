@@ -1101,7 +1101,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-
+  // Simple GET endpoint for database migration via browser
+  app.get("/api/setup-database", async (req, res) => {
+    try {
+      // Check if we can connect to database
+      const testUser = await storage.getUserByEmail("test@example.com");
+      res.json({ 
+        success: true, 
+        message: "Database is already set up and working!",
+        tablesExist: true
+      });
+    } catch (error) {
+      // If error, likely tables don't exist, try to create them
+      try {
+        const { execSync } = require('child_process');
+        execSync('npx drizzle-kit push', { stdio: 'pipe' });
+        res.json({ 
+          success: true, 
+          message: "Database tables created successfully!",
+          migrationRun: true
+        });
+      } catch (migrationError) {
+        res.status(500).json({ 
+          error: "Failed to set up database", 
+          details: migrationError.message 
+        });
+      }
+    }
+  });
 
   const httpServer = createServer(app);
   return httpServer;
