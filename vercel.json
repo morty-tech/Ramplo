@@ -33,5 +33,5 @@
       "DATABASE_URL": "@database-url"
     }
   },
-  "installCommand": "npm install && node scripts/migrate.js"
+  "buildCommand": "npm run build && node scripts/migrate.js"
 }
