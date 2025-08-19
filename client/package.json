@@ -1,7 +1,0 @@
-{
-  "name": "ramplo-client",
-  "type": "module",
-  "scripts": {
-    "build": "vite build"
-  }
-}

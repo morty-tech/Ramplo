@@ -54,8 +54,10 @@ export class ObjectStorageService {
       )
     );
     if (paths.length === 0) {
-      console.warn("PUBLIC_OBJECT_SEARCH_PATHS not set. Object storage features disabled.");
-      return [];
+      throw new Error(
+        "PUBLIC_OBJECT_SEARCH_PATHS not set. Create a bucket in 'Object Storage' " +
+          "tool and set PUBLIC_OBJECT_SEARCH_PATHS env var (comma-separated paths)."
+      );
     }
     return paths;
   }
@@ -64,8 +66,10 @@ export class ObjectStorageService {
   getPrivateObjectDir(): string {
     const dir = process.env.PRIVATE_OBJECT_DIR || "";
     if (!dir) {
-      console.warn("PRIVATE_OBJECT_DIR not set. Object storage features disabled.");
-      return "";
+      throw new Error(
+        "PRIVATE_OBJECT_DIR not set. Create a bucket in 'Object Storage' " +
+          "tool and set PRIVATE_OBJECT_DIR env var."
+      );
     }
     return dir;
   }

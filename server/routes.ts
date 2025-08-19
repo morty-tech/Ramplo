@@ -112,16 +112,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     },
   }));
 
-  // Health check endpoint for deployment verification
-  app.get("/api/health", (_req, res) => {
-    res.status(200).json({ 
-      status: "healthy",
-      timestamp: new Date().toISOString(),
-      uptime: process.uptime(),
-      environment: process.env.NODE_ENV || "development"
-    });
-  });
-
   // Auth routes
   app.post("/api/auth/send-magic-link", async (req, res) => {
     try {
@@ -1027,12 +1017,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const filePath = req.params.filePath;
     const objectStorageService = new ObjectStorageService();
     try {
-      // Check if object storage is available
-      const paths = objectStorageService.getPublicObjectSearchPaths();
-      if (paths.length === 0) {
-        return res.status(503).json({ error: "Object storage not available" });
-      }
-      
       const file = await objectStorageService.searchPublicObject(filePath);
       if (!file) {
         return res.status(404).json({ error: "File not found" });
@@ -1110,8 +1094,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-
-
 
   const httpServer = createServer(app);
   return httpServer;

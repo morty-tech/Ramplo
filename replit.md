@@ -49,14 +49,6 @@ Preferred communication style: Simple, everyday language.
 - **Onboarding**: Comprehensive 9-step questionnaire for detailed user profiling.
 - **Branding**: Vibrant color palette (Aura, Eclipse, Electric, Frost, Carbon) for consistent UI.
 
-### Deployment Configuration
-- **Health Check**: `/api/health` endpoint for deployment verification
-- **Database Migration**: Background migration execution to prevent startup blocking
-- **Environment Handling**: Automatic NODE_ENV=production for deployment
-- **Error Handling**: Comprehensive server startup error handling
-- **Port Configuration**: Proper host binding (0.0.0.0) for deployment
-- **Migration Script**: Separate `scripts/migrate.js` for manual database operations
-
 ## External Dependencies
 
 - **Database**: Neon PostgreSQL
