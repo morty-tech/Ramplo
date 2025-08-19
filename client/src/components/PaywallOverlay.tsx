@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Crown, Check } from "lucide-react";
+import rampLoWhiteLogo from "@assets/ramplo-log-white_1755552246908.png";
 
 const stripePromise = import.meta.env.VITE_STRIPE_PUBLIC_KEY 
   ? loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
@@ -146,10 +147,11 @@ export default function PaywallOverlay() {
         <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 relative z-10">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <div className="flex items-center justify-center mb-10">
-              <div className="h-10 w-10 bg-white rounded-lg flex items-center justify-center mr-3">
-                <span className="text-aura-600 font-bold text-xl">R</span>
-              </div>
-              <span className="text-white font-bold text-2xl">RampLO</span>
+              <img 
+                src={rampLoWhiteLogo} 
+                alt="RampLO" 
+                className="h-8 w-auto"
+              />
             </div>
           </div>
 
