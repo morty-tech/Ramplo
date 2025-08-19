@@ -23,9 +23,11 @@ export const config = {
       : process.env.STRIPE_PRICE_ID,
   },
   
-  // Database configuration (same database for both environments)
+  // Database configuration - separate databases for dev/prod
   database: {
-    url: process.env.DATABASE_URL,
+    url: isProduction 
+      ? process.env.DATABASE_URL_PROD 
+      : process.env.DATABASE_URL,
   },
   
   // Other service configurations
@@ -55,6 +57,17 @@ if (isProduction) {
     throw new Error('Missing STRIPE_SECRET_KEY for development');
   }
   console.log('🛠️ Development configuration loaded');
+}
+
+// Database validation
+if (isProduction) {
+  if (!process.env.DATABASE_URL_PROD) {
+    throw new Error('Missing DATABASE_URL_PROD for production deployment');
+  }
+} else {
+  if (!process.env.DATABASE_URL) {
+    throw new Error('Missing DATABASE_URL for development');
+  }
 }
 
 if (!config.database.url) {

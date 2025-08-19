@@ -78,10 +78,14 @@ The project uses environment-aware configuration that automatically switches bet
 
 **Development Environment** (workspace):
 - Uses `STRIPE_SECRET_KEY`, `VITE_STRIPE_PUBLIC_KEY`, `STRIPE_PRICE_ID`
+- Uses `DATABASE_URL` (development database)
+- Email sending disabled (logs only)
 - Detected by absence of `REPLIT_DEPLOYMENT=1`
 
 **Production Environment** (deployment):
 - Uses `STRIPE_SECRET_KEY_PROD`, `VITE_STRIPE_PUBLIC_KEY_PROD`, `STRIPE_PRICE_ID_PROD`
+- Uses `DATABASE_URL_PROD` (production database)
+- Email sending enabled via SendGrid
 - Detected by `REPLIT_DEPLOYMENT=1` or `.replit.app` hostname
 
 Configuration files:
