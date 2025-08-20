@@ -13,7 +13,7 @@ import { Progress } from "@/components/ui/progress";
 import { TagInput } from "@/components/ui/tag-input";
 import TransparentFooter from "@/components/TransparentFooter";
 import { Loader2, User, Clock, Target, Users, MessageSquare, TrendingUp, X } from "lucide-react";
-import rampLoWhiteLogo from "@assets/ramplo-log-white_1755552246908.png";
+import rampLoWhiteLogo from "@/assets/ramplo-logo-white.png";
 
 export default function Onboarding() {
   const [, setLocation] = useLocation();

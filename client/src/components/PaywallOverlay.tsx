@@ -6,7 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Crown, Check } from "lucide-react";
-import rampLoWhiteLogo from "@assets/ramplo-log-white_1755552246908.png";
+import rampLoWhiteLogo from "@/assets/ramplo-logo-white.png";
 import { config } from "@/lib/config";
 
 const stripePromise = config.stripe.publicKey 

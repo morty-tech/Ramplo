@@ -12,8 +12,8 @@ import {
   LogOut,
   ChevronRight
 } from "lucide-react";
-import rampLoWhiteLogo from "@assets/ramplo-log-white_1755552246908.png";
-import rampLoFaviconWhite from "@assets/ramplo-favicon-white_1755552876821.png";
+import rampLoWhiteLogo from "@/assets/ramplo-logo-white.png";
+import rampLoFaviconWhite from "@/assets/ramplo-favicon-white.png";
 
 interface SidebarProps {
   isExpanded: boolean;
