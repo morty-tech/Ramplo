@@ -1,16 +1,17 @@
 {
   "version": 2,
+  "buildCommand": "node scripts/build-for-vercel.js",
   "functions": {
     "server/index.ts": {
       "runtime": "nodejs20.x",
       "memory": 1024,
       "maxDuration": 30
-    },
-    "api/**/*.{js,ts}": { "runtime": "nodejs20.x" }
+    }
   },
   "routes": [
     { "src": "^/api/health$", "dest": "/api/health.ts" },
     { "src": "^/api/(.*)$", "dest": "/server/index.ts" },
+    { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/server/index.ts" }
   ]
 }
