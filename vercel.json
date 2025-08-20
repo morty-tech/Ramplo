@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "buildCommand": "node scripts/build-client-only.js",
   "functions": {
     "server/index.ts": {
       "runtime": "nodejs20.x"
