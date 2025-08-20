@@ -74,23 +74,28 @@ npm run db:push  # Equivalent to migrate.js push
 The migration script automatically detects schema changes from `shared/schema.ts` and applies them to the connected PostgreSQL database.
 
 ### Environment Configuration
-The project uses environment-aware configuration that automatically switches between development and production settings:
+The project uses simplified environment variables suitable for Vercel deployment:
 
-**Development Environment** (workspace):
-- Uses `STRIPE_SECRET_KEY`, `VITE_STRIPE_PUBLIC_KEY`, `STRIPE_PRICE_ID`
-- Uses `DATABASE_URL` (development database)
-- Email sending disabled (logs only)
-- Detected by absence of `REPLIT_DEPLOYMENT=1`
+**All Environments** use standard environment variables:
+- `STRIPE_SECRET_KEY`, `VITE_STRIPE_PUBLIC_KEY`, `STRIPE_PRICE_ID`
+- `DATABASE_URL` (environment-specific database)
+- `SENDGRID_API_KEY`, `SENDGRID_FROM_EMAIL` (for production email sending)
+- `OPENAI_API_KEY` (for AI features)
 
-**Production Environment** (deployment):
-- Uses `STRIPE_SECRET_KEY_PROD`, `VITE_STRIPE_PUBLIC_KEY_PROD`, `STRIPE_PRICE_ID_PROD`
-- Uses `DATABASE_URL_PROD` (production database)
-- Email sending enabled via SendGrid
-- Detected by `REPLIT_DEPLOYMENT=1` or `.replit.app` hostname
+**Environment Detection**:
+- Development: `NODE_ENV=development`
+- Production: `NODE_ENV=production`
+- Email sending: Enabled in production, console logging in development
+
+**Deployment**:
+- **Primary**: Vercel deployment (recommended)
+- **Legacy**: Replit deployment (being phased out)
 
 Configuration files:
 - `server/config.ts` - Backend environment configuration
 - `client/src/lib/config.ts` - Frontend environment configuration
+- `vercel.json` - Vercel deployment configuration
+- `README-VERCEL.md` - Vercel deployment guide
 
 ## External Dependencies
 
