@@ -15,9 +15,10 @@ app.use((req, res, next) => {
   let capturedJsonResponse: Record<string, any> | undefined;
 
   const originalResJson = res.json.bind(res);
-  res.json = function(bodyJson: any, ...args: any[]) {
+  res.json = (bodyJson: any, ...args: any[]) => {
     capturedJsonResponse = bodyJson;
-    return (originalResJson as any).call(this, bodyJson, ...args);
+    // @ts-ignore - Express res.json accepts spread args despite strict typing
+    return originalResJson(bodyJson, ...args);
   };
 
   res.on("finish", () => {
