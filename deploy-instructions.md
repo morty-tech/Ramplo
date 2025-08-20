@@ -28,13 +28,16 @@ vercel --prod
 4. Click "Create Deployment" 
 5. Select the branch to deploy
 
-### 3. Build Configuration Check
+### 3. Build Configuration Check (Vite Framework)
 
 In your Vercel project settings, ensure:
-- **Build Command**: `npm run build`
-- **Output Directory**: `dist`
-- **Install Command**: `npm install`
+- **Framework Preset**: Vite
+- **Build Command**: `npm run build` (auto-detected)
+- **Output Directory**: `dist` (auto-detected)  
+- **Install Command**: `npm install` (auto-detected)
 - **Node.js Version**: 18.x or 20.x
+
+Since you're using Vite framework preset, most settings should be auto-detected.
 
 ### 4. Environment Variables Verification
 
