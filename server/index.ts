@@ -59,9 +59,18 @@ async function createApp() {
   return { app, server };
 }
 
-// Export for Vercel serverless function
+let cachedApp: express.Express | null = null;
+
+async function getApp() {
+  if (!cachedApp) {
+    const { app } = await createApp();
+    cachedApp = app;
+  }
+  return cachedApp;
+}
+
 export default async function handler(req: any, res: any) {
-  const { app } = await createApp();
+  const app = await getApp();
   return app(req, res);
 }
 
