@@ -131,7 +131,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { token } = req.query;
       
       console.log(`🔍 MAGIC LINK VERIFICATION - Token: ${token?.toString().substring(0, 20)}...`);
-      console.log(`Environment: ${process.env.NODE_ENV}, Production: ${process.env.REPLIT_DEPLOYMENT === '1'}`);
+      console.log(`Environment: ${process.env.NODE_ENV}, Production: ${process.env.NODE_ENV === 'production'}`);
+
       
       if (!token || typeof token !== 'string') {
         console.log("❌ No token provided");

@@ -24,7 +24,7 @@ async function sendEmail(emailData: EmailData): Promise<void> {
   };
 
   // Only send emails in production environment
-  const isProduction = process.env.REPLIT_DEPLOYMENT === '1' || process.env.NODE_ENV === 'production';
+  const isProduction = process.env.NODE_ENV === 'production';
   
   if (isProduction && process.env.SENDGRID_API_KEY) {
     try {
@@ -38,7 +38,7 @@ async function sendEmail(emailData: EmailData): Promise<void> {
         fromEmail: email.from,
         toEmail: email.to,
         environment: process.env.NODE_ENV,
-        isProduction: process.env.REPLIT_DEPLOYMENT === '1',
+        isProduction: process.env.NODE_ENV === 'production',
         apiKeyPrefix: process.env.SENDGRID_API_KEY?.substring(0, 10) + '...',
         fromDomainSecret: process.env.SENDGRID_FROM_EMAIL
       });
@@ -86,25 +86,32 @@ export async function sendWelcomeEmail(email: string, userName: string): Promise
 }
 
 export async function sendMagicLinkEmail(email: string, token: string): Promise<void> {
-  // Use the correct domain for production vs development
-  const isProduction = process.env.REPLIT_DEPLOYMENT === '1' || process.env.NODE_ENV === 'production';
+  // Use NODE_ENV to determine environment
+  const isProduction = process.env.NODE_ENV === 'production';
   
   let baseUrl;
   if (isProduction) {
-    // For production deployment, use the REPLIT_DOMAINS environment variable first
-    if (process.env.REPLIT_DOMAINS) {
+    // For production deployment, check multiple possible URL sources
+    if (process.env.VERCEL_URL) {
+      // Vercel deployment URL
+      baseUrl = `https://${process.env.VERCEL_URL}`;
+    } else if (process.env.REPLIT_DOMAINS) {
+      // Replit deployment URL (fallback for existing deployments)
       baseUrl = process.env.REPLIT_DOMAINS.split(',')[0];
-      // Ensure it has https://
       if (!baseUrl.startsWith('http')) {
         baseUrl = `https://${baseUrl}`;
       }
     } else {
-      // Fallback to standard replit.app domain format
-      baseUrl = `https://${process.env.REPL_SLUG || 'app'}-${process.env.REPL_OWNER || 'user'}.replit.app`;
+      // Generic production fallback
+      baseUrl = process.env.BASE_URL || 'https://ramplo.app';
     }
   } else {
-    // For development, use the workspace domain
-    baseUrl = `https://${process.env.REPL_SLUG || 'workspace'}-${process.env.REPL_OWNER || 'user'}.${process.env.REPLIT_CLUSTER || 'spock'}.replit.dev`;
+    // For development, use the workspace domain or localhost
+    if (process.env.REPL_SLUG && process.env.REPL_OWNER && process.env.REPLIT_CLUSTER) {
+      baseUrl = `https://${process.env.REPL_SLUG}-${process.env.REPL_OWNER}.${process.env.REPLIT_CLUSTER}.replit.dev`;
+    } else {
+      baseUrl = process.env.BASE_URL || 'http://localhost:5000';
+    }
   }
   
   const magicLinkUrl = `${baseUrl}/api/auth/verify?token=${token}`;
@@ -113,8 +120,8 @@ export async function sendMagicLinkEmail(email: string, token: string): Promise<
   console.log(`🔗 MAGIC LINK for ${email}: ${magicLinkUrl}`);
   console.log(`Environment: ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'}`);
   console.log(`Base URL: ${baseUrl}`);
-  console.log(`Environment vars - REPLIT_DEPLOYMENT: ${process.env.REPLIT_DEPLOYMENT}, NODE_ENV: ${process.env.NODE_ENV}`);
-  console.log(`REPLIT_DOMAINS: ${process.env.REPLIT_DOMAINS || 'not set'}`);
+  console.log(`Environment vars - NODE_ENV: ${process.env.NODE_ENV}`);
+  console.log(`VERCEL_URL: ${process.env.VERCEL_URL || 'not set'}`);
 
   await sendEmail({
     to: email,

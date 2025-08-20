@@ -17,7 +17,12 @@ STRIPE_PRICE_ID=price_...
 SENDGRID_API_KEY=SG....
 SENDGRID_FROM_EMAIL=nora@morty.com
 OPENAI_API_KEY=sk-...
+BASE_URL=https://yourdomain.com (optional, will auto-detect for Vercel)
 ```
+
+### Environment Variables Vercel Provides Automatically
+- `VERCEL_URL` - Automatically set by Vercel for production URLs
+- `NODE_ENV` - Automatically set to 'production' in production
 
 ## Deployment Steps
 
