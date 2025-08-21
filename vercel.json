@@ -1,10 +1,14 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "api/server.ts", "use": "@vercel/node" }
-  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "functions": {
+    "api/server.ts": {
+      "runtime": "@vercel/node"
+    }
+  },
   "routes": [
-    { "src": "/api/health", "dest": "/api/health" },
-    { "src": "/(.*)", "dest": "/api/server" }
+    { "src": "/api/(.*)", "dest": "/api/server" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
