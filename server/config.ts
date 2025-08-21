@@ -33,17 +33,32 @@ export const config = {
 };
 
 // Validation - ensure required secrets exist
-if (!config.stripe.secretKey) {
-  throw new Error('Missing STRIPE_SECRET_KEY');
-}
-if (!config.stripe.publicKey) {
-  throw new Error('Missing VITE_STRIPE_PUBLIC_KEY');
-}
-if (!config.stripe.priceId) {
-  throw new Error('Missing STRIPE_PRICE_ID');
-}
 if (!config.database.url) {
   throw new Error('Missing DATABASE_URL');
+}
+
+// In development, make other keys optional to avoid startup errors
+if (isProduction) {
+  if (!config.stripe.secretKey) {
+    console.warn('Missing STRIPE_SECRET_KEY - Stripe features will be disabled');
+  }
+  if (!config.stripe.publicKey) {
+    console.warn('Missing VITE_STRIPE_PUBLIC_KEY - Stripe features will be disabled');
+  }
+  if (!config.stripe.priceId) {
+    console.warn('Missing STRIPE_PRICE_ID - Stripe features will be disabled');
+  }
+} else {
+  // Development mode - log warnings for missing keys but don't throw errors
+  if (!config.stripe.secretKey) {
+    console.log('⚠️ STRIPE_SECRET_KEY not set - Stripe features will be disabled');
+  }
+  if (!config.stripe.publicKey) {
+    console.log('⚠️ VITE_STRIPE_PUBLIC_KEY not set - Stripe features will be disabled');
+  }  
+  if (!config.stripe.priceId) {
+    console.log('⚠️ STRIPE_PRICE_ID not set - Stripe features will be disabled');
+  }
 }
 
 console.log(`🚀 ${isProduction ? 'Production' : 'Development'} configuration loaded`);
