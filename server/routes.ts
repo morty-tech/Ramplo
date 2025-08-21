@@ -1019,8 +1019,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Object Storage Routes
-  app.get("/public-objects/*", async (req, res) => {
-    const filePath = req.params[0];
+  app.get("/public-objects/:filePath(.*)", async (req, res) => {
+    const filePath = req.params.filePath;
     const objectStorageService = new ObjectStorageService();
     try {
       const file = await objectStorageService.searchPublicObject(filePath);
@@ -1034,7 +1034,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/objects/*", requireAuth, async (req, res) => {
+  app.get("/objects/:objectPath(.*)", requireAuth, async (req, res) => {
     const userId = (req as any).session.user.id;
     const objectStorageService = new ObjectStorageService();
     try {
