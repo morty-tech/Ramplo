@@ -442,8 +442,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Generate AI response using OpenAI
       const { generateDealCoachAdvice } = await import("./aiService");
+      const dealDetails = `Loan Stage: ${sessionData.loanStage || 'Not specified'}, Loan Type: ${sessionData.loanType || 'Not specified'}, Borrower Scenario: ${sessionData.borrowerScenario || 'Not specified'}`;
+      
       const aiResponse = await generateDealCoachAdvice({
-        dealDetails: sessionData.dealDetails || '',
+        dealDetails,
         challenge: sessionData.challenges || '',
         userProfile
       });
