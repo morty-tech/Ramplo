@@ -361,9 +361,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           id: template.id || '',
           name: template.name,
           templateType: template.templateType,
-          subject: template.subject,
+          subject: template.subject || '',
           content: template.content,
-          platform: template.platform
+          platform: template.platform || ''
         },
         userProfile,
         customization: { recipientType, tone, keyPoints }
@@ -443,8 +443,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Generate AI response using OpenAI
       const { generateDealCoachAdvice } = await import("./aiService");
       const aiResponse = await generateDealCoachAdvice({
-        dealDetails: sessionData.dealDetails,
-        challenge: sessionData.challenge,
+        challenge: sessionData.challenges,
         userProfile
       });
       
@@ -595,7 +594,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
               expand: ['payment_intent']
             });
             
-            const paymentIntent = invoice.payment_intent as any;
+            const paymentIntent = (invoice as any).payment_intent;
             console.log("Payment intent status:", paymentIntent?.status);
             console.log("Client secret exists:", !!paymentIntent?.client_secret);
             
@@ -758,7 +757,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Progress updates
   app.patch("/api/progress", requireAuth, async (req, res) => {
     try {
-      const userId = req.session.user.id;
+      const userId = req.session.user?.id;
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
       const updates = req.body;
       
       const progress = await storage.updateUserProgress(userId, updates);
@@ -770,7 +772,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Daily connections tracking
-  app.get("/api/connections/today", requireAuth, async (req: AuthenticatedRequest, res) => {
+  app.get("/api/connections/today", requireAuth, async (req: any, res) => {
     try {
       const userId = req.session.user.id;
       const connections = await storage.getTodayConnections(userId);
@@ -781,7 +783,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/connections", requireAuth, async (req: AuthenticatedRequest, res) => {
+  app.post("/api/connections", requireAuth, async (req: any, res) => {
     try {
       const userId = req.session.user.id;
       const { phoneCalls, textMessages, emails } = req.body;
@@ -815,7 +817,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Loan Actions Routes
-  app.get("/api/loan-actions/today", requireAuth, async (req: AuthenticatedRequest, res) => {
+  app.get("/api/loan-actions/today", requireAuth, async (req: any, res) => {
     try {
       const userId = req.session.user.id;
       const loanActions = await storage.getTodayLoanActions(userId);
@@ -826,7 +828,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/loan-actions", requireAuth, async (req: AuthenticatedRequest, res) => {
+  app.post("/api/loan-actions", requireAuth, async (req: any, res) => {
     try {
       const userId = req.session.user.id;
       const { preapprovals, applications, closings } = req.body;
