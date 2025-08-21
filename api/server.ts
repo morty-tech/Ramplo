@@ -1,5 +1,25 @@
-export default (_req: any, res: any) => {
-  res.status(200);
-  res.setHeader("content-type", "text/html; charset=utf-8");
-  res.end("<h1>✅ Baseline works</h1><p>Try /api/health</p>");
+import express from "express";
+import { registerRoutes } from "../server/routes";
+import { serveStatic } from "../server/vite";
+
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+// Initialize routes
+let initialized = false;
+let server: any;
+
+async function initializeApp() {
+  if (!initialized) {
+    server = await registerRoutes(app);
+    serveStatic(app);
+    initialized = true;
+  }
+  return app;
+}
+
+export default async (req: any, res: any) => {
+  const app = await initializeApp();
+  app(req, res);
 };

@@ -1,7 +1,10 @@
 {
   "version": 2,
-  "rewrites": [
-    { "source": "/api/health", "destination": "/api/health" },
-    { "source": "/(.*)", "destination": "/api/server" }
+  "builds": [
+    { "src": "api/server.ts", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/api/health", "dest": "/api/health" },
+    { "src": "/(.*)", "dest": "/api/server" }
   ]
 }
