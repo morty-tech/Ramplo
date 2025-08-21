@@ -21,10 +21,9 @@ import {
   Trash2,
   X
 } from "lucide-react";
-import { config } from "@/lib/config";
 
-const stripePromise = config.stripe.publicKey 
-  ? loadStripe(config.stripe.publicKey)
+const stripePromise = import.meta.env.VITE_STRIPE_PUBLIC_KEY 
+  ? loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
   : null;
 
 function SubscriptionForm({ clientSecret, onSuccess }: { clientSecret: string; onSuccess: () => void }) {

@@ -26,38 +26,18 @@ export async function sendMagicLink(email: string): Promise<void> {
 }
 
 export async function verifyMagicLink(token: string): Promise<{ email: string; isNewUser: boolean } | null> {
-  console.log(`🔍 Verifying magic link token: ${token.substring(0, 20)}...`);
-  
   const magicLink = await storage.getMagicLink(token);
   
   if (!magicLink) {
-    console.log("❌ Magic link not found in database");
-    return null;
-  }
-
-  console.log(`✅ Magic link found for email: ${magicLink.email}`);
-  
-  // Check expiration
-  if (magicLink.expiresAt && new Date() > magicLink.expiresAt) {
-    console.log("❌ Magic link has expired");
-    return null;
-  }
-  
-  // Check if already used
-  if (magicLink.used) {
-    console.log("❌ Magic link already used");
     return null;
   }
 
   // Mark as used
-  console.log("✅ Marking magic link as used");
   await storage.markMagicLinkUsed(token);
 
   // Check if user exists
   const existingUser = await storage.getUserByEmail(magicLink.email);
   const isNewUser = !existingUser;
-  
-  console.log(`👤 User check - exists: ${!!existingUser}, isNewUser: ${isNewUser}`);
 
   return {
     email: magicLink.email,

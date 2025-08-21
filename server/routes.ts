@@ -4,7 +4,6 @@ import Stripe from "stripe";
 import session from "express-session";
 import connectPg from "connect-pg-simple";
 import MemoryStore from "memorystore";
-import { config } from "./config";
 import { storage } from "./storage";
 import { sendMagicLink, verifyMagicLink, createOrGetUser, requireAuth, isMortyEmail } from "./auth";
 import { insertUserProfileSchema, insertDealCoachSessionSchema } from "@shared/schema";
@@ -19,7 +18,7 @@ import { imageService } from "./imageService";
 import multer from "multer";
 import { ZipProcessingService } from "./zipProcessingService";
 
-const openai = config.openai.apiKey ? new OpenAI({ apiKey: config.openai.apiKey }) : null;
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY }) : null;
 
 // Helper function to build user profile context for AI
 function buildUserContext(profile: any): string {
@@ -90,7 +89,11 @@ interface AuthenticatedRequest extends Request {
 
 const pgStore = connectPg(session);
 
-const stripe = config.stripe.secretKey ? new Stripe(config.stripe.secretKey) : null;
+if (!process.env.STRIPE_SECRET_KEY) {
+  console.warn('STRIPE_SECRET_KEY not found, Stripe functionality will be disabled');
+}
+
+const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY) : null;
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Session configuration - using memory store temporarily to fix auth
@@ -130,41 +133,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { token } = req.query;
       
-      console.log(`🔍 MAGIC LINK VERIFICATION - Token: ${token?.toString().substring(0, 20)}...`);
-      console.log(`Environment: ${process.env.NODE_ENV}, Production: ${process.env.NODE_ENV === 'production'}`);
-
-      
       if (!token || typeof token !== 'string') {
-        console.log("❌ No token provided");
         return res.status(400).json({ message: "Token is required" });
       }
 
-      console.log(`🔍 Verifying token with storage...`);
       const result = await verifyMagicLink(token);
       
       if (!result) {
-        console.log("❌ Token verification failed - invalid or expired");
         return res.status(400).json({ message: "Invalid or expired token" });
       }
 
-      console.log(`✅ Token verified for email: ${result.email}, isNewUser: ${result.isNewUser}`);
       const { user, isNew } = await createOrGetUser(result.email);
       
-      console.log(`👤 User created/retrieved: ${user.id} (${user.email})`);
       req.session.user = user;
       
       // Check if user has completed onboarding by looking for profile
       const profile = await storage.getUserProfile(user.id);
       const hasCompletedOnboarding = profile && profile.onboardingCompleted;
       
-      console.log(`📝 Profile check - exists: ${!!profile}, completed: ${hasCompletedOnboarding}`);
-      
       // Redirect based on onboarding status
-      const redirectUrl = !hasCompletedOnboarding ? '/onboarding' : '/';
-      console.log(`🔄 Redirecting to: ${redirectUrl}`);
-      res.redirect(redirectUrl);
+      if (!hasCompletedOnboarding) {
+        res.redirect('/onboarding');
+      } else {
+        res.redirect('/');
+      }
     } catch (error) {
-      console.error("❌ Error verifying magic link:", error);
+      console.error("Error verifying magic link:", error);
       res.status(500).json({ message: "Failed to verify token" });
     }
   });
@@ -367,9 +361,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           id: template.id || '',
           name: template.name,
           templateType: template.templateType,
-          subject: template.subject || '',
-          content: template.content || '',
-          platform: template.platform || ''
+          subject: template.subject,
+          content: template.content,
+          platform: template.platform
         },
         userProfile,
         customization: { recipientType, tone, keyPoints }
@@ -449,8 +443,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Generate AI response using OpenAI
       const { generateDealCoachAdvice } = await import("./aiService");
       const aiResponse = await generateDealCoachAdvice({
-        dealDetails: sessionData.loanStage || '',
-        challenge: sessionData.challenges || '',
+        dealDetails: sessionData.dealDetails,
+        challenge: sessionData.challenge,
         userProfile
       });
       
@@ -601,7 +595,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
               expand: ['payment_intent']
             });
             
-            const paymentIntent = (invoice as any).payment_intent;
+            const paymentIntent = invoice.payment_intent as any;
             console.log("Payment intent status:", paymentIntent?.status);
             console.log("Client secret exists:", !!paymentIntent?.client_secret);
             
@@ -641,7 +635,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const subscription = await stripe.subscriptions.create({
           customer: customerId,
           items: [{
-            price: config.stripe.priceId,
+            price: process.env.STRIPE_PRICE_ID || 'price_1234567890', // Set in environment
           }],
           payment_behavior: 'default_incomplete',
           payment_settings: {
@@ -764,7 +758,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Progress updates
   app.patch("/api/progress", requireAuth, async (req, res) => {
     try {
-      const userId = req.session.user!.id;
+      const userId = req.session.user.id;
       const updates = req.body;
       
       const progress = await storage.updateUserProgress(userId, updates);
@@ -776,9 +770,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Daily connections tracking
-  app.get("/api/connections/today", requireAuth, async (req, res) => {
+  app.get("/api/connections/today", requireAuth, async (req: AuthenticatedRequest, res) => {
     try {
-      const userId = req.session.user!.id;
+      const userId = req.session.user.id;
       const connections = await storage.getTodayConnections(userId);
       res.json(connections || { phoneCalls: 0, textMessages: 0, emails: 0 });
     } catch (error) {
@@ -787,9 +781,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/connections", requireAuth, async (req, res) => {
+  app.post("/api/connections", requireAuth, async (req: AuthenticatedRequest, res) => {
     try {
-      const userId = req.session.user!.id;
+      const userId = req.session.user.id;
       const { phoneCalls, textMessages, emails } = req.body;
       
       const today = new Date();
@@ -821,9 +815,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Loan Actions Routes
-  app.get("/api/loan-actions/today", requireAuth, async (req, res) => {
+  app.get("/api/loan-actions/today", requireAuth, async (req: AuthenticatedRequest, res) => {
     try {
-      const userId = req.session.user!.id;
+      const userId = req.session.user.id;
       const loanActions = await storage.getTodayLoanActions(userId);
       res.json(loanActions || { preapprovals: 0, applications: 0, closings: 0 });
     } catch (error) {
@@ -832,9 +826,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/loan-actions", requireAuth, async (req, res) => {
+  app.post("/api/loan-actions", requireAuth, async (req: AuthenticatedRequest, res) => {
     try {
-      const userId = req.session.user!.id;
+      const userId = req.session.user.id;
       const { preapprovals, applications, closings } = req.body;
       
       console.log("Loan actions request:", { userId, preapprovals, applications, closings });
@@ -1019,7 +1013,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Object Storage Routes
-  app.get("/public-objects/:filePath+", async (req, res) => {
+  app.get("/public-objects/:filePath(*)", async (req, res) => {
     const filePath = req.params.filePath;
     const objectStorageService = new ObjectStorageService();
     try {
@@ -1034,7 +1028,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/objects/:objectPath+", requireAuth, async (req, res) => {
+  app.get("/objects/:objectPath(*)", requireAuth, async (req, res) => {
     const userId = (req as any).session.user.id;
     const objectStorageService = new ObjectStorageService();
     try {

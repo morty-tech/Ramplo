@@ -15,49 +15,21 @@ interface EmailData {
 }
 
 async function sendEmail(emailData: EmailData): Promise<void> {
-  // Use a domain that works with SendGrid - either configured domain or default
-  const fromDomain = process.env.SENDGRID_FROM_EMAIL || 'hello@ramplo.app';
-  
   const email = {
     ...emailData,
-    from: emailData.from || fromDomain
+    from: emailData.from || 'noreply@morty.com'
   };
 
-  // Only send emails in production environment
-  const isProduction = process.env.NODE_ENV === 'production';
-  
-  if (isProduction && process.env.SENDGRID_API_KEY) {
+  if (process.env.SENDGRID_API_KEY) {
     try {
       await sgMail.send(email);
       console.log(`Email sent to ${email.to}: ${email.subject}`);
-    } catch (error: any) {
-      console.error('SendGrid error details:', {
-        message: error.message,
-        status: error.code,
-        response: error.response?.body || error.response,
-        fromEmail: email.from,
-        toEmail: email.to,
-        environment: process.env.NODE_ENV,
-        isProduction: process.env.NODE_ENV === 'production',
-        apiKeyPrefix: process.env.SENDGRID_API_KEY?.substring(0, 10) + '...',
-        fromDomainSecret: process.env.SENDGRID_FROM_EMAIL
-      });
-      
-      // More detailed error logging
-      if (error.response?.body?.errors) {
-        console.error('SendGrid API errors:', error.response.body.errors);
-      }
-      
+    } catch (error) {
+      console.error('SendGrid error:', error);
       console.log(`[EMAIL FALLBACK] To: ${email.to}, Subject: ${email.subject}`);
-      
-      // Re-throw the error so we can see it in production logs
-      throw error;
     }
   } else {
-    console.log(`[EMAIL FALLBACK - ${isProduction ? 'PROD' : 'DEV'}] To: ${email.to}, Subject: ${email.subject}`);
-    if (!isProduction) {
-      console.log(`DEV MODE: Email sending disabled in development environment`);
-    }
+    console.log(`[EMAIL FALLBACK] To: ${email.to}, Subject: ${email.subject}`);
   }
 }
 
@@ -86,42 +58,12 @@ export async function sendWelcomeEmail(email: string, userName: string): Promise
 }
 
 export async function sendMagicLinkEmail(email: string, token: string): Promise<void> {
-  // Use NODE_ENV to determine environment
-  const isProduction = process.env.NODE_ENV === 'production';
-  
-  let baseUrl;
-  if (isProduction) {
-    // For production deployment, check multiple possible URL sources
-    if (process.env.VERCEL_URL) {
-      // Vercel deployment URL
-      baseUrl = `https://${process.env.VERCEL_URL}`;
-    } else if (process.env.REPLIT_DOMAINS) {
-      // Replit deployment URL (fallback for existing deployments)
-      baseUrl = process.env.REPLIT_DOMAINS.split(',')[0];
-      if (!baseUrl.startsWith('http')) {
-        baseUrl = `https://${baseUrl}`;
-      }
-    } else {
-      // Generic production fallback
-      baseUrl = process.env.BASE_URL || 'https://ramplo.app';
-    }
-  } else {
-    // For development, use the workspace domain or localhost
-    if (process.env.REPL_SLUG && process.env.REPL_OWNER && process.env.REPLIT_CLUSTER) {
-      baseUrl = `https://${process.env.REPL_SLUG}-${process.env.REPL_OWNER}.${process.env.REPLIT_CLUSTER}.replit.dev`;
-    } else {
-      baseUrl = process.env.BASE_URL || 'http://localhost:5000';
-    }
-  }
-  
-  const magicLinkUrl = `${baseUrl}/api/auth/verify?token=${token}`;
+  // Use the current Replit domain from environment or default to current hostname
+  const replitDomain = process.env.REPLIT_DEV_DOMAIN || 'localhost:5000';
+  const magicLinkUrl = `https://${replitDomain}/api/auth/verify?token=${token}`;
 
-  // Always log the magic link URL and environment details
+  // Always log the magic link URL for development
   console.log(`🔗 MAGIC LINK for ${email}: ${magicLinkUrl}`);
-  console.log(`Environment: ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'}`);
-  console.log(`Base URL: ${baseUrl}`);
-  console.log(`Environment vars - NODE_ENV: ${process.env.NODE_ENV}`);
-  console.log(`VERCEL_URL: ${process.env.VERCEL_URL || 'not set'}`);
 
   await sendEmail({
     to: email,

@@ -1,4 +1,4 @@
-import rampLoWhiteLogo from "@/assets/ramplo-logo-white.png";
+import rampLoWhiteLogo from "@assets/ramplo-log-white_1755552246908.png";
 
 interface AuthLayoutProps {
   children: React.ReactNode;

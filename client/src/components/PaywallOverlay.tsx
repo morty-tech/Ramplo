@@ -6,11 +6,10 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Crown, Check } from "lucide-react";
-import rampLoWhiteLogo from "@/assets/ramplo-logo-white.png";
-import { config } from "@/lib/config";
+import rampLoWhiteLogo from "@assets/ramplo-log-white_1755552246908.png";
 
-const stripePromise = config.stripe.publicKey 
-  ? loadStripe(config.stripe.publicKey)
+const stripePromise = import.meta.env.VITE_STRIPE_PUBLIC_KEY 
+  ? loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
   : null;
 
 function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
