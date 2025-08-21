@@ -443,6 +443,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Generate AI response using OpenAI
       const { generateDealCoachAdvice } = await import("./aiService");
       const aiResponse = await generateDealCoachAdvice({
+        dealDetails: sessionData.dealDetails || '',
         challenge: sessionData.challenges || '',
         userProfile
       });
