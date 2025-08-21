@@ -1,12 +1,7 @@
 {
   "version": 2,
-  "functions": {
-    "api/**/*.{js,ts}": { "runtime": "nodejs20.x" },
-    "server/index.ts": { "runtime": "nodejs20.x" }
-  },
-  "routes": [
-    { "src": "^/api/health$", "dest": "/api/health.ts" },
-    { "src": "^/api/(.*)$", "dest": "/server/index.ts" },
-    { "src": "/(.*)", "dest": "/server/index.ts" }
+  "rewrites": [
+    { "source": "/api/health", "destination": "/api/health" },
+    { "source": "/(.*)", "destination": "/api/server" }
   ]
 }

@@ -1,5 +1,12 @@
 {
-  "name": "vercel-baseline",
-  "version": "1.0.0",
-  "private": true
+  "name": "your-app",
+  "private": true,
+  "engines": {
+    "node": "20.x"
+  },
+  "scripts": {
+    "dev": "NODE_ENV=development tsx server/index.ts",
+    "build": "echo \"no build\"", 
+    "start": "NODE_ENV=production tsx server/index.ts"
+  }
 }
