@@ -13,7 +13,7 @@ let server: any;
 async function initializeApp() {
   if (!initialized) {
     server = await registerRoutes(app);
-    serveStatic(app);
+    // Don't serve static files in Vercel - handled by platform
     initialized = true;
   }
   return app;
