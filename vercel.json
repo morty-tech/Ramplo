@@ -2,9 +2,6 @@
   "version": 2,
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "functions": {
-    "api/server.ts": {}
-  },
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/server" },
     { "src": "/(.*)", "dest": "/index.html" }
